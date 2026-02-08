@@ -39,6 +39,7 @@ This folder contains the root of an enterprise SaaS. This SaaS follows a super-a
 - Backend: ASP.NET Core 10.0 (Self-contained deployment)
 - Frontend: Vanilla HTML + Javascript (small) + TypeScript (large) + Bootstrap 5 in the folder `./frontend/`
 - Frontend Scripts: TypeScript (in the folder `./typescript/` which when compiled with Vite copies compiled files to `./frontend/`)
+  - **NOTE**: For all non-trivial frontend scripting, you MUST use TypeScript. The moment any inline Javascript becomes more than 10 lines of code, you should migrate to TypeScript. It is best to write TypeSCript from the beginning.
 - Database: PostgreSQL 17.6 with Dotnet EF Core. Mirgation and other SQL scripts are placed in `./sql/`.
 - Image Size: ~280-300MB (runtime-deps base + runtime + frontend)
 - Deployment: Self-contained (includes .NET runtime) to Cloud Run on Google Cloud Platform.
@@ -58,6 +59,8 @@ This folder contains the root of an enterprise SaaS. This SaaS follows a super-a
 + docs/              - All product documentation relevant to customers or users or integrators should be placed here.
 
 ## Development
+- Always consult CODING_STYLE when writing code. This is important for maintainability.
+- Always consult MIGRATIONS.md when migrating from one stack to another such as Javascript to TypeScript, Python to .NET Core etc.
 - Always consult LOGGING.md so that you add appropriate logging configuration and log statements to all generated code.
 - Always consult COMMENTING.md so that you add appropriate comments to all generated code.
 - Always consult FRONTEND.md when frontend code changes are involved.
@@ -65,6 +68,7 @@ This folder contains the root of an enterprise SaaS. This SaaS follows a super-a
 - Always consult UX_UI_GUIDELINES.md when thinking about any new capability or feature. 
 - Always consult API_GUIDELINES.md when implementing new APIs.
 - Always consult PERFORMANCE.md when implementing backends, frontends or APIs. It is important to keep performance in mind upfront.
+- Always consult TESTING.md when you need to write tests. Having maintainable and comprehensive tests is important.
 - When creating backend code, consult BACKEND.md.
 - When creating SDKs, consult SDKs.md.
 - **When implementing access control, sharing, or permissions, always consult ACCESS_CONTROL.md.** This includes:
