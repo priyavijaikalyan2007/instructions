@@ -65,6 +65,18 @@ You must add Playwright end-to-end tests for all user-facing changes.
 ### Clarifying Questions
 When any aspect of a task is unclear or ambiguous, ask clarifying questions before proceeding. Present the various choices or interpretations you see. It is better to ask questions than to make potentially incorrect assumptions.
 
+### Avoid Assumptions (User Configuration First)
+When the product already provides user-configurable settings (e.g., AI provider/model, API keys, tenant/workspace settings), **do not hardcode or assume defaults**. Always:
+- Use the existing configuration surfaces and stored settings.
+- If a required configuration is missing or ambiguous, **ask the user** rather than choosing a model/provider or behavior unilaterally.
+- Document any fallback behavior explicitly and only after confirmation.
+
+### UX First
+Always consider the user experience before finalizing UI or workflow changes.
+- Consult `UX_UI_GUIDELINES.md` for any UI/UX work.
+- If a `UI_UX_EXPERIENCES.md` file exists, consult it as well and follow its guidance.
+- If the intended user flow is unclear, **pause and ask for clarification**.
+
 ## Memory
 
 ### CONVERSATION.md Updates

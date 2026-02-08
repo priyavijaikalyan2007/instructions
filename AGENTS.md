@@ -60,6 +60,7 @@ This folder contains the root of an enterprise SaaS. This SaaS follows a super-a
 
 ## Development (CRITICAL)
 - Always consult CODING_STYLE when writing code. This is important for maintainability.
+- Always consult GOF_PATTERNS.md when writing code. Using patterns appropriately when building code improves maintenance and understanding.
 - Always consult MIGRATIONS.md when migrating from one stack to another such as Javascript to TypeScript, Python to .NET Core etc.
 - Always consult LOGGING.md so that you add appropriate logging configuration and log statements to all generated code.
 - Always consult COMMENTING.md so that you add appropriate comments to all generated code.
