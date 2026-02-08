@@ -1,17 +1,12 @@
-# Claude Frontend Instructions
+# 1. General Principles
 
-# Code Generation Guidelines
-
-## General Principles
-
-### 1. Standards Compliance
+## 1.1. Standards Compliance
 
 - Use HTML5 and modern ECMAScript standards
 - Prioritize native HTML capabilities over complex JavaScript solutions
 - Ensure cross-browser compatibility
 - Maintain semantic HTML structure
-
-### 2. Code Quality
+## 1.2. Code Quality
 
 - Use clear, descriptive naming conventions
   - Functions: descriptive, verb-based names (e.g., `validateUserInput()`)
@@ -19,8 +14,7 @@
   - Loop/temporary variables: short, standard names (i, j, k)
 - Keep code simple and readable
 - Avoid unnecessary complexity or "clever" programming tricks
-
-### 3. Structure and Organization
+## 1.3. Structure and Organization
 
 - Modular design
 - Functions should be focused and do one task well
@@ -28,46 +22,48 @@
 - Maximum line length: 120 characters
 - Limit nesting depth to 3 levels
 - Use K&R brace style
-
-### 4. Performance Considerations
+## 1.4. Performance Considerations
 
 - Minimize DOM manipulations
 - Use efficient selector methods
 - Leverage CSS for animations and transitions
 - Implement lazy loading where appropriate
 - Use event delegation for dynamic elements
-
-### 5. Accessibility and Usability
+## 1.5. Accessibility and Usability
 
 - Implement WCAG 2.1 guidelines
 - Provide clear focus states
 - Use semantic HTML elements
 - Include appropriate ARIA attributes
 - Ensure keyboard navigability
-
-### 6. Error Handling
+## 1.6. Error Handling
 
 - Implement graceful error management
 - Provide user-friendly error messages
 - Log errors for debugging
 - Use try-catch blocks strategically
+### 1.6.1. Code Generation Annotations
 
-### 7. Code Generation Annotations
+- Include clear comments explaining complex logic.
+- Add contextual markers for code understanding by AI agents.
+- Document function purposes and parameter expectations.
+### 1.6.2. Recommended Technologies
 
-- Include clear comments explaining complex logic
-- Add contextual markers for AI code understanding
-- Document function purposes and parameter expectations
+- Use Bootstrap 5 as the primary UI and component framework.
+- Use TypeScript with a simple compile step to convert into Javascript. Fallback to vanilla Javascript. Do not use overcomplicated technologies like React. For smaller, simpler, projects you can consider using vanilla Javascript.
+- Use CSS Grid / Flexbox for layouts.
+- Target modern, standards compliant web browsers ignoring older web browsers like Internet Explorer.
+- Use the Fetch API for AJAX API calls.
+- Use Service Workers for long running sync-style operations. 
+- Use web components for reusable elements.
+## 1.7. Application Structure
 
-### 8. Recommended Technologies
-
-- Vanilla JavaScript preferred
-- CSS Grid/Flexbox for layouts
-- Fetch API for AJAX
-- Web Components for reusable elements
-- TypeScript for larger projects
-
-## Example Code Structure
-
+- Implement a super-app model.
+- In the super-app model, there is a **platform menu-bar** at the top for the user, application dropdown, links to documentation, help, support etc. 
+- Individual sub-applications then render below this platform menu bar. The sub-application can have its own application menu bar that is specific to that application.
+- The bottom has a log console where application log messages are written. These are more relevant to the user such as *reading data, saving data* etc. 
+- All sub-applications should have a consistent UI / UX.
+## 1.8. Example Code Structure
 ```javascript
 // Descriptive function with clear purpose
 function processUserRegistration(userData) {
@@ -88,46 +84,32 @@ function processUserRegistration(userData) {
   }
 }
 ```
+## 1.9. Code Generation Best Practices
 
-## Code Generation Best Practices
+- Prefer composition over inheritance.
+- Use immutable data structures where possible.
+- Minimize global variables.
+- Implement defensive programming techniques.
+- Map frontend types to backend types to database objects consistently preferably through some sort of consistent mapping layer. This prevents typos, translation problems etc. 
+* Prevent cluttering regular business logic with SQL queries, data transfer objects and more.
+* Prevent bugs now and in the future due to mismatch between the field names or types or validation expectations.
 
-- Prefer composition over inheritance
+# 2. UI Framework and Styling
 
-- Use immutable data structures
-
-- Minimize global variables
-
-- Implement defensive programming techniques
-  
-  ```
-  
-  ```
-
-# Enterprise SaaS: SuperApp + Sub-Applications
-
-## Architecture Overview
-
-- Implement a superapp model with consistent UI/UX across all sub-applications
-- Use Bootstrap 5 as the primary UI and component framework
-- Prioritize functional design with accessibility considerations
-
-## UI Framework and Styling
-
-### Core Resources
+## 2.1. Core Resources
 
 - CSS Theme: https://4cdf16f2.knobbyio.pages.dev/css/custom.css
 - Bootstrap JS: https://4cdf16f2.knobbyio.pages.dev/js/bootstrap.bundle.min.js
+## 2.2. Styling Principles
 
-### Styling Principles
+1. Prefer vanilla Bootstrap styles.
+2. Write custom CSS/JS/Typescript only when absolutely necessary.
+3. Prioritize functional design with accessibility considerations over fancy animations etc.
+4. Maintain consistent color schemes, typography, and layout across applications.
+5. Ensure responsive design for multiple device types.
+# 3. User Experience Standards
 
-1. Prefer vanilla Bootstrap styles
-2. Write custom CSS/JS only when absolutely necessary
-3. Maintain consistent color schemes, typography, and layout across applications
-4. Ensure responsive design for multiple device types
-
-## User Experience Standards
-
-### Keyboard Navigation
+## 3.1. Keyboard Navigation
 
 - Implement standard keyboard shortcuts:
   - Ctrl-C: Copy
@@ -137,7 +119,7 @@ function processUserRegistration(userData) {
   - Ctrl-A: Select All
 - Ensure logical tab order for form and interactive elements
 
-### UI Interaction Patterns
+## 3.2. UI Interaction Patterns
 
 - Implement context-appropriate:
   - Panning
@@ -146,35 +128,34 @@ function processUserRegistration(userData) {
   - Grid snapping
   - Auto layout features
 
-### Help and Onboarding
+## 3.3. Help and Onboarding
 
 - Include help buttons for complex input elements
 - Develop walkthrough guides for each application
 - Provide contextual tooltips and explanations
 
-## Accessibility Guidelines
+## 3.4. Accessibility Guidelines
 
-### Primary Considerations
+### 3.4.1. Primary Considerations
 
 - Maintain sufficient color contrast
 - Use legible font sizes
 - Support screen reader compatibility
 - Implement ARIA labels where appropriate
 
-### Accessibility Hierarchy
+### 3.4.2. Accessibility Hierarchy
 
 - Prioritize application functionality
 - Implement accessibility features without compromising core functionality
 - Recognize that some complex interactions may limit full accessibility
 
-## Performance Optimization
+## 3.5. Performance Optimization
 
 - Minimize external library dependencies
 - Use lazy loading for components
 - Optimize asset delivery
 - Implement efficient state management
-
-## Browser Compatibility
+## 3.6. Browser Compatibility
 
 - Support latest versions of:
   - Chrome
@@ -182,17 +163,15 @@ function processUserRegistration(userData) {
   - Safari
   - Edge
 - Provide graceful degradation for older browsers
-
-## Security Considerations
+## 3.7. Security Considerations
 
 - Implement secure authentication mechanisms
 - Use HTTPS for all communications
 - Sanitize user inputs
 - Prevent XSS and CSRF vulnerabilities
+# 4. Framework & Library Selection Principles
 
-# Framework & Library Selection Principles
-
-### General Approach
+## 4.1. General Approach
 
 - Prioritize existing, well-maintained libraries and frameworks
 - Prefer open-source solutions
@@ -202,15 +181,14 @@ function processUserRegistration(userData) {
   - Strong community support
   - Performance optimization
   - Regular security updates
+## 4.2. Recommended Libraries by Function
 
-### Recommended Libraries by Function
-
-#### Mapping
+### 4.2.1. Mapping
 
 - Leaflet.js: Primary choice for map-based applications
 - OpenLayers: Alternative for complex geospatial projects
 
-#### Data Visualization
+### 4.2.2. Data Visualization
 
 - D3.js: Highly customizable, complex visualizations
 - Google Charts: Simple, quick charting
@@ -218,65 +196,26 @@ function processUserRegistration(userData) {
 - Charts.js: Lightweight, responsive charts
 - Highcharts: Enterprise-grade visualization
 - Grid.JS: Enterprise grade tabular data visualization with sorting, searching, pagination, coloring etc.
-
-#### User Experience
+### 4.2.3. User Experience
 
 - IntroJS: Application walkthroughs
 - Popper.js: Tooltips and popovers
 - AnimeJS: Advanced animations
 - jQuery: DOM manipulation (if necessary)
-
-#### Form Handling
+### 4.2.4. Form Handling
 
 - SurveyJS: Dynamic form building
 - Alpaca: Complex form generation
 - Cleave.js: Input formatting
-
-#### Datetime & Localization
+### 4.2.5. Datetime & Localization
 
 - MomentJS: Datetime manipulation
 - date-fns: Modern datetime library
-
-#### Diagramming
+### 4.2.6. Diagramming
 
 - Cytoscape: Network and graph visualizations
 - GoJS: Advanced diagramming
-
-## Project Structure
-
-### Folder Organization
-
-```
-root/
-├── server.py
-├── app1/
-│   ├── frontend/
-│   └── backend/
-└── app2/
-│   ├── frontend/
-│   └── backend/
-└── shared/
-    ├── components/
-    └── utilities/
-```
-
-### Frontend Folder Structure
-
-```
-frontend/
-├── index.html
-├── styles/
-│   ├── main.css
-│   └── responsive.css
-├── scripts/
-│   ├── app.js
-│   └── modules/
-└── assets/
-    ├── images/
-    └── icons/
-```
-
-## Best Practices
+## 4.3. Best Practices
 
 - Modular code design
 - Responsive layouts
@@ -284,36 +223,32 @@ frontend/
 - Accessibility compliance
 - Cross-browser compatibility
 - Consistent coding standards
-
-## Performance Considerations
+## 4.4. Performance Considerations
 
 - Minimize library and framework overhead
 - Use code splitting
 - Implement lazy loading
 - Optimize asset delivery
 - Use modern bundling tools (Webpack, Vite)
-
-## Security Guidelines
+## 4.5. Security Guidelines
 
 - Sanitize user inputs
 - Implement proper authentication flows
 - Use HTTPS
 - Protect against XSS and CSRF
 - Keep dependencies updated
+- Follow OWASP guidelines for web applications.
+## 4.6. Recommended Toolchain
 
-## Recommended Toolchain
+- Framework: Bootstrap 5.0
+- Code: TypeScript
+- Styling: Bootstrap, or CSS Modules
+- Testing: Jest
+# 5. API Centric Thinking
 
-- Framework: React, Vue, or Svelte
-- State Management: Redux, Vuex, or Zustand
-- Styling: Tailwind CSS, Bootstrap, or CSS Modules
-- Build Tools: Vite or Next.js
-- Testing: Jest, React Testing Library
+## 5.1. General Principles
 
-# API Centric Thinking
-
-## General Principles
-
-### API and Data Management
+### 5.1.1. API and Data Management
 
 1. Backend API Integration
    
@@ -330,22 +265,19 @@ frontend/
 2. Local Storage and Synchronization
    
    - Use browser's localStorage as primary local cache
-   - Implement background synchronization mechanisms
+   - Implement background synchronization mechanisms using ServiceWorkers.
    - Sync edits to server:
      * Immediate background sync for critical updates
      * Periodic sync for non-critical changes
    - Provide placeholder functions for future API implementations
+## 5.2. Initial Development Setup
 
-## Initial Development Setup
+### 5.2.1. Backend API Hosting
 
-### Backend API Hosting
-
-- Use `server.py` in root folder for initial API development
 - Plan for modular API organization
   * Separate API files for different application components
   * Maintain clean, organized API structure
-
-## Frontend Function Pattern
+## 5.3. Frontend Function Pattern
 
 ```javascript
 async function apiFunction(parameters) {
@@ -369,33 +301,30 @@ async function apiFunction(parameters) {
 }
 ```
 
-## Key Considerations
+## 5.4. Key Considerations
 
 - Always handle potential API failures
-- Implement proper error logging
+- Implement proper logging (see LOGGING.md)
 - Provide user-friendly error messages
 - Ensure responsive design
 - Optimize performance
 - Maintain clean, readable code
-
-## Technology Recommendations
+## 5.5. Technology Recommendations
 
 - Use modern JavaScript (ES6+)
-- Consider React or Vue.js for complex interfaces
-- Implement state management (Redux, Vuex)
+- Do NOT use complicated frameworks like React.
 - Use TypeScript for type safety
+# 6. Commenting & Logging
 
-# Commenting & Logging
+## 6.1. Code Commenting Principles
 
-## Code Commenting Principles
-
-### Purpose of Comments
+### 6.1.1. Purpose of Comments
 
 - Comments should explain the "why" and "what" of code, not the "how"
 - Provide context that is not immediately obvious from the code itself
 - Focus on explaining business logic, complex algorithms, and design decisions
-
-### Comment Types
+- Consult COMMENTING.md.
+### 6.1.2. Comment Types
 
 1. File-level comments
    
@@ -416,21 +345,19 @@ async function apiFunction(parameters) {
    - Break down intricate conditional logic
    - Provide rationale for specific implementation approaches
 
-### Maintenance-Oriented Commenting
+### 6.1.3. Maintenance-Oriented Commenting
 
 - Write comments assuming a new developer will maintain the code in 6-12 months
 - Update comments whenever code changes
 - Avoid redundant comments that merely restate the code
+## 6.2. Logging Strategy
 
-## Logging Strategy
+### 6.2.1. Logging Principles
 
-### Logging Principles
-
-- Log at critical points to aid debugging and understanding system behavior
+- Log well to aid debugging and understanding system behavior
 - Include sufficient context without overwhelming log volume
 - Never log sensitive information (passwords, tokens, personal data)
-
-### Recommended Logging Points
+### 6.2.2. Recommended Logging Points
 
 1. Method/Function Entry/Exit
    
@@ -458,15 +385,13 @@ async function apiFunction(parameters) {
    - Log significant state transitions
    - Record user actions leading to state changes
    - Capture system events and configuration modifications
-
-### Logging Best Practices
+### 6.2.3. Logging Best Practices
 
 - Use structured logging (JSON preferred)
 - Include correlation IDs to track request flows
 - Implement log levels (DEBUG, INFO, WARN, ERROR)
 - Ensure logs are easily parseable by log management tools
-
-### Example Logging Structure
+### 6.2.4. Example Logging Structure
 
 ```javascript
 function processUserOrder(userId, orderDetails) {
@@ -493,14 +418,14 @@ function processUserOrder(userId, orderDetails) {
 }
 ```
 
-### Performance Considerations
+### 6.2.5. Performance Considerations
 
 - Implement efficient logging mechanisms
 - Use asynchronous logging to minimize performance impact
 - Configure log rotation and retention policies
 - Consider log sampling for high-volume environments
 
-### Security Reminders
+### 6.2.6. Security Reminders
 
 - Never log:
   - Authentication credentials
@@ -509,83 +434,83 @@ function processUserOrder(userId, orderDetails) {
   - Encryption keys
 - Sanitize and mask sensitive data before logging
 
-# Data Centric Thinking
+# 7. Data Centric Thinking
 
-## Core Principles
+## 7.1. Core Principles
 
-### Data-Centric Design Philosophy
+### 7.1.1. Data-Centric Design Philosophy
 
 - Prioritize data structure and flow over visual presentation
 - Represent all data as JSON objects
 - Implement data management as primary concern before UI design
 
-## Data Management Strategies
+## 7.2. Data Management Strategies
 
-### JSON-First Approach
+### 7.2.1. JSON-First Approach
 
 - All data must be structured as JSON
 - Use consistent JSON schemas across frontend and backend
 - Implement universal data transformation functions
 - Support both local storage and API-based data retrieval
 
-### Data Synchronization Considerations
+### 7.2.2. Data Synchronization Considerations
 
 - Implement eTags for version tracking
 - Create delta detection mechanisms
 - Support optimistic and pessimistic update models
 - Handle concurrent editing scenarios
 
-## Technical Implementation Guidelines
+## 7.3. Technical Implementation Guidelines
 
-### Storage Mechanisms
+### 7.3.1. Storage Mechanisms
 
 - Prefer JSON-based storage solutions
 - Use browser localStorage/sessionStorage
 - Implement IndexedDB for complex data structures
 - Design fallback mechanisms for storage failures
 
-### API Interaction Patterns
+### 7.3.2. API Interaction Patterns
 
 - Use consistent data transfer protocols
 - Implement robust error handling
 - Support partial data updates
 - Design for graceful network interruptions
 
-### State Management
+### 7.3.3. State Management
 
 - Use immutable data structures
 - Implement unidirectional data flow
 - Minimize complex state mutations
 - Prefer reactive programming paradigms
 
-## Recommended Technologies
+## 7.4. Recommended Technologies
 
 - React with TypeScript
 - Redux or MobX for state management
 - Axios for API interactions
 - JSON Schema for data validation
 
-### Performance Considerations
+### 7.4.1. Performance Considerations
 
 - Minimize unnecessary re-renders
 - Implement efficient data serialization
 - Use memoization techniques
 - Optimize JSON parsing and transformation
 
-### Security Principles
+### 7.4.2. Security Principles
 
 - Sanitize all incoming JSON data
 - Implement strict type checking
 - Use JSON.parse() with reviver functions
 - Validate data schemas before processing
 
-# Sub-Application Structure
+# 8. Sub-Application Structure
 
-## Super-App Model
+## 8.1. Super-App Model
 
 The main `index.html` file implements a "super-app". Every link in the top nav bar is a "sub-app" that loads the appropriate `.html` file in the main view panel below the top nav bar. The only "pages" in the application are "terms and conditions", "notices" and "report bug". This structure allows the entire SaaS to be modular.
 
-## UI Layout
+## 8.2. UI Layout
 
 - All sub-applications have a toolbar at the top that contains common commands relevant to the application. For example, copy-paste, undo-redo, settings, pan, fit, zoom etc. 
 
@@ -599,8 +524,8 @@ The main `index.html` file implements a "super-app". Every link in the top nav b
 
 - Resizing, expanding or collapsing of the Log Console or the Left or Right sidebars should shrink or expand the canvas for such applications.
 
-## UI Behaviors
+## 8.3. UI Behaviors
 
 * Never show modal dialogs for common errors. Always, write errors to the log console. In some specific instances, modal dialogs may be shown for some specific erroneous problems, but in general it is best to indicate failures with UI hints and cues next to the relevant elements directly.
-
+* Do not use the vanilla Javascript alert or error dialogs which are browser blocking. Instead, prefer the Bootstrap modal dialog instead. 
 * All applications are responsive in general so that users can use any device they want. 
