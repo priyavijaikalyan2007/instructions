@@ -49,6 +49,9 @@ Use these tags within comments to map logic flow and decision history.
 *   `// @entrypoint`: Marks the start of a public API or execution flow.
 *   `// @dependency: [File/Service]`: Explicitly marks a hidden or key dependency.
 *   `// @maps_to: [DB_Table/Column]`: Links code entities to database schema.
+*   `// @config: [SettingName]`: Marks a dependency on a configuration value (env var, appsettings key).
+*   `// @middleware`: Marks a middleware or pipeline component that intercepts requests.
+*   `// @background`: Marks a background job, hosted service, or scheduled task.
 
 ### 2.2 Logic Flow Indicators
 *   `// -> Dispatches: [EventName]`: Indicates an event emission.
@@ -67,6 +70,10 @@ Use these tags for targeted follow-up by other agents. Align with `COMMENTING.md
 *   `// @agent:security` — Requires security review.
 *   `// @agent:review` — Requires human verification.
 *   `// @agent:refactor` — Candidate for future refactor.
+
+### 2.5 Annotation Alignment
+
+The semantic markers above complement the standard annotations defined in `COMMENTING.md` (`TODO`, `FIXME`, `SECURITY`, `PERF`, etc.). Use annotations for *status* (what state is this code in?) and semantic markers for *navigation* (where does this code fit in the system?). Both are captured by the repository index (see `REPO_INDEX.md`).
 
 ## 3. Global Concept Registry
 
@@ -101,7 +108,30 @@ public Task<User> GetUserAsync(...) { ... }
 #endregion
 ```
 
-## 6. Documentation and Playbooks
+## 6. HTML and CSS Files
+
+Apply markers using HTML comments. This is relevant for the vanilla HTML frontend files in `frontend/`.
+
+**HTML:**
+```html
+<!--
+  ⚓ COMPONENT: SessionCanvas
+  📜 PURPOSE: Main canvas for Thinker brainstorm sessions.
+  🔗 RELATES: [[ThinkerSession]], [[IdeaBubble]]
+  ⚡ FLOW: [AppShell] -> [This] -> [SessionAPI]
+-->
+```
+
+**CSS:**
+```css
+/*
+ * ⚓ COMPONENT: ThinkerStyles
+ * 📜 PURPOSE: Styles for the Thinker brainstorm canvas and idea bubbles.
+ * 🔗 RELATES: [[SessionCanvas]]
+ */
+```
+
+## 7. Documentation and Playbooks
 
 Apply markers in Markdown and other documentation so agents can find intent quickly.
 
@@ -118,14 +148,30 @@ Apply markers in Markdown and other documentation so agents can find intent quic
 <!-- ⚓ ConceptName: Canonical explanation lives here -->
 ```
 
-## 7. Do and Do Not
+## 8. Relationship to the Knowledge Base
+
+Markers and the knowledge base (`KNOWLEDGE_ARCHITECTURE.md`) serve different purposes but reinforce each other:
+
+| Artifact | Purpose | Lives In |
+|----------|---------|----------|
+| Semantic Markers | Fast in-file navigation and context | Source files (comments) |
+| `concepts.yaml` | Cross-file concept registry | `./agentknowledge/` |
+| `decisions.yaml` | Architectural decision log | `./agentknowledge/` |
+| Repository Index | Full-text + marker search | `./local/repo-index.sqlite` |
+
+When you add an `⚓ ConceptName` anchor to a source file, also ensure the concept is registered in `concepts.yaml` so agents can look it up without scanning every file.
+
+## 9. Do and Do Not
 
 **Do**
 - Add headers to all non-trivial files you touch.
 - Use `// @entrypoint` on public API surfaces.
 - Keep markers in sync with code changes.
+- Update `concepts.yaml` when adding a new `⚓ ConceptName` anchor.
+- Rebuild the repository index after a marker migration pass (`python3 scripts/repo-index.py rebuild`).
 
 **Do Not**
 - Add markers to tiny utility files unless they are core to a workflow.
 - Duplicate headers; update the existing block instead.
 - Use markers to hide TODO work; use `TODO` or `@agent:*` tags.
+- Invent new marker tags outside this document; extend this list first so all agents share the same vocabulary.
