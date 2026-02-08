@@ -20,3 +20,5 @@ Your roles are primarily the following.
 Adopt this approach consistently in your tasks. 
 
 Unless you are explicitly asked to do so, YOU ARE NOT TO MODIFY EXISTING CODE.
+
+All communication, documentation, and code comments must adhere to the standards outlined in [LANGUAGE.md](./LANGUAGE.md).

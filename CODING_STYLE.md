@@ -9,6 +9,7 @@ A comprehensive guide for writing maintainable, readable, and consistent code ac
 - **Explicit**: Write explicit code that reveals intent
 - **Simple**: Write concise code that gets the job done without cleverness
 - **Readable**: Assume you will read this code months from now and won't remember what you did
+- **Language**: Adhere to the business communication standards in [LANGUAGE.md](./LANGUAGE.md)
 
 ---
 

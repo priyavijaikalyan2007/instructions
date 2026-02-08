@@ -17,13 +17,13 @@ Write comments for:
 
 ### 1.2 The Tone
 
-Comments should read like a good technical book:
+Comments must adhere to the style and tone guidelines defined in [LANGUAGE.md](./LANGUAGE.md). In summary:
 
-- Simple and concise
-- Neutral and unemotional
-- Business casual English
-- Mild humor is acceptable; puffery, profanity, and sycophancy are not
-- No teaching or tutoring—that belongs in `/guides`
+- Simple, concise, and precise
+- Neutral, unemotional, and objective
+- Standard British English for business communication
+- Free of technical jargon, profanity, or overly complex words
+- Upleveled but accessible to non-native speakers
 
 ---
 

@@ -71,6 +71,7 @@ Use a V-V-P-V-I-T-T-C loop for your core workflow. The workflow is as follows. F
 + **Commit:** Stage the verified changes and create a commit with a concise, conventional message (e.g., `fix: ...`, `feat: ...`).
 
 ## Development (CRITICAL)
+- You must adhere to the language conventions provided in LANGUAGE.md.
 - Always consult CODING_STYLE when writing code. This is important for maintainability.
 - Always consult GOF_PATTERNS.md when writing code. Using patterns appropriately when building code improves maintenance and understanding.
 - Always consult MIGRATIONS.md when migrating from one stack to another such as Javascript to TypeScript, Python to .NET Core etc.
