@@ -1,3 +1,4 @@
+<!-- AGENT: Soft-delete patterns, trash folder UI, and recovery guidelines for Knobby. -->
 # Deletion Patterns and Guidelines
 
 This document describes the deletion patterns implemented in the Knobby platform. **All future features that support deletion MUST follow these patterns.**

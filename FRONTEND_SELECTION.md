@@ -1,3 +1,5 @@
+<!-- AGENT: Approved and recommended libraries for the TypeScript/Bootstrap 5 frontend stack. -->
+
 # Frontend Library Selection (Enterprise SaaS)
 
 This document lists the approved and recommended libraries for the frontend of our Enterprise SaaS applications, adhering to the "Pure TypeScript + Bootstrap 5" stack guidelines.

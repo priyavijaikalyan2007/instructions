@@ -1,3 +1,5 @@
+<!-- AGENT: Standards for implementing human-friendly, shareable URLs for all resources. -->
+
 # Restable Resources: Human-Friendly URLs for the Super-App
 
 This document outlines the standard for implementing "Restable URLs" in our platform. A "Restable URL" ensures that every distinct resource (a diagram, a checklist, a thought stream) has a unique, permanent, and sharable web address.

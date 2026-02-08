@@ -1,3 +1,5 @@
+<!-- AGENT: Criteria and guidelines for selecting third-party frontend libraries. -->
+
 # Frontend Library Selection Guidelines (Enterprise SaaS)
 
 This document outlines the mandatory criteria and preferred categories for selecting third-party libraries for the frontend of our Enterprise SaaS applications.

@@ -1,6 +1,8 @@
+<!-- AGENT: Agent knowledge base architecture using YAML/JSONL with optional SQLite for complex queries. -->
+
 # Agent Knowledge Base Architecture
 
-To optimize agent performance, we utilize a **Structured Local Knowledge Base** rooted in the repository. This doesn't replace the `CONVERVERSATION.md` or `./specs/<project>.status.md` files which are the human readable versions. Instead, it augments the agent with a system that is machine readable had has a queryable structure.
+To optimize agent performance, we utilize a **Structured Local Knowledge Base** rooted in the repository. This doesn't replace the `CONVERSATION.md` or `./specs/<project>.status.md` files which are the human readable versions. Instead, it augments the agent with a system that is machine readable and has a queryable structure.
 
 ## 1. The Challenge
 *   **Markdown files** are hard to query ("Find all bugs in module X").

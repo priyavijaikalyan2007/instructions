@@ -1,3 +1,5 @@
+<!-- AGENT: Practical guidance on applying Gang of Four design patterns in the codebase. -->
+
 # Gang of Four (GoF) Design Patterns - Coding Agent Guide
 
 Purpose: Provide balanced, practical guidance on when and how to apply GoF patterns in this codebase.

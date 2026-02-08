@@ -1,3 +1,5 @@
+<!-- AGENT: Code commenting standards and best practices for maintainable code. -->
+
 # Code Commenting Guide for AI Coding Agents
 
 A comprehensive reference for generating well-commented, maintainable code.

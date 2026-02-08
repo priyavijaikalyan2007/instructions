@@ -1,3 +1,5 @@
+<!-- AGENT: LLM prompt engineering techniques and decision matrix for AI tasks. -->
+
 # AI/ML Prompt Tuning Guide for Coding Agents
 
 **Goal:** Stop "one-shotting" complex AI tasks. Select the appropriate prompting technique based on the complexity and nature of the request.

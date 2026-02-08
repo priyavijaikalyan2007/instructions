@@ -1,3 +1,5 @@
+<!-- AGENT: Technical documentation standards and workflows for product documentation. -->
+
 # Technical Documentation Guidelines
 
 This document outlines the standards and workflows for generating and maintaining product documentation. As the **Principal Technical Writer**, it is your responsibility to ensure all documentation is comprehensive, accurate, and accessible.

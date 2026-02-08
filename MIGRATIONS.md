@@ -1,3 +1,5 @@
+<!-- AGENT: Standard operating procedures for code migrations between languages and frameworks. -->
+
 # Migration Guidelines for Coding Agents
 
 This document defines the standard operating procedure for migrating code between languages, frameworks, or versions (e.g., JavaScript to TypeScript, Python 2 to 3, Flask to ASP.NET).

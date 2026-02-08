@@ -1,3 +1,5 @@
+<!-- AGENT: Criteria and guidelines for selecting third-party backend libraries. -->
+
 # Backend Library Selection Guidelines
 
 This document outlines the mandatory criteria and preferred categories for selecting third-party libraries for the backend services. All engineering agents and team members must adhere to these guidelines when introducing new dependencies to the project.

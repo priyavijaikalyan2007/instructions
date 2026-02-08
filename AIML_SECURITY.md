@@ -1,3 +1,5 @@
+<!-- AGENT: AI/ML security guidelines for defending against prompt injection and adversarial attacks. -->
+
 # AI/ML Security Guide: Defending Against Adversarial Attacks
 
 **Goal:** Secure Knobby.io's AI features against Prompt Injection, Jailbreaking, and Data Exfiltration. Treat LLMs as untrusted components—similar to user input.

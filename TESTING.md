@@ -1,3 +1,4 @@
+<!-- AGENT: Testing guidelines and standards for AI coding agents on enterprise SaaS. -->
 # Testing Guidelines for AI Coding Agents
 
 This document provides comprehensive testing standards and practices for AI coding agents working on enterprise SaaS applications. These guidelines ensure maintainable, readable, and reliable test suites across all technology stacks.

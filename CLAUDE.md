@@ -1,3 +1,4 @@
+<!-- AGENT: Instructions for Claude Code agent; directs to AGENTS.md as the master instructions file. -->
 
 (CRITICAL) Consult AGENTS.md first.
 

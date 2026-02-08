@@ -1,3 +1,5 @@
+<!-- AGENT: Traditional AI/ML techniques and decision matrix for non-LLM approaches. -->
+
 # Non-LLM AI/ML Techniques Guide for Coding Agents
 
 **Goal:** Efficiently solve problems using specialized AI/ML techniques. While LLMs are powerful, traditional ML and graph algorithms are often faster, cheaper, deterministic, and more interpretable for specific tasks.

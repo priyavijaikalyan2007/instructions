@@ -1,3 +1,5 @@
+<!-- AGENT: Coding style conventions and formatting rules for the codebase. -->
+
 # Coding Style Guide
 
 A comprehensive guide for writing maintainable, readable, and consistent code across C#, TypeScript, JavaScript, and Python.

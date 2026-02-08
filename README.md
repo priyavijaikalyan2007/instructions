@@ -1,3 +1,5 @@
+<!-- AGENT: Project overview, business context, and problem statement for the Knobby.io platform. -->
+
 # 1. Introduction
 
 ** Describe your startup **

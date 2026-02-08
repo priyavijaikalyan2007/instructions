@@ -1,3 +1,5 @@
+<!-- AGENT: Master instructions file for coding agents; start here for all tasks. -->
+
 # Introduction
 
 First, read `README.md` to understand the situation, background and problem statement we are addressing and the solution we are building. Then continue from here.
@@ -75,7 +77,7 @@ I urge you to think along the lines of Steve Jobs, Douglas Normal, Jonathan Ivy 
 
 ## Development (CRITICAL)
 - You must adhere to the language conventions provided in LANGUAGE.md.
-- You must utilize the navigation markers defined in [MARKERS.md](./MARKERS.md) and maintain the knowledge base as described in [KNOWLEDGE_ARCHITECTURE.md](./KNOWLEDGE_ARCHITECTURE.md) in addition to what is described below. One is for humans and the other is for agents.
+- You must utilize the navigation markers defined in [MARKERS.md](./MARKERS.md) in all generated code. See the Agent Knowledge Base section below for how to read and update `./agentknowledge/` every session.
 - When dealing with secrets of any kind, especially user provided secrets, always consult SECRET_HANDLING.md to understand how to architect that properly.
 - Always consult CODING_STYLE when writing code. This is important for maintainability.
 - Always consult GOF_PATTERNS.md when writing code. Using patterns appropriately when building code improves maintenance and understanding.
@@ -138,8 +140,33 @@ I urge you to think along the lines of Steve Jobs, Douglas Normal, Jonathan Ivy 
 After `run.sh` starts, about 1 minute later, the app should be available at `http://localhost:8080`. 
 The local database is PostgreSQL. User name is `postgres` and password is `postgres`. Database is `postgres`.
 
+# Agent Knowledge Base (CRITICAL)
+
+The directory `./agentknowledge/` contains a machine-readable knowledge graph of the codebase. See [KNOWLEDGE_ARCHITECTURE.md](./KNOWLEDGE_ARCHITECTURE.md) for the full specification.
+
+## Session Start — Read
+At the beginning of every session, read these files to orient yourself:
+1. `agentknowledge/concepts.yaml` — Business concepts mapped to anchor files. Use this to locate code instead of blind searching.
+2. `agentknowledge/entities.yaml` — Data models mapped to code files, database tables, and relationships.
+3. `agentknowledge/decisions.yaml` — Architectural Decision Records (ADRs). Consult before proposing alternative approaches; the decision may already be recorded and reasoned.
+
+## Session End — Update
+Before your final commit in a session, update these files if your work changed the codebase meaningfully:
+
+| Trigger | Action |
+|---------|--------|
+| Created a new service, controller, or shared module | Add a concept entry to `concepts.yaml` with `name`, `definition`, `anchor_file`, `related`. |
+| Created or modified a data model / entity | Add or update an entry in `entities.yaml` with `name`, `table`, `file`, `description`, `related`. |
+| Made an architectural decision (new library, new pattern, new infrastructure choice) | Add an ADR entry to `decisions.yaml` with `id` (next `ADR-NNN`), `title`, `date`, `status`, `context`, `files`. |
+| Completed any significant task | Append a single JSON line to `history.jsonl` with `date`, `task`, `files`, `summary`. |
+
+## Rules
+- **Never delete** existing entries — only add or update.
+- **Never rewrite** `history.jsonl` — it is append-only.
+- Keep concept names in PascalCase and stable; other files may reference them.
+- If a decision is superseded, set its `status` to `Superseded` and add the replacement ADR id.
+
 # History and Status
-(CRITICAL) You must utilize the navigation markers defined in [MARKERS.md](./MARKERS.md) and maintain the knowledge base as described in [KNOWLEDGE_ARCHITECTURE.md](./KNOWLEDGE_ARCHITECTURE.md) in addition to what is described below. One is for humans and the other is for agents.
 
 Always keep all provided input from me to you, the agent, in the file CONVERSATION.md. Write the request + your output summary into the CONVERSATION.md file as well. This helps keep track of all refinements and changes over time. If this file already exists, also attempt to read it to understand everything that has been done so far. Leverage the `git log` to understand past changes and refinements. Use agentic markers in all generated files to guide yourself. This combination should give you almost all context about what was achieved.
 

@@ -1,3 +1,4 @@
+<!-- AGENT: Logging standards for post-mortem debugging and structured log output. -->
 
 # Logging
 

@@ -1,3 +1,4 @@
+<!-- AGENT: Access control and sharing implementation patterns for the Knobby platform. -->
 # Access Control & Sharing Guidelines
 
 This document provides instructions for implementing access control and sharing features in the Knobby platform. All new applications and features must follow these patterns.

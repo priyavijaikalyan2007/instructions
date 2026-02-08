@@ -1,3 +1,5 @@
+<!-- AGENT: Human-centric error handling guidelines for constructing literate error messages. -->
+
 # Literate Errors: Guidelines for Human-Centric Error Handling
 
 This document establishes the standard for how coding agents and developers must construct error messages. The goal is to move away from "computer-centric" errors (stack traces, obscure codes) towards "human-centric" literate errors that empower users to understand and resolve issues.

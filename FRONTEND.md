@@ -1,3 +1,5 @@
+<!-- AGENT: Frontend development guidelines and architecture for the TypeScript/HTMX stack. -->
+
 # 1. General Principles
 
 ## 1.1. Standards Compliance

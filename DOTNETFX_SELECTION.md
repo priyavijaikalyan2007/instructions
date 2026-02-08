@@ -1,3 +1,5 @@
+<!-- AGENT: Approved and recommended libraries for the ASP.NET Core 10.0+ backend. -->
+
 # .NET Backend Library Selection (ASP.NET Core 10.0+)
 
 This document lists the approved and recommended libraries for the backend monolithic service, selected based on the criteria in `BACKEND_LIBRARY_SELECTION.md` (Observability, Performance, Usage, Licensing, and Longevity).
