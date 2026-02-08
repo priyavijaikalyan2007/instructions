@@ -75,6 +75,7 @@ I urge you to think along the lines of Steve Jobs, Douglas Normal, Jonathan Ivy 
 
 ## Development (CRITICAL)
 - You must adhere to the language conventions provided in LANGUAGE.md.
+- You must utilize the navigation markers defined in [MARKERS.md](./MARKERS.md) and maintain the knowledge base as described in [KNOWLEDGE_ARCHITECTURE.md](./KNOWLEDGE_ARCHITECTURE.md) in addition to what is described below. One is for humans and the other is for agents.
 - When dealing with secrets of any kind, especially user provided secrets, always consult SECRET_HANDLING.md to understand how to architect that properly.
 - Always consult CODING_STYLE when writing code. This is important for maintainability.
 - Always consult GOF_PATTERNS.md when writing code. Using patterns appropriately when building code improves maintenance and understanding.
@@ -138,6 +139,8 @@ After `run.sh` starts, about 1 minute later, the app should be available at `htt
 The local database is PostgreSQL. User name is `postgres` and password is `postgres`. Database is `postgres`.
 
 # History and Status
+(CRITICAL) You must utilize the navigation markers defined in [MARKERS.md](./MARKERS.md) and maintain the knowledge base as described in [KNOWLEDGE_ARCHITECTURE.md](./KNOWLEDGE_ARCHITECTURE.md) in addition to what is described below. One is for humans and the other is for agents.
+
 Always keep all provided input from me to you, the agent, in the file CONVERSATION.md. Write the request + your output summary into the CONVERSATION.md file as well. This helps keep track of all refinements and changes over time. If this file already exists, also attempt to read it to understand everything that has been done so far. Leverage the `git log` to understand past changes and refinements. Use agentic markers in all generated files to guide yourself. This combination should give you almost all context about what was achieved.
 
 Always keep the per-application progress and plans in an application specific file inside the `./specs/` directory. For example, as we are working on the *Diagrams* app, keep progress from CONVERSATION.md, your context, your history, the `git log`, bug fixes, refinements in the file `./specs/diagrams.status.md`. This makes it easier to resume sessions working on the app over time or for bug fixes etc. This is going to be shorter context than CONVERSATION.md which is quite large.
