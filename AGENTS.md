@@ -58,7 +58,7 @@ This folder contains the root of an enterprise SaaS. This SaaS follows a super-a
 + playbooks/         - All generated documentation, guides, tutorials etc. relevant to product development and testing should be placed here.
 + docs/              - All product documentation relevant to customers or users or integrators should be placed here.
 
-## Development
+## Development (CRITICAL)
 - Always consult CODING_STYLE when writing code. This is important for maintainability.
 - Always consult MIGRATIONS.md when migrating from one stack to another such as Javascript to TypeScript, Python to .NET Core etc.
 - Always consult LOGGING.md so that you add appropriate logging configuration and log statements to all generated code.
@@ -70,6 +70,10 @@ This folder contains the root of an enterprise SaaS. This SaaS follows a super-a
 - Always consult PERFORMANCE.md when implementing backends, frontends or APIs. It is important to keep performance in mind upfront.
 - Always consult TESTING.md when you need to write tests. Having maintainable and comprehensive tests is important.
 - When creating backend code, consult BACKEND.md.
+- When selecting libaries for backend functionality, always consult BACKEND_LIBRARY_SELECTION.md for guidelines and DOTNETFX_SELECTION.md for pre-canned recommendations. 
+- When selecting libraries for frontend functionality, always consult FRONTEND_LIBRARY_SELECTION.md for guidelines and FRONTEND_SELECTION.md for pre-canned recommendations.
+- Always consult RESTABLE_RESOURCES.md for how to setup resource URLs to be restable and usable by humans.
+- Always consult LITERATE_ERRORS.md for how to construct error messages to be usable and meaningful to users and operators.
 - When creating SDKs, consult SDKs.md.
 - **When implementing access control, sharing, or permissions, always consult ACCESS_CONTROL.md.** This includes:
   - Defining new permissions and roles
@@ -112,6 +116,8 @@ This folder contains the root of an enterprise SaaS. This SaaS follows a super-a
 After `run.sh` starts, about 1 minute later, the app should be available at `http://localhost:8080`. 
 The local database is PostgreSQL. User name is `postgres` and password is `postgres`. Database is `postgres`.
 
-# History
+# History and Status
 Always keep all provided input from me to you, the agent, in the file CONVERSATION.md. Write the request + your output summary into the CONVERSATION.md file as well. This helps keep track of all refinements and changes over time. If this file already exists, also attempt to read it to understand everything that has been done so far. Leverage the `git log` to understand past changes and refinements. Use agentic markers in all generated files to guide yourself. This combination should give you almost all context about what was achieved.
+
+Always keep the per-application progress and plans in an application specific file inside the `./specs/` directory. For example, as we are working on the *Diagrams* app, keep progress from CONVERSATION.md, your context, your history, the `git log`, bug fixes, refinements in the file `./specs/diagrams.status.md`. This makes it easier to resume sessions working on the app over time or for bug fixes etc. This is going to be shorter context than CONVERSATION.md which is quite large.
 
