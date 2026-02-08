@@ -22,13 +22,19 @@ For C#:
 3. Apply the overrides in this document
 
 For TypeScript/JavaScript:
-1. Follow [Google TypeScript Style Guide](https://google.github.io/styleguide/tsguide.html)
-2. Apply the overrides in this document
+1. Follow [ts.dev](https://ts.dev/style/#identifiers)
+2. Follow [Google TypeScript Style Guide](https://google.github.io/styleguide/tsguide.html)
+3. Follow [Unofficial Typescript Lang](https://www.typescriptlang.org/docs/handbook/declaration-files/do-s-and-don-ts.html)
+4. Apply the overrides in this document
 
 For Python:
 1. Follow [PEP 8](https://peps.python.org/pep-0008/)
 2. Follow [Google Python Style Guide](https://google.github.io/styleguide/pyguide.html)
 3. Apply the overrides in this document
+
+For HTML/CSS:
+1. Follow [Google HTML/CSS Style Guide](https://google.github.io/styleguide/htmlcssguide.html)
+2. Apply the overrides in this document
 
 ---
 

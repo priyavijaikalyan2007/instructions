@@ -6,6 +6,11 @@
 - Prioritize native HTML capabilities over complex JavaScript solutions
 - Ensure cross-browser compatibility
 - Maintain semantic HTML structure
+- Use TypeScript files in the ./typescript/ folder instead of inline Javascript.
+  - App specific TypeScript can be kept as separate modules.
+- Use CSS files in the frontend/ folder instead of inline CSS.
+  - App specific CSS can be kept as separate files.
+
 ## 1.2. Code Quality
 
 - Use clear, descriptive naming conventions
@@ -211,10 +216,36 @@ function processUserRegistration(userData) {
 
 - MomentJS: Datetime manipulation
 - date-fns: Modern datetime library
-### 4.2.6. Diagramming
+### 4.2.6. Diagramming & Graph Visualization
 
-- Cytoscape: Network and graph visualizations
-- GoJS: Advanced diagramming
+**Simple Graph/Network Visualization:**
+- Cytoscape.js: Network graphs, node-link diagrams, simple flowcharts
+  - Best for: relationship visualization, network topology, simple graphs
+  - Limitations: Single label per node, limited shape complexity
+
+**Complex Vector Diagramming (Recommended):**
+- maxGraph (Apache 2.0): Full-featured diagramming library
+  - Fork of mxGraph (powers draw.io/diagrams.net)
+  - True vector shapes (SVG-based, resizable without loss)
+  - Multi-compartment shapes (UML classes with properties/methods)
+  - Built-in support for: UML, BPMN, flowcharts, ER diagrams
+  - Multiple editable text areas per shape
+  - Professional stencil/shape library support
+  - Works with vanilla JS/TypeScript (no React/Vue required)
+  - Best for: enterprise diagramming, UML, architecture diagrams, complex flowcharts
+
+**When to Use Which:**
+| Use Case | Recommended Library |
+|----------|---------------------|
+| Network/graph visualization | Cytoscape.js |
+| Simple flowcharts (basic shapes) | Cytoscape.js |
+| UML diagrams | maxGraph |
+| BPMN/process diagrams | maxGraph |
+| Architecture diagrams (C4, cloud) | maxGraph |
+| Complex shapes with compartments | maxGraph |
+| Resizable vector shapes | maxGraph |
+
+**Note:** GoJS is powerful but requires a commercial license for production use.
 ## 4.3. Best Practices
 
 - Modular code design
@@ -528,4 +559,266 @@ The main `index.html` file implements a "super-app". Every link in the top nav b
 
 * Never show modal dialogs for common errors. Always, write errors to the log console. In some specific instances, modal dialogs may be shown for some specific erroneous problems, but in general it is best to indicate failures with UI hints and cues next to the relevant elements directly.
 * Do not use the vanilla Javascript alert or error dialogs which are browser blocking. Instead, prefer the Bootstrap modal dialog instead. 
-* All applications are responsive in general so that users can use any device they want. 
+* All applications are responsive in general so that users can use any device they want.
+
+# 9. Access Control UI Patterns
+
+## 9.1. Access Level Indicator
+
+All applications with sharing functionality should display the user's access level prominently.
+
+### 9.1.1. Access Level Badge
+
+Display a badge in the toolbar showing the user's access level:
+
+```html
+<span id="access-level-indicator" class="access-level-badge" style="display: none;"></span>
+```
+
+### 9.1.2. Badge Styling
+
+```css
+.access-level-badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.25rem 0.5rem;
+    font-size: 0.625rem;
+    font-weight: 500;
+    border-radius: 0.25rem;
+    white-space: nowrap;
+}
+
+.access-level-badge.owner {
+    background: #dcfce7;
+    color: #166534;
+}
+
+.access-level-badge.editor {
+    background: #dbeafe;
+    color: #1e40af;
+}
+
+.access-level-badge.viewer {
+    background: #fef3c7;
+    color: #92400e;
+}
+
+.access-level-badge.commenter {
+    background: #f3e8ff;
+    color: #6b21a8;
+}
+```
+
+## 9.2. Disabling Edit Controls for Viewers
+
+When a user has view-only access, disable all editing functionality.
+
+### 9.2.1. UI Elements to Disable
+
+- Mode buttons (Edit, Link modes)
+- Save/Undo/Redo buttons
+- Delete buttons
+- Paste/Layout buttons
+- Make text inputs readonly
+- Disable canvas editing (node creation, linking)
+
+### 9.2.2. Implementation Pattern
+
+```javascript
+let currentAccessLevel = null;
+let canEditSession = true;
+
+function updateAccessLevelUI() {
+    const indicator = document.getElementById('access-level-indicator');
+
+    if (!currentAccessLevel || !currentResource) {
+        indicator.style.display = 'none';
+        canEditSession = true;
+        return;
+    }
+
+    // Show badge
+    indicator.style.display = 'inline-flex';
+    indicator.className = 'access-level-badge ' + currentAccessLevel;
+
+    const labelMap = {
+        'owner': 'Owner',
+        'editor': 'Can Edit',
+        'viewer': 'View Only',
+        'commenter': 'Can Comment'
+    };
+    indicator.textContent = labelMap[currentAccessLevel] || currentAccessLevel;
+
+    // Determine capabilities
+    canEditSession = currentAccessLevel === 'owner' || currentAccessLevel === 'editor';
+    const canDelete = currentAccessLevel === 'owner';
+
+    // Disable buttons
+    document.getElementById('btn-delete').disabled = !canDelete;
+    document.getElementById('btn-save').disabled = !canEditSession;
+    document.getElementById('btn-undo').disabled = !canEditSession;
+    document.getElementById('btn-redo').disabled = !canEditSession;
+
+    // Make inputs readonly
+    document.querySelectorAll('.editable-input').forEach(input => {
+        input.readOnly = !canEditSession;
+    });
+
+    // Log view-only mode
+    if (!canEditSession) {
+        logInfo('View-only mode - editing disabled');
+    }
+}
+```
+
+### 9.2.3. Protecting Edit Functions
+
+Guard all editing functions to prevent viewers from making changes:
+
+```javascript
+function createNode(x, y, label) {
+    if (!canEditSession) {
+        logInfo('View-only mode - cannot create nodes');
+        return;
+    }
+    // ... node creation logic
+}
+
+function saveEdit() {
+    if (!canEditSession) {
+        logInfo('View-only mode - cannot save edits');
+        return;
+    }
+    // ... save logic
+}
+
+function setMode(mode) {
+    // Prevent viewers from entering edit modes
+    if (!canEditSession && (mode === 'edit' || mode === 'link')) {
+        logInfo('View-only mode - cannot switch to ' + mode + ' mode');
+        return;
+    }
+    // ... mode switching logic
+}
+```
+
+## 9.3. Loading Access Level from API
+
+When loading a resource, extract and apply the access level from the API response:
+
+```javascript
+async function loadResource(id) {
+    const response = await api.getResource(id);
+
+    currentResource = response;
+    currentAccessLevel = response.access_level || 'owner';
+
+    logInfo('Resource access level: ' + currentAccessLevel);
+
+    // Render resource
+    renderResource();
+
+    // Update UI based on access level
+    updateAccessLevelUI();
+}
+```
+
+## 9.4. Share Button Behavior
+
+The Share button should always be visible but behave differently based on access:
+
+- **Owners**: Can view and modify sharing settings
+- **Editors/Viewers**: Can view sharing settings (read-only)
+
+```javascript
+function shareResource() {
+    if (!currentResource) {
+        alert('Please select a resource first.');
+        return;
+    }
+
+    // Share modal handles read-only display for non-owners
+    ShareModal.open({
+        resourceNamespace: 'myapp',
+        resourceType: 'resource',
+        resourceId: currentResource.id,
+        resourceName: currentResource.name || 'Untitled',
+    });
+}
+
+## 9.5. Disabling Canvas Interactions for Viewers
+
+For canvas-based diagramming applications, viewers must not be able to drag or edit elements.
+
+### Cytoscape.js Settings
+
+```javascript
+// In updateAccessLevelUI()
+if (!canEditSession) {
+    // Disable node dragging
+    cy.autoungrabify(true);
+    cy.boxSelectionEnabled(false);
+} else {
+    cy.autoungrabify(false);
+    cy.boxSelectionEnabled(true);
+}
+```
+
+### Cytoscape.js Key Methods
+
+| Method | Effect |
+|--------|--------|
+| `cy.autoungrabify(true)` | Prevents all nodes from being grabbed/dragged |
+| `cy.boxSelectionEnabled(false)` | Disables rectangular selection |
+| `setMode('pan')` | Force pan mode for navigation only |
+
+### maxGraph Settings
+
+```javascript
+// In updateAccessLevelUI()
+if (!canEditSession) {
+    // Disable all editing
+    graph.setEnabled(false);
+    graph.setCellsMovable(false);
+    graph.setCellsResizable(false);
+    graph.setCellsEditable(false);
+    graph.setConnectable(false);
+} else {
+    graph.setEnabled(true);
+    graph.setCellsMovable(true);
+    graph.setCellsResizable(true);
+    graph.setCellsEditable(true);
+    graph.setConnectable(true);
+}
+```
+
+### maxGraph Key Methods
+
+| Method | Effect |
+|--------|--------|
+| `graph.setEnabled(false)` | Disables all graph interactions |
+| `graph.setCellsMovable(false)` | Prevents cells from being dragged |
+| `graph.setCellsResizable(false)` | Prevents cells from being resized |
+| `graph.setCellsEditable(false)` | Prevents in-place text editing |
+| `graph.setConnectable(false)` | Prevents creating new connections |
+
+## 9.6. Authentication Check Patterns
+
+Each app uses a different API wrapper. Always use the correct one.
+
+| App | API Variable | Auth Check |
+|-----|-------------|------------|
+| Thinker | `api` | `api.isAuthenticated() && api.tenantId` |
+| Checklists | `checklistsAPI` | `checklistsAPI.useBackend` |
+| Strukture | `strukturAPI` | `strukturAPI.useBackend` |
+
+```javascript
+// CORRECT - use app-specific API
+if (!checklistsAPI || !checklistsAPI.useBackend) {
+    alert('Please log in.');
+    return;
+}
+
+// INCORRECT - window.api may not exist in all apps
+if (!window.api || !window.api.isAuthenticated()) { ... }
+``` 

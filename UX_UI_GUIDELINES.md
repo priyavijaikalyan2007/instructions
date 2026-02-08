@@ -88,9 +88,12 @@ Power users rely on keyboards. All apps must support:
 ### 4.2. Feedback & States
 *   **Hover:** Interactive elements must have a hover state to indicate clickability.
 *   **Focus:** Focus rings are mandatory for accessibility. Never remove `outline: none` without replacing it.
-*   **Loading:**
-    *   < 1s: Spinner inside the button.
-    *   > 1s: Global loading indicator or skeleton loader.
+*   **Loading & Progress (Crucial):**
+    *   **Never leave the user guessing.** If an operation takes > 200ms, show an indicator.
+    *   **Initial Load:** Use **Skeleton Screens** (gray placeholders) or a global loading spinner to indicate the app is initializing. Do not show a blank white screen.
+    *   **Background Actions (Auto-save):** Show a non-intrusive status indicator (e.g., "Saving..." -> "All changes saved") in the toolbar or footer.
+    *   **Blocking Operations:** If the user *cannot* interact with the app while processing (e.g., "Importing large file"), use a **Progress Modal** with a visible progress bar or spinner and a descriptive text ("Importing... 45%").
+    *   **Lazy Loading:** When loading parts of the UI (like a heavy tool palette), show a local spinner placeholder where the content will appear.
 *   **Success/Error:** Use toast notifications (top-right or bottom-right) for transient messages. Do not block the screen with "Success!" modals.
 
 ### 4.3. Modals vs. Inline

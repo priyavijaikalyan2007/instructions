@@ -14,6 +14,9 @@ Logs must function as a **post-mortem, time-travel debugging system**. Assume th
 **Design principle**
 Prefer *over-logging with structure and configurability* over minimal logging. Excess verbosity must be controllable dynamically.
 
+**Optimization**
+Wrap all highly detailed log levels such as DEBUG/TRACE with an if check to make sure that log level is enabled. This eliminates unnecessary formatting, string conversion and log function calls.
+
 ---
 
 ## 2. Configuration Rules (Non-Negotiable)
@@ -180,6 +183,16 @@ This metadata **must be injected automatically**, not manually appended in each 
   * Success/failure
 * Avoid logging full result sets.
 
+### 8.4 Application Flow
+
+* Log before and after any significant action such as a database tranaction, API call, file action:
+
+  * File or directory consulted or loaded.
+  * Transaction status.
+  * Query used in transaction.
+  * API invoked.
+  * API invocation result.
+* Full request, response, query, results, file contents or directory listing only at TRACE/DEBUG.
 ---
 
 ## 9. Control Flow Logging (Very Important)

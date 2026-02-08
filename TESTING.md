@@ -1178,3 +1178,63 @@ Before considering a feature complete, verify:
 - [ ] Mocks are used appropriately and not excessively
 - [ ] Cross-stack changes have tests at each layer
 - [ ] Non-code assets (SQL, configs, scripts) are tested where applicable
+
+## Authorization Service Testing
+
+When testing controllers that use `IAuthorizationService`, ensure mocks match the actual service methods being called.
+
+### Common Authorization Methods to Mock
+
+The authorization service has evolved over time. When writing or updating tests, use the correct mock setup:
+
+| Method | Purpose | When to Use |
+|--------|---------|-------------|
+| `GetUserAccessLevelAsync()` | Returns user's access level (owner/editor/viewer/null) | Checking if user has ANY access to a resource |
+| `CheckAsync()` | Returns boolean for specific permission | Checking specific permissions like `thinker.session.edit` |
+| `ListAccessibleObjectsAsync()` | Returns list of object IDs user can access | Filtering list endpoints |
+| `ListSubjectsWithAccessAsync()` | Returns list of users/groups with access | Displaying sharing settings |
+
+### Example: Mocking Access Level Checks
+
+```csharp
+// CORRECT: Mock GetUserAccessLevelAsync for access level checks
+authServiceMock
+    .Setup(s => s.GetUserAccessLevelAsync(
+        resourceId, "thinker", "session", It.IsAny<CancellationToken>()))
+    .ReturnsAsync("viewer");  // or "owner", "editor", null
+
+// INCORRECT: Using HasRelationAsync when controller uses GetUserAccessLevelAsync
+// This will cause tests to fail with ForbidResult
+authServiceMock
+    .Setup(s => s.HasRelationAsync("viewer", resourceId, ...))
+    .ReturnsAsync(true);  // Won't work if controller calls GetUserAccessLevelAsync
+```
+
+### Keeping Mocks in Sync with Implementation
+
+When controller code changes which authorization method it calls, tests must be updated accordingly:
+
+1. **Read the controller code** to see which `IAuthorizationService` methods are actually called
+2. **Update mock setups** to match the actual method signatures
+3. **Verify return types** - `GetUserAccessLevelAsync` returns `string?`, `CheckAsync` returns `bool`
+
+### Testing Access Level Responses
+
+When testing endpoints that return access level information:
+
+```csharp
+[Fact]
+public async Task GetResource_IncludesAccessLevelInResponse()
+{
+    // Arrange
+    authServiceMock
+        .Setup(s => s.GetUserAccessLevelAsync(resourceId, "myapp", "resource", It.IsAny<CancellationToken>()))
+        .ReturnsAsync("editor");
+
+    // Act
+    var result = await controller.GetResource(resourceId);
+
+    // Assert
+    var okResult = result.Should().BeOfType<OkObjectResult>().Subject;
+    // Verify response includes access_level, can_edit, can_share, can_delete
+}
