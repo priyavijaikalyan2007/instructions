@@ -63,6 +63,7 @@ This folder contains the root of an enterprise SaaS. This SaaS follows a super-a
 - Always consult MIGRATIONS.md when migrating from one stack to another such as Javascript to TypeScript, Python to .NET Core etc.
 - Always consult LOGGING.md so that you add appropriate logging configuration and log statements to all generated code.
 - Always consult COMMENTING.md so that you add appropriate comments to all generated code.
+- Always consult SECURITY_GUIDELINES.md so that you are aware of how to mitigate security concerns and do not introduce inadvertent security issues.
 - Always consult FRONTEND.md when frontend code changes are involved.
 - Always consult DELETION.md when adding new types of resources that users will use.
 - Always consult UX_UI_GUIDELINES.md when thinking about any new capability or feature. 
@@ -74,7 +75,7 @@ This folder contains the root of an enterprise SaaS. This SaaS follows a super-a
 - When selecting libraries for frontend functionality, always consult FRONTEND_LIBRARY_SELECTION.md for guidelines and FRONTEND_SELECTION.md for pre-canned recommendations.
 - Always consult RESTABLE_RESOURCES.md for how to setup resource URLs to be restable and usable by humans.
 - Always consult LITERATE_ERRORS.md for how to construct error messages to be usable and meaningful to users and operators.
-It'sfeature 
+- Always consult LLM_TECHNIQUES.md and NON_LLM_AIML_TECHNIQUES.md to determine the best approach for infusing any AI or ML feature. It's important to choose the right AI or ML technique instead of one-shotting everything with LLMs. Make sure to consult AIML_SECURITY.md *every time* to make sure AI or ML features especially those involving LLMs do not lead to system compromise or data exfiltration.
 - When creating SDKs, consult SDKs.md.
 - **When implementing access control, sharing, or permissions, always consult ACCESS_CONTROL.md.** This includes:
   - Defining new permissions and roles
