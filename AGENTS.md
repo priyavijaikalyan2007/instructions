@@ -58,6 +58,18 @@ This folder contains the root of an enterprise SaaS. This SaaS follows a super-a
 + playbooks/         - All generated documentation, guides, tutorials etc. relevant to product development and testing should be placed here.
 + docs/              - All product documentation relevant to customers or users or integrators should be placed here.
 
+## Operating Style
+Use a V-V-P-V-I-T-T-C loop for your core workflow. The workflow is as follows. For all software engineering tasks, you MUST strictly adhere to the following sequence:
+
++ **Validate (Request):** Analyze the prompt for ambiguity. Restate the core requirement and constraints to ensure alignment before acting.
++ **Verify (State):** Inspect the current codebase context. Read relevant files to confirm the environment is clean and assumptions about the existing code are correct.
++ **Plan:** Draft a concrete, step-by-step technical plan. Identify exactly which files will be modified and how.
++ **Verify (Plan):** Review the plan against project conventions (e.g., `CODING_STYLE.md`) and safety guidelines. Ensure the approach is idiomatic and low-risk.
++ **Implement Code:** Execute the planned changes using atomic, focused edits.
++ **Implement Tests:** Implement specific unit or integration tests that verify the new functionality or fix. Treat tests as a mandatory part of the implementation.
++ **Test Changes:** Execute the new tests *and* relevant regression tests. Ensure everything passes locally.
++ **Commit:** Stage the verified changes and create a commit with a concise, conventional message (e.g., `fix: ...`, `feat: ...`).
+
 ## Development (CRITICAL)
 - Always consult CODING_STYLE when writing code. This is important for maintainability.
 - Always consult GOF_PATTERNS.md when writing code. Using patterns appropriately when building code improves maintenance and understanding.
