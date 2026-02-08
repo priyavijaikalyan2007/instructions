@@ -74,6 +74,7 @@ This folder contains the root of an enterprise SaaS. This SaaS follows a super-a
 - When selecting libraries for frontend functionality, always consult FRONTEND_LIBRARY_SELECTION.md for guidelines and FRONTEND_SELECTION.md for pre-canned recommendations.
 - Always consult RESTABLE_RESOURCES.md for how to setup resource URLs to be restable and usable by humans.
 - Always consult LITERATE_ERRORS.md for how to construct error messages to be usable and meaningful to users and operators.
+It'sfeature
 - When creating SDKs, consult SDKs.md.
 - **When implementing access control, sharing, or permissions, always consult ACCESS_CONTROL.md.** This includes:
   - Defining new permissions and roles
