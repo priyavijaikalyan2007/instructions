@@ -70,10 +70,15 @@ Use a V-V-P-V-I-T-T-C loop for your core workflow. The workflow is as follows. F
 + **Test Changes:** Execute the new tests *and* relevant regression tests. Ensure everything passes locally.
 + **Commit:** Stage the verified changes and create a commit with a concise, conventional message (e.g., `fix: ...`, `feat: ...`).
 
+## (CRITICAL) Thinking
+I urge you to think along the lines of Steve Jobs, Douglas Normal, Jonathan Ivy and others. The details are important in making sure the software and documentation we provide our users offer an amazing, consistent, thoughtful and complete end to end experience.
+
 ## Development (CRITICAL)
 - You must adhere to the language conventions provided in LANGUAGE.md.
+- When dealing with secrets of any kind, especially user provided secrets, always consult SECRET_HANDLING.md to understand how to architect that properly.
 - Always consult CODING_STYLE when writing code. This is important for maintainability.
 - Always consult GOF_PATTERNS.md when writing code. Using patterns appropriately when building code improves maintenance and understanding.
+- Always consult DOCUMENTATION.md when generating internal operator or external user facing documentation.
 - Always consult MIGRATIONS.md when migrating from one stack to another such as Javascript to TypeScript, Python to .NET Core etc.
 - Always consult LOGGING.md so that you add appropriate logging configuration and log statements to all generated code.
 - Always consult COMMENTING.md so that you add appropriate comments to all generated code.

@@ -36,6 +36,71 @@
 - **Auth Decorators:** No API endpoint is created without an `[Authorize]` or `[RequirePermission]` attribute unless explicitly public (like login).
 - **Explicit Ignores:** In EF Core, use Fluent API `modelBuilder.Entity<T>().Ignore(x => x.Prop)` for all computed properties. Do not rely on `[NotMapped]`.
 
+### Root Cause Refactoring (No Ad-Hoc Patches)
+
+- **"Fix it right, don't just make it work."**
+- **Consolidate, Don't Duplicate:** If you find duplicate or parallel implementations (e.g., a JS registry and a TS registry), do not patch the one that "works" and force the system to use both.
+  - **Action:** Merge the logic into the strictly better implementation (e.g., TypeScript) and delete the legacy/duplicate file.
+- **Deep Fixes:** Do not write "glue code" to handle bugs in upstream logic. Fix the upstream logic.
+
+### Data & Naming Consistency
+
+- **"Uniformity is a feature."**
+- **Global Standards:** If you encounter a camelCase vs. snake_case mismatch between backend/frontend or components:
+  - **Do NOT** apply local patches or field renaming in a single component.
+  - **Action:** Enforce a system-wide serialization standard (e.g., Global JSON settings in Program.cs). Ensure all APIs conform to this standard.
+- **Rule:** A codebase should look like it was written by one person. Mismatched casing styles across files are unacceptable.
+
+### Direct Type Compatibility (No Unnecessary Adapters)
+
+- **"Align the source, don't bridge the gap."**
+- **Eliminate Converters:** If Module A produces data that Module B cannot consume directly:
+  - **Do NOT** write a converter/mapper function between them if you own both modules.
+  - **Action:** Refactor Module A or Module B so that their data types are identical.
+- **Performance:** Unnecessary conversion layers waste CPU cycles and introduce points of failure.
+
+### Architectural Homogeneity (The "Look Left, Look Right" Rule)
+
+- **"Do not invent new patterns."**
+- **Pattern Mimicry:** Before writing a new Controller, Service, or Component, examine three existing ones.
+  - If existing Controllers use a Service layer, **do not** write a Controller that queries EF Core directly.
+  - If existing Frontend components use `React Query`, **do not** write a component that uses `fetch` in `useEffect`.
+  - If the backend uses the Repository pattern, **do not** introduce the Unit of Work pattern or direct `DbContext` usage in a single isolated area.
+- **Async Consistency:** Do not mix `Promise.then()` chains with `async/await`. If the codebase uses `async/await`, use it exclusively.
+
+### Dependency Discipline (The "No New Toys" Rule)
+
+- **"Use what is already there."**
+- **Duplicate Check:** Before adding a new package (npm or NuGet), run `npm list` or check `.csproj` files.
+  - If `Day.js` is installed, **do not** install `Moment.js`.
+  - If `Newtonsoft.Json` is used, **do not** introduce `System.Text.Json` unless part of a documented migration.
+- **Triviality Check:** Do not add libraries for trivial one-line functions (e.g., `is-odd`, `left-pad`). Write the helper function yourself.
+
+### Visual & Styling Rigor
+
+- **"Single Source of Truth."**
+- **Framework Purity:** If the project uses Tailwind CSS, **do not** write inline `style={{ ... }}` or create separate `.css` files.
+- **Unit Consistency:** Do not mix `px`, `rem`, `em`, and `%` arbitrarily. Inspect `tailwind.config.js` or `variables.css` and use the defined spacing/color scales.
+- **Color Variables:** Never hardcode hex codes (e.g., `#FF0000`). Use the semantic names defined in the theme (e.g., `text-error`, `bg-primary`).
+
+### Error Handling Standardization
+
+- **"Fail consistently."**
+- **Unified Strategy:** Do not mix "Return Null on Failure" with "Throw Exception on Failure". Inspect the `Services` folder to determine the project's standard contract.
+- **UI Propagation:** Ensure errors propagate to the UI consistently. If the app uses a global Toast notification system for API errors, do not implement a local `alert()` or console-only error log.
+
+### Configuration & Magic Constants
+
+- **"No Magic Numbers."**
+- **Extraction:** Any number (e.g., `3000` ms timeout) or string (e.g., "Admin" role) that appears more than once—or has semantic meaning—must be a named constant.
+- **Environment Isolation:** **Never** hardcode URLs (e.g., `http://localhost:5000`) inside code. Use `appsettings.json` (backend) or `import.meta.env` (frontend).
+
+### Code Hygiene & "Zombie" Code
+
+- **"Delete, don't disable."**
+- **No Commented-Out Code:** Do not leave blocks of commented-out code "just in case". Rely on Git history.
+- **Import Cleanup:** Unused imports and variables are technical debt. Remove them immediately before considering a task complete.
+
 
 ## Testing
 
