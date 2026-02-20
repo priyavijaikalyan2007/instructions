@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Repository Metrics Report - {{ snapshot.commit_sha }}</title>
+    <style>
+        :root {
+            --primary: #2563eb;
+            --secondary: #64748b;
+            --success: #22c55e;
+            --danger: #ef4444;
+            --warning: #f59e0b;
+            --background: #f8fafc;
+            --card: #ffffff;
+            --text: #1e293b;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background-color: var(--background);
+            color: var(--text);
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+        .card {
+            background-color: var(--card);
+            border-radius: 8px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        .summary-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        .stat-card {
+            text-align: center;
+        }
+        .stat-value {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--primary);
+        }
+        .stat-label {
+            color: var(--secondary);
+            font-size: 0.875rem;
+        }
+        .health-badge {
+            font-size: 3rem;
+            font-weight: bold;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            text-align: center;
+        }
+        .grade-A { background-color: var(--success); color: white; }
+        .grade-B { background-color: #86efac; color: #166534; }
+        .grade-C { background-color: var(--warning); color: white; }
+        .grade-D { background-color: #fdba74; color: #9a3412; }
+        .grade-F { background-color: var(--danger); color: white; }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            text-align: left;
+            padding: 0.75rem;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        th {
+            background-color: #f1f5f9;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div>
+                <h1>Repository Metrics</h1>
+                <p><strong>Commit:</strong> {{ snapshot.commit_sha }} | <strong>Branch:</strong> {{ snapshot.branch }}</p>
+                <p><strong>Date:</strong> {{ snapshot.snapshot_at }}</p>
+            </div>
+            <div class="health-badge grade-{{ snapshot.quality.health_grade }}">
+                {{ snapshot.quality.health_grade }}
+                <div style="font-size: 0.875rem; font-weight: normal;">Score: {{ snapshot.quality.health_score }}</div>
+            </div>
+        </div>
+
+        <div class="summary-grid">
+            <div class="card stat-card">
+                <div class="stat-value">{{ snapshot.summary.total_files }}</div>
+                <div class="stat-label">Total Files</div>
+            </div>
+            <div class="card stat-card">
+                <div class="stat-value">{{ snapshot.summary.total_loc }}</div>
+                <div class="stat-label">Lines of Code</div>
+            </div>
+            <div class="card stat-card">
+                <div class="stat-value">{{ snapshot.quality.avg_complexity | round(2) }}</div>
+                <div class="stat-label">Avg Complexity</div>
+            </div>
+            <div class="card stat-card">
+                <div class="stat-value">{{ snapshot.tests.test_to_source_ratio | round(2) }}</div>
+                <div class="stat-label">Test Ratio</div>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>Language Breakdown</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Language</th>
+                        <th>Files</th>
+                        <th>LOC</th>
+                        <th>% of Total</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for lang, data in snapshot.languages.items() %}
+                    <tr>
+                        <td>{{ lang }}</td>
+                        <td>{{ data.file_count }}</td>
+                        <td>{{ data.loc }}</td>
+                        <td>{{ data.pct_of_total_loc | round(1) }}%</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <div class="card">
+            <h2>Top Files by Complexity</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Path</th>
+                        <th>LOC</th>
+                        <th>Max Complexity</th>
+                        <th>Avg Complexity</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for f in snapshot.top_files_by_complexity[:10] %}
+                    <tr>
+                        <td>{{ f.path }}</td>
+                        <td>{{ f.loc }}</td>
+                        <td>{{ f.complexity_max }}</td>
+                        <td>{{ f.complexity_avg | round(2) }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <div class="card">
+            <h2>Snapshot History</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Commit</th>
+                        <th>LOC</th>
+                        <th>Avg Complexity</th>
+                        <th>Health</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for entry in history.snapshots | reverse %}
+                    {% if loop.index <= 10 %}
+                    <tr>
+                        <td>{{ entry.snapshot_at[:10] }}</td>
+                        <td><code>{{ entry.commit_sha[:8] }}</code></td>
+                        <td>{{ entry.summary.total_loc }}</td>
+                        <td>{{ entry.quality.avg_complexity | round(2) }}</td>
+                        <td>{{ entry.quality.health_grade }}</td>
+                    </tr>
+                    {% endif %}
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+</html>
