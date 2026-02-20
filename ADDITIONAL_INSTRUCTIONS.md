@@ -120,11 +120,11 @@ You must always add unit tests for all code changes. This is non-negotiable.
 You must add Playwright end-to-end tests for all user-facing changes.
 
 ### Test Users
-- Use test users in the format `userNNN@test.knobby.io` (e.g., `user001@test.knobby.io`, `user042@test.knobby.io`).
-- `test.knobby.io` is a non-existent domain reserved exclusively for testing.
+- Use test users in the format `userNNN@test.<appdomain>.io` (e.g., `user001@test.domain.io`, `user042@test.domain.io`).
+- `test.<appdomain>.io` is a non-existent domain reserved exclusively for testing.
 - The test login endpoint must only be enabled in the local **testing** environment.
-- Logins from `@test.knobby.io` must only be accepted in the local **testing** environment.
-- Logins from `@test.knobby.io` must be **rejected** in development and production environments.
+- Logins from `@test.<appdomain>.io` must only be accepted in the local **testing** environment.
+- Logins from `@test.<appdomain>.io` must be **rejected** in development and production environments.
 - Test login endpoints must be **disabled and non-functional** in development and production environments.
 
 ## Clarification

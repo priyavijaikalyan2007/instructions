@@ -1669,10 +1669,36 @@ class NodeA
 - Use Observer for UI updates and real-time collaboration events.
 - Use Adapter/Facade for third-party or legacy API integration.
 - Use Decorator for optional behaviors like logging, caching, instrumentation.
+### Relationship to Martin Fowler Refactoring Techniques
+
+When applying a GoF pattern in this codebase, use the corresponding Fowler refactoring technique to get there safely:
+
+| GoF Pattern | Primary Fowler Technique | When to Apply |
+|-------------|-------------------------|---------------|
+| Strategy | Replace Conditional with Polymorphism | A switch/if-else dispatches to type-specific logic (providers, settings, permissions). |
+| Facade | Extract Class | A service exceeds 500 lines or mixes HTTP/DB/business concerns. |
+| Adapter | Extract Interface + Extract Class | Code is tightly coupled to a third-party API (Auth0, AI providers). |
+| Decorator | Extract Method + Pull Up Method | Cross-cutting logic (logging, audit, caching) is duplicated in multiple locations. |
+| State | Replace Type Code with Class | String constants represent lifecycle states with transition rules. |
+| Composite | Encapsulate Collection + Replace Type Code with Class | `Dictionary<string, object>` or `List<object>` models structured, typed data. |
+| Command | Extract Class | A method both parses input and executes side effects (violation of SRP). |
+
+### Migration Approach
+
+Per `MIGRATIONS.md`, every pattern application follows the Golden Loop:
+
+1. **Baseline:** Ensure passing tests cover the code being refactored. Fill gaps to =90%.
+2. **Refactor:** Apply the pattern using the Fowler technique. Keep logic 1:1 initially.
+3. **Verify:** Run all tests. Fix the refactored code (not the tests) until they pass.
+4. **Polish:** Make idiomatic improvements. Run tests after each change.
+5. **Commit:** One refactoring per commit with a conventional message.
 
 ## Balance Checklist
+
 Before applying a pattern, ask:
 - Does this reduce complexity or just add ceremony?
-- Will another developer recognize this pattern quickly?
-- Is there a smaller, clearer alternative?
-- Are we complying with existing architecture and project guidelines?
+- Will another developer recognise this pattern quickly?
+- Is there a smaller, clearer alternative (Extract Method before Extract Class)?
+- Does the product roadmap justify the extensibility this pattern provides?
+- Are we complying with `CODING_STYLE.md` (max 30-line methods, Allman braces, one type per file)?
+- Have we established a test baseline per `MIGRATIONS.md` Phase 1?

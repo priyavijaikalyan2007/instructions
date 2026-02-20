@@ -9,7 +9,7 @@ This document outlines the standard for implementing "Restable URLs" in our plat
 ## 1. The URL Philosophy
 
 URLs are the UI for locating data. They should be:
-1.  **Readable:** `knobby.io/diagrams/org-chart-2024`
+1.  **Readable:** `appdomain.io/diagrams/org-chart-2024`
 2.  **Predictable:** `/{app-name}/{resource-type}/{id}`
 3.  **Hackable:** Users should guess that deleting `/{id}` takes them to the resource list.
 
@@ -27,10 +27,10 @@ https://{domain}/{app}/{view}/{id-slug}?{query-params}
 *   **{query-params}:** Transient state (e.g., `?zoom=1.5`, `?mode=edit`, `?search=term`).
 
 ### Examples:
-*   **Home:** `knobby.io/`
-*   **App Home:** `knobby.io/diagrams` (Shows list of diagrams)
-*   **Specific Resource:** `knobby.io/diagrams/canvas/xK9j2P-q3-marketing-flow`
-*   **Specific Resource (Clean):** `knobby.io/checklists/run/daily-standup-checklist`
+*   **Home:** `appdomain.io/`
+*   **App Home:** `appdomain.io/diagrams` (Shows list of diagrams)
+*   **Specific Resource:** `appdomain.io/diagrams/canvas/xK9j2P-q3-marketing-flow`
+*   **Specific Resource (Clean):** `appdomain.io/checklists/run/daily-standup-checklist`
 
 ---
 
@@ -43,7 +43,7 @@ Since our architecture uses a parent Shell loading sub-apps in `<iframe>`s, we c
 The Browser URL is the "Source of Truth". The Shell and Iframe must stay in sync.
 
 #### A. Shell-to-Iframe (Inbound Link)
-When a user opens `knobby.io/diagrams/edit/123`:
+When a user opens `appdomain.io/diagrams/edit/123`:
 1.  **Shell** parses the URL.
 2.  **Shell** loads the `diagrams` iframe (if not loaded).
 3.  **Shell** sends a `NAVIGATE_TO` message to the iframe.
@@ -53,7 +53,7 @@ When a user opens `knobby.io/diagrams/edit/123`:
 When a user clicks "New Diagram" inside the `diagrams` iframe:
 1.  **Iframe** creates the diagram (ID: 456).
 2.  **Iframe** sends a `URL_CHANGED` message to the Shell.
-3.  **Shell** updates the browser URL to `knobby.io/diagrams/edit/456` using `history.pushState`.
+3.  **Shell** updates the browser URL to `appdomain.io/diagrams/edit/456` using `history.pushState`.
 4.  **Important:** The Shell does *not* reload the page.
 
 ### 2.2 The Message Contract

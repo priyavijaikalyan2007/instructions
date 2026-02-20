@@ -71,8 +71,8 @@ The documentation is hosted as part of the monolithic application. Coding agents
     *   All external-facing documentation source files must reside in `/docs/external/`.
 
 2.  **URL Structure:**
-    *   **Production:** `prod.knobby.io/docs/` (Application: `prod.knobby.io`)
-    *   **Staging (Development):** `dev.knobby.io/docs/` (Application: `dev.knobby.io`)
+    *   **Production:** `prod.<appdomain>.io/docs/` (Application: `prod.<appdomain>.io`)
+    *   **Staging (Development):** `dev.<appdomain>.io/docs/` (Application: `dev.<appdomain>.io`)
 
 3.  **Build & Packaging:**
     *   The documentation is part of the single monolith Docker container.

@@ -1,6 +1,6 @@
 <!-- AGENT: Standard operating procedures for code migrations between languages and frameworks. -->
 
-# Migration Guidelines for Coding Agents
+# Migration and Refactoring Guidelines for Coding Agents
 
 This document defines the standard operating procedure for migrating code between languages, frameworks, or versions (e.g., JavaScript to TypeScript, Python 2 to 3, Flask to ASP.NET).
 
@@ -45,12 +45,14 @@ Now that the code compiles, does it actually work?
 4.  **Repeat**: Fix code -> Run Tests -> Check Failures.
 5.  **Success**: The loop ends only when **100% of tests pass**.
 
-### Phase 4: Refactoring (Optional but Recommended)
+### Phase 4: Refactoring (Required for All Non-Trivial Changes)
 
-Once tests pass, the code is safe to modify.
+Once tests pass, the code is safe to improve. This is NOT optional for any change that introduces new classes, services, or modifies more than one file.
 
-1.  **Idiomatic Polish**: Now you can replace direct translations with language-specific features (e.g., changing a `for` loop to a LINQ query or `.map()`).
-2.  **Verify**: Run tests after every refactoring step.
+1.  **Structural improvements**: Apply Martin Fowler refactoring techniques (Extract Method, Extract Class, Replace Conditional with Polymorphism, etc.) to achieve clean architecture. Consult `GOF_PATTERNS.md` for pattern applicability.
+2.  **Compliance check**: Verify the refactored code meets `CODING_STYLE.md` (max 30-line methods, max 3 nesting levels, one type per file, Allman braces).
+3.  **Idiomatic polish**: Replace direct translations with language-specific features (e.g., changing a `for` loop to a LINQ query or `.map()`).
+4.  **Verify**: Run tests after EACH refactoring step. If a test fails, revert the last change and investigate.
 
 ---
 
@@ -77,8 +79,10 @@ Once tests pass, the code is safe to modify.
 
 ## Checklist for Agents
 
-- [ ] **Pre-Flight**: Are there passing tests for the legacy code?
-- [ ] **Draft**: Is the code translated?
-- [ ] **Compile**: Does the build command succeed without errors?
-- [ ] **Verify**: Do the migrated tests pass against the migrated code?
-- [ ] **Cleanup**: Did you remove temporary files or "commented out" legacy code?
+- [ ] **Pre-Flight**: Are there passing tests for the legacy or existing code? Is coverage =90% for the affected area?
+- [ ] **Draft**: Is the code translated or refactored?
+- [ ] **Compile**: Does the build command succeed without errors or warnings?
+- [ ] **Verify**: Do all tests (migrated and regression) pass against the new code?
+- [ ] **Refactor**: Does the code follow `CODING_STYLE.md`? Are GoF patterns applied where appropriate per `GOF_PATTERNS.md`? Are methods =30 lines? Are classes =500 lines of logic?
+- [ ] **Cleanup**: Did you remove temporary files, "commented out" legacy code, and orphaned imports?
+- [ ] **Commit**: Single logical change per commit with conventional message (`refactor: ...`, `feat: ...`, `fix: ...`).

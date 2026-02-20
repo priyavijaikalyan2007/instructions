@@ -105,8 +105,9 @@ function processUserRegistration(userData) {
 
 ## 2.1. Core Resources
 
-- CSS Theme: https://4cdf16f2.knobbyio.pages.dev/css/custom.css
-- Bootstrap JS: https://4cdf16f2.knobbyio.pages.dev/js/bootstrap.bundle.min.js
+- CSS Theme: https://theme.priyavijai-kalyan2007.workers.dev/css/custom.css
+- Bootstrap JS: theme.priyavijai-kalyan2007.workers.dev/js/bootstrap.bundle.min.js
+
 ## 2.2. Styling Principles
 
 1. Prefer vanilla Bootstrap styles.
@@ -115,6 +116,10 @@ function processUserRegistration(userData) {
 4. Maintain consistent color schemes, typography, and layout across applications.
 5. Ensure responsive design for multiple device types.
 # 3. User Experience Standards
+
+## 2.3 Additional Components
+
+- Start at theme.priyavijai-kalyan2007.workers.dev/docs/index.html
 
 ## 3.1. Keyboard Navigation
 
