@@ -26,3 +26,5 @@ replay_pid*
 .obsidian/
 
 *.bak
+
+**/__pycache__/**
