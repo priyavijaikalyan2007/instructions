@@ -115,6 +115,8 @@ I urge you to think along the lines of Steve Jobs, Douglas Normal, Jonathan Ivy 
 - Always consult MIGRATIONS.md when migrating from one stack to another such as Javascript to TypeScript, Python to .NET Core etc.
 - Always consult LOGGING.md so that you add appropriate logging configuration and log statements to all generated code.
 - Always consult COMMENTING.md so that you add appropriate comments to all generated code.
+- Always consult PRAGMATIC_PROGRAMMER.md for pragmatic engineering principles and PRAGMATIC_PROGRAMMER.checklist.md for a quick review.
+- Always consult CODE_COMPLETE.md for software construction best practices and CODE_COMPLETE.checklist.md for a quick review.
 - Always consult SECURITY_GUIDELINES.md so that you are aware of how to mitigate security concerns and do not introduce inadvertent security issues.
 - Always consult FRONTEND.md when frontend code changes are involved.
 - Always consult DELETION.md when adding new types of resources that users will use.

@@ -22,3 +22,11 @@ Adopt this approach consistently in your tasks.
 Unless you are explicitly asked to do so, YOU ARE NOT TO MODIFY EXISTING CODE.
 
 All communication, documentation, and code comments must adhere to the standards outlined in [LANGUAGE.md](./LANGUAGE.md).
+
+## Coding Principles and Standards
+
+All coding tasks MUST adhere to the following principles and standards:
+
+1.  **[CODING_STYLE.md](./CODING_STYLE.md)**: Core formatting and language-specific style rules.
+2.  **[PRAGMATIC_PROGRAMMER.md](./PRAGMATIC_PROGRAMMER.md)**: Pragmatic engineering principles (DRY, Orthogonality, Contracts, etc.).
+3.  **[CODE_COMPLETE.md](./CODE_COMPLETE.md)**: Software construction best practices (Routines, Variables, Control Structures, etc.).
