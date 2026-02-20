@@ -1,6 +1,99 @@
 <!-- AGENT: Logging standards for post-mortem debugging and structured log output. -->
 
-# Logging
+# Background
+In high scale web services, logging is crucial to understand what happened when an issue occurs. Metrics are important to understand where something is happening and how the service is behaving.
+
+For example, when a customer reports that their API calls are failing, we need to understand:
+
+- Which API is failing? One, some or all?
+- How is it failing? Is it failing with any of the 5xx HTTP errors in which case it is a service error. Is it failing with any of the 4xx errors in which case it is a user error.
+- How often is it failing? Are 100%, 50%, 10% or 5% of API calls failing?
+- What are the correlated failures at the same time? E.g. are timeouts spiking which could be a GC pause or data fetch latency issue. 
+
+Logging should be comprehensive enough that a less-than-gifted high school student can read the logs, map the execution path to the code as deployed and understand where things failed. They can read the detailed logs and then understand why things failed as well. So, log enough information for this student to be able to wake up at 3am and still be able to debug production issues.
+
+## Log Sources
+Once we have identified that there is a problem and potentially where it is located based on the metrics, we need to look at logs to understand what is causing it. This could take many forms. 
+- Application specific logs are emitted by developer of the code. 
+- In other cases, logs may be need to be configured to be emitted. For example, HTTP clients will need HTTP client request-response logging turned on via configuration to emit the full requests and responses. 
+- Similarly, framework and library dependencies may also need a logging framework attached to emit logs appropriately. 
+- In some systems such as Kubernetes, logs may need to be configured via YAML. 
+- Finally, in some specific cases such as the JVM, garbage collection logs may need to be turned via JVM configuration. 
+
+## Sensitive Data
+Application and system logs may often contain sensitive data such as secret keys, user IDs, continuation tokens, emails and more. If logged, these must be one way hashed before uploading the log file for retention or there is a potential problem of data loss from unauthorized log file access. There are frameworks that do this, most often provided by the OWASP foundation but sometimes other open source. These frameworks may require both configuration as well as escaping of sensitive data with special tags. 
+
+Typically:
+- For the development environment (desktop, dev box, test environments), no hashing of values is needed.
+- For the production environment, one way hashing of sensitive data is required.
+- Sensitive data is always tagged so that the one way hashing can happen in post-processing of logs.
+
+## Log Rotation
+Log files can get quite large. So they must be rotated at intervals, typically every one hour. 
+
+## Log Destinations
+When logs are rewritten, logging frameworks can route them to multiple destinations for storage. 
+
+Typically:
+- For large scale, cloud based software as a service applications, this is often local files; the local files are retrieved by some other system using the configured retention policy and moved to a final destination. 
+- For local browser based applications, the destination may be the JavaScript console. 
+- For desktop applications, command line tools and scripts, it might be a local file and the terminal. 
+- For system services such as the daemons and background services, it will be the system log. 
+
+## Log Context
+The log context is automatically added information that enables us to identify the surrounding environment for a particular log line. Typically, the context often includes:
+- The log level.
+- The granular timestamp.
+- The thread ID. Preferably, the thread name as well for named threads.
+- The logger / log source name (typically class name + method or function name)
+- The host name.
+- The application name.
+- For software as a service, the request ID, the user ID and any trace / span / correlation IDs.
+
+This is automatic that the developer who is adding logs does not have to bother to add this information again. Most frameworks do provide this automatically.
+## Log Line ID
+The log line ID is a technique that attaches a unique 8 or 16 digit hexadecimal code to every log line. The code is generated once when the log line is written and is typically globally unique. The code is static. This model enables a few things such as:
+
+- Identifying when a particular log line is being logged excessively.
+- Building metrics and creating dashboards for log lines that indicate warnings or errors.
+- Throttling log lines when they are excessive and are not adding much value.
+
+## Log Throttling
+Sometimes, some code path can be hit at high velocity. For example, let's say there is some sort of immediate retry mechanism for fetching some configuration data. Let us also assume that this configuration data has to be fetched for each page such as static headers etc. Although an error, pages still render but an error log line is generated when these static header files are not present. For some reason, a recent deployment removed such a header file and suddenly, at scale, the logs are stuffed with thousands or even millions of error log lines from this missing header file. This will end up masking all other logs potentially leading to unknown issues. In such cases, we usually implement log throttling. Basically, a buffered logger of some kind is used which does some super fast fingerprinting of the log lines (typically using the Log Line ID) and uses some sort of local rate counter to throttle at some configurable threshold. 
+
+## Retention
+Once emitted locally, logs may need to be offloaded to some central log storage system or pushed to storage such as AWS S3. This offload has to be configured separately. Elastic Beanstalk has its own configuration in the form of YAML. Other systems may have other configurations. 
+
+## What to Log
+- Log all function or method enters and exits.
+- Log at the start of all branches indicating why that branch was taken. For example, every `if`, `else` and `then` clause is logged.
+- Log method or function parameter names and values. If it is potentially sensitive, tag it appropriately for post-processing.
+- Log all configuration values read from external sources.
+- Log all inversion of control wiring or injection choices.
+- Log all function or method return values.
+- Log all logical actions such as:
+	- Loading data from a configuration file.
+	- Fetching data from a database.
+	- Validating a user session.
+	- Logging in a user.
+	- Reading data from a data source.
+	- Rendering a page.
+	- Writing to a queue.
+- Log all exceptions at the location they are caught and handled.
+* For command line applications, log the application path (usually the first argument) and all command line parameters.
+* For all applications, log all environment variables making sure to treat sensitive data in environment variables such as keys or secrets using the sensitive data handling protocol.
+
+### Log Context
+The log context is automatically added information that enables us to identify the surrounding environment for a particular log line. Typically, the context often includes:
+- The log level.
+- The granular timestamp.
+- The thread ID. Preferably, the thread name as well for named threads.
+- The logger / log source name (typically class name + method or function name)
+- The host name.
+- The application name.
+- For software as a service, the request ID, the user ID and any trace / span / correlation IDs.
+
+# Logging Instructions
 
 ## 1. Purpose and Mental Model
 

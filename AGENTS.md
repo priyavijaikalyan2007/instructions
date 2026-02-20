@@ -95,6 +95,8 @@ I urge you to think along the lines of Steve Jobs, Douglas Normal, Jonathan Ivy 
 - When creating backend code, consult BACKEND.md.
 - When selecting libaries for backend functionality, always consult BACKEND_LIBRARY_SELECTION.md for guidelines and DOTNETFX_SELECTION.md for pre-canned recommendations. 
 - When selecting libraries for frontend functionality, always consult FRONTEND_LIBRARY_SELECTION.md for guidelines and FRONTEND_SELECTION.md for pre-canned recommendations.
+- Before building new UI components, always consult the MASTER_COMPONENT_LIST.md to check if a resuable component exists. If not, produce a specification for resuable UI components and then wait for the user to confirm that the components are available for use before proceeding. This ensures that UI code uses
+standardized repeatable patterns and not AI slop.
 - Always consult RESTABLE_RESOURCES.md for how to setup resource URLs to be restable and usable by humans.
 - Always consult LITERATE_ERRORS.md for how to construct error messages to be usable and meaningful to users and operators.
 - Always consult LLM_TECHNIQUES.md and NON_LLM_AIML_TECHNIQUES.md to determine the best approach for infusing any AI or ML feature. It's important to choose the right AI or ML technique instead of one-shotting everything with LLMs. Make sure to consult AIML_SECURITY.md *every time* to make sure AI or ML features especially those involving LLMs do not lead to system compromise or data exfiltration.
@@ -106,6 +108,7 @@ I urge you to think along the lines of Steve Jobs, Douglas Normal, Jonathan Ivy 
   - Integrating Share buttons in frontend
   - Writing authorization tests
 - Always consult ADDITIONAL_INSTRUCTIONS.md which contain some refinements. 
+- Always make sure that all generated code includes copyright information following the instructions in ./COPYRIGHT_HEADER.md
 - Generate a concise summary of changes for each set of changes and commit the Git code. Don't push yet.
 
 ## Local Development
