@@ -119,7 +119,7 @@ function processUserRegistration(userData) {
 
 ## 2.3 Additional Components
 
-- Start at theme.priyavijai-kalyan2007.workers.dev/docs/index.html
+- Start at theme.priyavijai-kalyan2007.workers.dev/docs/COMPONENT_REFERENCE.md
 
 ## 3.1. Keyboard Navigation
 

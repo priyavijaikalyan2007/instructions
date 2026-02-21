@@ -1,4 +1,4 @@
-<!-- AGENT: AI/ML security guidelines for defending against prompt injection and adversarial attacks. -->
+<!-- AGENT: AI/ML security guidelines for defending against prompt injection, output exploitation, and adversarial attacks. Aligned with OWASP Top 10 for LLM Applications 2025. Read before implementing or modifying ANY AI feature. -->
 
 # AI/ML Security Guide
 

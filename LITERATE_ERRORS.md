@@ -94,3 +94,12 @@ throw new LiterateException(
 .WithContext("Last4", "4242")
 .WithContext("GatewayResponse", "DoNotHonor");
 ```
+
+## 6. Frontend Components (TypeScript/Javascript)
+A Bootstrap 5+ compatible component for displaying literate errors has been implemented in the component library. 
+Prefer to use this component over vanilla Javascript `alert` messages. For confirmation dialogs such as `Are you sure about deleting this file?`
+a `confirmdialog` component has been deleted.
+
+The entire theme library and component catalog can be referenced at `theme.priyavijai-kalyan2007.workers.dev/docs/COMPONENT_REFERENCE.md`. Prefer to use
+the prebuilt components to show literate errors.
+

@@ -4,7 +4,7 @@
 
 This document defines the standard operating procedure for migrating code between languages, frameworks, or versions (e.g., JavaScript to TypeScript, Python 2 to 3, Flask to ASP.NET).
 
-**Core Philosophy**: Tests are the source of truth. The migration is not complete until the new code compiles AND passes the original behavior tests.
+**Core Philosophy**: Tests are the source of truth. The migration or refactoring is not complete until the new code compiles AND passes the original behaviour tests. **Every refactoring, no matter how small, follows this loop.**
 
 ---
 
