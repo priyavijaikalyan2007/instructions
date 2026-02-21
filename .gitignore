@@ -28,3 +28,5 @@ replay_pid*
 *.bak
 
 **/__pycache__/**
+
+.metrics/**

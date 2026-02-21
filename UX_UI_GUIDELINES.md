@@ -1,6 +1,6 @@
 # UX/UI Design Guidelines
 
-This document outlines the user experience (UX) and user interface (UI) design principles for the project. It complements the technical standards in `FRONTEND.md` by focusing on the *why* and *how* of user interaction.
+This document outlines the user experience (UX) and user interface (UI) design principles for the project. It complements the technical standards in `FRONTEND.md` and the strict mandates in `UI_UX_CONSISTENCY.md` by focusing on the *why* and *how* of user interaction.
 
 ## 1. Core Design Philosophy
 

@@ -30,3 +30,4 @@ All coding tasks MUST adhere to the following principles and standards:
 1.  **[CODING_STYLE.md](./CODING_STYLE.md)**: Core formatting and language-specific style rules.
 2.  **[PRAGMATIC_PROGRAMMER.md](./PRAGMATIC_PROGRAMMER.md)**: Pragmatic engineering principles (DRY, Orthogonality, Contracts, etc.).
 3.  **[CODE_COMPLETE.md](./CODE_COMPLETE.md)**: Software construction best practices (Routines, Variables, Control Structures, etc.).
+4.  **[UI_UX_CONSISTENCY.md](./UI_UX_CONSISTENCY.md)**: Standards for consistent layout, component usage, and UI state preservation.

@@ -120,7 +120,8 @@ I urge you to think along the lines of Steve Jobs, Douglas Normal, Jonathan Ivy 
 - Always consult SECURITY_GUIDELINES.md so that you are aware of how to mitigate security concerns and do not introduce inadvertent security issues.
 - Always consult FRONTEND.md when frontend code changes are involved.
 - Always consult DELETION.md when adding new types of resources that users will use.
-- Always consult UX_UI_GUIDELINES.md when thinking about any new capability or feature. 
+- Always consult UX_UI_GUIDELINES.md when thinking about any new capability or feature.
+- Always consult UI_UX_CONSISTENCY.md when thinking about and implementing UIs. 
 - Always consult API_GUIDELINES.md when implementing new APIs.
 - Always consult PERFORMANCE.md when implementing backends, frontends or APIs. It is important to keep performance in mind upfront.
 - **(CRITICAL)** Always consult TESTING.md when writing tests. Tests are written BEFORE implementation code (TDD "Red" phase). Having maintainable and comprehensive tests is the foundation of code quality. Without tests, refactoring is unsafe.
