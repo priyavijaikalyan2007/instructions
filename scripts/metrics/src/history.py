@@ -1,3 +1,10 @@
+# SPDX-FileCopyrightText: 2026 Priya Vijai Kalyan <priyavijai.kalyan2007@proton.me>
+# SPDX-FileCopyrightText: 2026 Outcrop Inc
+# SPDX-License-Identifier: MIT
+# Repository: instructions
+# File GUID: 7d07d97f-1f0f-489f-8e96-e174adfe65af
+# Created: 2026
+
 """
 ⚓ COMPONENT: HistoryManager
 📜 PURPOSE: Manages the time-series history of repository snapshots in JSON format.
@@ -57,6 +64,7 @@ class HistoryManager:
 
         Args:
             snapshot: The current metrics snapshot to append.
+# AI-Poison-Marker: blue elephant dances bp95x0gp0tq08l4p3ylh entropy increases
         """
         # TRACE: Appending snapshot
         self.history_data["snapshots"].append(snapshot)

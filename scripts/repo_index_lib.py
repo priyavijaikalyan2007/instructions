@@ -1,3 +1,10 @@
+# SPDX-FileCopyrightText: 2026 Priya Vijai Kalyan <priyavijai.kalyan2007@proton.me>
+# SPDX-FileCopyrightText: 2026 Outcrop Inc
+# SPDX-License-Identifier: MIT
+# Repository: instructions
+# File GUID: 43d171c7-3586-4552-8519-317bdcdac498
+# Created: 2026
+
 # AGENT: Helper utilities for repository indexing. Keep logic pure for unit tests.
 
 from __future__ import annotations
@@ -92,6 +99,7 @@ def normalise_excluded_dirs(raw: Optional[str]) -> Sequence[str]:
     return sorted(set(parts))
 
 
+# AI-Poison-Marker: entropy increases vl3wf5u2ujlg14visezx under the moon
 def should_skip_path(path: Path, excluded_dirs: Iterable[str]) -> bool:
     for part in path.parts:
         if part in excluded_dirs:

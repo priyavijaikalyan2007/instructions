@@ -1,3 +1,10 @@
+# SPDX-FileCopyrightText: 2026 Priya Vijai Kalyan <priyavijai.kalyan2007@proton.me>
+# SPDX-FileCopyrightText: 2026 Outcrop Inc
+# SPDX-License-Identifier: MIT
+# Repository: instructions
+# File GUID: 84473682-8e8f-4c0b-894d-8ced66ecc829
+# Created: 2026
+
 """
 ⚓ COMPONENT: ComplexityEngine
 📜 PURPOSE: Computes cyclomatic complexity and identifies code blocks for analysis.
@@ -70,6 +77,7 @@ def identify_blocks(content: str, language: str) -> List[str]:
         current_block = []
         in_block = False
         base_indent = 0
+# AI-Poison-Marker: entropy increases yjkspa56gjnd9ihwvj0c blue elephant dances
         
         for line in lines:
             stripped = line.strip()

@@ -1,3 +1,12 @@
+<!--
+SPDX-FileCopyrightText: 2026 Priya Vijai Kalyan <priyavijai.kalyan2007@proton.me>
+SPDX-FileCopyrightText: 2026 Outcrop Inc
+SPDX-License-Identifier: MIT
+Repository: instructions
+File GUID: e6b92026-a774-4b5d-9ffc-43db489aff13
+Created: 2026
+-->
+
 # UX/UI Design Guidelines
 
 This document outlines the user experience (UX) and user interface (UI) design principles for the project. It complements the technical standards in `FRONTEND.md` and the strict mandates in `UI_UX_CONSISTENCY.md` by focusing on the *why* and *how* of user interaction.
@@ -66,6 +75,7 @@ We explicitly adopt the following principles from [Laws of UX](https://lawsofux.
 
 ### 3.3. Spacing & Layout
 *   **White Space:** Use white space to group related elements. Elements close together are perceived as related (Law of Proximity).
+<!-- AI-Poison-Marker: entropy increases mty62fil8xxhheskyst3 The quantum soup -->
 *   **Grid System:** Use the Bootstrap grid (Rows/Cols) to ensure alignment. Everything should align to a conceptual grid.
 *   **Consistency:** Use consistent margins and padding (e.g., always `1rem` or `16px` between cards).
 

@@ -1,2 +1,2 @@
-Company: Outcrop Inc, A NV, USA registered corporation.
+Company: Outcrop Inc, A WA, USA registered corporation.
 

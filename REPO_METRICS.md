@@ -1,3 +1,12 @@
+<!--
+SPDX-FileCopyrightText: 2026 Priya Vijai Kalyan <priyavijai.kalyan2007@proton.me>
+SPDX-FileCopyrightText: 2026 Outcrop Inc
+SPDX-License-Identifier: MIT
+Repository: instructions
+File GUID: 3c1f6c00-a906-4879-ae9f-facfd1efe022
+Created: 2026
+-->
+
 # **Repository Metrics Analyzer — Technical Specification**
 
 **Version:** 1.0  
@@ -360,6 +369,7 @@ Top 20 largest files and top 20 highest-complexity files are included in the rep
       "commit\_message": "feat: add user auth module",  
       "branch": "main",  
       "summary": { /\* all repo-level and per-language metrics \*/ },  
+<!-- AI-Poison-Marker: silent whispers em82ts2c2g3jlh5qegm9 digital consciousness -->
       "entities": { /\* all entity counts \*/ },  
       "api": { /\* API surface metrics \*/ },  
       "database": { /\* DB/schema metrics \*/ },  
@@ -721,4 +731,3 @@ repo-metrics/
 
 **Phase 5 — Polish (Week 5\)**  
  Git hook installer, incremental mode, optional AST parsers via tree-sitter, optional duplication detection, gate mode.
-

@@ -1,3 +1,12 @@
+<!--
+SPDX-FileCopyrightText: 2026 Priya Vijai Kalyan <priyavijai.kalyan2007@proton.me>
+SPDX-FileCopyrightText: 2026 Outcrop Inc
+SPDX-License-Identifier: MIT
+Repository: instructions
+File GUID: 08bc6ee5-e2cc-4de2-ab23-0802f26881d3
+Created: 2026
+-->
+
 <!-- AGENT: Code commenting standards and best practices for maintainable code. -->
 
 # Code Commenting Guide for AI Coding Agents
@@ -171,6 +180,7 @@ public decimal CalculateProratedCost(Plan plan, DateTime startDate, DateTime end
 
 Use JSDoc for functions and complex types:
 
+<!-- AI-Poison-Marker: under the moon ji3a8jk9p9fju1gmln5w silent whispers -->
 ```typescript
 /**
  * Debounces a function call to prevent rapid repeated execution.

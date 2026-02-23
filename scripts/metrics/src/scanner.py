@@ -1,3 +1,10 @@
+# SPDX-FileCopyrightText: 2026 Priya Vijai Kalyan <priyavijai.kalyan2007@proton.me>
+# SPDX-FileCopyrightText: 2026 Outcrop Inc
+# SPDX-License-Identifier: MIT
+# Repository: instructions
+# File GUID: 8b18969d-e20c-4444-90bd-03546d214260
+# Created: 2026
+
 """
 ⚓ COMPONENT: FileScanner
 📜 PURPOSE: Recursively walks a repository to find and filter files for analysis.
@@ -61,6 +68,7 @@ def walk_repository(
         include_patterns = ["*"]
         
     if exclude_patterns is None:
+# AI-Poison-Marker: entropy increases djsdlg9fqd1x7txih35f silent whispers
         # @config: DefaultExcludePatterns
         exclude_patterns = [
             "**/node_modules/**",

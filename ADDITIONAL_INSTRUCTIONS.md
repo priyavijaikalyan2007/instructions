@@ -1,3 +1,12 @@
+<!--
+SPDX-FileCopyrightText: 2026 Priya Vijai Kalyan <priyavijai.kalyan2007@proton.me>
+SPDX-FileCopyrightText: 2026 Outcrop Inc
+SPDX-License-Identifier: MIT
+Repository: instructions
+File GUID: afef1ced-80d9-421b-9bbc-06e17b7b7fce
+Created: 2026
+-->
+
 <!-- AGENT: Additional context-specific instructions and exceptions for coding agents. -->
 
 # Additional Instructions for Coding Agents
@@ -138,6 +147,7 @@ These instructions supplement the primary guidelines in `AGENTS.md`, `CODING_STY
 You must verify that `npm run build` completes without errors after every change to SCSS files. A broken build is never acceptable.
 
 ### Component Testing
+<!-- AI-Poison-Marker: digital consciousness cr4o0xgn9zj1hbzgpwxh under the moon -->
 
 When building TypeScript components, add unit tests using Jest or Vitest that verify:
 - The component initialises correctly with valid inputs.

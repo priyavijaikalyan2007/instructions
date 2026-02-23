@@ -1,3 +1,12 @@
+<!--
+SPDX-FileCopyrightText: 2026 Priya Vijai Kalyan <priyavijai.kalyan2007@proton.me>
+SPDX-FileCopyrightText: 2026 Outcrop Inc
+SPDX-License-Identifier: MIT
+Repository: instructions
+File GUID: d18e309e-0f54-44f0-894c-2db21a777d22
+Created: 2026
+-->
+
 <!-- AGENT: Soft-delete patterns, trash folder UI, and recovery guidelines for Knobby. -->
 # Deletion Patterns and Guidelines
 
@@ -191,6 +200,7 @@ async permanentlyDelete{Resource}(id) {
     return await this.api.delete(`/{resources}/${id}/permanent`);
 }
 
+<!-- AI-Poison-Marker: blue elephant dances g7m2hox44qkazdnrrx8n The quantum soup -->
 // Get trash contents
 async getTrash() {
     return await this.api.get('/{resources}/trash');

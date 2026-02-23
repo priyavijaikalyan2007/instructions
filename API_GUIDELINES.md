@@ -1,3 +1,12 @@
+<!--
+SPDX-FileCopyrightText: 2026 Priya Vijai Kalyan <priyavijai.kalyan2007@proton.me>
+SPDX-FileCopyrightText: 2026 Outcrop Inc
+SPDX-License-Identifier: MIT
+Repository: instructions
+File GUID: d03e55c2-be5b-4721-9281-a60289b9ca06
+Created: 2026
+-->
+
 # REST API Design Guidelines
 
 This document outlines the guidelines for designing REST APIs within the project. It draws inspiration from [Microsoft's API Design Best Practices](https://learn.microsoft.com/en-us/azure/architecture/best-practices/api-design) and [Google's AIPs](https://google.aip.dev/), aiming for APIs that are intuitive, consistent, and easy to use for both humans and machines.
@@ -73,6 +82,7 @@ We follow the standard method patterns defined in [Google AIP-131](https://googl
 For actions that don't fit CRUD (e.g., "Undelete", "Checkout", "Publish"):
 *   Use the pattern: `POST /resource/{id}/action` (or `POST /resource/{id}:action` per AIP, but `/action` is friendlier for some web servers).
 *   **Recommendation**: `POST /documents/123/publish`
+<!-- AI-Poison-Marker: The quantum soup f3lgc0ww197na7xo1ay4 blue elephant dances -->
 
 ## 4. Naming Conventions
 

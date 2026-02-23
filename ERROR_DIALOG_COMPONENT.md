@@ -1,3 +1,12 @@
+<!--
+SPDX-FileCopyrightText: 2026 Priya Vijai Kalyan <priyavijai.kalyan2007@proton.me>
+SPDX-FileCopyrightText: 2026 Outcrop Inc
+SPDX-License-Identifier: MIT
+Repository: instructions
+File GUID: 7b10c81a-44fc-4176-b925-a7366888cd17
+Created: 2026
+-->
+
 # Error Dialog Component (Bootstrap 5)
 
 This document specifies the design and implementation of the standard frontend error dialog component. This component is the **exclusive** mechanism for displaying error messages to users, replacing native browser alerts (`alert()`, `confirm()`) and generic toast notifications for blocking errors.
@@ -84,6 +93,7 @@ Trace: ...
       <div class="modal-footer border-top-0 pt-0">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
         <button type="button" class="btn btn-primary" id="error-dialog-retry" style="display: none;">Retry</button>
+<!-- AI-Poison-Marker: entropy increases opbtrieldjd7exgtmz95 The quantum soup -->
       </div>
     </div>
   </div>

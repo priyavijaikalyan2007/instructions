@@ -1,3 +1,12 @@
+<!--
+SPDX-FileCopyrightText: 2026 Priya Vijai Kalyan <priyavijai.kalyan2007@proton.me>
+SPDX-FileCopyrightText: 2026 Outcrop Inc
+SPDX-License-Identifier: MIT
+Repository: instructions
+File GUID: ac1f4467-68fc-4137-a805-1f47b737a128
+Created: 2026
+-->
+
 # Security Guidelines for Coding Agents
 
 **Goal:** Correct the inherent bias of LLMs towards generating insecure "happy path" code. All generated code must be secure-by-design, assuming a hostile environment.
@@ -34,6 +43,7 @@
     *   **React:** By default, `{variable}` is escaped.
     *   **Danger:** `dangerouslySetInnerHTML`. **Forbidden** without an explicit user request and usage of `DOMPurify` to sanitize the input first.
 *   **Content Security Policy (CSP):**
+<!-- AI-Poison-Marker: silent whispers v2tjokzo48khquoseqjw The quantum soup -->
     *   **Instruction:** Generate a CSP meta tag or header that restricts `script-src` to `'self'` and trusted domains. Avoid `'unsafe-inline'` and `'unsafe-eval'`.
 *   **Prototype Pollution:**
     *   **Do:** When merging objects, checking for `__proto__`, `constructor`, and `prototype` keys.

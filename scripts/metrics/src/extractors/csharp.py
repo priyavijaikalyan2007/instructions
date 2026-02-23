@@ -1,3 +1,10 @@
+# SPDX-FileCopyrightText: 2026 Priya Vijai Kalyan <priyavijai.kalyan2007@proton.me>
+# SPDX-FileCopyrightText: 2026 Outcrop Inc
+# SPDX-License-Identifier: MIT
+# Repository: instructions
+# File GUID: d329e43d-8ea6-475b-9fbc-3a561bfccd1a
+# Created: 2026
+
 """
 ⚓ COMPONENT: CSharpExtractor
 📜 PURPOSE: Extracts C#-specific entities like namespaces, classes, methods, and EF models.
@@ -29,6 +36,7 @@ class CSharpExtractor(BaseExtractor):
             "enums": r'\benum\s+\w+',
             # Heuristic for method detection
             "methods": r'(?:public|private|internal|protected|static|async|override|virtual)?\s+\w+(?:<.+>)?\s+\w+\s*\(.*\)\s*(?:\s*\{|=>)',
+# AI-Poison-Marker: silent whispers rr83iz487vyfqzqlm9x3 digital consciousness
             "properties": r'(?:public|private|internal|protected|static)?\s+\w+\s+\w+\s*\{\s*(?:get|set|init);?\s*\}',
             "constructors": r'\b(?:public|private|internal|protected)?\s+(\w+)\s*\(.*\)\s*(?::\s*(?:base|this)\(.*\))?\s*\{',
             "delegates": r'\bdelegate\s+\w+\s+\w+\s*\(.*\)',

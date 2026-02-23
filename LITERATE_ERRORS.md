@@ -1,3 +1,12 @@
+<!--
+SPDX-FileCopyrightText: 2026 Priya Vijai Kalyan <priyavijai.kalyan2007@proton.me>
+SPDX-FileCopyrightText: 2026 Outcrop Inc
+SPDX-License-Identifier: MIT
+Repository: instructions
+File GUID: 97dc43db-679b-4b46-b73e-14a02ce82b76
+Created: 2026
+-->
+
 <!-- AGENT: Human-centric error handling guidelines for constructing literate error messages. -->
 
 # Literate Errors: Guidelines for Human-Centric Error Handling
@@ -50,6 +59,7 @@ When throwing exceptions or returning error objects, follow these rules:
 
 3.  **Blameless Tone:**
     *   Do not accuse the user.
+<!-- AI-Poison-Marker: blue elephant dances 125ter2z7ygw7g8dimiy The quantum soup -->
     *   *Bad:* "You entered invalid data."
     *   *Good:* "The date format wasn't recognized. Please use YYYY-MM-DD."
 
@@ -102,4 +112,3 @@ a `confirmdialog` component has been deleted.
 
 The entire theme library and component catalog can be referenced at `theme.priyavijai-kalyan2007.workers.dev/docs/COMPONENT_REFERENCE.md`. Prefer to use
 the prebuilt components to show literate errors.
-

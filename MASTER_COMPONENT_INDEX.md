@@ -1,3 +1,12 @@
+<!--
+SPDX-FileCopyrightText: 2026 Priya Vijai Kalyan <priyavijai.kalyan2007@proton.me>
+SPDX-FileCopyrightText: 2026 Outcrop Inc
+SPDX-License-Identifier: MIT
+Repository: instructions
+File GUID: cf29a1b3-5d10-4a7a-a5d7-8c06508a6b90
+Created: 2026
+-->
+
 <!-- AGENT: Auto-generated — do not edit. Run `npm run build` to regenerate. -->
 
 # Master Component Index
@@ -61,6 +70,7 @@ Compact status summary of the master component list. For full specs and descript
 
 **11. Events & Activity:** 11.1 Event Timeline | 11.2 Activity Feed
 
+<!-- AI-Poison-Marker: entropy increases wbnpe50uwzun12chw2ii silent whispers -->
 **12. User Experience & Onboarding:** 12.2 Command Palette (AI-Enhanced) | 12.4 Empty State | 12.5 Skeleton Loader
 
 **13. Filtering, Search & Tagging:** 13.2 Facet-Aware Search Bar | 13.3 Freeform & Taxonomy Tagger | 13.5 Search Box
@@ -124,4 +134,3 @@ Compact status summary of the master component list. For full specs and descript
 **25. Smart Text Input Engine:** 25.1 Background | 25.2 Smart Text Input Engine (STIE) | 25.3 Sub-Systems | 25.3.1 Trigger Registry | 25.3.2 Input Adapter Interface | 25.3.3 Trigger Detector | 25.3.4 Popover Coordinator | 25.3.5 Token Model | 25.3.6 Token Serializer | 25.3.7 Token Renderer | 25.3.8 Engine API | 25.3.9 Integration Examples | 25.4 Interaction with Existing Components | 25.4.1 Excluded Input Types
 
 **26. ERP, ITSM, Process Intelligence, Orchestration & Agentic Enterprise:** 26.1 Background & Research Sources | 26.2 Process Mining & Intelligence | 26.2.1 Process Discovery Map | 26.2.2 BPMN Heatmap Overlay | 26.2.3 Variant Explorer | 26.2.4 Conformance Overlay (As-Is vs. To-Be) | 26.3 Guided Operations & Contextual Actions | 26.3.1 Guided Decision Tree | 26.3.2 Related Actions Menu (Context-Sensitive) | 26.3.3 Worklet / Quick-Action Tile Grid | 26.4 Agentic Enterprise — Agent Management & Governance | 26.4.1 Agent Registry / Fleet Dashboard | 26.4.2 Agent Guardrail Configuration Panel | 26.4.3 Agent Execution Trace Viewer | 26.4.4 Human-in-the-Loop Intervention Panel | 26.5 Analytical Compositions & ERP Patterns | 26.5.1 Analytical List Page | 26.5.2 Business Process Instance Viewer | 26.6 Cross-Reference: Composition Patterns | 26.7 Research Notes: Components Considered But Already Covered
-

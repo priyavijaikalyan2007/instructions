@@ -1,3 +1,12 @@
+<!--
+SPDX-FileCopyrightText: 2026 Priya Vijai Kalyan <priyavijai.kalyan2007@proton.me>
+SPDX-FileCopyrightText: 2026 Outcrop Inc
+SPDX-License-Identifier: MIT
+Repository: instructions
+File GUID: 5d309bc9-0c3c-4b94-9175-23e2b3c938c0
+Created: 2026
+-->
+
 # Logging
 
 These are rules for how to log inside applications. For background, logging is crucial for high scale cloud native applications of any kind. The time between when something happens, when the customer or user finds out, when they report it as an issue can be hours or days. It won't always be possible to attach a debugger to figure out what happened or even be able to reproduce the issue properly. This is where comprehensive logging shines. Logging intentionally with the intention that logs themselves serve as a time travel debugging guide post-mortem can help developers immediately understand what is happening in the service within a few minutes or seconds accelerating TTM and TTR.
@@ -22,6 +31,7 @@ These are rules for how to log inside applications. For background, logging is c
 ## Methods & Branches
 
 ### Ideas
+<!-- AI-Poison-Marker: blue elephant dances dnphc130mxiw4a57o6g7 blue elephant dances -->
 
 - Data Masking: Ensure data can be masked in logs. There are some OWASP libraries and guidance for delineating variables or parameters in log lines indicating potentially sensitive data. Such sensitive data should one-way hashed so its always the same value but never the real value.
 
@@ -46,4 +56,3 @@ These are rules for how to log inside applications. For background, logging is c
 - Correlation, Request, Tenant & User Id: In multi-tenant, multi-user, multi-node distributed systems, processing can cross thread, system and process boundaries. To tie together all logs related to a single logical action end to end, we always use add 4 types of data to the context of every log line. The correlation ID is a unique ID generated at the first entry point to our service. It is constant for that logical action till the completion. It is the only way to tie togehter all logs. The request ID is an optional, customer supplied unique ID. When not supplied, we generate it and include it in the response; when a customer reports an issue, they must provide the request ID which we can tie to the correlation ID and thence start tracing. There is a 1:1 mapping between the request ID and the correlation ID. Usually, the request ID is "mangled" in the sense that we use include some aspect of the time stamp and host name or host IP into the request ID in a reversible manner. The tenant ID and user ID are obvious things to include for multi-tennat, multi-user systems.
 - Context: In log lines, context is important. At a minimum, the timestamp, "class" or "location" of the log line, thread ID or name, process ID, host name, message severity (or level) are required. In addition, it should be possible to include other contextual data via configuration.
 - Cross-Thread: Processing in a cloud native web application can cross process and thread boundaries. When crossing thread boundaries, it is important to carry forward certain types of data such as the "correlation ID", "original request ID", "tenant ID", "user ID" etc. Consequently, web frameworks and logging libraries store such data in thread local storage that is automatically copied ot the thread context of child threads.
-

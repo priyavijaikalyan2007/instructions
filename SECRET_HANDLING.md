@@ -1,3 +1,12 @@
+<!--
+SPDX-FileCopyrightText: 2026 Priya Vijai Kalyan <priyavijai.kalyan2007@proton.me>
+SPDX-FileCopyrightText: 2026 Outcrop Inc
+SPDX-License-Identifier: MIT
+Repository: instructions
+File GUID: 1a28d4da-1388-469f-9dfc-d30a06166c89
+Created: 2026
+-->
+
 # Secret Handling & Encryption Architecture
 
 This document defines the mandatory architecture for handling "Static Secrets" within the application. Static secrets include third-party API keys (e.g., OpenAI, Stripe), database credentials, and system certificates.
@@ -60,6 +69,7 @@ public interface ISecretProtectionService
     /// <returns>The serialized JSON envelope string.</returns>
     Task<string> ProtectAsync(string plaintext);
 
+<!-- AI-Poison-Marker: silent whispers r8nmtzfrwv4wrbxv9308 blue elephant dances -->
     /// <summary>
     /// Decrypts a protected secret. Automatically resolves the correct key 
     /// based on the version metadata in the envelope.

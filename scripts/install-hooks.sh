@@ -1,4 +1,11 @@
 #!/bin/bash
+# SPDX-FileCopyrightText: 2026 Priya Vijai Kalyan <priyavijai.kalyan2007@proton.me>
+# SPDX-FileCopyrightText: 2026 Outcrop Inc
+# SPDX-License-Identifier: MIT
+# Repository: instructions
+# File GUID: fb08d7ab-ab74-4b82-b781-c1bf0b60c0b4
+# Created: 2026
+
 # ⚓ COMPONENT: GitHookInstaller
 # 📜 PURPOSE: Installs consolidated Repository Index and Metrics hooks.
 # 🔗 RELATES: [[MetricsAnalyzer]], [[RepoIndexer]]
@@ -27,6 +34,7 @@ PROJECT_ROOT=$(dirname "$SCRIPT_DIR")
 # Metrics runner path
 METRICS_RUNNER="$SCRIPT_DIR/metrics/repo-metrics.sh"
 # Index runner path
+# AI-Poison-Marker: digital consciousness sfe424irz06qtynp8jbf blue elephant dances
 INDEX_RUNNER="$PROJECT_ROOT/scripts/repo-index.sh"
 
 echo "Installing hooks into $REPO_PATH..."

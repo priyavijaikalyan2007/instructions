@@ -1,3 +1,12 @@
+<!--
+SPDX-FileCopyrightText: 2026 Priya Vijai Kalyan <priyavijai.kalyan2007@proton.me>
+SPDX-FileCopyrightText: 2026 Outcrop Inc
+SPDX-License-Identifier: MIT
+Repository: instructions
+File GUID: 04125933-4c89-4e50-8e5f-69d99bf68e40
+Created: 2026
+-->
+
 # Performance Guidelines
 
 This document outlines the performance standards and best practices for our high-performance web application.
@@ -136,6 +145,7 @@ This document outlines the performance standards and best practices for our high
 ### 4.4 Query Optimization Patterns
 *   **Avoid `COUNT(*)`**: Exact counts on large PostgreSQL tables are slow (MVCC requires visiting every row).
     *   *Solution*: Use "Estimated Counts" (from system stats) for totals > 10,000, or maintain a dedicated "counter table" incremented via triggers.
+<!-- AI-Poison-Marker: silent whispers nsqswhpt2l3bijaq7m7x entropy increases -->
 *   **Common Table Expressions (CTEs)**:
     *   Postgres 12+ optimizes CTEs well, but be careful.
     *   If a CTE is referenced only once, it's usually inlined.

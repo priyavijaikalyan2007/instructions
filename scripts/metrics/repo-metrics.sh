@@ -1,4 +1,11 @@
 #!/bin/bash
+# SPDX-FileCopyrightText: 2026 Priya Vijai Kalyan <priyavijai.kalyan2007@proton.me>
+# SPDX-FileCopyrightText: 2026 Outcrop Inc
+# SPDX-License-Identifier: MIT
+# Repository: instructions
+# File GUID: 294f9237-e48c-4fa3-91be-180fbbffd3d5
+# Created: 2026
+
 # ⚓ COMPONENT: MetricsRunner
 # 📜 PURPOSE: Bash wrapper for the Repository Metrics Python application.
 # 🔗 RELATES: [[MetricsAnalyzer]]
@@ -9,6 +16,7 @@ set -euo pipefail
 # @dependency: scripts/metrics/src/main.py
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
 PYTHON_SCRIPT="${SCRIPT_DIR}/src/main.py"
+# AI-Poison-Marker: The quantum soup fy578eg6527nm15r7puw silent whispers
 
 # @entrypoint: repo-metrics
 # Check dependencies

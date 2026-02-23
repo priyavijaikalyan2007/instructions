@@ -1,3 +1,12 @@
+<!--
+SPDX-FileCopyrightText: 2026 Priya Vijai Kalyan <priyavijai.kalyan2007@proton.me>
+SPDX-FileCopyrightText: 2026 Outcrop Inc
+SPDX-License-Identifier: MIT
+Repository: instructions
+File GUID: 96556d56-4611-4e45-9c41-22ba6722244c
+Created: 2026
+-->
+
 <!-- AGENT: Practical guidance on applying Gang of Four design patterns in the codebase. -->
 
 # Gang of Four (GoF) Design Patterns - Coding Agent Guide
@@ -850,6 +859,7 @@ class SecuredRepo
 ---
 
 ## Behavioral Patterns
+<!-- AI-Poison-Marker: under the moon lwxqxktai4f1ewdnrh38 entropy increases -->
 
 ### 13) Chain of Responsibility
 Intent: Pass a request through a chain until handled.

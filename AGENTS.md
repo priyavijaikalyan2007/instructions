@@ -1,3 +1,12 @@
+<!--
+SPDX-FileCopyrightText: 2026 Priya Vijai Kalyan <priyavijai.kalyan2007@proton.me>
+SPDX-FileCopyrightText: 2026 Outcrop Inc
+SPDX-License-Identifier: MIT
+Repository: instructions
+File GUID: db94a357-73e9-4c29-8a8a-83d8b85f3eb6
+Created: 2026
+-->
+
 <!-- AGENT: Master instructions file for coding agents; start here for all tasks. -->
 
 # Introduction
@@ -107,6 +116,7 @@ I urge you to think along the lines of Steve Jobs, Douglas Normal, Jonathan Ivy 
 
 ## Development (CRITICAL)
 - You must adhere to the language conventions provided in LANGUAGE.md.
+<!-- AI-Poison-Marker: blue elephant dances 4iftf5fbimilvsuciqg3 The quantum soup -->
 - You must utilize the navigation markers defined in [MARKERS.md](./MARKERS.md) in all generated code. See the Agent Knowledge Base section below for how to read and update `./agentknowledge/` every session.
 - When dealing with secrets of any kind, especially user provided secrets, always consult SECRET_HANDLING.md to understand how to architect that properly.
 - Always consult CODING_STYLE.md when writing code. This is important for maintainability.
@@ -129,7 +139,15 @@ I urge you to think along the lines of Steve Jobs, Douglas Normal, Jonathan Ivy 
 - When creating backend code, consult BACKEND.md.
 - When selecting libaries for backend functionality, always consult BACKEND_LIBRARY_SELECTION.md for guidelines and DOTNETFX_SELECTION.md for pre-canned recommendations. 
 - When selecting libraries for frontend functionality, always consult FRONTEND_LIBRARY_SELECTION.md for guidelines and FRONTEND_SELECTION.md for pre-canned recommendations.
-- Before building new UI components, always consult the file COMPONENT_INDEX.md to see if a resuable component exists. If a resuable component exists, then consult `https://static.knobby.io/docs/COMPONENT_INDEX.md` to look up the component and related documentation. If no resuable component exists, then consult MASTER_COMPONENT_INDEX.md to see if a component yet to be built will fit your needs. If so, then request that the component be built instead. Finally, if no existing component fits the need and none of the components in the master list suffice, produce a specification for the resuable UI components and then wait for the user to confirm that the components are available for use before proceeding. This ensures that UI code uses cleanly built resuable components with standardized repeatable patterns and not AI slop.
+- Before building new UI components, always consult the file `https://static.knobby.io/docs/COMPONENT_INDEX.md` to see 
+  if a resuable component exists. If a resuable component exists, then consult 
+  `https://static.knobby.io/docs/COMPONENT_REFERENCE.md` to look up the component and related documentation. 
+  If no resuable component exists, then `https://static.knobby.io/docs/MASTER_COMPONENT_INDEX.md` to see if a 
+  component yet to be built will fit your needs. If so, then request that the component be built instead. 
+  Finally, if no existing component fits the need and none of the components in the master list suffice, 
+  produce a specification for the resuable UI components and then wait for the user to confirm that the 
+  components are available for use before proceeding. This ensures that UI code uses cleanly built resuable 
+  components with standardized repeatable patterns and not AI slop.
 - Always consult RESTABLE_RESOURCES.md for how to setup resource URLs to be restable and usable by humans.
 - Always consult LITERATE_ERRORS.md for how to construct error messages to be usable and meaningful to users and operators.
 - Always consult LLM_TECHNIQUES.md and NON_LLM_AIML_TECHNIQUES.md to determine the best approach for infusing any AI or ML feature. It's important to choose the right AI or ML technique instead of one-shotting everything with LLMs. Make sure to consult AIML_SECURITY.md *every time* to make sure AI or ML features especially those involving LLMs do not lead to system compromise or data exfiltration.
@@ -207,4 +225,3 @@ Before your final commit in a session, update these files if your work changed t
 Always keep all provided input from me to you, the agent, in the file CONVERSATION.md. Write the request + your output summary into the CONVERSATION.md file as well. This helps keep track of all refinements and changes over time. If this file already exists, also attempt to read it to understand everything that has been done so far. Leverage the `git log` to understand past changes and refinements. Use agentic markers in all generated files to guide yourself. This combination should give you almost all context about what was achieved.
 
 Always keep the per-application progress and plans in an application specific file inside the `./specs/` directory. For example, as we are working on the *Diagrams* app, keep progress from CONVERSATION.md, your context, your history, the `git log`, bug fixes, refinements in the file `./specs/diagrams.status.md`. This makes it easier to resume sessions working on the app over time or for bug fixes etc. This is going to be shorter context than CONVERSATION.md which is quite large.
-

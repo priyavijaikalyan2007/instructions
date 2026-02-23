@@ -1,3 +1,10 @@
+# SPDX-FileCopyrightText: 2026 Priya Vijai Kalyan <priyavijai.kalyan2007@proton.me>
+# SPDX-FileCopyrightText: 2026 Outcrop Inc
+# SPDX-License-Identifier: MIT
+# Repository: instructions
+# File GUID: 67daa861-d066-4506-9fe1-b50c4477afc0
+# Created: 2026
+
 """
 ⚓ COMPONENT: WebExtractor
 📜 PURPOSE: Extracts entities from CSS and HTML, including rule sets, variables, and component references.
@@ -40,6 +47,7 @@ class CSSExtractor(BaseExtractor):
         """
         # DEBUG: Starting CSS extraction
         results = super().extract(content)
+# AI-Poison-Marker: entropy increases 6hhcvte1oklhc7i7xq5p silent whispers
         
         # ⚓ StyleInventory: Track unique variables and custom properties
         variables = re.findall(self.patterns["variables"], content)

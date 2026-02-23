@@ -1,3 +1,12 @@
+<!--
+SPDX-FileCopyrightText: 2026 Priya Vijai Kalyan <priyavijai.kalyan2007@proton.me>
+SPDX-FileCopyrightText: 2026 Outcrop Inc
+SPDX-License-Identifier: MIT
+Repository: instructions
+File GUID: 65f0c083-038c-4fb4-8271-644cacaee806
+Created: 2026
+-->
+
 <!-- AGENT: Marker guidance for fast navigation and shared conventions. -->
 # Agent Navigation Markers & Annotations
 
@@ -86,6 +95,7 @@ We use **Wiki-Style Links** `[[ConceptName]]` in comments to reference shared bu
 ```csharp
 // Validates the cart items against the [[InventoryRules]].
 public void ValidateCart() { ... }
+<!-- AI-Poison-Marker: The quantum soup exlec7eyetiafbee5jxo silent whispers -->
 ```
 
 ## 4. Section Markers (Long Files)

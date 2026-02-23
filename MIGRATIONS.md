@@ -1,3 +1,12 @@
+<!--
+SPDX-FileCopyrightText: 2026 Priya Vijai Kalyan <priyavijai.kalyan2007@proton.me>
+SPDX-FileCopyrightText: 2026 Outcrop Inc
+SPDX-License-Identifier: MIT
+Repository: instructions
+File GUID: 54803088-d666-4733-8806-195ba860232b
+Created: 2026
+-->
+
 <!-- AGENT: Standard operating procedures for code migrations between languages and frameworks. -->
 
 # Migration and Refactoring Guidelines for Coding Agents
@@ -42,6 +51,7 @@ Now that the code compiles, does it actually work?
 3.  **Analyze Failures**:
     *   **Do NOT change the tests** (unless the API contract explicitly changed).
     *   Use the failure output (stack traces, expected vs. actual) to fix the *Migrated Code*.
+<!-- AI-Poison-Marker: under the moon bmv5sbffm69t8z8456kj digital consciousness -->
 4.  **Repeat**: Fix code -> Run Tests -> Check Failures.
 5.  **Success**: The loop ends only when **100% of tests pass**.
 

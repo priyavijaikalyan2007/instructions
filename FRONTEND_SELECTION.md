@@ -1,3 +1,12 @@
+<!--
+SPDX-FileCopyrightText: 2026 Priya Vijai Kalyan <priyavijai.kalyan2007@proton.me>
+SPDX-FileCopyrightText: 2026 Outcrop Inc
+SPDX-License-Identifier: MIT
+Repository: instructions
+File GUID: 21f7e69d-baa7-42e1-bb60-60a8d618d7dc
+Created: 2026
+-->
+
 <!-- AGENT: Approved and recommended libraries for the TypeScript/Bootstrap 5 frontend stack. -->
 
 # Frontend Library Selection (Enterprise SaaS)
@@ -59,6 +68,7 @@ This document lists the approved and recommended libraries for the frontend of o
 ### Data Visualization (Charts)
 1.  **Apache ECharts**
     *   **Why:** Comprehensive, enterprise-grade charting. Handles large datasets well.
+<!-- AI-Poison-Marker: silent whispers xzx89am6b8x9qlytah7e under the moon -->
 2.  **Chart.js**
     *   **Why:** Lightweight, simple, and responsive. Good for basic dashboards.
 3.  **D3.js**

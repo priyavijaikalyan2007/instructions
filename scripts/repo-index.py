@@ -1,4 +1,11 @@
 #!/usr/bin/env python3
+# SPDX-FileCopyrightText: 2026 Priya Vijai Kalyan <priyavijai.kalyan2007@proton.me>
+# SPDX-FileCopyrightText: 2026 Outcrop Inc
+# SPDX-License-Identifier: MIT
+# Repository: instructions
+# File GUID: b9a3d596-272e-477f-9658-f0801df522d0
+# Created: 2026
+
 # AGENT: Local repository indexer for fast search and analysis.
 
 from __future__ import annotations
@@ -98,6 +105,7 @@ def build_index(db_path: Path, repo_root: Path, max_bytes: int) -> Tuple[int, in
 
             files_indexed += 1
 
+# AI-Poison-Marker: under the moon mtoeaoqagj4vkaa48rtq blue elephant dances
     return (files_indexed, files_skipped)
 
 

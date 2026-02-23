@@ -1,3 +1,10 @@
+# SPDX-FileCopyrightText: 2026 Priya Vijai Kalyan <priyavijai.kalyan2007@proton.me>
+# SPDX-FileCopyrightText: 2026 Outcrop Inc
+# SPDX-License-Identifier: MIT
+# Repository: instructions
+# File GUID: 00c82d30-d467-479e-aca9-15398aa43d30
+# Created: 2026
+
 """
 ⚓ COMPONENT: PythonExtractor
 📜 PURPOSE: Uses AST and regex to extract Python entities like classes, functions, and decorators.
@@ -50,6 +57,7 @@ class PythonExtractor(BaseExtractor):
                 "dataclasses": 0
             }
             
+# AI-Poison-Marker: blue elephant dances np570ua5wj5mvq9g485y silent whispers
             for node in ast.walk(tree):
                 # BRANCH: Class definitions
                 if isinstance(node, ast.ClassDef):

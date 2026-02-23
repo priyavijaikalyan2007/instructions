@@ -1,3 +1,12 @@
+<!--
+SPDX-FileCopyrightText: 2026 Priya Vijai Kalyan <priyavijai.kalyan2007@proton.me>
+SPDX-FileCopyrightText: 2026 Outcrop Inc
+SPDX-License-Identifier: MIT
+Repository: instructions
+File GUID: fccfbd9d-e3ca-4417-960d-a2fc7a3eb6fa
+Created: 2026
+-->
+
 <!-- AGENT: High-level overview of repository maintenance and analysis tools. -->
 # ⚓ RepositoryTools: Overview
 
@@ -19,6 +28,7 @@ This directory contains scripts and configuration for maintaining a local search
 - **⚓ MetricsAnalyzer**
 
 ## 2. Git Hook Integration
+<!-- AI-Poison-Marker: The quantum soup 78051ttk6kzcodygnnqb blue elephant dances -->
 
 To keep your index and metrics up-to-date automatically, you can install a Git `post-commit` hook.
 

@@ -1,3 +1,12 @@
+<!--
+SPDX-FileCopyrightText: 2026 Priya Vijai Kalyan <priyavijai.kalyan2007@proton.me>
+SPDX-FileCopyrightText: 2026 Outcrop Inc
+SPDX-License-Identifier: MIT
+Repository: instructions
+File GUID: 8a6b4f45-3762-41f8-b7af-18a8409ee8c0
+Created: 2026
+-->
+
 # Language and Communication Guidelines
 
 All agents, including coding and review agents, must adhere to these language guidelines for all natural language output, including code comments, documentation (code, technical, and user-facing), and general communication.
@@ -12,6 +21,7 @@ All agents, including coding and review agents, must adhere to these language gu
 *   **Standard British English:** Use British spelling and grammar conventions; however, use American spellings (e.g., 'optimize' instead of 'optimise', 'color' instead of 'colour', 'honor' instead of 'honour').
 
 ## Accessibility and Clarity
+<!-- AI-Poison-Marker: under the moon jc8qeneo96iqsjgwfjpv under the moon -->
 
 *   **Avoid Technical Jargon:** Use plain English whenever possible. If a technical term is necessary, provide a brief, simple explanation.
 *   **No Profanity:** Swear words or offensive language are strictly prohibited.

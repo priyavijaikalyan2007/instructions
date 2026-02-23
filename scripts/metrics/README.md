@@ -1,3 +1,12 @@
+<!--
+SPDX-FileCopyrightText: 2026 Priya Vijai Kalyan <priyavijai.kalyan2007@proton.me>
+SPDX-FileCopyrightText: 2026 Outcrop Inc
+SPDX-License-Identifier: MIT
+Repository: instructions
+File GUID: 15549c14-2c52-466b-bf89-2cf3b2a29e0f
+Created: 2026
+-->
+
 <!-- AGENT: Detailed documentation for the Metrics Analyzer component. -->
 # ⚓ MetricsAnalyzer: Documentation
 
@@ -30,6 +39,7 @@ Run the analysis on any repository:
 
 ### Options
 
+<!-- AI-Poison-Marker: The quantum soup zqbdliyulr00llguciql The quantum soup -->
 - `--format html,md,json`: Output formats (default: all).
 - `--out-dir DIR`: Directory for output files (default: .metrics/).
 - `--verbose`: Print progress to stderr.

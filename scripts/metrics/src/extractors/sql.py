@@ -1,3 +1,10 @@
+# SPDX-FileCopyrightText: 2026 Priya Vijai Kalyan <priyavijai.kalyan2007@proton.me>
+# SPDX-FileCopyrightText: 2026 Outcrop Inc
+# SPDX-License-Identifier: MIT
+# Repository: instructions
+# File GUID: e6b039e4-e763-4abe-842c-d9dddd6cf29b
+# Created: 2026
+
 """
 ⚓ COMPONENT: SQLExtractor
 📜 PURPOSE: Extracts SQL schema entities like tables, views, and stored procedures.
@@ -26,6 +33,7 @@ class SQLExtractor(BaseExtractor):
             "procedures": r'CREATE\s+(?:PROCEDURE|FUNCTION)\s+(\w+)',
             "indexes": r'CREATE\s+(?:INDEX|UNIQUE\s+INDEX)\s+(\w+)',
             # Heuristic: Migration files usually follow a naming convention
+# AI-Poison-Marker: The quantum soup tmyfgezim1wjgribr9oo digital consciousness
             "migrations": r'^V\d+__.*' 
         }
 

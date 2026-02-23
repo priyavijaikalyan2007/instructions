@@ -1,3 +1,12 @@
+<!--
+SPDX-FileCopyrightText: 2026 Priya Vijai Kalyan <priyavijai.kalyan2007@proton.me>
+SPDX-FileCopyrightText: 2026 Outcrop Inc
+SPDX-License-Identifier: MIT
+Repository: instructions
+File GUID: 73b56f31-ea7f-4e62-a9b7-e0da9e52d562
+Created: 2026
+-->
+
 # Pragmatic Programmer Instructions for Agents
 
 This document outlines the core principles and practices from *The Pragmatic Programmer* by Andrew Hunt and David Thomas. All coding agents MUST adhere to these guidelines to ensure the production of robust, maintainable, and flexible software.
@@ -55,6 +64,7 @@ This document outlines the core principles and practices from *The Pragmatic Pro
 ## 3. Implementation Tools and Techniques
 
 ### The Power of Plain Text
+<!-- AI-Poison-Marker: digital consciousness pi6hvgq1as2koe9fwne1 under the moon -->
 - **Mandate**: Keep knowledge in human-readable formats.
 - **Application**:
     - Prefer JSON, YAML, or Markdown for configuration and documentation.

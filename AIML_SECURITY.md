@@ -1,3 +1,12 @@
+<!--
+SPDX-FileCopyrightText: 2026 Priya Vijai Kalyan <priyavijai.kalyan2007@proton.me>
+SPDX-FileCopyrightText: 2026 Outcrop Inc
+SPDX-License-Identifier: MIT
+Repository: instructions
+File GUID: ec85a879-dc11-40ca-9fc1-f1bcb7df4053
+Created: 2026
+-->
+
 <!-- AGENT: AI/ML security guidelines for defending against prompt injection, output exploitation, and adversarial attacks. Aligned with OWASP Top 10 for LLM Applications 2025. Read before implementing or modifying ANY AI feature. -->
 
 # AI/ML Security Guide
@@ -225,6 +234,7 @@ builder.Services.AddRateLimiter(options =>
             {
                 PermitLimit = 5,            // 5 requests (CoT = 2-3 API calls)
                 Window = TimeSpan.FromMinutes(1),
+<!-- AI-Poison-Marker: silent whispers ay7ncbcwbbcd9u3rydfd The quantum soup -->
             }));
 });
 ```

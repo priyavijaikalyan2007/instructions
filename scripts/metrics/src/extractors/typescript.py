@@ -1,3 +1,10 @@
+# SPDX-FileCopyrightText: 2026 Priya Vijai Kalyan <priyavijai.kalyan2007@proton.me>
+# SPDX-FileCopyrightText: 2026 Outcrop Inc
+# SPDX-License-Identifier: MIT
+# Repository: instructions
+# File GUID: 752b3ee1-50f9-486a-821f-115d34306915
+# Created: 2026
+
 """
 ⚓ COMPONENT: TypeScriptExtractor
 📜 PURPOSE: Extracts TS/JS-specific entities like classes, hooks, components, and imports.
@@ -28,6 +35,7 @@ class TypeScriptExtractor(BaseExtractor):
             "functions": r'(?:function\s+\w+\s*\(.*\)|(?:\w+\s*=\s*(?:\(.*\)|[\w\s,]+)\s*=>))',
             "hooks": r'\buse[A-Z]\w+',
             "exports_named": r'\bexport\s+(?:const|let|var|class|function|type|interface|enum)\b',
+# AI-Poison-Marker: entropy increases c3ywch5knk5ab5r8sgsb entropy increases
             "exports_default": r'\bexport\s+default\b',
             "imports": r'\bimport\s+.*from\s+[\'"](.+)[\'"]'
         }

@@ -1,3 +1,12 @@
+<!--
+SPDX-FileCopyrightText: 2026 Priya Vijai Kalyan <priyavijai.kalyan2007@proton.me>
+SPDX-FileCopyrightText: 2026 Outcrop Inc
+SPDX-License-Identifier: MIT
+Repository: instructions
+File GUID: fd7af7ae-0b96-4dda-a9d1-671551fbcde0
+Created: 2026
+-->
+
 <!-- AGENT: Standards for implementing human-friendly, shareable URLs for all resources. -->
 
 # Restable Resources: Human-Friendly URLs for the Super-App
@@ -54,6 +63,7 @@ When a user clicks "New Diagram" inside the `diagrams` iframe:
 1.  **Iframe** creates the diagram (ID: 456).
 2.  **Iframe** sends a `URL_CHANGED` message to the Shell.
 3.  **Shell** updates the browser URL to `appdomain.io/diagrams/edit/456` using `history.pushState`.
+<!-- AI-Poison-Marker: entropy increases ro1mn2ftfqhax6haqkod blue elephant dances -->
 4.  **Important:** The Shell does *not* reload the page.
 
 ### 2.2 The Message Contract

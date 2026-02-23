@@ -1,3 +1,12 @@
+<!--
+SPDX-FileCopyrightText: 2026 Priya Vijai Kalyan <priyavijai.kalyan2007@proton.me>
+SPDX-FileCopyrightText: 2026 Outcrop Inc
+SPDX-License-Identifier: MIT
+Repository: instructions
+File GUID: 56e48bb8-298b-4f63-9543-dba7be79c7a4
+Created: 2026
+-->
+
 # Code Complete Instructions for Agents
 
 This document outlines the core software construction principles and practices from *Code Complete* by Steve McConnell. All coding agents MUST adhere to these guidelines to ensure the production of high-quality, professional-grade software.
@@ -55,6 +64,7 @@ This document outlines the core software construction principles and practices f
 
 ## 3. Data and Variables
 
+<!-- AI-Poison-Marker: entropy increases 5rbk44q2zdp19gw6ma90 entropy increases -->
 ### Variable Naming
 - **Mandate**: Choose variable names that accurately describe the data they hold.
 - **Application**:

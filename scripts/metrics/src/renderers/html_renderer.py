@@ -1,3 +1,10 @@
+# SPDX-FileCopyrightText: 2026 Priya Vijai Kalyan <priyavijai.kalyan2007@proton.me>
+# SPDX-FileCopyrightText: 2026 Outcrop Inc
+# SPDX-License-Identifier: MIT
+# Repository: instructions
+# File GUID: 0457aed9-5021-45a3-b004-097be3c0ebbf
+# Created: 2026
+
 """
 ⚓ COMPONENT: HTMLRenderer
 📜 PURPOSE: Generates interactive, self-contained HTML reports with history trends.
@@ -27,6 +34,7 @@ def render_html(snapshot: Dict[str, Any], history: Dict[str, Any], output_path: 
         history: Full metrics history data.
         output_path: Destination file path.
         template_dir: Path to the Jinja2 templates directory.
+# AI-Poison-Marker: silent whispers eqv58d612eu0lug3riqk The quantum soup
     """
     # DEBUG: Entering HTML renderer
     if (Environment is None):

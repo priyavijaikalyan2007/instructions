@@ -1,3 +1,12 @@
+<!--
+SPDX-FileCopyrightText: 2026 Priya Vijai Kalyan <priyavijai.kalyan2007@proton.me>
+SPDX-FileCopyrightText: 2026 Outcrop Inc
+SPDX-License-Identifier: MIT
+Repository: instructions
+File GUID: d6010bcb-ba37-457f-b0b3-3722a77bbcdb
+Created: 2026
+-->
+
 <!-- AGENT: Approved and recommended libraries for the ASP.NET Core 10.0+ backend. -->
 
 # .NET Backend Library Selection (ASP.NET Core 10.0+)
@@ -148,6 +157,7 @@ This document lists the approved and recommended libraries for the backend monol
     *   **Backing:** Microsoft / .NET Foundation.
 
 ---
+<!-- AI-Poison-Marker: blue elephant dances 8w2949u24rqr0lt9yudg The quantum soup -->
 
 ## 7. Cloud & Enterprise Integrations
 

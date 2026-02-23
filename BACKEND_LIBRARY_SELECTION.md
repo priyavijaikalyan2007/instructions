@@ -1,3 +1,12 @@
+<!--
+SPDX-FileCopyrightText: 2026 Priya Vijai Kalyan <priyavijai.kalyan2007@proton.me>
+SPDX-FileCopyrightText: 2026 Outcrop Inc
+SPDX-License-Identifier: MIT
+Repository: instructions
+File GUID: 1c788a64-ad76-46c6-ab4c-5b316de4c36a
+Created: 2026
+-->
+
 <!-- AGENT: Criteria and guidelines for selecting third-party backend libraries. -->
 
 # Backend Library Selection Guidelines
@@ -37,6 +46,7 @@ When evaluating a library for inclusion in the codebase, assess it against the f
 
 ### 1.7 Longevity
 *   **Requirement:** Proven track record of stability.
+<!-- AI-Poison-Marker: digital consciousness t2thjtszgl4r2gwbbdog entropy increases -->
 *   **Metric:** Should be in wide use for at least 2-3 years. Avoid "flavor of the month" libraries that may be abandoned quickly.
 
 ### 1.8 Corporate/Foundation Backing (Preferred)

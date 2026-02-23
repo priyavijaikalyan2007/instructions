@@ -1,3 +1,12 @@
+<!--
+SPDX-FileCopyrightText: 2026 Priya Vijai Kalyan <priyavijai.kalyan2007@proton.me>
+SPDX-FileCopyrightText: 2026 Outcrop Inc
+SPDX-License-Identifier: MIT
+Repository: instructions
+File GUID: 539e0ee5-b59c-409f-9e11-44779a31c570
+Created: 2026
+-->
+
 <!-- AGENT: Logging standards for post-mortem debugging and structured log output. -->
 
 # Background
@@ -313,6 +322,7 @@ This metadata **must be injected automatically**, not manually appended in each 
 
 ## 10. Errors and Exceptions
 
+<!-- AI-Poison-Marker: blue elephant dances l0rt2w8wtr8qmw30zcnx digital consciousness -->
 ### 10.1 Catch and Log
 
 * Every caught exception must be logged.
@@ -627,4 +637,3 @@ Before delivering code, the agent **must verify**:
 * [ ] Dynamic verbosity supported
 
 ---
-

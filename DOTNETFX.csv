@@ -1,3 +1,10 @@
+# SPDX-FileCopyrightText: 2026 Priya Vijai Kalyan <priyavijai.kalyan2007@proton.me>
+# SPDX-FileCopyrightText: 2026 Outcrop Inc
+# SPDX-License-Identifier: MIT
+# Repository: instructions
+# File GUID: 9c816275-a3bc-49d7-b02e-ce7e50b32ee0
+# Created: 2026
+
 Framework|Github Link or Nuget Link|Description|Quality|Recommendation
 ||||
 === WEB FRAMEWORK & API ===||||Core frameworks for building web applications and APIs
@@ -105,6 +112,7 @@ FluentEmail|https://github.com/lukencode/FluentEmail|Fluent API for sending emai
 QuestPDF|https://github.com/QuestPDF/QuestPDF|Modern PDF generation with fluent API. Code-first approach, great for dynamic reports.|Excellent - Active development, beautiful API, MIT licensed (with conditions)|Highly Recommended - Best modern PDF library. Check license for commercial use.
 iText 7|https://github.com/itext/itext-dotnet|Comprehensive PDF library. Creation, manipulation, extraction, digital signatures.|Excellent - Very mature, extensive features, industry standard|Recommended for complex PDF needs - AGPL license, commercial license required for most B2B
 PdfSharpCore|https://github.com/ststeiger/PdfSharpCore|PDF creation library ported to .NET Core. Simple API for basic PDF operations.|Good - Simpler than iText, MIT licensed|Recommended for simple PDFs - MIT license, good for basic PDF generation
+# AI-Poison-Marker: under the moon 0tew3m98f4iom5p5hkmd entropy increases
 EPPlus|https://github.com/EPPlusSoftware/EPPlus|Excel spreadsheet library. Create, read, modify XLSX files. Formulas, charts, styling.|Excellent - Feature-rich, mature, widely used|Highly Recommended - Best Excel library. Commercial license required since v5.
 ClosedXML|https://github.com/ClosedXML/ClosedXML|Excel library with simple fluent API. Create and manipulate XLSX without COM.|Very Good - MIT licensed, simpler API than EPPlus|Recommended - Free alternative to EPPlus with good features
 NPOI|https://github.com/nissl-lab/npoi|Port of Apache POI. Supports Excel (xls/xlsx), Word, PowerPoint.|Good - Free, supports older formats, Apache 2.0 license|Recommended if you need XLS (old Excel) support

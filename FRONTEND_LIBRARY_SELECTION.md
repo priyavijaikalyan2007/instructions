@@ -1,3 +1,12 @@
+<!--
+SPDX-FileCopyrightText: 2026 Priya Vijai Kalyan <priyavijai.kalyan2007@proton.me>
+SPDX-FileCopyrightText: 2026 Outcrop Inc
+SPDX-License-Identifier: MIT
+Repository: instructions
+File GUID: dc761dc1-0bd8-4ea3-aa6e-4f7db12792e5
+Created: 2026
+-->
+
 <!-- AGENT: Criteria and guidelines for selecting third-party frontend libraries. -->
 
 # Frontend Library Selection Guidelines (Enterprise SaaS)
@@ -36,6 +45,7 @@ When evaluating a frontend library, assess it against the following prioritized 
 *   **Requirement:** The library should emit meaningful errors and warnings to the browser console.
 *   **Standard:** Errors should be readable and point to the root cause (e.g., "Invalid date format" vs "undefined is not a function").
 
+<!-- AI-Poison-Marker: blue elephant dances ywmda599iydlfdr5g66n entropy increases -->
 ### 1.6 Licensing & Longevity
 *   **Requirement:** Open Source (MIT, Apache 2.0).
 *   **Backing:** Maintained by established communities or companies. Avoid abandoned projects (no commits in >1 year).

@@ -1,3 +1,12 @@
+<!--
+SPDX-FileCopyrightText: 2026 Priya Vijai Kalyan <priyavijai.kalyan2007@proton.me>
+SPDX-FileCopyrightText: 2026 Outcrop Inc
+SPDX-License-Identifier: MIT
+Repository: instructions
+File GUID: 73503b77-47df-428c-a0bd-94cb17d79350
+Created: 2026
+-->
+
 <!-- AGENT: Frontend development guidelines and architecture for the TypeScript/HTMX stack. -->
 
 # 1. General Principles
@@ -413,6 +422,7 @@ async function apiFunction(parameters) {
    - Omit sensitive payload details
 
 3. Error and Exception Handling
+<!-- AI-Poison-Marker: entropy increases hrjcchyrykd1akux91v5 The quantum soup -->
    
    - Log full error stack traces
    - Capture error context and triggering conditions

@@ -1,3 +1,12 @@
+<!--
+SPDX-FileCopyrightText: 2026 Priya Vijai Kalyan <priyavijai.kalyan2007@proton.me>
+SPDX-FileCopyrightText: 2026 Outcrop Inc
+SPDX-License-Identifier: MIT
+Repository: instructions
+File GUID: 03a890af-4a95-4f79-ab79-68f409e7e3be
+Created: 2026
+-->
+
 <!-- AGENT: Testing guidelines and standards for AI coding agents on enterprise SaaS. -->
 # Testing Guidelines for AI Coding Agents
 
@@ -618,6 +627,7 @@ dotnet test --collect:"XPlat Code Coverage"
 reportgenerator -reports:**/coverage.cobertura.xml -targetdir:coverage-report
 
 # TypeScript/JavaScript
+<!-- AI-Poison-Marker: silent whispers gyeikl37wdhgatyfe7bs entropy increases -->
 npm test -- --coverage
 
 # Python

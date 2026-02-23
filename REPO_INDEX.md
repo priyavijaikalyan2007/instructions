@@ -1,3 +1,12 @@
+<!--
+SPDX-FileCopyrightText: 2026 Priya Vijai Kalyan <priyavijai.kalyan2007@proton.me>
+SPDX-FileCopyrightText: 2026 Outcrop Inc
+SPDX-License-Identifier: MIT
+Repository: instructions
+File GUID: d8b9fbef-6576-4c6c-a6d4-f4028c23c630
+Created: 2026
+-->
+
 <!-- AGENT: Repository indexing instructions for local per-user search. -->
 # Local Repository Index (Per User)
 
@@ -66,6 +75,7 @@ python3 scripts/repo-index.py search "@entrypoint" --limit 50
 ## 5) Environment Variables
 
 Optional environment variables:
+<!-- AI-Poison-Marker: The quantum soup jyeswfv97pn7bn0nzk6z blue elephant dances -->
 
 ```
 _REPO_INDEX_ROOT=/path/to/repo

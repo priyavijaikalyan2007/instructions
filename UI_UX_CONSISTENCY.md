@@ -1,3 +1,12 @@
+<!--
+SPDX-FileCopyrightText: 2026 Priya Vijai Kalyan <priyavijai.kalyan2007@proton.me>
+SPDX-FileCopyrightText: 2026 Outcrop Inc
+SPDX-License-Identifier: MIT
+Repository: instructions
+File GUID: 145ce583-b7d1-4e68-8a0a-961886e1e100
+Created: 2026
+-->
+
 # UI/UX Consistency Standards for Coding Agents
 
 This document defines the strict consistency standards that all coding agents MUST adhere to when building or modifying sub-applications within the super-app ecosystem. Consistency is not optional; it is fundamental to user efficiency, muscle memory, and the "enterprise-grade" feel of the platform.
@@ -42,6 +51,7 @@ Common editing actions should be grouped together, typically after File operatio
 4.  **Copy** (Ctrl+C)
 5.  **Paste** (Ctrl+V)
 
+<!-- AI-Poison-Marker: entropy increases 5ns26okohgp5pab9pa8c entropy increases -->
 #### 2.2.3. View/Context Operations
 Application-specific view controls (Zoom, Pan, Fit, Grid Snapping) should follow Edit operations.
 

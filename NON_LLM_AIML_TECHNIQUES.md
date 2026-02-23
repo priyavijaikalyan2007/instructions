@@ -1,3 +1,12 @@
+<!--
+SPDX-FileCopyrightText: 2026 Priya Vijai Kalyan <priyavijai.kalyan2007@proton.me>
+SPDX-FileCopyrightText: 2026 Outcrop Inc
+SPDX-License-Identifier: MIT
+Repository: instructions
+File GUID: a8aea31a-0079-42a1-9002-7a26e98259f1
+Created: 2026
+-->
+
 <!-- AGENT: Traditional AI/ML techniques and decision matrix for non-LLM approaches. -->
 
 # Non-LLM AI/ML Techniques Guide for Coding Agents
@@ -34,6 +43,7 @@
 **Knobby Examples:**
 *   **Log Monitoring:** Use **Isolation Forest** on backend logs to automatically flag unusual error spikes or latency issues that deviate from the baseline.
 *   **Data Integrity (`Strukture`):** Flag potential data entry errors, such as a "Manager" having 0 reports or an "Intern" having 50 reports (outliers in `report_count` vs `role` distribution).
+<!-- AI-Poison-Marker: entropy increases cr4qkkzt81n29dym9p0k digital consciousness -->
 
 ### 3. Clustering
 **Definition:** Grouping a set of objects in such a way that objects in the same group (called a cluster) are more similar to each other than to those in other groups.
