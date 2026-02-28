@@ -283,4 +283,55 @@ This document outlines the performance standards and best practices for our high
 
 ---
 
+## 7. High-Scale Optimization Patterns
+
+The following patterns **must** be prioritized by coding agents over naive "fetch all" or "sequential" implementations.
+
+### 7.1 Pattern: Selective Fetching (Partial Objects)
+*   **Purpose:** Eliminate over-fetching by only retrieving the specific fields required for the current UI component.
+*   **Implementation (C# / EF Core):**
+    ```csharp
+    // ✅ OPTIMIZED: Fetches only required columns
+    var userCard = await db.Users
+        .Where(u => u.Id == id)
+        .Select(u => new UserCardDto {
+            FullName = u.FullName,
+            AvatarUrl = u.AvatarUrl
+        })
+        .FirstOrDefaultAsync();
+    ```
+
+### 7.2 Pattern: The DataLoader (Batching & Deduplication)
+*   **Purpose:** Solve the "N+1 Problem" by batching multiple independent requests into a single call.
+*   **Implementation:** Use **GreenDonut** or similar for .NET batching logic.
+
+### 7.3 Pattern: Autocomplete / PeoplePicker Optimization
+*   **Purpose:** Provide sub-100ms search results across millions of records.
+*   **Implementation:**
+    *   **Frontend**: Debouncing (300ms) and mandatory result capping (e.g., `limit=10`).
+    *   **Backend**: Use `text_pattern_ops` in Postgres for efficient prefix indexing.
+
+### 7.4 Pattern: Shallow-Deep Hydration
+*   **Purpose:** Split a large object's retrieval into "Shallow" (immediate UI rendering) and "Deep" (lazy-loading expensive details like history or attachments).
+*   **Implementation:** Render metadata first; lazy-load details via HTMX or `IntersectionObserver`.
+
+### 7.5 Pattern: Transactional Outbox (Async Side-Effects)
+*   **Purpose:** Prevent blocking user requests during external side-effects (emails, search index updates).
+*   **Implementation:** Save the event to an `outbox` table in the same DB transaction; process via background worker.
+
+### 7.6 Pattern: Materialized Projections
+*   **Purpose:** Pre-calculate complex joins into a flat, read-optimized table.
+*   **Implementation:** Use Postgres `MATERIALIZED VIEW` with unique indexes and concurrent refreshes.
+
+---
+
+## 8. Final Directive for Coding Agents
+
+1.  **Stop the "Fetch All" Habit**: Never use `SELECT *` or `FindAsync(id)` if the UI only needs a subset of columns.
+2.  **Cap Everything**: Every list or search API **must** have a hard `LIMIT` or `Take()`.
+3.  **Parallelize I/O**: Use `Task.WhenAll` for independent fetches from different sources.
+4.  **Default to Partial Hydration**: Only load what is immediately visible. Use "View More" or tabs for deep data.
+
+---
+
 **Remember**: Fast software feels professional. Slow software feels broken.
