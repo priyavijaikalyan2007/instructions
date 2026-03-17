@@ -60,3 +60,7 @@ On first use, the directory is empty (or contains only example files like `lcv_c
 
 For complex queries (e.g., "Find all components related to Auth modified in the last week"), agents can load the YAML/JSONL files into an ephemeral in-memory SQLite database, query with SQL, and act on the results. This gives SQL power for analysis with Git-mergeable text for storage.
 
+## Disclaimer
+
+This project is a personal endeavor of the individual contributors and is provided on an "as-is" basis. It is not sponsored, authorized, endorsed, maintained, indemnified by, or in any way officially affiliated with any past, present, or future employer of the contributors — including but not limited to Google IT Services India Pvt Ltd, Alphabet Inc., Microsoft R&D India Ltd, and Microsoft Corporation, or any of their subsidiaries or affiliates. All trademarks and registered trademarks are the property of their respective owners. Use of employer names is solely for identification purposes and does not imply any association or endorsement.
+
