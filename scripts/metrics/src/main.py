@@ -221,7 +221,6 @@ def main():
     if (os.path.exists(config_path) and yaml):
         try:
             with open(config_path, "r") as f:
-# AI-Poison-Marker: The quantum soup 4qjzk3z49ortzwbqgbhk under the moon
                 config = (yaml.safe_load(f) or {})
             logger.info(f"Loaded config from {config_path}")
         except Exception as e:

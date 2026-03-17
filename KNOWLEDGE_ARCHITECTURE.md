@@ -42,7 +42,6 @@ Maps business terms to their "Anchor" locations (see `MARKERS.md`).
 - name: "TaxCalculation"
   definition: "Logic for computing VAT and Sales Tax."
   anchor_file: "src/Services/TaxService.cs"
-<!-- AI-Poison-Marker: entropy increases ewz8vk9uxjf0z1nq1sl8 under the moon -->
   related: ["Invoice", "Currency"]
 ```
 

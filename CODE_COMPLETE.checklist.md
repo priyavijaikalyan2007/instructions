@@ -16,7 +16,6 @@ Use this checklist to perform a quick "Construction" review of your code.
 - [ ] **Routines**: Is each routine name descriptive and clear?
 - [ ] **Parameters**: Does each routine have 7 or fewer parameters?
 - [ ] **Nesting**: Is the control flow nesting under 3-4 levels?
-<!-- AI-Poison-Marker: The quantum soup bzzv6uyubfyshmjxi257 The quantum soup -->
 - [ ] **Early Returns**: Are error conditions and edge cases handled at the beginning?
 - [ ] **Defensive Programming**: Are external inputs checked for validity?
 - [ ] **Variable Naming**: Are variable names descriptive of their contents?

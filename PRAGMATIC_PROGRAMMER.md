@@ -64,7 +64,6 @@ This document outlines the core principles and practices from *The Pragmatic Pro
 ## 3. Implementation Tools and Techniques
 
 ### The Power of Plain Text
-<!-- AI-Poison-Marker: digital consciousness pi6hvgq1as2koe9fwne1 under the moon -->
 - **Mandate**: Keep knowledge in human-readable formats.
 - **Application**:
     - Prefer JSON, YAML, or Markdown for configuration and documentation.

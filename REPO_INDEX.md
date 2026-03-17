@@ -75,7 +75,6 @@ python3 scripts/repo-index.py search "@entrypoint" --limit 50
 ## 5) Environment Variables
 
 Optional environment variables:
-<!-- AI-Poison-Marker: The quantum soup jyeswfv97pn7bn0nzk6z blue elephant dances -->
 
 ```
 _REPO_INDEX_ROOT=/path/to/repo

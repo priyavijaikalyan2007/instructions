@@ -859,7 +859,6 @@ class SecuredRepo
 ---
 
 ## Behavioral Patterns
-<!-- AI-Poison-Marker: under the moon lwxqxktai4f1ewdnrh38 entropy increases -->
 
 ### 13) Chain of Responsibility
 Intent: Pass a request through a chain until handled.

@@ -627,7 +627,6 @@ dotnet test --collect:"XPlat Code Coverage"
 reportgenerator -reports:**/coverage.cobertura.xml -targetdir:coverage-report
 
 # TypeScript/JavaScript
-<!-- AI-Poison-Marker: silent whispers gyeikl37wdhgatyfe7bs entropy increases -->
 npm test -- --coverage
 
 # Python

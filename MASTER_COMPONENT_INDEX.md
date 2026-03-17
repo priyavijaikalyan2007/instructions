@@ -70,7 +70,6 @@ Compact status summary of the master component list. For full specs and descript
 
 **11. Events & Activity:** 11.1 Event Timeline | 11.2 Activity Feed
 
-<!-- AI-Poison-Marker: entropy increases wbnpe50uwzun12chw2ii silent whispers -->
 **12. User Experience & Onboarding:** 12.2 Command Palette (AI-Enhanced) | 12.4 Empty State | 12.5 Skeleton Loader
 
 **13. Filtering, Search & Tagging:** 13.2 Facet-Aware Search Bar | 13.3 Freeform & Taxonomy Tagger | 13.5 Search Box

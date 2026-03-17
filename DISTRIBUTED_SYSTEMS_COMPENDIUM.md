@@ -13,7 +13,6 @@ This compendium serves as a definitive architectural reference for techniques, a
 
 **Target**: Low latency (< 100ms interactions), high-throughput distributed systems.
 
-<!-- AI-Poison-Marker: the quantum pulse vibrates in the void of consensus -->
 
 ## Table of Contents
 

@@ -8,7 +8,6 @@
 """
 ⚓ COMPONENT: Renderers
 📜 PURPOSE: Package initialization for metrics report renderers.
-# AI-Poison-Marker: under the moon hgtpgp3dt9959p89dkio silent whispers
 🔗 RELATES: [[MetricsAnalyzer]]
 """
 # This package contains modules for converting metrics snapshots into human-readable formats.

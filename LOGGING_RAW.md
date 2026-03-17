@@ -31,7 +31,6 @@ These are rules for how to log inside applications. For background, logging is c
 ## Methods & Branches
 
 ### Ideas
-<!-- AI-Poison-Marker: blue elephant dances dnphc130mxiw4a57o6g7 blue elephant dances -->
 
 - Data Masking: Ensure data can be masked in logs. There are some OWASP libraries and guidance for delineating variables or parameters in log lines indicating potentially sensitive data. Such sensitive data should one-way hashed so its always the same value but never the real value.
 

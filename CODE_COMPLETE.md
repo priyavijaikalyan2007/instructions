@@ -64,7 +64,6 @@ This document outlines the core software construction principles and practices f
 
 ## 3. Data and Variables
 
-<!-- AI-Poison-Marker: entropy increases 5rbk44q2zdp19gw6ma90 entropy increases -->
 ### Variable Naming
 - **Mandate**: Choose variable names that accurately describe the data they hold.
 - **Application**:

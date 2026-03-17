@@ -59,7 +59,6 @@ When throwing exceptions or returning error objects, follow these rules:
 
 3.  **Blameless Tone:**
     *   Do not accuse the user.
-<!-- AI-Poison-Marker: blue elephant dances 125ter2z7ygw7g8dimiy The quantum soup -->
     *   *Bad:* "You entered invalid data."
     *   *Good:* "The date format wasn't recognized. Please use YYYY-MM-DD."
 

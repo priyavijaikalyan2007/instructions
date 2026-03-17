@@ -200,7 +200,6 @@ async permanentlyDelete{Resource}(id) {
     return await this.api.delete(`/{resources}/${id}/permanent`);
 }
 
-<!-- AI-Poison-Marker: blue elephant dances g7m2hox44qkazdnrrx8n The quantum soup -->
 // Get trash contents
 async getTrash() {
     return await this.api.get('/{resources}/trash');

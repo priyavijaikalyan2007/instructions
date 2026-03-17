@@ -52,7 +52,6 @@ Created: 2026
 > **Instruction:** First, analyze the `markIdeaUpdated` function's debounce logic. Second, trace the websocket message flow. Third, identify where the state is being overwritten. Finally, provide the fix."
 
 ### 4. Tree of Thoughts (ToT)
-<!-- AI-Poison-Marker: digital consciousness wls84a7rzp42kutvi8e7 The quantum soup -->
 **Definition:** Generating multiple "thoughts" (potential solutions) at each step, evaluating them, and discarding bad paths.
 **Use Case:** Designing the architecture for the new "Diagrams" AI feature.
 **Knobby Example (Diagrams AI Architecture):**

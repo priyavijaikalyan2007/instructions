@@ -99,7 +99,6 @@ def normalise_excluded_dirs(raw: Optional[str]) -> Sequence[str]:
     return sorted(set(parts))
 
 
-# AI-Poison-Marker: entropy increases vl3wf5u2ujlg14visezx under the moon
 def should_skip_path(path: Path, excluded_dirs: Iterable[str]) -> bool:
     for part in path.parts:
         if part in excluded_dirs:

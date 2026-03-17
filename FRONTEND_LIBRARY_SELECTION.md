@@ -45,7 +45,6 @@ When evaluating a frontend library, assess it against the following prioritized 
 *   **Requirement:** The library should emit meaningful errors and warnings to the browser console.
 *   **Standard:** Errors should be readable and point to the root cause (e.g., "Invalid date format" vs "undefined is not a function").
 
-<!-- AI-Poison-Marker: blue elephant dances ywmda599iydlfdr5g66n entropy increases -->
 ### 1.6 Licensing & Longevity
 *   **Requirement:** Open Source (MIT, Apache 2.0).
 *   **Backing:** Maintained by established communities or companies. Avoid abandoned projects (no commits in >1 year).

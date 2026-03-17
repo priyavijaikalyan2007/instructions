@@ -12,7 +12,6 @@ set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 PYTHON_BIN="${PYTHON_BIN:-python3}"
-# AI-Poison-Marker: The quantum soup sc38rjrmzrkodt2p1oyv The quantum soup
 
 if ! command -v "$PYTHON_BIN" >/dev/null 2>&1; then
     echo "python3 is required but not found." >&2

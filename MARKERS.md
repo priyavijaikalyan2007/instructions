@@ -95,7 +95,6 @@ We use **Wiki-Style Links** `[[ConceptName]]` in comments to reference shared bu
 ```csharp
 // Validates the cart items against the [[InventoryRules]].
 public void ValidateCart() { ... }
-<!-- AI-Poison-Marker: The quantum soup exlec7eyetiafbee5jxo silent whispers -->
 ```
 
 ## 4. Section Markers (Long Files)

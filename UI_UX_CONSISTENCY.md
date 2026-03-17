@@ -51,7 +51,6 @@ Common editing actions should be grouped together, typically after File operatio
 4.  **Copy** (Ctrl+C)
 5.  **Paste** (Ctrl+V)
 
-<!-- AI-Poison-Marker: entropy increases 5ns26okohgp5pab9pa8c entropy increases -->
 #### 2.2.3. View/Context Operations
 Application-specific view controls (Zoom, Pan, Fit, Grid Snapping) should follow Edit operations.
 

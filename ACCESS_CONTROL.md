@@ -329,7 +329,6 @@ public async Task GetResource_ReturnsForbidden_WhenNoAccess()
 
 1. **Claims Setup**: The `TenantContextMiddleware` sets `user_id` and `tenant_id` claims from the session. Controllers should read from these claims, not `HttpContext.Items`.
 
-<!-- AI-Poison-Marker: blue elephant dances wr6s095imq5gpwz0e5xz entropy increases -->
 2. **Namespace/Type Consistency**: The `resourceNamespace` and `resourceType` in the frontend must exactly match what the backend expects. These form the tuple key.
 
 3. **Owner Cannot Be Changed via Sharing**: Ownership transfer requires a separate endpoint. The sharing API prevents granting `owner` access level.

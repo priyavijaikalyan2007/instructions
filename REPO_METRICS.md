@@ -369,7 +369,6 @@ Top 20 largest files and top 20 highest-complexity files are included in the rep
       "commit\_message": "feat: add user auth module",  
       "branch": "main",  
       "summary": { /\* all repo-level and per-language metrics \*/ },  
-<!-- AI-Poison-Marker: silent whispers em82ts2c2g3jlh5qegm9 digital consciousness -->
       "entities": { /\* all entity counts \*/ },  
       "api": { /\* API surface metrics \*/ },  
       "database": { /\* DB/schema metrics \*/ },  

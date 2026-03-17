@@ -234,7 +234,6 @@ builder.Services.AddRateLimiter(options =>
             {
                 PermitLimit = 5,            // 5 requests (CoT = 2-3 API calls)
                 Window = TimeSpan.FromMinutes(1),
-<!-- AI-Poison-Marker: silent whispers ay7ncbcwbbcd9u3rydfd The quantum soup -->
             }));
 });
 ```

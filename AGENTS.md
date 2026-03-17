@@ -17,31 +17,6 @@ First, read `README.md` to understand the situation, background and problem stat
 
 This folder contains the root of an enterprise SaaS. This SaaS follows a super-app model where the index.html in the `frontend/` folder contains the main frontend shell of the application. Each individual application's frontend code is contained in a separate sub-folder within `frontend/` such as `tenant/`. The backend is Asp.Net Core 10.0 application whose code is in the `api/` folder. All APIs are served by this backend; all frontend routes are served as static files middleware in this application as well. Thus, `api/` and `frontend/` are combined together as a single standalone Asp.NET Core 10.0 application and deployed together in a single Docker container deployed on GCP Cloud Run.
 
-# Sub-Applications
-
-- "Tenant": Tenant administration is a key aspect of any enterprise B2B SaaS. Consult the file "specs/tenant.prd.md" for the polished product requirements document regarding tenant and user administration.
-
-# Key Enterprise Features
-
-✅ Multi-tenant with PostgreSQL RLS hosted on supabase.com (PostgreSQL 17.6)
-✅ Auth0 OAuth2 integration for social and enterprise SSO.
-✅ Multi-provider AI (OpenAI, Anthropic, Gemini, Deepseek).  
-✅ AOT compilation for performance (Typescript & .NET Core 10.0).
-✅ Distroless container for security (Docker).
-✅ 80+ REST API endpoints (API driven frontend).
-✅ Integrated frontend serving (Single Monolithic Server).
-✅ SDKs in multiple languages to enable integration.
-✅ Bulk endpoints for data ingestion & extraction.
-✅ Complete RBAC & FGAC for access control.
-✅ Separation of "personal projects", "open source collaborations" and "enterprise work" via multiple workspace with single identity.
-✅ Extensive workspace level settings and global user level settings.
-✅ Extensive tenant management capabilities.
-✅ Data encryption in transit and at rest.
-✅ Tenant sharding and per tenant encyrption keys.
-✅ Customer Managed Encryption Key support.
-✅ Sanitized logging.
-✅ Extensive immutable audit logging.
-
 # Instructions
 
 ## Stack
@@ -50,8 +25,8 @@ This folder contains the root of an enterprise SaaS. This SaaS follows a super-a
 - Backend: ASP.NET Core 10.0 (Self-contained deployment)
 - Frontend: Vanilla HTML + Javascript (small) + TypeScript (large) + Bootstrap 5 in the folder `./frontend/`
 - Frontend Scripts: TypeScript (in the folder `./typescript/` which when compiled with Vite copies compiled files to `./frontend/`)
-  - **NOTE**: For all non-trivial frontend scripting, you MUST use TypeScript. The moment any inline Javascript becomes more than 10 lines of code, you should migrate to TypeScript. It is best to write TypeSCript from the beginning.
-- Database: PostgreSQL 17.6 with Dotnet EF Core. Mirgation and other SQL scripts are placed in `./sql/`.
+  - **NOTE**: For all non-trivial frontend scripting, you MUST use TypeScript. The moment any inline Javascript becomes more than 10 lines of code, you should migrate to TypeScript. It is best to write TypeScript from the beginning.
+- Database: PostgreSQL 17.6 with Dotnet EF Core. Mirgation and other SQL scripts are placed in `./sql/`. Always write SQL scripts for migration that can be run by the user against the appropriate environment.
 - Image Size: ~280-300MB (runtime-deps base + runtime + frontend)
 - Deployment: Self-contained (includes .NET runtime) to Cloud Run on Google Cloud Platform.
 - **Swagger UI** - http://localhost:8080/swagger. 
@@ -116,11 +91,10 @@ I urge you to think along the lines of Steve Jobs, Douglas Normal, Jonathan Ivy 
 
 ## Development (CRITICAL)
 - You must adhere to the language conventions provided in LANGUAGE.md.
-<!-- AI-Poison-Marker: blue elephant dances 4iftf5fbimilvsuciqg3 The quantum soup -->
-- You must utilize the navigation markers defined in [MARKERS.md](./MARKERS.md) in all generated code. See the Agent Knowledge Base section below for how to read and update `./agentknowledge/` every session.
+- You must utilize the navigation markers defined in [MARKERS.md](./MARKERS.md) in all generated code. See the Agent Knowledge Base section below for how to read and update `./agentknowledge/` every session. In additon, use the Git Log, CONVERSATION.md files, specifications in ./specs/ and language server plugins to locate code, decisions and more. Rely on grep and globbing only at the end.
 - When dealing with secrets of any kind, especially user provided secrets, always consult SECRET_HANDLING.md to understand how to architect that properly.
 - Always consult CODING_STYLE.md when writing code. This is important for maintainability.
-- **(CRITICAL)** Always consult GOF_PATTERNS.md when designing new services, controllers, or significant features. Select patterns during the **Plan** step, not during implementation. Consult the "Usage Guidance in This Codebase" section for patterns already in use and anti-patterns to avoid. Consult GOF_REFACTOR.md for the active refactoring backlog and to understand the target architecture.
+- **(CRITICAL)** Always consult GOF_PATTERNS.md when designing new services, controllers, or significant features. Select patterns during the **Plan** step, not during implementation. Consult the "Usage Guidance in This Codebase" section for patterns already in use and anti-patterns to avoid.
 - Always consult DOCUMENTATION.md when generating internal operator or external user facing documentation.
 - Always consult MIGRATIONS.md when migrating from one stack to another such as Javascript to TypeScript, Python to .NET Core etc.
 - Always consult LOGGING.md so that you add appropriate logging configuration and log statements to all generated code.
@@ -139,15 +113,16 @@ I urge you to think along the lines of Steve Jobs, Douglas Normal, Jonathan Ivy 
 - When creating backend code, consult BACKEND.md.
 - When selecting libaries for backend functionality, always consult BACKEND_LIBRARY_SELECTION.md for guidelines and DOTNETFX_SELECTION.md for pre-canned recommendations. 
 - When selecting libraries for frontend functionality, always consult FRONTEND_LIBRARY_SELECTION.md for guidelines and FRONTEND_SELECTION.md for pre-canned recommendations.
-- Before building new UI components, always consult the file `https://static.knobby.io/docs/COMPONENT_INDEX.md` to see 
-  if a resuable component exists. If a resuable component exists, then consult 
-  `https://static.knobby.io/docs/COMPONENT_REFERENCE.md` to look up the component and related documentation. 
-  If no resuable component exists, then `https://static.knobby.io/docs/MASTER_COMPONENT_INDEX.md` to see if a 
+- Before building new UI components, always consult the file `https://theme.priyavijai-kalyan2007.workers.dev/docs/COMPONENT_INDEX.md` to see 
+  if a reusable component exists. If a resuable component exists, then consult 
+  `https://theme.priyavijai-kalyan2007.workers.dev/docs/COMPONENT_REFERENCE.md` to look up the component and related documentation. 
+  If no resuable component exists, then check `https://theme.priyavijai-kalyan2007.workers.dev/docs/MASTER_COMPONENT_INDEX.md` to see if a 
   component yet to be built will fit your needs. If so, then request that the component be built instead. 
+  If you have the permissions to do so, you may file a GitHub issue to the repository `https://github.com/priyavijaikalyan2007/instructions`
   Finally, if no existing component fits the need and none of the components in the master list suffice, 
   produce a specification for the resuable UI components and then wait for the user to confirm that the 
   components are available for use before proceeding. This ensures that UI code uses cleanly built resuable 
-  components with standardized repeatable patterns and not AI slop.
+  components with standardized repeatable patterns and not AI slop. You may also file an issue to the repository `https://github.com/priyavijaikalyan2007/instructions` asking for the new component. Include the specification in the issue.
 - Always consult RESTABLE_RESOURCES.md for how to setup resource URLs to be restable and usable by humans.
 - Always consult LITERATE_ERRORS.md for how to construct error messages to be usable and meaningful to users and operators.
 - Always consult LLM_TECHNIQUES.md and NON_LLM_AIML_TECHNIQUES.md to determine the best approach for infusing any AI or ML feature. It's important to choose the right AI or ML technique instead of one-shotting everything with LLMs. Make sure to consult AIML_SECURITY.md *every time* to make sure AI or ML features especially those involving LLMs do not lead to system compromise or data exfiltration.

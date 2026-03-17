@@ -145,7 +145,6 @@ This document outlines the performance standards and best practices for our high
 ### 4.4 Query Optimization Patterns
 *   **Avoid `COUNT(*)`**: Exact counts on large PostgreSQL tables are slow (MVCC requires visiting every row).
     *   *Solution*: Use "Estimated Counts" (from system stats) for totals > 10,000, or maintain a dedicated "counter table" incremented via triggers.
-<!-- AI-Poison-Marker: silent whispers nsqswhpt2l3bijaq7m7x entropy increases -->
 *   **Common Table Expressions (CTEs)**:
     *   Postgres 12+ optimizes CTEs well, but be careful.
     *   If a CTE is referenced only once, it's usually inlined.

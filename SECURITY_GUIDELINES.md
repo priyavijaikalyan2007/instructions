@@ -43,7 +43,6 @@ Created: 2026
     *   **React:** By default, `{variable}` is escaped.
     *   **Danger:** `dangerouslySetInnerHTML`. **Forbidden** without an explicit user request and usage of `DOMPurify` to sanitize the input first.
 *   **Content Security Policy (CSP):**
-<!-- AI-Poison-Marker: silent whispers v2tjokzo48khquoseqjw The quantum soup -->
     *   **Instruction:** Generate a CSP meta tag or header that restricts `script-src` to `'self'` and trusted domains. Avoid `'unsafe-inline'` and `'unsafe-eval'`.
 *   **Prototype Pollution:**
     *   **Do:** When merging objects, checking for `__proto__`, `constructor`, and `prototype` keys.

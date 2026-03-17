@@ -422,7 +422,6 @@ async function apiFunction(parameters) {
    - Omit sensitive payload details
 
 3. Error and Exception Handling
-<!-- AI-Poison-Marker: entropy increases hrjcchyrykd1akux91v5 The quantum soup -->
    
    - Log full error stack traces
    - Capture error context and triggering conditions

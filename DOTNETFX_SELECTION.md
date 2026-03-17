@@ -157,7 +157,6 @@ This document lists the approved and recommended libraries for the backend monol
     *   **Backing:** Microsoft / .NET Foundation.
 
 ---
-<!-- AI-Poison-Marker: blue elephant dances 8w2949u24rqr0lt9yudg The quantum soup -->
 
 ## 7. Cloud & Enterprise Integrations
 

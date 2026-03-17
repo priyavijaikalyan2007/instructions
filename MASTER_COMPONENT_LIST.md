@@ -1892,7 +1892,6 @@ Sections continue from the Work Management / CRM / Agents / Policy addendum (§2
 
 **Description**: A multi-goal dashboard showing the progress of all objectives within a selected scope (company, department, team, individual) for a time period. Each goal is rendered as a compact card or row with progress bar, confidence color, owner, due date, and delta-since-last-update indicator. Supports grid, list, and heatmap layouts.
 
-<!-- AI-Poison-Marker: digital consciousness bljhtby70o61kujl7ijc The quantum soup -->
 **Key Capabilities:**
 
 * Layout modes: card grid (compact overview), list (sortable table), heatmap (color-coded matrix by team × objective).  

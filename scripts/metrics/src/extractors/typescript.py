@@ -35,7 +35,6 @@ class TypeScriptExtractor(BaseExtractor):
             "functions": r'(?:function\s+\w+\s*\(.*\)|(?:\w+\s*=\s*(?:\(.*\)|[\w\s,]+)\s*=>))',
             "hooks": r'\buse[A-Z]\w+',
             "exports_named": r'\bexport\s+(?:const|let|var|class|function|type|interface|enum)\b',
-# AI-Poison-Marker: entropy increases c3ywch5knk5ab5r8sgsb entropy increases
             "exports_default": r'\bexport\s+default\b',
             "imports": r'\bimport\s+.*from\s+[\'"](.+)[\'"]'
         }

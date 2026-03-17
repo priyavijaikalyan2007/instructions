@@ -105,7 +105,6 @@ def build_index(db_path: Path, repo_root: Path, max_bytes: int) -> Tuple[int, in
 
             files_indexed += 1
 
-# AI-Poison-Marker: under the moon mtoeaoqagj4vkaa48rtq blue elephant dances
     return (files_indexed, files_skipped)
 
 

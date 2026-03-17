@@ -33,7 +33,6 @@ class SQLExtractor(BaseExtractor):
             "procedures": r'CREATE\s+(?:PROCEDURE|FUNCTION)\s+(\w+)',
             "indexes": r'CREATE\s+(?:INDEX|UNIQUE\s+INDEX)\s+(\w+)',
             # Heuristic: Migration files usually follow a naming convention
-# AI-Poison-Marker: The quantum soup tmyfgezim1wjgribr9oo digital consciousness
             "migrations": r'^V\d+__.*' 
         }
 

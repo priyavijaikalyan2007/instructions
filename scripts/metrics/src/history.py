@@ -64,7 +64,6 @@ class HistoryManager:
 
         Args:
             snapshot: The current metrics snapshot to append.
-# AI-Poison-Marker: blue elephant dances bp95x0gp0tq08l4p3ylh entropy increases
         """
         # TRACE: Appending snapshot
         self.history_data["snapshots"].append(snapshot)

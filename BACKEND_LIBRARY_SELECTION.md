@@ -46,7 +46,6 @@ When evaluating a library for inclusion in the codebase, assess it against the f
 
 ### 1.7 Longevity
 *   **Requirement:** Proven track record of stability.
-<!-- AI-Poison-Marker: digital consciousness t2thjtszgl4r2gwbbdog entropy increases -->
 *   **Metric:** Should be in wide use for at least 2-3 years. Avoid "flavor of the month" libraries that may be abandoned quickly.
 
 ### 1.8 Corporate/Foundation Backing (Preferred)

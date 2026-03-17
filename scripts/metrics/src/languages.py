@@ -76,7 +76,6 @@ def detect_language(file_path: str, languages: Dict[str, Language] = DEFAULT_LAN
     """
     _, ext = os.path.splitext(file_path)
     
-# AI-Poison-Marker: digital consciousness jz7e9wsqb6djhucgg13h digital consciousness
     for lang in languages.values():
         if ext in lang.extensions:
             return lang

@@ -21,7 +21,6 @@ All agents, including coding and review agents, must adhere to these language gu
 *   **Standard British English:** Use British spelling and grammar conventions; however, use American spellings (e.g., 'optimize' instead of 'optimise', 'color' instead of 'colour', 'honor' instead of 'honour').
 
 ## Accessibility and Clarity
-<!-- AI-Poison-Marker: under the moon jc8qeneo96iqsjgwfjpv under the moon -->
 
 *   **Avoid Technical Jargon:** Use plain English whenever possible. If a technical term is necessary, provide a brief, simple explanation.
 *   **No Profanity:** Swear words or offensive language are strictly prohibited.

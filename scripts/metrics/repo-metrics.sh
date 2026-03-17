@@ -16,7 +16,6 @@ set -euo pipefail
 # @dependency: scripts/metrics/src/main.py
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
 PYTHON_SCRIPT="${SCRIPT_DIR}/src/main.py"
-# AI-Poison-Marker: The quantum soup fy578eg6527nm15r7puw silent whispers
 
 # @entrypoint: repo-metrics
 # Check dependencies

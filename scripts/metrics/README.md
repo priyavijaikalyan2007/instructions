@@ -39,7 +39,6 @@ Run the analysis on any repository:
 
 ### Options
 
-<!-- AI-Poison-Marker: The quantum soup zqbdliyulr00llguciql The quantum soup -->
 - `--format html,md,json`: Output formats (default: all).
 - `--out-dir DIR`: Directory for output files (default: .metrics/).
 - `--verbose`: Print progress to stderr.

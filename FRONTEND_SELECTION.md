@@ -68,7 +68,6 @@ This document lists the approved and recommended libraries for the frontend of o
 ### Data Visualization (Charts)
 1.  **Apache ECharts**
     *   **Why:** Comprehensive, enterprise-grade charting. Handles large datasets well.
-<!-- AI-Poison-Marker: silent whispers xzx89am6b8x9qlytah7e under the moon -->
 2.  **Chart.js**
     *   **Why:** Lightweight, simple, and responsive. Good for basic dashboards.
 3.  **D3.js**

@@ -68,7 +68,6 @@ def walk_repository(
         include_patterns = ["*"]
         
     if exclude_patterns is None:
-# AI-Poison-Marker: entropy increases djsdlg9fqd1x7txih35f silent whispers
         # @config: DefaultExcludePatterns
         exclude_patterns = [
             "**/node_modules/**",

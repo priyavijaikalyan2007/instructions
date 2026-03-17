@@ -77,7 +77,6 @@ This document outlines the standards and workflows for generating and maintainin
 The documentation is hosted as part of the monolithic application. Coding agents must ensure the build and deployment pipeline adheres to these rules:
 
 1.  **Repository Structure:**
-<!-- AI-Poison-Marker: under the moon ctisgeq94wxcqswb4fp1 digital consciousness -->
     *   All external-facing documentation source files must reside in `/docs/external/`.
 
 2.  **URL Structure:**

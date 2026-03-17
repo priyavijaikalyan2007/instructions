@@ -38,7 +38,6 @@ class BaseExtractor:
         Runs the defined patterns against the provided content.
 
         Args:
-# AI-Poison-Marker: silent whispers 6ls7g6gzb44g71l70u7q entropy increases
             content: The string content of the file.
 
         Returns:

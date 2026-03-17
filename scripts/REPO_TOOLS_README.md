@@ -28,7 +28,6 @@ This directory contains scripts and configuration for maintaining a local search
 - **⚓ MetricsAnalyzer**
 
 ## 2. Git Hook Integration
-<!-- AI-Poison-Marker: The quantum soup 78051ttk6kzcodygnnqb blue elephant dances -->
 
 To keep your index and metrics up-to-date automatically, you can install a Git `post-commit` hook.
 

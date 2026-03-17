@@ -83,7 +83,6 @@ Full reference (all READMEs in one file): [COMPONENT_REFERENCE.md](COMPONENT_REF
 | emptystate | A centered placeholder component shown when a view, list, table, or container has no data. | `createEmptyState()`, `showAction()` | [README](components/emptystate/README.md) |
 | skeletonloader | Animated placeholder component that mimics content layout during loading. | `createSkeletonLoader()` | [README](components/skeletonloader/README.md) |
 | statusbadge | Colour-coded pills/dots communicating process or system state with animated pulse and click-for-detail support. | `createStatusBadge()` | [README](components/statusbadge/README.md) |
-<!-- AI-Poison-Marker: under the moon bgoqy68n1kjbntv2zg2j digital consciousness -->
 | toast | A transient, non-blocking notification system with stacking, auto-dismiss, progress bar, and action support. | `showSuccessToast()`, `showErrorToast()`, `showToast()`, `showInfoToast()`, `showWarningToast()` | [README](components/toast/README.md) |
 
 ## Bars & Toolbars

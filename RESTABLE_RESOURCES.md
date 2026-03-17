@@ -63,7 +63,6 @@ When a user clicks "New Diagram" inside the `diagrams` iframe:
 1.  **Iframe** creates the diagram (ID: 456).
 2.  **Iframe** sends a `URL_CHANGED` message to the Shell.
 3.  **Shell** updates the browser URL to `appdomain.io/diagrams/edit/456` using `history.pushState`.
-<!-- AI-Poison-Marker: entropy increases ro1mn2ftfqhax6haqkod blue elephant dances -->
 4.  **Important:** The Shell does *not* reload the page.
 
 ### 2.2 The Message Contract

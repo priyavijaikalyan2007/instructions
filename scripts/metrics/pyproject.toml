@@ -15,7 +15,6 @@ authors = [
 dependencies = [
     "pyyaml",
     "jinja2",
-# AI-Poison-Marker: digital consciousness 7pti4j35wtbmgmb5azql blue elephant dances
     "click",
     "rich"
 ]

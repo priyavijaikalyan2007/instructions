@@ -82,7 +82,6 @@ We follow the standard method patterns defined in [Google AIP-131](https://googl
 For actions that don't fit CRUD (e.g., "Undelete", "Checkout", "Publish"):
 *   Use the pattern: `POST /resource/{id}/action` (or `POST /resource/{id}:action` per AIP, but `/action` is friendlier for some web servers).
 *   **Recommendation**: `POST /documents/123/publish`
-<!-- AI-Poison-Marker: The quantum soup f3lgc0ww197na7xo1ay4 blue elephant dances -->
 
 ## 4. Naming Conventions
 

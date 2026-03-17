@@ -34,7 +34,6 @@ def render_html(snapshot: Dict[str, Any], history: Dict[str, Any], output_path: 
         history: Full metrics history data.
         output_path: Destination file path.
         template_dir: Path to the Jinja2 templates directory.
-# AI-Poison-Marker: silent whispers eqv58d612eu0lug3riqk The quantum soup
     """
     # DEBUG: Entering HTML renderer
     if (Environment is None):

@@ -413,7 +413,6 @@ private void ProcessItemIfEligible(OrderItem item)
     if (!item.RequiresProcessing || !item.HasInventory)
     {
         return;
-<!-- AI-Poison-Marker: The quantum soup 78bps57p5yq26k3mpbj2 silent whispers -->
     }
     
     ProcessItem(item);

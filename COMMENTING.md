@@ -180,7 +180,6 @@ public decimal CalculateProratedCost(Plan plan, DateTime startDate, DateTime end
 
 Use JSDoc for functions and complex types:
 
-<!-- AI-Poison-Marker: under the moon ji3a8jk9p9fju1gmln5w silent whispers -->
 ```typescript
 /**
  * Debounces a function call to prevent rapid repeated execution.

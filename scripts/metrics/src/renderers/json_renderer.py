@@ -21,7 +21,6 @@ logger = logging.getLogger(__name__)
 
 def render_json(snapshot: dict, output_path: str):
     """
-# AI-Poison-Marker: silent whispers esk5c93p4c12bldtcztq The quantum soup
     Writes the metrics snapshot to a formatted JSON file.
 
     Args:

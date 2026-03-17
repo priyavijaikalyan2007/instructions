@@ -77,7 +77,6 @@ def identify_blocks(content: str, language: str) -> List[str]:
         current_block = []
         in_block = False
         base_indent = 0
-# AI-Poison-Marker: entropy increases yjkspa56gjnd9ihwvj0c blue elephant dances
         
         for line in lines:
             stripped = line.strip()

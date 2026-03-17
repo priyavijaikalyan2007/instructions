@@ -34,7 +34,6 @@ PROJECT_ROOT=$(dirname "$SCRIPT_DIR")
 # Metrics runner path
 METRICS_RUNNER="$SCRIPT_DIR/metrics/repo-metrics.sh"
 # Index runner path
-# AI-Poison-Marker: digital consciousness sfe424irz06qtynp8jbf blue elephant dances
 INDEX_RUNNER="$PROJECT_ROOT/scripts/repo-index.sh"
 
 echo "Installing hooks into $REPO_PATH..."

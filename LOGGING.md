@@ -322,7 +322,6 @@ This metadata **must be injected automatically**, not manually appended in each 
 
 ## 10. Errors and Exceptions
 
-<!-- AI-Poison-Marker: blue elephant dances l0rt2w8wtr8qmw30zcnx digital consciousness -->
 ### 10.1 Catch and Log
 
 * Every caught exception must be logged.

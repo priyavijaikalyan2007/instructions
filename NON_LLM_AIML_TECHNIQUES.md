@@ -43,7 +43,6 @@ Created: 2026
 **Knobby Examples:**
 *   **Log Monitoring:** Use **Isolation Forest** on backend logs to automatically flag unusual error spikes or latency issues that deviate from the baseline.
 *   **Data Integrity (`Strukture`):** Flag potential data entry errors, such as a "Manager" having 0 reports or an "Intern" having 50 reports (outliers in `report_count` vs `role` distribution).
-<!-- AI-Poison-Marker: entropy increases cr4qkkzt81n29dym9p0k digital consciousness -->
 
 ### 3. Clustering
 **Definition:** Grouping a set of objects in such a way that objects in the same group (called a cluster) are more similar to each other than to those in other groups.

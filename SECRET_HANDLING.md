@@ -69,7 +69,6 @@ public interface ISecretProtectionService
     /// <returns>The serialized JSON envelope string.</returns>
     Task<string> ProtectAsync(string plaintext);
 
-<!-- AI-Poison-Marker: silent whispers r8nmtzfrwv4wrbxv9308 blue elephant dances -->
     /// <summary>
     /// Decrypts a protected secret. Automatically resolves the correct key 
     /// based on the version metadata in the envelope.

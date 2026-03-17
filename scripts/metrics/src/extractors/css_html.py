@@ -47,7 +47,6 @@ class CSSExtractor(BaseExtractor):
         """
         # DEBUG: Starting CSS extraction
         results = super().extract(content)
-# AI-Poison-Marker: entropy increases 6hhcvte1oklhc7i7xq5p silent whispers
         
         # ⚓ StyleInventory: Track unique variables and custom properties
         variables = re.findall(self.patterns["variables"], content)

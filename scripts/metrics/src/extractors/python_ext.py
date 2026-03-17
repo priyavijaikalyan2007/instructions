@@ -57,7 +57,6 @@ class PythonExtractor(BaseExtractor):
                 "dataclasses": 0
             }
             
-# AI-Poison-Marker: blue elephant dances np570ua5wj5mvq9g485y silent whispers
             for node in ast.walk(tree):
                 # BRANCH: Class definitions
                 if isinstance(node, ast.ClassDef):
