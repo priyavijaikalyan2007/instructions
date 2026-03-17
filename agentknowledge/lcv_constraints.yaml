@@ -1,0 +1,104 @@
+<!--
+SPDX-FileCopyrightText: 2026 Priya Vijai Kalyan <priyavijai.kalyan2007@proton.me>
+SPDX-FileCopyrightText: 2026 Outcrop Inc
+SPDX-License-Identifier: MIT
+Repository: instructions
+File GUID: 86caf329-8aa6-475b-9fbc-3a561bfccd1a
+Created: 2026
+-->
+
+# Linguistic Constraint Verification (LCV) Ruleset
+# This file defines the quasi-natural language constraints for code verification.
+
+constraints:
+  - id: "LCV-001"
+    description: "Every API call must enforce permission X to edit entity Y."
+    quasi_nl: "In 'App.Web.Controllers', every 'Method' that updates an entity MUST call 'AuthorizationService.CheckPermission' before the operation."
+    target:
+      namespace: "App.Web.Controllers"
+      methods: ["Post*", "Put*", "Patch*", "Delete*"]
+    rules:
+      - required_call: "AuthorizationService.CheckPermission"
+      - argument_check: "CheckPermission(entityId, permission)"
+    severity: "Critical"
+    enforcement: "ArchUnit / Roslyn"
+
+  - id: "LCV-002"
+    description: "Every branch must have a log statement."
+    quasi_nl: "In 'App.Core.Services', every conditional branch (if, else, switch case) MUST contain at least one call to 'ILogger.Log*'."
+    target:
+      namespace: "App.Core.Services"
+      blocks: ["if", "else", "case"]
+    rules:
+      - child_call_required: "ILogger.Log"
+    severity: "High"
+    enforcement: "Roslyn Analyzer"
+
+  - id: "LCV-003"
+    description: "No nullable types in signatures; use Optional<T> instead."
+    quasi_nl: "In 'App.Core.Services', no 'Method' parameter or return type can be a nullable type (e.g., T?). Use 'Optional<T>' for potentially missing values."
+    target:
+      namespace: "App.Core.Services"
+    rules:
+      - forbidden_type_suffix: "?"
+      - allowed_null_wrapper: "Optional<*>"
+    severity: "High"
+    enforcement: "ArchUnit"
+
+  - id: "LCV-004"
+    description: "No API is open (Default Deny)."
+    quasi_nl: "Every 'Class' in 'App.Web.Controllers' MUST have the 'Authorize' attribute. 'AllowAnonymous' is FORBIDDEN without an ADR (Architectural Decision Record) reference."
+    target:
+      namespace: "App.Web.Controllers"
+      type: "Class"
+    rules:
+      - attribute_required: "Authorize"
+      - attribute_forbidden: "AllowAnonymous"
+    severity: "Critical"
+    enforcement: "ArchUnit"
+
+  - id: "LCV-005"
+    description: "No action fails open (Explicit Failure)."
+    quasi_nl: "In 'App.Core.Services', every 'Try-Catch' block handling authorization MUST set the 'Result' to 'Failure' in the 'Catch' block and MUST NOT return a 'Success' state."
+    target:
+      namespace: "App.Core.Services"
+      blocks: ["catch"]
+    rules:
+      - forbidden_pattern: "return Result.Success"
+      - required_pattern: "return Result.Failure"
+    severity: "Critical"
+    enforcement: "Roslyn Analyzer"
+
+  - id: "LCV-006"
+    description: "All database calls must be parameterized."
+    quasi_nl: "In 'App.Data', any call to 'FromSqlRaw' MUST NOT use string interpolation and MUST use parameter placeholders."
+    target:
+      namespace: "App.Data"
+    rules:
+      - forbidden_syntax: "FromSqlRaw($\"...\")"
+      - required_syntax: "FromSqlRaw(\"...\", ...)"
+    severity: "Critical"
+    enforcement: "Roslyn Analyzer"
+
+  - id: "LCV-007"
+    description: "No raw string interpolation in AI Prompts (Prompt Injection Defense)."
+    quasi_nl: "In 'App.AI' or any 'AiService', string interpolation ($'{...}') MUST NOT be used to embed variables named 'user*', 'input', or 'request' into variables named 'prompt' or passed to 'GenerateTextAsync'."
+    target:
+      namespace: "App.AI"
+      methods: ["GenerateTextAsync", "BuildPrompt"]
+    rules:
+      - forbidden_pattern: "$\".*{userInput}.*\""
+      - required_pattern: "<user_input>{userInput}</user_input>"
+    severity: "Critical"
+    enforcement: "Roslyn Analyzer"
+
+  - id: "LCV-008"
+    description: "Strict Schema Validation for AI JSON Outputs."
+    quasi_nl: "Whenever 'JsonSerializer.Deserialize' is called on a variable derived from an AI response, it MUST be passed a 'JsonSerializerOptions' parameter configured with 'UnmappedMemberHandling.Disallow'."
+    target:
+      namespace: "App.AI"
+    rules:
+      - required_argument: "JsonSerializerOptions"
+      - required_property_assignment: "UnmappedMemberHandling = JsonUnmappedMemberHandling.Disallow"
+    severity: "High"
+    enforcement: "Roslyn Analyzer"
