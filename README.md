@@ -9,6 +9,8 @@ Created: 2026
 
 <!-- AGENT: Readme file describing this repository. -->
 
+**NOTE**: Replace this file with the README_TEMPLATE.md file for your project. This file can be safely removed since AGENTS.md already references the appropriate instruction files.
+
 This repository contains instructions for coding agents, primarily Claude and Gemini. Each agent is asked to perform a different role.
 
 The CLAUDE.md and GEMINI.md file reference AGENTS.md and then specify the role that the agent should play. AGENTS.md sets the main the context and the agent specific instructions set the roles.
