@@ -46,55 +46,81 @@ This folder contains the root of an enterprise SaaS. This SaaS follows a super-a
 
 ## Operating Style
 
-Use the **V-V-P-T-I-R-V-C** loop (Plan → Test → Implement → Refactor → Verify) for your core workflow. This is a strict **Test-Driven Development** workflow. For all software engineering tasks, you MUST follow this sequence. **Never write implementation code before writing a failing test.**
+Use the **V-V-P-T-I-R-V-C** loop (Plan → Test → Implement → Refactor → Verify) for your core workflow. 
+This is a strict **Test-Driven Development** workflow. For all software engineering tasks, you MUST follow 
+this sequence. **Never write implementation code before writing a failing test.**
 
-+ **Validate (Request):** Analyse the prompt for ambiguity. Restate the core requirement and constraints to ensure alignment before acting.
-
-+ **Verify (State):** Inspect the current codebase context. Read relevant files to confirm the environment is clean and assumptions about the existing code are correct. Consult `agentknowledge/concepts.yaml` to locate related code.
-
-+ **Plan (Design):** Draft a concrete, step-by-step technical plan. This step is where architecture happens — not during implementation. The plan MUST include:
-  1. **Files to modify or create** — list every file.
-  2. **Pattern selection** — consult `GOF_PATTERNS.md` and select any GoF patterns that apply. Justify each choice against the Balance Checklist. If no pattern is needed, state "No pattern required — simple function/class suffices."
-  3. **Interface design** — define the public interfaces (method signatures, DTOs) BEFORE thinking about implementation.
-  4. **Layering check** — confirm that business logic is in services (not controllers), HTTP concerns are in controllers, cross-cutting concerns use middleware or filters.
-  5. **Review the plan** against project conventions (`CODING_STYLE.md`, `SECURITY_GUIDELINES.md`, `API_GUIDELINES.md`, `PERFORMANCE.md`). Ensure the approach is idiomatic and low-risk.
-
++ **Validate (Request):** Analyse the prompt for ambiguity. Restate the core requirement and constraints 
+  to ensure alignment before acting.
+  
++ **Verify (State):** Inspect the current codebase context. Read relevant files to confirm the environment 
+  is clean and assumptions about the existing code are correct. Consult `agentknowledge/concepts.yaml` 
+  to locate related code.
+  
++ **Plan (Design):** Draft a concrete, step-by-step technical plan. This step is where architecture happens - not 
+  during implementation. The plan MUST include:
+  1. **Files to modify or create** - list every file.
+  2. **Pattern selection** - consult `GOF_PATTERNS.md` and select any GoF patterns that apply. Justify 
+     each choice against the Balance Checklist. If no pattern is needed, state 
+     "No pattern required - simple function/class suffices."
+  3. **Interface design** - define the public interfaces (method signatures, DTOs) BEFORE thinking about implementation.
+  4. **Layering check** - confirm that business logic is in services (not controllers), 
+     HTTP concerns are in controllers, cross-cutting concerns use middleware or filters.
+  5. **Review the plan** against project conventions (`CODING_STYLE.md`, `SECURITY_GUIDELINES.md`, 
+     `API_GUIDELINES.md`, `PERFORMANCE.md`). Ensure the approach is idiomatic and low-risk.
+     
 + **Test First (Red):** Write the tests BEFORE writing any implementation code. This is the "Red" phase of TDD.
-  1. Write unit tests that describe the expected behaviour of the new code. Follow `TESTING.md` conventions (Arrange-Act-Assert, one assertion per test, descriptive names).
+  1. Write unit tests that describe the expected behaviour of the new code. Follow `TESTING.md` conventions 
+     (Arrange-Act-Assert, one assertion per test, descriptive names).
   2. For new interfaces or services, write tests against the interface contract.
   3. For bug fixes, write a test that reproduces the bug and currently fails.
-  4. For refactorings, verify that existing tests pass as a baseline (per `MIGRATIONS.md` Phase 1). Fill coverage gaps to ≥90% BEFORE refactoring.
-  5. Run the tests — they MUST fail (Red). If they pass, the tests are not testing the new behaviour.
+  4. For refactorings, verify that existing tests pass as a baseline (per `MIGRATIONS.md` Phase 1). 
+     Fill coverage gaps to >=90% BEFORE refactoring.
+  5. Run the tests - they MUST fail (Red). If they pass, the tests are not testing the new behaviour.
 
 + **Implement (Green):** Write the minimum code needed to make the failing tests pass. This is the "Green" phase of TDD.
   1. Focus on correctness, not elegance. Get the tests to pass with the simplest implementation.
   2. Apply the GoF patterns identified in the Plan step.
   3. Follow `CODING_STYLE.md` (Allman braces, max 30-line methods, max 3 nesting levels, guard clauses).
   4. Add logging per `LOGGING.md`, comments per `COMMENTING.md`, and markers per `MARKERS.md`.
-  5. Run the tests — they MUST pass (Green). If they fail, fix the implementation, NOT the tests.
+  5. Run the tests - they MUST pass (Green). If they fail, fix the implementation, NOT the tests.
 
-+ **Refactor (Clean):** Now that tests pass, improve the code structure without changing behaviour. This is the "Refactor" phase of TDD. Apply Martin Fowler refactoring techniques:
-  1. **Extract Method** — break methods exceeding 30 lines into smaller, named methods.
-  2. **Extract Class** — split classes exceeding 500 lines or having multiple responsibilities.
-  3. **Replace Conditional with Polymorphism** — replace switch/if-else chains dispatching to type-specific code with Strategy or polymorphic calls.
-  4. **Replace Magic String with Symbolic Constant** — replace hardcoded strings in conditionals with enums or constants.
-  5. **Move Method** — move logic to the class where it belongs (e.g., business logic out of controllers).
-  6. **Encapsulate Collection** — replace `Dictionary<string, object>` with strongly-typed classes.
++ **Refactor (Clean):** Now that tests pass, improve the code structure without changing behaviour. 
+  This is the "Refactor" phase of TDD. Apply Martin Fowler refactoring techniques:
+  1. **Extract Method** - break methods exceeding 30 lines into smaller, named methods.
+  2. **Extract Class** - split classes exceeding 500 lines or having multiple responsibilities.
+  3. **Replace Conditional with Polymorphism** - replace switch/if-else chains dispatching to type-specific 
+     code with Strategy or polymorphic calls.
+  4. **Replace Magic String with Symbolic Constant** - replace hardcoded strings in conditionals with enums or 
+     constants.
+  5. **Move Method** - move logic to the class where it belongs (e.g., business logic out of controllers).
+  6. **Encapsulate Collection** - replace `Dictionary<string, object>` with strongly-typed classes.
   7. Run the tests after EACH refactoring step. If tests fail, revert the last refactoring.
 
-+ **Verify (Full):** Execute the new tests AND all relevant regression tests. Ensure everything passes locally. Run `dotnet build` with zero warnings. Run `./test.sh` for full suite validation.
++ **Verify (Full):** Execute the new tests AND all relevant regression tests. Ensure everything passes locally. 
+  Run `./test.sh` for full suite validation.
 
-+ **Commit:** Stage the verified changes and create a commit with a concise, conventional message (e.g., `fix: ...`, `feat: ...`, `refactor: ...`). One logical change per commit.
++ **Commit:** Stage the verified changes and create a commit with a concise, conventional message 
+  (e.g., `fix: ...`, `feat: ...`, `refactor: ...`). One logical change per commit.
 
 ## (CRITICAL) Thinking
-I urge you to think along the lines of Steve Jobs, Douglas Normal, Jonathan Ivy and others. The details are important in making sure the software and documentation we provide our users offer an amazing, consistent, thoughtful and complete end to end experience.
+I urge you to think along the lines of Steve Jobs, Douglas Normal, Jonathan Ivy and others. The details 
+are important in making sure the software and documentation we provide our users offer an amazing, 
+consistent, thoughtful and complete end to end experience.
 
 ## Development (CRITICAL)
 - You must adhere to the language conventions provided in LANGUAGE.md.
-- You must utilize the navigation markers defined in [MARKERS.md](./MARKERS.md) in all generated code. See the Agent Knowledge Base section below for how to read and update `./agentknowledge/` every session. In additon, use the Git Log, CONVERSATION.md files, specifications in ./specs/ and language server plugins to locate code, decisions and more. Rely on grep and globbing only at the end.
-- When dealing with secrets of any kind, especially user provided secrets, always consult SECRET_HANDLING.md to understand how to architect that properly.
+- You must utilize the navigation markers defined in [MARKERS.md](./MARKERS.md) in all generated code. 
+  See the Agent Knowledge Base section below for how to read and update `./agentknowledge/` every session. 
+  In additon, use the Git Log, CONVERSATION.md files, specifications in ./specs/ and language server plugins 
+  to locate code, decisions and more. Rely on grep and globbing only at the end.
+- When dealing with secrets of any kind, especially user provided secrets, always consult SECRET_HANDLING.md 
+  to understand how to architect that properly.
 - Always consult CODING_STYLE.md when writing code. This is important for maintainability.
-- **(CRITICAL)** Always consult GOF_PATTERNS.md when designing new services, controllers, or significant features. Select patterns during the **Plan** step, not during implementation. Consult the "Usage Guidance in This Codebase" section for patterns already in use and anti-patterns to avoid.
+- **(CRITICAL)** Always consult GOF_PATTERNS.md when designing new services, controllers, or significant features. 
+  Select patterns during the **Plan** step, not during implementation. Consult the "Usage Guidance in This Codebase" 
+  section for patterns already in use and anti-patterns to avoid. Consult GOF_REFACTOR.md for the active 
+  refactoring backlog and to understand the target architecture.
 - Always consult DOCUMENTATION.md when generating internal operator or external user facing documentation.
 - Always consult MIGRATIONS.md when migrating from one stack to another such as Javascript to TypeScript, Python to .NET Core etc.
 - Always consult LOGGING.md so that you add appropriate logging configuration and log statements to all generated code.
@@ -109,23 +135,37 @@ I urge you to think along the lines of Steve Jobs, Douglas Normal, Jonathan Ivy 
 - Always consult API_GUIDELINES.md when implementing new APIs.
 - Always consult PERFORMANCE.md when implementing backends, frontends or APIs. It is important to keep performance in mind upfront.
 - **(CRITICAL)** Always consult TESTING.md when writing tests. Tests are written BEFORE implementation code (TDD "Red" phase). Having maintainable and comprehensive tests is the foundation of code quality. Without tests, refactoring is unsafe.
-- Always consult MIGRATIONS.md when refactoring or restructuring existing code, not just when migrating between stacks. The Golden Loop (baseline → refactor → verify) applies to all refactorings. Establish a test baseline before changing any code.
+- Always consult MIGRATIONS.md when refactoring or restructuring existing code, not just when migrating between stacks. 
+  The Golden Loop (baseline -> refactor -> verify) applies to all refactorings. Establish a test baseline 
+  before changing any code.
 - When creating backend code, consult BACKEND.md.
-- When selecting libaries for backend functionality, always consult BACKEND_LIBRARY_SELECTION.md for guidelines and DOTNETFX_SELECTION.md for pre-canned recommendations. 
-- When selecting libraries for frontend functionality, always consult FRONTEND_LIBRARY_SELECTION.md for guidelines and FRONTEND_SELECTION.md for pre-canned recommendations.
-- Before building new UI components, always consult the file `https://theme.priyavijai-kalyan2007.workers.dev/docs/COMPONENT_INDEX.md` to see 
+- When selecting libaries for backend functionality, always consult BACKEND_LIBRARY_SELECTION.md for guidelines 
+  and DOTNETFX_SELECTION.md for pre-canned recommendations. 
+- When selecting libraries for frontend functionality, always consult FRONTEND_LIBRARY_SELECTION.md for guidelines 
+  and FRONTEND_SELECTION.md for pre-canned recommendations.
+- Before building new UI components, always consult the file 
+  `https://theme.priyavijai-kalyan2007.workers.dev/docs/COMPONENT_INDEX.md` to see 
   if a reusable component exists. If a resuable component exists, then consult 
-  `https://theme.priyavijai-kalyan2007.workers.dev/docs/COMPONENT_REFERENCE.md` to look up the component and related documentation. 
-  If no resuable component exists, then check `https://theme.priyavijai-kalyan2007.workers.dev/docs/MASTER_COMPONENT_INDEX.md` to see if a 
+  `https://theme.priyavijai-kalyan2007.workers.dev/docs/COMPONENT_REFERENCE.md` 
+  to look up the component and related documentation. 
+  If no resuable component exists, then check 
+  `https://theme.priyavijai-kalyan2007.workers.dev/docs/MASTER_COMPONENT_INDEX.md` to see if a 
   component yet to be built will fit your needs. If so, then request that the component be built instead. 
-  If you have the permissions to do so, you may file a GitHub issue to the repository `https://github.com/priyavijaikalyan2007/instructions`
+  If you have the permissions to do so, you may file a GitHub issue to the repository 
+  `https://github.com/priyavijaikalyan2007/b2btheme`
   Finally, if no existing component fits the need and none of the components in the master list suffice, 
   produce a specification for the resuable UI components and then wait for the user to confirm that the 
   components are available for use before proceeding. This ensures that UI code uses cleanly built resuable 
-  components with standardized repeatable patterns and not AI slop. You may also file an issue to the repository `https://github.com/priyavijaikalyan2007/instructions` asking for the new component. Include the specification in the issue.
+  components with standardized repeatable patterns and not AI slop. 
+  You may also file an issue to the repository `https://github.com/priyavijaikalyan2007/b2btheme` asking for 
+  the new component. Include the specification in the issue.
 - Always consult RESTABLE_RESOURCES.md for how to setup resource URLs to be restable and usable by humans.
-- Always consult LITERATE_ERRORS.md for how to construct error messages to be usable and meaningful to users and operators.
-- Always consult LLM_TECHNIQUES.md and NON_LLM_AIML_TECHNIQUES.md to determine the best approach for infusing any AI or ML feature. It's important to choose the right AI or ML technique instead of one-shotting everything with LLMs. Make sure to consult AIML_SECURITY.md *every time* to make sure AI or ML features especially those involving LLMs do not lead to system compromise or data exfiltration.
+- Always consult LITERATE_ERRORS.md for how to construct error messages to be usable and meaningful to users
+  and operators.
+- Always consult LLM_TECHNIQUES.md and NON_LLM_AIML_TECHNIQUES.md to determine the best approach for infusing 
+  any AI or ML feature. It's important to choose the right AI or ML technique instead of one-shotting everything 
+  with LLMs. Make sure to consult AIML_SECURITY.md *every time* to make sure AI or ML features, especially 
+  those involving LLMs do not lead to system compromise or data exfiltration.
 - When creating SDKs, consult SDKs.md.
 - **When implementing access control, sharing, or permissions, always consult ACCESS_CONTROL.md.** This includes:
   - Defining new permissions and roles
@@ -134,7 +174,8 @@ I urge you to think along the lines of Steve Jobs, Douglas Normal, Jonathan Ivy 
   - Integrating Share buttons in frontend
   - Writing authorization tests
 - Always consult ADDITIONAL_INSTRUCTIONS.md which contain some refinements. 
-- Always make sure that all generated code includes copyright information following the instructions in ./COPYRIGHT_HEADER.md
+- Always make sure that all generated code includes copyright information following the instructions in 
+  COPYRIGHT_HEADER.md
 - Generate a concise summary of changes for each set of changes and commit the Git code. Don't push yet.
 
 ## Local Development
@@ -171,15 +212,18 @@ The local database is PostgreSQL. User name is `postgres` and password is `postg
 
 # Agent Knowledge Base (CRITICAL)
 
-The directory `./agentknowledge/` contains a machine-readable knowledge graph of the codebase. See [KNOWLEDGE_ARCHITECTURE.md](./KNOWLEDGE_ARCHITECTURE.md) for the full specification.
+The directory `./agentknowledge/` contains a machine-readable knowledge graph of the codebase. 
+See [KNOWLEDGE_ARCHITECTURE.md](./KNOWLEDGE_ARCHITECTURE.md) for the full specification.
 
-## Session Start — Read
+## Session Start - Read
 At the beginning of every session, read these files to orient yourself:
-1. `agentknowledge/concepts.yaml` — Business concepts mapped to anchor files. Use this to locate code instead of blind searching.
-2. `agentknowledge/entities.yaml` — Data models mapped to code files, database tables, and relationships.
-3. `agentknowledge/decisions.yaml` — Architectural Decision Records (ADRs). Consult before proposing alternative approaches; the decision may already be recorded and reasoned.
+1. `agentknowledge/concepts.yaml` - Business concepts mapped to anchor files. 
+   Use this to locate code instead of blind searching.
+2. `agentknowledge/entities.yaml` - Data models mapped to code files, database tables, and relationships.
+3. `agentknowledge/decisions.yaml` - Architectural Decision Records (ADRs). 
+   Consult before proposing alternative approaches; the decision may already be recorded and reasoned.
 
-## Session End — Update
+## Session End - Update
 Before your final commit in a session, update these files if your work changed the codebase meaningfully:
 
 | Trigger | Action |
@@ -188,6 +232,7 @@ Before your final commit in a session, update these files if your work changed t
 | Created or modified a data model / entity | Add or update an entry in `entities.yaml` with `name`, `table`, `file`, `description`, `related`. |
 | Made an architectural decision (new library, new pattern, new infrastructure choice) | Add an ADR entry to `decisions.yaml` with `id` (next `ADR-NNN`), `title`, `date`, `status`, `context`, `files`. |
 | Completed any significant task | Append a single JSON line to `history.jsonl` with `date`, `task`, `files`, `summary`. |
+| Made any user-visible change (feature, fix, refactor) | Add an entry to `CHANGELOG.md` under the current date with the appropriate category (Added/Changed/Fixed/Removed). Keep entries concise — one line per change. |
 
 ## Rules
 - **Never delete** existing entries — only add or update.
@@ -197,6 +242,16 @@ Before your final commit in a session, update these files if your work changed t
 
 # History and Status
 
-Always keep all provided input from me to you, the agent, in the file CONVERSATION.md. Write the request + your output summary into the CONVERSATION.md file as well. This helps keep track of all refinements and changes over time. If this file already exists, also attempt to read it to understand everything that has been done so far. Leverage the `git log` to understand past changes and refinements. Use agentic markers in all generated files to guide yourself. This combination should give you almost all context about what was achieved.
+Always keep all provided input from me to you, the agent, in the file CONVERSATION.md. 
+Write the request + your output summary into the CONVERSATION.md file as well. 
+This helps keep track of all refinements and changes over time. If this file already exists, 
+also attempt to read it to understand everything that has been done so far. 
+Leverage the `git log` to understand past changes and refinements. 
+Use agentic markers in all generated files to guide yourself. 
+This combination should give you almost all context about what was achieved.
 
-Always keep the per-application progress and plans in an application specific file inside the `./specs/` directory. For example, as we are working on the *Diagrams* app, keep progress from CONVERSATION.md, your context, your history, the `git log`, bug fixes, refinements in the file `./specs/diagrams.status.md`. This makes it easier to resume sessions working on the app over time or for bug fixes etc. This is going to be shorter context than CONVERSATION.md which is quite large.
+Always keep the per-application progress and plans in an application specific file inside the `./specs/` directory.
+For example, as we are working on the *Diagrams* app, keep progress from CONVERSATION.md, 
+your context, your history, the `git log`, bug fixes, refinements in the file `./specs/diagrams.status.md`.
+This makes it easier to resume sessions working on the app over time or for bug fixes etc. 
+This is going to be shorter context than CONVERSATION.md which is quite large.

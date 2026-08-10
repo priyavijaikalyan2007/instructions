@@ -1,17 +1,8 @@
-<!--
-SPDX-FileCopyrightText: 2026 Priya Vijai Kalyan <priyavijai.kalyan2007@proton.me>
-SPDX-FileCopyrightText: 2026 Outcrop Inc
-SPDX-License-Identifier: MIT
-Repository: instructions
-File GUID: 9591257e-72bf-4ae3-aad7-e5c1ccd9edc6
-Created: 2026
--->
-
 <!-- AGENT: Auto-generated — do not edit. Run `npm run build` to regenerate. -->
 
 # Component Index
 
-56 implemented components. Use this file for quick lookup; see each component's README for full API details.
+106 implemented components. Use this file for quick lookup; see each component's README for full API details.
 
 Full reference (all READMEs in one file): [COMPONENT_REFERENCE.md](COMPONENT_REFERENCE.md)
 
@@ -19,12 +10,28 @@ Full reference (all READMEs in one file): [COMPONENT_REFERENCE.md](COMPONENT_REF
 
 | Component | Description | Factory | Docs |
 |-----------|-------------|---------|------|
+| anglepicker | A circular dial input for selecting angles from 0 to 360 degrees. | `createAnglePicker()` | [README](components/anglepicker/README.md) |
 | colorpicker | A canvas-based colour selection control with saturation/brightness gradient, vertical hue strip, optional opacity sli... | `createColorPicker()` | [README](components/colorpicker/README.md) |
+| columnspicker | A dropdown showing column layout presets with visual SVG page thumbnails. | `createColumnsPicker()` | [README](components/columnspicker/README.md) |
 | cronpicker | A visual builder for extended 6-field CRON expressions (second, minute, hour, day-of-month, month, day-of-week) with ... | `createCronPicker()` | [README](components/cronpicker/README.md) |
 | datepicker | A calendar date picker with day, month, and year navigation views. | `createDatePicker()` | [README](components/datepicker/README.md) |
 | durationpicker | A duration/interval picker with configurable unit patterns and ISO 8601 support. | `createDurationPicker()` | [README](components/durationpicker/README.md) |
+| gradientpicker | A gradient colour picker that enables users to create, edit, and preview linear and radial gradients with full alpha ... | `createGradientPicker()` | [README](components/gradientpicker/README.md) |
+| lineendingpicker | A dropdown picker that displays line ending (arrowhead / marker) styles with inline SVG previews, letting users selec... | `createLineEndingPicker()` | [README](components/lineendingpicker/README.md) |
+| lineshapepicker | A dropdown picker that displays line shape/routing patterns with inline SVG previews, letting users select connector ... | `createLineShapePicker()` | [README](components/lineshapepicker/README.md) |
+| linetypepicker | A dropdown picker that displays line dash patterns with inline SVG previews, letting users select stroke styles for g... | `createLineTypePicker()` | [README](components/linetypepicker/README.md) |
+| linewidthpicker | A dropdown picker that displays line widths with visual CSS border previews, letting users select stroke thickness fo... | `createLineWidthPicker()` | [README](components/linewidthpicker/README.md) |
+| marginspicker | A dropdown component showing page margin presets with visual page thumbnails, modelled after Microsoft Word's Margins... | `createMarginsPicker()` | [README](components/marginspicker/README.md) |
+| orientationpicker | A simple dropdown picker for selecting page orientation (Portrait or Landscape). | `createOrientationPicker()` | [README](components/orientationpicker/README.md) |
+| peoplepicker | Searchable person selector for share dialogs, assignment fields, and permission lists. | `createPeoplePicker()` | [README](components/peoplepicker/README.md) |
+| periodpicker | Coarse time-period selector for enterprise project planning. | `createPeriodPicker()` | [README](components/periodpicker/README.md) |
+| sizespicker | A dropdown listing page and frame sizes with proportional page thumbnails and dimensions. | `createSizesPicker()` | [README](components/sizespicker/README.md) |
+| spacingpicker | A dropdown showing line/paragraph spacing presets with visual SVG thumbnails. | `createSpacingPicker()` | [README](components/spacingpicker/README.md) |
+| sprintpicker | Agile sprint selector with list and calendar views. | `createSprintPicker()` | [README](components/sprintpicker/README.md) |
+| symbolpicker | A grid-based symbol and icon picker for inserting Unicode characters and Bootstrap Icons. | `createSymbolPicker()` | [README](components/symbolpicker/README.md) |
 | timepicker | A time-of-day picker with spinner columns and optional timezone selector. | `createTimePicker()` | [README](components/timepicker/README.md) |
 | timezonepicker | A searchable dropdown selector for IANA timezones with grouped regions, UTC offset display, and live current-time pre... | `createTimezonePicker()` | [README](components/timezonepicker/README.md) |
+| toolcolorpicker | A visual colour picker that displays colours as tool icons (pens, markers, pencils, highlighters, brushes). | `createToolColorPicker()` | [README](components/toolcolorpicker/README.md) |
 
 ## Inputs & Selection
 
@@ -39,10 +46,10 @@ Full reference (all READMEs in one file): [COMPONENT_REFERENCE.md](COMPONENT_REF
 
 | Component | Description | Factory | Docs |
 |-----------|-------------|---------|------|
-| codeeditor | Bootstrap 5-themed code editor wrapping CodeMirror 6 with syntax highlighting, toolbar, diagnostics, and graceful tex... | `createCodeEditor()` | [README](components/codeeditor/README.md) |
+| codeeditor | Bootstrap 5-themed code editor wrapping CodeMirror 6 with syntax highlighting, toolbar, and diagnostics. | `createCodeEditor()` | [README](components/codeeditor/README.md) |
 | commentoverlay | Transparent overlay system for anchoring comment pins to DOM elements, enabling inline annotation with threaded discu... | `createCommentOverlay()` | [README](components/commentoverlay/README.md) |
 | fileupload | A drag-and-drop file upload zone with progress bars, file type validation, size limits, batch upload, and an optional... | `createFileUpload()` | [README](components/fileupload/README.md) |
-| markdowneditor | A Bootstrap 5-themed Markdown editor wrapper around [Vditor](https://github.com/Vanessa219/vditor) with tab/side-by-s... | `createMarkdownEditor()`, `showMarkdownEditorModal()` | [README](components/markdowneditor/README.md) |
+| markdowneditor | A Bootstrap 5-themed Markdown editor wrapper around [Vditor](https://github.com/Vanessa219/vditor) with tab/side-by-s... | `createMarkdownEditor()`, `showMarkdownEditorModal()`, `created()`, `showOverflowIndicator()` | [README](components/markdowneditor/README.md) |
 
 ## Data Display
 
@@ -130,6 +137,7 @@ Full reference (all READMEs in one file): [COMPONENT_REFERENCE.md](COMPONENT_REF
 | gridlayout | A uniform CSS Grid layout container where all cells are the same size, arranged via `grid-template-columns: repeat(N,... | `createElement()`, `createGridLayout()` | [README](components/gridlayout/README.md) |
 | layerlayout | A z-stack layout container where all children are simultaneously visible, layered in z-order. | `createLayerLayout()` | [README](components/layerlayout/README.md) |
 | splitlayout | A split layout container that divides available space into two or more panes separated by draggable dividers. | `createSplitLayout()` | [README](components/splitlayout/README.md) |
+| stacklayout | A vertically stacked panel layout where each panel has a collapsible header (with icon, title, and chevron toggle) an... | `createElement()`, `createStackLayout()`, `createDockedSidebar()` | [README](components/stacklayout/README.md) |
 | treegrid | A highly configurable tree-grid hybrid component for displaying hierarchical data with multi-column tabular views. | `createTreeGrid()`, `showColumn()` | [README](components/treegrid/README.md) |
 
 ## Governance & Security
@@ -149,7 +157,40 @@ Full reference (all READMEs in one file): [COMPONENT_REFERENCE.md](COMPONENT_REF
 
 | Component | Description | Factory | Docs |
 |-----------|-------------|---------|------|
+| actionitems | A rich, stateful action item list with status lifecycle tracking, person assignments, priority badges, due dates, com... | `createActionItems()` | [README](components/actionitems/README.md) |
 | applauncher | Grid-based application launcher with three view modes: dropdown (waffle icon trigger), modal (centered overlay), and ... | `createAppLauncher()` | [README](components/applauncher/README.md) |
+| breadcrumb | Hierarchical path display with clickable segments, optional terminal dropdown actions, and overflow truncation for de... | `createBreadcrumb()` | [README](components/breadcrumb/README.md) |
+| contextmenu | A theme-aware, accessible context menu component with icons, keyboard shortcuts, separators, sub-menus, checked/radio... | `createContextMenu()` | [README](components/contextmenu/README.md) |
+| diagramengine | Universal vector canvas engine for diagramming, graph visualization, technical drawing, poster creation, and embedded... | `createDiagramEngine()` | [README](components/diagramengine/README.md) |
+| docviewer | Full-page three-column documentation layout. | `createDocViewer()` | [README](components/docviewer/README.md) |
+| fontdropdown | A dropdown where each font name renders in its own typeface, similar to the font picker in Google Docs. | `createFontDropdown()`, `createRibbon()` | [README](components/fontdropdown/README.md) |
+| formdialog | A modal dialog optimized for form-based workflows (create, edit, invite, assign). | `createFormDialog()`, `createElement()` | [README](components/formdialog/README.md) |
+| graphcanvas | Interactive SVG graph visualization with multiple layout algorithms, zoom/pan, selection, edge creation, keyboard sho... | `createGraphCanvas()` | [README](components/graphcanvas/README.md) |
+| graphlegend | Collapsible legend panel showing color/icon/shape key for graph node types and edge types. | `createGraphLegend()` | [README](components/graphlegend/README.md) |
+| graphminimap | A small, always-visible overview widget that shows a miniaturised view of the entire graph canvas. | `createGraphMinimap()` | [README](components/graphminimap/README.md) |
+| guidedtour | Product walkthrough component wrapping Driver.js. | `createGuidedTour()` | [README](components/guidedtour/README.md) |
+| helpdrawer | Right-side sliding panel for in-context documentation display. | `createHelpDrawer()` | [README](components/helpdrawer/README.md) |
+| helptooltip | A small `?` icon that attaches to any element for in-context help. | `createHelpTooltip()` | [README](components/helptooltip/README.md) |
+| inlinetoolbar | A compact inline toolbar that renders INSIDE a container element as a flex row. | `createInlineToolbar()` | [README](components/inlinetoolbar/README.md) |
+| magnifier | A cursor-following magnifying glass overlay that clones and scales the content of a target element within a circular ... | `createMagnifier()` | [README](components/magnifier/README.md) |
+| markdownrenderer | Shared markdown-to-HTML rendering utility for the Enterprise Theme. | `createMarkdownRenderer()` | [README](components/markdownrenderer/README.md) |
+| notificationcenter | Aggregated notification panel with bell trigger, unread badge, category filters, read/unread state, dismiss per item,... | `createNotificationCenter()` | [README](components/notificationcenter/README.md) |
+| personchip | A compact inline element displaying a person's identity: circular avatar (image or deterministic initials), name, opt... | `createPersonChip()`, `createElement()` | [README](components/personchip/README.md) |
+| pill | A reusable inline pill element for mentions, issues, documents, tags, and other entity references. | `createPill()` | [README](components/pill/README.md) |
+| presenceindicator | A compact overlapping avatar stack showing who is actively viewing or editing a shared resource. | `createPresenceIndicator()` | [README](components/presenceindicator/README.md) |
+| propertyinspector | Non-modal right-side panel for viewing and editing entity details without navigating away from the parent list. | `createPropertyInspector()`, `createElement()` | [README](components/propertyinspector/README.md) |
+| relationshipmanager | Component for creating, viewing, and managing typed relationships between entities. | `createRelationshipManager()` | [README](components/relationshipmanager/README.md) |
+| ribbon | A Microsoft Office-style tabbed toolbar for organizing commands and controls into logical groups. | `createRibbon()`, `showContextualTab()`, `createElement()` | [README](components/ribbon/README.md) |
+| ribbonbuilder | Visual WYSIWYG editor for composing Ribbon toolbar layouts via drag-and-drop. | `createRibbon()`, `createRibbonBuilder()` | [README](components/ribbonbuilder/README.md) |
+| richtextinput | A lightweight `contenteditable`-based rich text input that composes STIE and Pill for per-row editing contexts — todo... | `createRichTextInput()` | [README](components/richtextinput/README.md) |
+| ruler | A canvas-based calibrated ruler with cursor tracking, multiple unit systems, and DPI-aware rendering. | `createRuler()` | [README](components/ruler/README.md) |
+| sharedialog | A modal dialog for sharing resources with configurable access levels. | `showShareDialog()`, `createShareDialog()` | [README](components/sharedialog/README.md) |
+| slider | A range input component with single-value and dual-thumb range modes, optional tick marks, value labels, keyboard nav... | `createSlider()` | [README](components/slider/README.md) |
+| smarttextinput | A behavioral middleware engine (non-UI) that attaches to text inputs and provides trigger-based inline references suc... | `createSmartTextInput()`, `showPopover()` | [README](components/smarttextinput/README.md) |
+| spinemap | Interactive SVG capability/feature map with a central spine, branching sub-nodes, four layout algorithms, zoom/pan, s... | `createSpineMap()` | [README](components/spinemap/README.md) |
+| stepper | Linear or non-linear step progression UI for complex multi-step processes with validation gates, save-as-draft, step ... | `createStepper()` | [README](components/stepper/README.md) |
+| themetoggle | Compact three-state theme switcher — **Light**, **Auto** (OS preference), and **Dark**. | `createThemeToggle()` | [README](components/themetoggle/README.md) |
+| typebadge | Small inline chip/badge that visually identifies an ontology type via icon, color, and label. | `createTypeBadge()` | [README](components/typebadge/README.md) |
 
 ## Asset Paths
 

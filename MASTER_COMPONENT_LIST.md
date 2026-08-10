@@ -1,12 +1,3 @@
-<!--
-SPDX-FileCopyrightText: 2026 Priya Vijai Kalyan <priyavijai.kalyan2007@proton.me>
-SPDX-FileCopyrightText: 2026 Outcrop Inc
-SPDX-License-Identifier: MIT
-Repository: instructions
-File GUID: 8bf7266d-1e2a-4c91-96da-4537836170cc
-Created: 2026
--->
-
 # UI Component Library
 
 # Overview
@@ -55,6 +46,22 @@ This document defines the complete set of reusable UI components for a Bootstrap
 
 **Use Cases**: User profile setup, meeting scheduling across regions, deployment window planning.
 
+## 1.6✅Period Picker
+
+**Description**: Coarse time-period selector for project planning. Users select months, quarters, halves, or years with automatic date resolution based on start/end mode. Supports keyboard navigation and configurable year ranges.
+
+**References**: Jira roadmap date range, Monday.com timeline columns, Azure DevOps iteration picker.
+
+**Use Cases**: Budget period selection, roadmap milestone targeting, fiscal quarter assignment, report date range filtering.
+
+## 1.7✅Sprint Picker
+
+**Description**: Agile sprint selector with dual list and calendar views. Computes sprints dynamically from an anchor date and sprint length with customizable naming modes ("sprint", "short", "monthly", or callback) and colored sprint band overlays in calendar view.
+
+**References**: Jira sprint selector, Azure DevOps iteration picker, Linear cycle selector.
+
+**Use Cases**: Sprint assignment in backlog grooming, iteration planning, velocity reporting period selection, release scoping.
+
 # 2\. Progress
 
 ## 2.1✅Infinite Progress Modal
@@ -67,11 +74,51 @@ This document defines the complete set of reusable UI components for a Bootstrap
 
 ## 2.2✅Steppable Progress Modal
 
-**Description**: Modal showing discrete, named steps with completion states (pending, active, done, error), elapsed time, and retry capability. 
+**Description**: Modal showing discrete, named steps with completion states (pending, active, done, error), elapsed time, and retry capability.
 
-**References**: Stripe Connect onboarding, AWS CloudFormation stack events. 
+**References**: Stripe Connect onboarding, AWS CloudFormation stack events.
 
 **Use Cases**: Multi-phase deployment, onboarding wizards, payment processing pipelines.
+
+## 2.3✅Confirm Dialog
+
+**Description**: General-purpose confirmation modal with customizable title, message, icon, variant (default/danger/warning/info), and promise-based API. Traps focus, supports Escape/Enter, and provides `showConfirmDialog()` → `Promise<boolean>` and `showDangerConfirmDialog()` shortcuts. Distinct from ErrorDialog (which is error-specific with technical details/stack traces).
+
+**References**: SweetAlert2, macOS confirmation sheets, VS Code confirmation dialogs.
+
+**Use Cases**: Destructive action confirmation (delete, discard), unsaved changes warning, update prompts, general-purpose user confirmation flows.
+
+## 2.4✅Error Dialog
+
+**Description**: Error-specific modal for displaying application errors, exceptions, and system failures with structured technical details. Shows error title, user-friendly message, expandable stack trace / technical details section, severity icon, and retry/dismiss actions. Designed for surfacing caught exceptions with contextual debugging information.
+
+**References**: Windows error dialogs, VS Code error notifications, browser DevTools unhandled exception modals.
+
+**Use Cases**: API failure display, unhandled exception reporting, validation error summary, connection failure alerts, background task error details.
+
+## 2.5✅Form Dialog
+
+**Description**: Modal dialog optimized for form-based workflows (create, edit, invite, assign). Supports two mutually exclusive modes: single-page (scrollable form with collapsible sections, multi-column layout, 12 field types) and wizard (multi-step with numbered step indicator, back/next navigation, per-step validation, configurable transitions). Optionally includes a resizable sidebar panel for help text, previews, or contextual information. Built-in required/email/custom validation, focus trapping, loading state with spinner, dirty-change warnings via ConfirmDialog, and keyboard shortcuts.
+
+**References**: Salesforce Lightning Modal, Stripe Dashboard Modals, Shopify Polaris Wizard, Azure Portal Create Resource, apps team `.settings-modal`.
+
+**Use Cases**: Create/edit modals, user invitation forms, role/permission assignment, multi-step onboarding wizards, workspace creation flows, admin CRUD forms.
+
+## 2.6✅Ribbon
+
+**Description**: Microsoft Office-style tabbed toolbar with adaptive group scaling, Quick Access Toolbar (QAT), integrated menu bar, backstage full-screen overlay, keyboard-driven KeyTips, and 13 built-in control types (button, toggle, split, dropdown, gallery, checkbox, spinner, combobox, color-picker, group, separator, label, custom). Groups shrink through up to four size tiers (large, medium, small, collapsed) as the window narrows. Supports configurable accent colours, contextual tabs, layout persistence, and full WAI-ARIA toolbar pattern.
+
+**References**: Microsoft Office Ribbon (Word, Excel, PowerPoint), Windows 11 File Explorer Ribbon, Telerik/Kendo UI Ribbon, DevExpress Ribbon, Syncfusion Ribbon.
+
+**Use Cases**: Document editors, spreadsheet applications, diagramming tools, admin consoles with many grouped actions, creative tools with format/insert/review workflows.
+
+## 2.7✅Ribbon Builder
+
+**Description**: Visual WYSIWYG editor for composing Ribbon toolbar layouts via drag-and-drop. Three-panel layout with toolbar (add tab/group/control, delete, export), live Ribbon preview with debounced rebuild, and bottom split with structure tree and property inspector with icon picker. Supports drag-and-drop reordering of tabs, groups, and controls. Exports structured Markdown specs for coding agents and JSON configs for direct `createRibbon()` consumption. Import JSON to load existing layouts. Keyboard shortcuts for node management and tree navigation.
+
+**References**: Microsoft Office Ribbon Customizer (File > Options > Customize Ribbon), Telerik/Kendo UI Toolbar Builder, Visual Studio toolbar/menu editor, Figma component property panels.
+
+**Use Cases**: Design-time Ribbon layout authoring, admin-configurable toolbar customization, agent-assisted UI generation from exported Markdown specs, rapid prototyping of Office-style command surfaces.
 
 # 3\. Data Entry & Display
 
@@ -83,7 +130,7 @@ This document defines the complete set of reusable UI components for a Bootstrap
 
 **Use Cases**: Tag entry, custom category creation, assignee selection with ad-hoc entries.
 
-## 3.2 Multiselect Combo Box
+## 3.2✅Multiselect Combo Box
 
 **Description**: Combo box supporting multiple simultaneous selections displayed as removable chips/tags, with search, select-all, and group selection. 
 
@@ -91,7 +138,7 @@ This document defines the complete set of reusable UI components for a Bootstrap
 
 **Use Cases:** Permission assignment, multi-label classification, recipient selection, feature flag targeting.
 
-## 3.3 Non-Password Masked Entry & View
+## 3.3✅Non-Password Masked Entry & View
 
 **Description**: Input and display component that masks sensitive non-password data (SSNs, API keys, account numbers) with a toggle to reveal, copy-to-clipboard, and configurable masking patterns. 
 
@@ -107,13 +154,101 @@ This document defines the complete set of reusable UI components for a Bootstrap
 
 **Use Cases**: Audience segmentation, custom report filters, alert rule definition, dynamic user targeting.
 
-## 3.5 Color Picker
+## 3.5✅Color Picker
 
-**Description**: Color selection input supporting hex, RGB, HSL, and named colors with a visual palette, eyedropper, opacity slider, and preset swatches. 
+**Description**: Color selection input supporting hex, RGB, HSL, and named colors with a visual palette, eyedropper, opacity slider, and preset swatches.
 
-**References**: Figma color picker, Canva, Shopify theme editor. 
+**References**: Figma color picker, Canva, Shopify theme editor.
 
 **Use Cases:** Theme/branding customization, chart color assignment, status color configuration, white-label setup.
+
+## 3.6✅Slider
+
+**Description**: Range input component with single-value and dual-thumb range modes, tick marks, value labels, keyboard navigation, and size variants. Supports horizontal and vertical orientations.
+
+**References**: MUI Slider, Ant Design Slider, Figma opacity/zoom controls.
+
+**Use Cases:** Zoom controls, volume/opacity adjustment, price range filters, numeric parameter tuning, Ribbon toolbar value controls.
+
+## 3.7✅Font Dropdown
+
+**Description**: Font family picker where each font name renders in its own typeface. Ships with 17 web-safe fonts by default, supports custom font lists, search filtering, recently-used tracking via localStorage, and live preview text. Full keyboard navigation. Integrates into Ribbon toolbar controls.
+
+**References**: Google Docs font selector, Microsoft Word font dropdown, Canva font picker.
+
+**Use Cases**: Document formatting toolbars, rich text editor font selection, theme customization, email template design.
+
+## 3.8✅Symbol Picker
+
+**Description**: Grid-based symbol and icon picker for inserting Unicode characters and Bootstrap/Font Awesome icons. Features categorized tabs, search filtering, recently-used tracking, keyboard navigation, and inline or popup display modes. Auto-discovers icons from loaded stylesheets at runtime (~500 Unicode symbols, ~200 Bootstrap Icons).
+
+**References**: Microsoft Word symbol insert, Google Docs special characters, Notion emoji picker.
+
+**Use Cases**: Document formatting (insert special characters), icon selection for UI builders, emoji/symbol insertion in rich text, Ribbon toolbar icon assignment.
+
+## 3.9✅Angle Picker
+
+**Description**: Circular dial input for selecting angles (0-360°). SVG-based dial with draggable knob, tick marks at 15° intervals, center numeric input, and optional live shadow preview. Supports inline (always visible) and dropdown (compact trigger) display modes.
+
+**References**: Figma shadow angle control, Photoshop angle picker, CSS gradient direction controls.
+
+**Use Cases**: Drop shadow angle, gradient direction, rotation controls, lighting angle, any angular value input.
+
+## 3.10✅Gradient Picker
+
+**Description**: Gradient colour picker supporting linear and radial gradients with draggable stop handles, per-stop alpha via composed ColorPicker, angle control via composed AnglePicker, radial centre/radius controls, preset gradient swatches, reverse/clear actions, inline and popup display modes, and four size variants (mini/sm/default/lg). Converts to/from DiagramEngine GradientDefinition.
+
+**References**: Figma gradient editor, CSS gradient generators, Photoshop gradient tool, Canva gradient fills.
+
+**Use Cases**: Diagram fill/stroke gradients, shape border gradients, background gradients, chart colour ramps, theme gradient configuration, poster design.
+
+## 3.11✅Orientation Picker
+
+**Description**: Dropdown picker for selecting page orientation (portrait/landscape) with SVG page icon previews. Compact 22px trigger for ribbon integration.
+
+**References**: Microsoft Word Layout tab, Google Docs Page Setup.
+
+**Use Cases**: Document orientation selection, page frame configuration, print layout settings.
+
+## 3.12✅Sizes Picker
+
+**Description**: Dropdown picker for selecting page/paper sizes with proportional SVG thumbnails and dimensions. Built-in presets for Letter, Legal, A4, A5, B5, Executive, and screen/mobile sizes.
+
+**References**: Microsoft Word Size dropdown, Google Docs Page Setup.
+
+**Use Cases**: Page frame size selection, document template configuration, print layout settings.
+
+## 3.13✅Margins Picker
+
+**Description**: Dropdown picker for selecting page margin presets with SVG page thumbnails showing margin boundaries. Supports normal, narrow, moderate, wide, mirrored, and custom margins.
+
+**References**: Microsoft Word Margins dropdown, Google Docs Page Setup.
+
+**Use Cases**: Document margin configuration, page frame margin presets, print layout settings.
+
+## 3.14✅Tool Color Picker
+
+**Description**: Visual colour picker that displays colours as tool-shaped SVG icons (pen, marker, pencil, highlighter, brush). Each tool type has a built-in colour pack with appropriate alpha values. Row and grid layout modes.
+
+**References**: Microsoft OneNote pen colours, Apple Notes marker selection.
+
+**Use Cases**: Drawing tool colour selection, pen/marker/highlighter configuration, DiagramEngine tool settings.
+
+## 3.15✅Columns Picker
+
+**Description**: Dropdown picker for selecting column layout presets (1/2/3/left/right) with SVG page thumbnails showing column dividers and placeholder content lines.
+
+**References**: Microsoft Word Columns dropdown, Google Docs column selection.
+
+**Use Cases**: Document column layout, page template configuration, content flow settings.
+
+## 3.16✅Spacing Picker
+
+**Description**: Dropdown picker for selecting line/paragraph spacing presets with SVG thumbnails showing proportional line spacing. Built-in presets for single, 1.15, 1.5, double, compact, and relaxed.
+
+**References**: Microsoft Word Line Spacing dropdown, Google Docs line spacing.
+
+**Use Cases**: Document line spacing, paragraph spacing configuration, text formatting.
 
 # 4\. Rich Content Editing
 
@@ -125,7 +260,7 @@ This document defines the complete set of reusable UI components for a Bootstrap
 
 **Use Cases:** Documentation authoring, knowledge base articles, release notes, internal wikis.
 
-## 4.2 Code Editor (JSON/YAML/General Purpose)
+## 4.2✅Code Editor (JSON/YAML/General Purpose)
 
 **Description**: Embeddable code editor with syntax highlighting, linting, auto-complete, line numbers, minimap, and diff mode. 
 
@@ -143,7 +278,7 @@ This document defines the complete set of reusable UI components for a Bootstrap
 
 # 5\. Data Grids & Tables
 
-## 5.1 Data Grid
+## 5.1✅Data Grid
 
 **Description**: High-performance, sortable, filterable tabular data component with fixed headers, column resizing, row selection, and pagination or infinite scroll. 
 
@@ -205,11 +340,51 @@ This document defines the complete set of reusable UI components for a Bootstrap
 
 ## 7.3 ✅ Banner Bar
 
-**Description**: Full-width dismissible banner for system-level announcements, warnings, or promotional messages with action buttons and severity levels. 
+**Description**: Full-width dismissible banner for system-level announcements, warnings, or promotional messages with action buttons and severity levels.
 
-**References**: GitHub (repo archive notice), Stripe (test mode banner), AWS console alerts. 
+## 7.4✅Graph Toolbar
+
+**Description**: Factory function that creates a preconfigured Toolbar for graph/diagram visualization applications. Provides editing controls (undo/redo/delete), layout selector, zoom controls (in/out/fit), grid snap toggle, minimap toggle, export dropdown, and search input. Built on top of the Toolbar component with graph-specific item configuration. Supports keyboard shortcuts for zoom and actions.
+
+**References**: GitHub (repo archive notice), Stripe (test mode banner), AWS console alerts.
 
 **Use Cases:** Maintenance windows, trial expiration, feature announcements, environment warnings.
+
+## 7.5✅LineWidthPicker
+
+**Description**: Dropdown picker displaying visual CSS border previews for 13 default stroke widths (0.5–12px). Body-portaled at z-index 2050, keyboard navigation, size variants (mini/sm/default/lg). Factory createLineWidthPicker().
+
+**Use Cases:** Graph/diagram stroke width selection, drawing tool line thickness, Ribbon toolbar integration.
+
+## 7.6✅LineTypePicker
+
+**Description**: Dropdown picker displaying inline SVG dash-pattern previews for 12 default line types. Body-portaled at z-index 2050, keyboard navigation, size variants (mini/sm/default/lg). Factory createLineTypePicker().
+
+**Use Cases:** Graph/diagram line style selection, drawing tool dash patterns, Ribbon toolbar integration.
+
+## 7.7✅LineShapePicker
+
+**Description**: Dropdown picker displaying SVG previews for line shape/routing patterns (straight, curved, orthogonal, step, arc). Body-portaled, keyboard navigation, size variants (mini/sm/default/lg). Factory createLineShapePicker().
+
+**Use Cases:** Graph/diagram edge routing selection, connector shape configuration, Ribbon toolbar integration.
+
+## 7.8✅LineEndingPicker
+
+**Description**: Dropdown picker displaying SVG arrowhead/marker previews for line endings. Supports start and end mode. Body-portaled, keyboard navigation, size variants (mini/sm/default/lg). Factory createLineEndingPicker().
+
+**Use Cases:** Graph/diagram arrowhead selection, connector endpoint markers, Ribbon toolbar integration.
+
+## 7.9✅Magnifier
+
+**Description**: Cursor-following magnifying glass overlay that clones and scales target element content within a circular lens. Configurable zoom level, lens diameter, and offset. Factory createMagnifier().
+
+**Use Cases:** Image inspection, map detail viewing, accessibility zoom, document close-up.
+
+## 7.10✅Ruler
+
+**Description**: Canvas-based calibrated ruler with cursor tracking, multiple unit systems (px, mm, cm, in, pt), DPI-aware rendering. Horizontal and vertical orientations with configurable tick marks and numbered labels. Factory createRuler().
+
+**Use Cases:** Design tool measurement, document layout guides, image editor coordinates, CAD-style rulers.
 
 # 8\. Containers
 
@@ -247,7 +422,7 @@ This document defines the complete set of reusable UI components for a Bootstrap
 
 **Use Cases:** AI debugging, prompt engineering, cost attribution, compliance auditing of AI decisions.
 
-## 9.3 Reasoning Accordion (Chain of Thought)
+## 9.3✅Reasoning Accordion (Chain of Thought)
 
 **Description**: Collapsible panel showing an LLM's step-by-step reasoning process, with a pulsing "thinking" state, markdown-rendered logic, and confidence indicators. 
 
@@ -271,7 +446,7 @@ This document defines the complete set of reusable UI components for a Bootstrap
 
 **Use Cases**: Production ML observability, A/B test model comparison, SLA compliance tracking, retraining trigger alerts.
 
-## 9.6 Prompt Template Manager
+## 9.6✅Prompt Template Manager
 
 **Description**: CRUD interface for governing, versioning, and testing prompt templates. Supports variable injection (`{{placeholders}}`), diff between versions, and a "Try in Playground" action. 
 
@@ -315,30 +490,7 @@ This document defines the complete set of reusable UI components for a Bootstrap
 
 **Data Model (simplified):**
 
-| ReasoningTree {
-  root: ThoughtNode
-  metadata: {
-    model: string
-    strategy: "tree-of-thought" | "beam-search" | "mcts" | "best-of-n"
-    total\_tokens: number
-    total\_branches\_explored: number
-    max\_depth: number
-    timestamp: ISO-8601
-  }
-}
-
-ThoughtNode {
-  id: string
-  depth: number
-  thought: string              // The reasoning text
-  score: number | null         // Evaluator score (0-1), null if not yet evaluated
-  status: "selected" | "pruned" | "exploring" | "pending"
-  pruning\_reason: string | null
-  token\_cost: number
-  evaluator: string | null     // Which evaluator scored this node
-  children: ThoughtNode\[\]
-  metadata: Record\<string, any\>
-} |
+| ReasoningTree {  root: ThoughtNode  metadata: {    model: string    strategy: "tree-of-thought" | "beam-search" | "mcts" | "best-of-n"    total\_tokens: number    total\_branches\_explored: number    max\_depth: number    timestamp: ISO-8601  }}ThoughtNode {  id: string  depth: number  thought: string              // The reasoning text  score: number | null         // Evaluator score (0-1), null if not yet evaluated  status: "selected" | "pruned" | "exploring" | "pending"  pruning\_reason: string | null  token\_cost: number  evaluator: string | null     // Which evaluator scored this node  children: ThoughtNode\[\]  metadata: Record\<string, any\>} |
 | :---- |
 
 **State Rendering:**
@@ -390,33 +542,7 @@ ThoughtNode {
 
 **Data Model:**
 
-| BeamSearch {
-  beam\_width: number
-  depths: BeamDepth\[\]
-  selected\_beam\_id: string
-  metadata: {
-    model: string
-    total\_tokens: number
-    timestamp: ISO-8601
-  }
-}
-
-BeamDepth {
-  depth: number
-  candidates: BeamCandidate\[\]
-}
-
-BeamCandidate {
-  id: string
-  beam\_id: string             // Which beam/lane this belongs to
-  depth: number
-  thought: string
-  score: number | null
-  status: "active" | "pruned" | "selected"
-  pruning\_reason: string | null
-  token\_cost: number
-  parent\_id: string | null    // Links to candidate at depth \- 1
-} |
+| BeamSearch {  beam\_width: number  depths: BeamDepth\[\]  selected\_beam\_id: string  metadata: {    model: string    total\_tokens: number    timestamp: ISO-8601  }}BeamDepth {  depth: number  candidates: BeamCandidate\[\]}BeamCandidate {  id: string  beam\_id: string             // Which beam/lane this belongs to  depth: number  thought: string  score: number | null  status: "active" | "pruned" | "selected"  pruning\_reason: string | null  token\_cost: number  parent\_id: string | null    // Links to candidate at depth \- 1} |
 | :---- |
 
 **Visual Reference:**
@@ -486,13 +612,7 @@ Beam3 │ Thought C │-\>│  pruned X │
 **Data Model:**  
 Reuses the same ReasoningTree / ThoughtNode structure from Addendum A. The Sankey rendering is a derived visualization that aggregates token\_cost and score values from the tree.
 
-| SankeyConfig {
-  width\_metric: "token\_cost" | "score" | "branch\_count"
-  color\_metric: "score" | "status" | "cost" | "custom"
-  show\_pruned: boolean
-  depth\_range: \[number, number\] | null
-  min\_flow\_width: number        // Minimum pixel width to keep thin flows visible
-} |
+| SankeyConfig {  width\_metric: "token\_cost" | "score" | "branch\_count"  color\_metric: "score" | "status" | "cost" | "custom"  show\_pruned: boolean  depth\_range: \[number, number\] | null  min\_flow\_width: number        // Minimum pixel width to keep thin flows visible} |
 | :---- |
 
 **Visual Reference:**
@@ -579,6 +699,46 @@ Each view is a rendering strategy over the same underlying tree.
 
 **Use Cases:** Executive dashboards, NOC/SOC monitoring walls, personalized analytics views, team status boards.
 
+## 10.4✅SpineMap (Capability Map)
+
+**Description**: Interactive SVG capability/feature map with a central spine, branching sub-nodes, four layout algorithms (vertical, horizontal, radial, winding), zoom/pan, status color coding, cross-branch connections, and integrated editing via sidebar TreeGrid, popover, and visual drag.
+
+**References**: Workflow orchestration product feature maps, fishbone diagrams, capability trees, serpentine road diagrams.
+
+**Use Cases:** SaaS feature roadmaps, product capability maps, service catalogs, technology architecture visualizations, platform feature inventories.
+
+## 10.5✅GraphCanvas (SVG Graph Visualization)
+
+**Description**: Interactive SVG graph visualization with multiple layout algorithms (force, hierarchical, radial, dagre, group-by-namespace), zoom/pan, rubber-band selection, edge creation, keyboard shortcuts (±/0 zoom, arrow navigation, Ctrl+A select-all), right-click context menu, and SVG/PNG/JSON export. Supports "schema" and "instance" display modes with filtering, highlighting, and layout control.
+
+**References**: D3 force layout, Cytoscape.js, yFiles, Gephi.
+
+**Use Cases**: Dependency topology maps, entity relationship diagrams, service mesh visualization, knowledge graph exploration, network infrastructure views.
+
+## 10.6✅GraphCanvasMx (maxGraph Graph Visualization)
+
+**Description**: Interactive graph visualization powered by maxGraph — a drop-in replacement for GraphCanvas (same public API) with superior layout quality, orthogonal edge routing, and better performance on large graphs. Supports force, hierarchical, radial, dagre, and group-by-namespace layouts with native zoom/pan, rubber-band selection, and customizable tooltips. Requires `window.maxgraph` (@maxgraph/core).
+
+**References**: maxGraph (formerly mxGraph/JGraph), draw.io, yEd.
+
+**Use Cases**: Large-scale dependency graphs, enterprise architecture diagrams, workflow visualization, infrastructure topology maps requiring high-fidelity edge routing.
+
+## 10.7✅Graph Legend
+
+**Description**: Collapsible legend panel showing colour/icon/shape key for all visible node types and edge types in a graph canvas. Uses TypeBadge for node entries, inline SVG line samples for edge types. Supports counts, click-to-filter, hover-to-highlight, and status indicators (planned/deprecated/external).
+
+**References**: Neo4j Browser side panel, Datadog Service Map legend, Google Maps legend.
+
+**Use Cases**: Ontology visualizer type key, network topology legend, dependency graph node/edge type reference.
+
+## 10.8✅Graph Minimap
+
+**Description**: Small SVG-based overview widget showing a miniaturized view of the entire graph canvas with a viewport rectangle indicating the currently visible region. Click to pan, drag viewport to pan in real-time. Auto-refreshes on layout changes. Performance mode skips edges for >500 nodes.
+
+**References**: Neo4j Browser minimap, draw.io minimap, Figma minimap.
+
+**Use Cases**: Large graph navigation, ontology visualizer overview, dependency graph orientation.
+
 # 11\. Events & Activity
 
 ## 11.1 ✅ Event Timeline
@@ -589,7 +749,7 @@ Each view is a rendering strategy over the same underlying tree.
 
 **Use Cases:** Audit trails, deployment history, customer journey tracking, incident timelines.
 
-## 11.2 Activity Feed
+## 11.2✅Activity Feed
 
 **Description**: Social-style feed of user and system actions with actor avatars, action descriptions, object links, and relative timestamps. Supports real-time updates and load-more pagination. 
 
@@ -607,7 +767,7 @@ Each view is a rendering strategy over the same underlying tree.
 
 # 12\. User Experience & Onboarding
 
-## 12.1 Walkthrough (Guided Tour)
+## 12.1✅Walkthrough (Guided Tour)
 
 **Description**: Step-by-step overlay tour highlighting UI elements with tooltips, spotlights, and progress indicators. Supports branching paths and skip/dismiss. 
 
@@ -615,7 +775,7 @@ Each view is a rendering strategy over the same underlying tree.
 
 **Use Cases**: New user onboarding, feature adoption, complex workflow guidance, contextual help.
 
-## 12.2 Command Palette (AI-Enhanced)
+## 12.2✅Command Palette (AI-Enhanced)
 
 **Description**: Keyboard-first omnibar (Cmd+K) with fuzzy search across actions, navigation, entities, and recent items. Supports natural language intent parsing and deep-link execution. 
 
@@ -631,7 +791,7 @@ Each view is a rendering strategy over the same underlying tree.
 
 **Use Cases:** Feature discovery for new releases, progressive disclosure, adoption nudges for underused capabilities.
 
-## 12.4 Empty State
+## 12.4✅Empty State
 
 **Description**: Placeholder content shown when a view has no data, with illustration/icon, explanatory text, and a primary call-to-action to create or import the first item. 
 
@@ -639,13 +799,37 @@ Each view is a rendering strategy over the same underlying tree.
 
 **Use Cases:** First-run experience, empty search results, zero-data dashboards, invitation to action.
 
-## 12.5 Skeleton Loader
+## 12.5✅Skeleton Loader
 
 **Description**: Animated placeholder mimicking the layout of content being loaded, using grey shapes with a shimmer pulse animation. Matches the exact structure of the target UI. 
 
 **References**: Facebook, LinkedIn, IBM Carbon Skeleton. 
 
 **Use Cases:** Dashboard loading, list/grid loading, card loading, perceived performance improvement.
+
+## 12.6✅DocViewer (Documentation Layout)
+
+**Description**: Full-page three-column documentation layout with hierarchical TOC tree on the left, Vditor-rendered markdown content in the center, and an "On This Page" outline on the right with IntersectionObserver-based scroll tracking. Responsive: hides outline below 1200px, collapses TOC to hamburger below 768px. Supports code copy-to-clipboard buttons. Requires Vditor ≥3.11.2.
+
+**References**: Stripe API docs, Tailwind CSS docs, MDN Web Docs, ReadTheDocs.
+
+**Use Cases**: Product documentation portals, API reference sites, internal knowledge bases, developer guides.
+
+## 12.7✅HelpDrawer (Contextual Help Panel)
+
+**Description**: Singleton right-side sliding panel for in-context documentation. Renders markdown via Vditor with support for topic history and back navigation. Supports inline markdown or URL-based markdown loading. Resizable with min/max width constraints. One instance per page, lazily loaded on first open.
+
+**References**: Salesforce Help & Training panel, Azure Portal help blade, AWS documentation sidebar.
+
+**Use Cases**: In-context field-level documentation, feature help overlays, admin console guidance, contextual troubleshooting.
+
+## 12.8✅HelpTooltip (Contextual Help Icon)
+
+**Description**: Small 14px blue `?` icon that attaches to any element for in-context help. Shows a hover tooltip on mouseover and opens the HelpDrawer documentation panel on click. Multiple instances supported, 5 positioning options (top-right, top-left, bottom-right, bottom-left, inline-end). Keyboard accessible via Enter/Space.
+
+**References**: Stripe form field help icons, AWS console info tooltips, Salesforce field-level help.
+
+**Use Cases**: Form field documentation, settings explanation, complex feature guidance, onboarding hints.
 
 # 13\. Filtering, Search & Tagging
 
@@ -657,7 +841,7 @@ Each view is a rendering strategy over the same underlying tree.
 
 **Use Cases:** Product catalogs, log exploration, candidate search, asset library filtering.
 
-## 13.2 Facet-Aware Search Bar
+## 13.2✅Facet-Aware Search Bar
 
 **Description**: Search input that recognizes structured facets (e.g., status:open assignee:@me priority:high) with autocomplete for both facet keys and values, alongside free-text search. 
 
@@ -665,7 +849,7 @@ Each view is a rendering strategy over the same underlying tree.
 
 **Use Cases:** Issue trackers, log analysis, CRM search, advanced entity search.
 
-## 13.3 Freeform & Taxonomy Tagger
+## 13.3✅Freeform & Taxonomy Tagger
 
 **Description**: Component for applying both controlled-vocabulary tags (from a taxonomy) and freeform tags to entities, with autocomplete, create-on-the-fly, color coding, and tag management. 
 
@@ -675,15 +859,23 @@ Each view is a rendering strategy over the same underlying tree.
 
 ## 13.4 Saved Views / Saved Filters
 
-**Description**: Ability to save, name, and recall filter/sort/column configurations as named views. Supports personal and shared (team) views with pin and default options. 
+**Description**: Ability to save, name, and recall filter/sort/column configurations as named views. Supports personal and shared (team) views with pin and default options.
 
-**References**: Airtable (views), Linear (custom views), Notion (database views), HubSpot saved filters. 
+**References**: Airtable (views), Linear (custom views), Notion (database views), HubSpot saved filters.
 
 **Use Cases**: Team-specific dashboard configurations, frequently used report filters, personalized workspaces.
 
+## 13.5✅Search Box
+
+**Description**: Debounced search input with icon, clear button, loading spinner, and optional suggestions dropdown (static or async). Supports keyboard navigation (ArrowUp/Down, Enter, Escape), ARIA combobox pattern, and size variants. Suitable for embedding in toolbars, sidebars, and standalone search contexts.
+
+**References**: GitHub code search, VS Code search box, Slack search, Spotlight search.
+
+**Use Cases**: Global search, inline list filtering, command input, toolbar search, content discovery.
+
 # 14\. File & Content Management
 
-## 14.1 File Upload / Download Manager
+## 14.1✅File Upload / Download Manager
 
 **Description**: Drag-and-drop upload zone with progress bars, file type validation, size limits, batch upload, download queue, and format conversion options. 
 
@@ -699,7 +891,7 @@ Each view is a rendering strategy over the same underlying tree.
 
 **Use Cases:** Bug reporting, visual feedback, documentation creation, customer support evidence.
 
-## 14.3 File Explorer / Asset Browser
+## 14.3✅File Explorer / Asset Browser
 
 **Description**: Two-pane (tree \+ grid/list) file navigation component with breadcrumbs, thumbnail previews, sort/filter, drag-and-drop organization, and context menus. 
 
@@ -709,7 +901,7 @@ Each view is a rendering strategy over the same underlying tree.
 
 # 15\. Workspace & Navigation
 
-## 15.1 Multi-Tenant Workspace Switcher
+## 15.1✅Multi-Tenant Workspace Switcher
 
 **Description**: Dropdown or modal for switching between organizational workspaces/tenants. Displays org branding, search, and "Add Workspace" action. 
 
@@ -725,7 +917,7 @@ Each view is a rendering strategy over the same underlying tree.
 
 **Use Cases:** Multi-record editing, parallel investigation workflows, analyst workbenches.
 
-## 15.3 Breadcrumb Navigation (Contextual)
+## 15.3✅Breadcrumb Navigation (Contextual)
 
 **Description**: Hierarchical path display with clickable segments and an optional quick-action dropdown on the terminal segment. Supports overflow truncation for deep hierarchies. 
 
@@ -735,15 +927,31 @@ Each view is a rendering strategy over the same underlying tree.
 
 ## 15.4 Multi-Level Collapsible Sidebar
 
-**Description**: Navigation sidebar supporting 3+ levels of hierarchy with expand/collapse, icon-only rail mode, favorites/pinning, and active-state persistence. 
+**Description**: Navigation sidebar supporting 3+ levels of hierarchy with expand/collapse, icon-only rail mode, favorites/pinning, and active-state persistence.
 
-**References**: IBM Carbon Side Nav, Notion, Azure Portal. 
+**References**: IBM Carbon Side Nav, Notion, Azure Portal.
 
 **Use Cases:** Enterprise apps with deep information architectures, admin consoles, documentation portals.
 
+## 15.5✅User Menu
+
+**Description**: Avatar-triggered dropdown menu for user account actions. Displays user avatar (image or initials fallback), name, role, and online status indicator (online/offline/busy/away). Dropdown includes menu items with icons, dividers, group headers, danger items, and keyboard navigation (ArrowUp/Down, Enter, Escape, Home/End). ARIA menu pattern.
+
+**References**: GitHub user menu, GitLab user dropdown, Slack workspace menu, VS Code account menu.
+
+**Use Cases**: User profile access, account settings, sign out, role switching, status setting, help access.
+
+## 15.6✅App Launcher
+
+**Description**: Grid-based application launcher for enterprise SaaS platforms with three view modes: dropdown (waffle icon trigger), modal (centered overlay), and fullpage (dedicated browsing view with sidebar). Supports search with 150ms debounce and optional async server-side fallback, user-pinned favourites persisted in localStorage, recent apps tracking (MRU, max 6), category grouping via tabs (modal) or sidebar (fullpage), "NEW"/"BETA" badges with colour variants, current app indicator, and responsive grid layout (3–6 columns). Full keyboard navigation with 2D arrow keys across grid tiles, roving tabindex, Home/End, Shift+F favourite toggle, and / to focus search.
+
+**References**: Google App Launcher (9-dot waffle), Microsoft 365 App Launcher, Salesforce App Launcher, ServiceNow Application Navigator, Atlassian App Switcher.
+
+**Use Cases**: App switching in multi-app enterprise platforms, admin console navigation, product suite browsing, quick app access with favourites and recent history.
+
 # 16\. Governance & Security
 
-## 16.1 RBAC Permission Matrix
+## 16.1✅RBAC Permission Matrix
 
 **Description**: High-density checkbox grid mapping roles to permissions, with support for inherited states, bulk toggle, and visual grouping by module/feature. 
 
@@ -751,7 +959,7 @@ Each view is a rendering strategy over the same underlying tree.
 
 **Use Cases:** Role management, permission auditing, onboarding new roles, compliance review.
 
-## 16.2 Immutable Audit Log Viewer
+## 16.2✅Immutable Audit Log Viewer
 
 **Description**: Read-only, filterable log of all system actions with actor, action, target, timestamp, and before/after change data. Exportable to CSV/JSON. 
 
@@ -769,7 +977,7 @@ Each view is a rendering strategy over the same underlying tree.
 
 # 17\. Communication & Collaboration
 
-## 17.1 Notification Center (In-App Bell)
+## 17.1✅Notification Center (In-App Bell)
 
 **Description**: Aggregated notification panel with categories (mentions, system alerts, task assignments), read/unread state, filtering, and deep-link to the source record. 
 
@@ -777,7 +985,7 @@ Each view is a rendering strategy over the same underlying tree.
 
 **Use Cases:** @mention alerts, report-ready notifications, approval requests, system health warnings.
 
-## 17.2 Commenting & Annotation Overlay
+## 17.2✅Commenting & Annotation Overlay
 
 **Description**: Contextual commenting system anchored to specific UI elements, data cells, or document regions. Supports @mentions, threaded replies, resolve/reopen, and timestamps. 
 
@@ -795,7 +1003,7 @@ Each view is a rendering strategy over the same underlying tree.
 
 **Use Cases:** Business process automation, CI/CD pipeline design, approval chains, ETL pipeline configuration.
 
-## 18.2 Multi-Stage Stepper (Wizard)
+## 18.2✅Multi-Stage Stepper (Wizard)
 
 **Description**: Linear or non-linear step progression UI for complex multi-step processes with validation gates, save-as-draft, step summary, and completion percentage. 
 
@@ -837,7 +1045,7 @@ Each view is a rendering strategy over the same underlying tree.
 
 **Use Cases:** Pricing tier display, vendor evaluation, configuration comparison, plan upgrade nudges.
 
-## 19.4 Property Inspector (Slide-out Drawer)
+## 19.4✅Property Inspector (Slide-out Drawer)
 
 **Description**: Non-modal right-side panel (30-40% width) for viewing and editing entity details without navigating away from the parent list. Supports tabbed sections within the drawer. 
 
@@ -845,7 +1053,7 @@ Each view is a rendering strategy over the same underlying tree.
 
 **Use Cases:** Record detail preview, quick-edit workflows, support ticket inspection, metadata editing.
 
-## 19.5 Split / Resizable Panes
+## 19.5✅Split / Resizable Panes
 
 **Description**: Two or more resizable content areas separated by a draggable divider, supporting horizontal and vertical orientations with min/max constraints and collapse-to-edge. 
 
@@ -855,7 +1063,7 @@ Each view is a rendering strategy over the same underlying tree.
 
 # 20\. System Feedback & Indicators
 
-## 20.1 Status Badges & Health Indicators
+## 20.1✅Status Badges & Health Indicators
 
 **Description**: Color-coded pills/dots communicating process or system state (Operational, Degraded, Down, In Progress, Failed). Clickable for detail. Supports animated "live" pulse. 
 
@@ -863,7 +1071,7 @@ Each view is a rendering strategy over the same underlying tree.
 
 **Use Cases:** API health status, deployment state, pipeline stage, SLA status.
 
-## 20.2 Toast / Snackbar Notifications
+## 20.2✅Toast / Snackbar Notifications
 
 **Description**: Transient, non-blocking messages that appear at screen edges for action confirmations, errors, or info. Support auto-dismiss, manual dismiss, action buttons, and stacking. 
 
@@ -878,6 +1086,62 @@ Each view is a rendering strategy over the same underlying tree.
 **References**: Stripe Checkout (card validation), GitHub (username availability), Auth0 signup. 
 
 **Use Cases:** Form validation, password strength, input format guidance, availability checks.
+
+## 20.4✅Pill (Inline Entity Reference)
+
+**Description**: Reusable inline pill element for mentions, issues, documents, tags, and other entity references. Flows naturally within text content with rounded-end (stadium) shape — explicit exception to the zero-radius theme (ADR-034). 6 colour presets (blue, gray, green, red, purple, orange), 3 sizes (sm/md/lg), dismissible mode, clickable mode with keyboard activation, anchor mode, CSS custom properties for runtime theming, hover callbacks, entrance animation with reduced-motion support.
+
+**References**: Google Docs @mentions, GitHub issue references, Slack channel/user pills, Linear issue tags.
+
+**Use Cases:** @mention pills in text editors, issue/document references, tag chips, inline entity links, STIE token rendering.
+
+## 20.5✅RichTextInput (Lightweight Rich Text)
+
+**Description**: A lightweight `contenteditable`-based rich text input for per-row editing contexts — todo items, checklist entries, inline detail fields. Uses `document.execCommand` for bold/italic/strikethrough (deprecated but universally supported), manual DOM manipulation only for code wrapping and task list toggling. HTML-primary serialization with optional markdown output via DOM walker. Optional STIE composition via `window.SmartTextInputEngine`. Inline toolbar as lightweight custom div (not the full Toolbar component). Shared singleton `document.selectionchange` listener across instances. Paste sanitization via DOMParser with tag allowlist.
+
+**References**: Notion inline blocks, Linear comment editor, Slack message composer, GitHub issue body editor.
+
+**Use Cases:** Todo item text, checklist descriptions, inline editing fields, comment input with basic formatting, per-row rich text in data grids.
+
+## 20.6✅PersonChip (Person Identity Chip)
+
+**Description**: A compact inline element displaying a person's identity: circular avatar (image or deterministic-colour initials), name, optional email/role, status dot (online/offline/busy/away). Replicates the UserMenu trigger visual style as a standalone reusable element. Three sizes (sm 24px, md 32px, lg 40px), clickable/href modes, avatarOnly mode (just the circular avatar for stacking contexts like PresenceIndicator), hover/click callbacks, metadata `data-*` attributes for consumer integration.
+
+**References**: Google Workspace people chips, Slack user badges, Microsoft 365 persona cards, Figma collaborator avatars.
+
+**Use Cases:** Share dialogs, assignment fields, permission lists, collaborator displays, mention chips, people pickers, presence indicators.
+
+## 20.7✅PeoplePicker (Person Selector)
+
+**Description**: Searchable person selector for share dialogs, assignment fields, and permission lists. Frequent contacts dropdown on focus, async search via callback (`onSearch`) or URL-based (`searchUrl`) with generation counter to prevent stale results. PersonChip integration at sm size for selected chips and md size for dropdown rows. Single-select and multi-select modes, overflow badge (`+N more`), keyboard navigation (ArrowUp/Down, Enter, Escape, Backspace, Home/End), configurable max selections, disabled/readonly states, three size variants (sm/md/lg). Runtime PersonChip bridge via `window.createPersonChip` with inlined initials fallback.
+
+**References**: Google Docs share dialog people field, Slack DM people selector, Jira assignee picker, Microsoft 365 people picker.
+
+**Use Cases:** Share dialogs, task assignment, permission management, team member selection, mention autocomplete, reviewer assignment.
+
+## 20.8✅PresenceIndicator (Avatar Stack)
+
+**Description**: Compact overlapping avatar stack showing who is actively viewing or editing a shared resource. Composes PersonChip in avatarOnly mode (collapsed stack) and full PersonChip (expanded list). Collapsed state uses z-index stacking with white ring borders and negative-margin overlap. Overflow badge when people exceed `maxVisible`. Click/keyboard toggle between collapsed and expanded views. Three size variants (sm 24px, md 32px, lg 40px) mapping to PersonChip sizes. Runtime PersonChip bridge with inlined initials fallback. Disabled state, focus-visible outline, opacity transition, reduced-motion support.
+
+**References**: Google Docs collaborator avatars, Figma multiplayer cursors/avatars, Notion presence indicators, Microsoft 365 co-authoring indicators.
+
+**Use Cases:** Document co-editing presence, real-time collaboration indicators, shared resource viewers, team activity displays.
+
+## 20.9✅ShareDialog (Share Modal)
+
+**Description**: Modal share dialog for enterprise SaaS — composes PeoplePicker for person search/selection and PersonChip for existing access display. Configurable access levels (e.g. Viewer, Commenter, Editor, Owner) via native `<select>` elements. Existing access list with PersonChip + access level dropdown + remove button per row. Diff computation returns `{ added, changed, removed }` comparing current vs original state. Promise-based API (`showShareDialog` returns result or null on cancel) and imperative API (`createShareDialog`). FormDialog overlay pattern (z-index 2000) with ConfirmDialog simplicity. Three size variants (sm/md/lg), focus trap, screen reader live region, async `onShare` callback with loading state, graceful degradation when PeoplePicker/PersonChip not loaded.
+
+**References**: Google Docs/Drive share dialog, Figma share modal, Notion share page, Dropbox sharing, Confluence page restrictions.
+
+**Use Cases:** Document sharing, project permission management, folder access control, resource collaboration invitations.
+
+## 20.10✅TypeBadge (Ontology Type Badge)
+
+**Description**: Small inline chip/badge that visually identifies an ontology type via icon, color, and label. Three size variants (sm/md/lg at 20/28/32px height), three visual variants (filled/outlined/subtle), configurable icon (Bootstrap Icons), hex color, and optional namespace display. Clickable mode with keyboard activation. Runtime window global (`createTypeBadge`). Used by GraphCanvas and RelationshipManager for type identification.
+
+**References**: Notion property type indicators, Linear issue type badges, Jira issue type icons, Azure DevOps work item type pills.
+
+**Use Cases:** Ontology type identification in graph visualizations, relationship lists, search results, breadcrumbs, and entity detail headers.
 
 # 21\. Layout Container Components
 
@@ -911,7 +1175,7 @@ All layout containers in this section share the following characteristics:
 * Gap/spacing control — configurable inter-child gaps and container padding.  
 * Overflow behavior — configurable: clip, scroll, or wrap.
 
-### 21.2.1 Border Layout Container
+### 21.2.1✅Border Layout Container
 
 **Description:** Divides its area into five regions: North (top), South (bottom), East (right), West (left), and Center. North and South span the full width. East and West fill the remaining height between them. Center takes all remaining space. Each region holds at most one child (which can itself be a layout container). Any region can be empty.
 
@@ -951,7 +1215,7 @@ BorderLayout (app shell)
 ├── East: PropertyInspector (collapsible)  
 └── South: StatusBar
 
-### 21.2.2 Box Layout Container (Stack)
+### 21.2.2✅Box Layout Container (Stack)
 
 **Description:** Arranges children in a single line along one axis — either horizontal (row) or vertical (column). Children are laid out sequentially and do not wrap. Each child can be assigned a flex factor that determines how much of the remaining space it consumes, or it can use its natural/preferred size.
 
@@ -981,7 +1245,7 @@ BorderLayout (app shell)
 * Navigation bars, button bars, breadcrumb rows.  
 * Any single-axis sequential arrangement.
 
-### 21.2.3 Flow Layout Container (Wrap)
+### 21.2.3✅Flow Layout Container (Wrap)
 
 **Description:** Arranges children sequentially in a line (horizontal or vertical) and wraps to the next line when the boundary is reached. Unlike Box Layout, children overflow to new rows/columns rather than overflowing or being hidden.
 
@@ -1010,7 +1274,7 @@ BorderLayout (app shell)
 * Button groups that adapt to narrow viewports.  
 * Any collection of items where the count is dynamic and wrapping is preferred over scrolling.
 
-### 21.2.4 Grid Layout Container (Uniform)
+### 21.2.4✅Grid Layout Container (Uniform)
 
 **Description:** Divides its area into a uniform grid of equal-sized cells arranged in rows and columns. Each child occupies exactly one cell. All cells are the same width and the same height, determined by dividing the container dimensions evenly.
 
@@ -1032,7 +1296,7 @@ BorderLayout (app shell)
 * Settings grids, icon launchers, image thumbnails.  
 * Any layout requiring a uniform, predictable cell matrix.
 
-### 21.2.5 Flex Grid Layout Container (Advanced)
+### 21.2.5✅Flex Grid Layout Container (Advanced)
 
 **Description:** A two-dimensional grid with independently sized rows and columns. Rows can have different heights, columns can have different widths. Sizing can be fixed (px), proportional (fr/star), or auto (fit to content). Children can span multiple rows and/or columns. This is the most powerful and flexible layout algorithm.
 
@@ -1074,7 +1338,7 @@ FlexGrid (form layout)
 ├── \[2,1\]: TextArea (rowSpan: 2\)  
 └── \[3,0\]: (empty)
 
-### 21.2.6 Card Layout Container (Indexed Stack)
+### 21.2.6✅Card Layout Container (Indexed Stack)
 
 **Description:** Stacks all children on top of each other in the same space, but displays only one at a time. A selection index or key determines which child is visible. Transitions between children can be animated (fade, slide, flip).
 
@@ -1104,7 +1368,7 @@ FlexGrid (form layout)
 * Feature flags that swap between implementation variants.  
 * Multi-view containers where only one view is active at a time (e.g., list view vs. grid view vs. map view).
 
-### 21.2.7 Layer Layout Container (Z-Stack)
+### 21.2.7✅Layer Layout Container (Z-Stack)
 
 **Description:** Stacks all children on top of each other in the z-axis, with all children simultaneously visible (unlike Card Layout). Children are layered back-to-front in DOM order. Each child can be positioned within the container using anchor offsets (top, right, bottom, left) or alignment.
 
@@ -1130,7 +1394,7 @@ References (Web): Overlay UIs (floating action buttons over content), image \+ c
 * Map with controls anchored at specific positions.  
 * Any UI where elements must be layered and independently positioned.
 
-### 21.2.8 Anchor Layout Container (Constraint)
+### 21.2.8✅Anchor Layout Container (Constraint)
 
 **Description:** Positions children by declaring constraint relationships between a child's edges and the container's edges (or other children's edges). As the container resizes, children maintain their declared edge distances. A child can be anchored on one edge (floats from the other) or both edges (stretches).
 
@@ -1158,7 +1422,7 @@ References (Web): Overlay UIs (floating action buttons over content), image \+ c
 * Complex layouts where elements have relationships to container edges rather than to siblings.  
 * Overlay/HUD elements positioned relative to a parent viewport.
 
-### 21.2.9 Dock Layout Container (IDE-Style)
+### 21.2.9✅Dock Layout Container (IDE-Style)
 
 **Description:** The most complex layout container — a dockable panel management system where children are panels that can be docked to edges, tabbed together, split, floated, minimized, maximized, and rearranged via drag-and-drop. This is the layout pattern used by IDEs (VS Code, IntelliJ), trading platforms (Bloomberg Terminal), and data analysis tools.
 
@@ -1208,7 +1472,7 @@ DockLayout (IDE workspace)
 │   └── TabGroup \[weight: 0.2\]  
 │       └── Panel: "Properties"
 
-### 21.2.10 Split Layout Container (Resizable Panes)
+### 21.2.10✅Split Layout Container (Resizable Panes)
 
 **Description:** Divides space into two or more panes separated by draggable dividers. Panes can be split horizontally or vertically. Each pane has configurable min/max size constraints. Panes can be collapsed to their minimum size (or to zero) by double-clicking the divider or via an API.
 
@@ -1256,38 +1520,7 @@ To make the above containers nestable and interoperable, all layout containers m
 
 4. Layout Serialization: Every layout tree can be serialized to/deserialized from JSON, enabling layout persistence (save/restore user-customized arrangements).
 
-| // Example: Serialized nested layout
-{
-  "type": "border",
-  "north": {
-    "type": "component", "id": "toolbar", "height": "48px"
-  },
-  "west": {
-    "type": "split",
-    "direction": "vertical",
-    "panes": \[
-      { "type": "component", "id": "file-explorer", "size": "60%" },
-      { "type": "component", "id": "outline-view", "size": "40%" }
-    \]
-  },
-  "center": {
-    "type": "card",
-    "activeKey": "editor-1",
-    "children": \[
-      { "key": "editor-1", "type": "component", "id": "code-editor" },
-      { "key": "editor-2", "type": "component", "id": "markdown-preview" }
-    \]
-  },
-  "south": {
-    "type": "box",
-    "direction": "horizontal",
-    "children": \[
-      { "type": "component", "id": "status-indicator", "flex": 0 },
-      { "type": "component", "id": "status-text", "flex": 1 },
-      { "type": "component", "id": "line-col-display", "flex": 0 }
-    \]
-  }
-} |
+| // Example: Serialized nested layout{  "type": "border",  "north": {    "type": "component", "id": "toolbar", "height": "48px"  },  "west": {    "type": "split",    "direction": "vertical",    "panes": \[      { "type": "component", "id": "file-explorer", "size": "60%" },      { "type": "component", "id": "outline-view", "size": "40%" }    \]  },  "center": {    "type": "card",    "activeKey": "editor-1",    "children": \[      { "key": "editor-1", "type": "component", "id": "code-editor" },      { "key": "editor-2", "type": "component", "id": "markdown-preview" }    \]  },  "south": {    "type": "box",    "direction": "horizontal",    "children": \[      { "type": "component", "id": "status-indicator", "flex": 0 },      { "type": "component", "id": "status-text", "flex": 1 },      { "type": "component", "id": "line-col-display", "flex": 0 }    \]  }} |
 | :---- |
 
 ## 21.4 Comparison Matrix
@@ -1409,7 +1642,7 @@ This section identifies generic, reusable components distilled from patterns fou
 * Support ticket details with conversation history.  
 * Case management pages with lifecycle and utility widgets.
 
-### 22.1.5 Relationship / Link Manager
+### 22.1.5 ✅ Relationship / Link Manager
 
 **Description**: A component for creating, viewing, and managing typed relationships between entities. Supports directional links (blocks/blocked-by, parent/child, duplicates, relates-to), inline creation of new linked items, and visual indicators of relationship type.
 
@@ -2169,7 +2402,7 @@ D**e**scription: A configuration panel for selecting and parameterizing a deploy
 * Hiring decisions: identifying sustained over-allocation as a signal to hire.  
 * Budget allocation: distributing budget across projects within constraints.
 
-### 23.5.4 Dependency Topology Map
+### 23.5.4 ✅ Dependency Topology Map
 
 **Description**: An interactive, zoomable graph visualization showing the dependency relationships between services, components, or projects. Nodes represent entities, edges represent dependency type (calls, depends-on, blocks, data-flow). Supports grouping by team/domain, highlighting critical paths, and tracing impact of a single node failure.
 
@@ -2410,7 +2643,7 @@ This section adds a streaming log console component and enterprise social/engage
 
 ## 24.2 Developer & Operations Tooling
 
-### 24.2.1 Log Console
+### 24.2.1✅Log Console
 
 **Description**: A high-performance, streaming log display component that renders structured JSON log lines in a scrollable, color-coded view. Designed for real-time tailing with a fixed-size ring buffer (FIFO eviction when limit is reached). Supports level-based coloring, filtering by log level or search text, timestamp formatting, and auto-scroll with manual scroll-lock.
 
@@ -2643,7 +2876,7 @@ For side-by-side work, Split Layout Container (§21.10) is the designated compon
 This section specifies a non-UI behavioral component — the Smart Text Input Engine (STIE). Unlike all previous components in the library which are visual, the STIE is a composable middleware layer that enriches any text input element with trigger-based inline references, formulas, and commands. It is designed to be attached to plain text inputs, textareas, rich text editors, and markdown editors — but never to structured inputs (password fields, select dropdowns, date pickers, numeric steppers, editable combo boxes, etc.).  
 The engine is deliberately domain-agnostic. It does not know what @ means, what \# resolves to, or how $ formulas evaluate. It provides the detection, coordination, and lifecycle machinery. The host application provides the trigger definitions, autocomplete data sources, resolution logic, and rendering templates.
 
-## 25.2 Smart Text Input Engine (STIE)
+## 25.2✅Smart Text Input Engine (STIE)
 
 Enterprise applications need consistent inline referencing across dozens of text inputs: @mentioning people in comments, \#linking resources in descriptions, $evaluating formulas in table cells, ^cross-referencing entities in notes. Without a shared engine, each input reimplements trigger detection, popover management, token serialization, and rendering — leading to inconsistent behavior, duplicated code, and integration brittleness.
 
@@ -2695,216 +2928,19 @@ Enterprise applications need consistent inline referencing across dozens of text
 
 The host application registers trigger definitions. Each trigger definition specifies:
 
-| interface TriggerDefinition {
-  /\*\* The character(s) that activate this trigger. Single char is typical. \*/
-  trigger: string;                    // e.g., "@", "\#", "$", "^", "{{"
-
-  /\*\* Human-readable name for this trigger type. \*/
-  name: string;                       // e.g., "mention", "resource", "formula", "reference"
-
-  /\*\* When should the trigger activate? \*/
-  activation: {
-    /\*\* Trigger fires only if preceded by whitespace or start-of-line.
-     \*  Prevents firing inside email addresses, URLs, etc. \*/
-    requireWhitespaceBefore: boolean; // default: true
-
-    /\*\* Minimum characters typed after trigger before querying the data source.
-     \*  0 \= show results immediately on trigger char. \*/
-    minQueryLength: number;           // default: 0
-
-    /\*\* Maximum characters after trigger before auto-cancelling
-     \*  (user probably isn't trying to trigger anymore). \*/
-    maxQueryLength: number;           // default: 50
-
-    /\*\* Cancel the trigger session on these characters. \*/
-    cancelChars: string\[\];            // default: \[" ", "\\n", "\\t"\] for single-word triggers
-                                      // empty \[\] for multi-word (e.g., formulas)
-
-    /\*\* Allow the trigger char to be escaped (e.g., \\@ types literal @). \*/
-    escapeChar: string | null;        // default: "\\\\"
-
-    /\*\* Context-aware suppression rules. \*/
-    suppressIn: SuppressContext\[\];    // e.g., \["codeBlock", "url", "inlineCode"\]
-  };
-
-  /\*\* The data source to query for autocomplete candidates. \*/
-  dataSource: TriggerDataSource;
-
-  /\*\* How to render the resolved token in the input (inline display). \*/
-  tokenRenderer: TokenRenderer;
-
-  /\*\* How to serialize/deserialize tokens for storage. \*/
-  tokenSerializer: TokenSerializer;
-
-  /\*\* Optional: restrict to specific input types. \*/
-  allowedInputTypes?: InputAdapterType\[\];  // e.g., \["textarea", "richtext", "markdown"\]
-                                            // undefined \= all types
-} |
+| interface TriggerDefinition {  /\*\* The character(s) that activate this trigger. Single char is typical. \*/  trigger: string;                    // e.g., "@", "\#", "$", "^", "{{"  /\*\* Human-readable name for this trigger type. \*/  name: string;                       // e.g., "mention", "resource", "formula", "reference"  /\*\* When should the trigger activate? \*/  activation: {    /\*\* Trigger fires only if preceded by whitespace or start-of-line.     \*  Prevents firing inside email addresses, URLs, etc. \*/    requireWhitespaceBefore: boolean; // default: true    /\*\* Minimum characters typed after trigger before querying the data source.     \*  0 \= show results immediately on trigger char. \*/    minQueryLength: number;           // default: 0    /\*\* Maximum characters after trigger before auto-cancelling     \*  (user probably isn't trying to trigger anymore). \*/    maxQueryLength: number;           // default: 50    /\*\* Cancel the trigger session on these characters. \*/    cancelChars: string\[\];            // default: \[" ", "\\n", "\\t"\] for single-word triggers                                      // empty \[\] for multi-word (e.g., formulas)    /\*\* Allow the trigger char to be escaped (e.g., \\@ types literal @). \*/    escapeChar: string | null;        // default: "\\\\"    /\*\* Context-aware suppression rules. \*/    suppressIn: SuppressContext\[\];    // e.g., \["codeBlock", "url", "inlineCode"\]  };  /\*\* The data source to query for autocomplete candidates. \*/  dataSource: TriggerDataSource;  /\*\* How to render the resolved token in the input (inline display). \*/  tokenRenderer: TokenRenderer;  /\*\* How to serialize/deserialize tokens for storage. \*/  tokenSerializer: TokenSerializer;  /\*\* Optional: restrict to specific input types. \*/  allowedInputTypes?: InputAdapterType\[\];  // e.g., \["textarea", "richtext", "markdown"\]                                            // undefined \= all types} |
 | :---- |
 
 **Example registrations:**
 
-| engine.register({
-  trigger: "@",
-  name: "mention",
-  activation: {
-    requireWhitespaceBefore: true,
-    minQueryLength: 0,
-    maxQueryLength: 30,
-    cancelChars: \[" ", "\\n"\],
-    escapeChar: "\\\\",
-    suppressIn: \["codeBlock", "inlineCode"\],
-  },
-  dataSource: {
-    query: async (text) \=\> peopleService.search(text),
-    // Returns: Array\<{ id, label, sublabel?, icon?, metadata? }\>
-  },
-  tokenRenderer: {
-    type: "pill",    // Render as an inline pill/chip
-    display: (token) \=\> \`@${token.label}\`,
-    className: "token-mention",
-  },
-  tokenSerializer: {
-    serialize: (token) \=\> \`@\[${token.label}\](user:${token.id})\`,
-    // Stored as: @\[Alice Chen\](user:u\_abc123)
-    deserialize: (raw) \=\> parseMentionSyntax(raw),
-  },
-});
-
-engine.register({
-  trigger: "\#",
-  name: "resource",
-  activation: {
-    requireWhitespaceBefore: true,
-    minQueryLength: 1,
-    maxQueryLength: 50,
-    cancelChars: \[" ", "\\n"\],
-    escapeChar: "\\\\",
-    suppressIn: \["codeBlock"\],
-  },
-  dataSource: {
-    query: async (text) \=\> resourceService.search(text),
-    // Could return issues, documents, projects, etc.
-    // Each result includes: { id, label, sublabel, icon, type }
-  },
-  tokenRenderer: {
-    type: "pill",
-    display: (token) \=\> \`\#${token.label}\`,
-    className: (token) \=\> \`token-resource token-${token.metadata.type}\`,
-  },
-  tokenSerializer: {
-    serialize: (token) \=\> \`\#\[${token.label}\](${token.metadata.type}:${token.id})\`,
-    deserialize: (raw) \=\> parseResourceSyntax(raw),
-  },
-});
-
-engine.register({
-  trigger: "$",
-  name: "formula",
-  activation: {
-    requireWhitespaceBefore: true,
-    minQueryLength: 0,
-    maxQueryLength: 200,
-    cancelChars: \[\],       // Formulas can contain spaces \-- never auto-cancel
-    escapeChar: "\\\\",
-    suppressIn: \["codeBlock"\],
-  },
-  dataSource: {
-    // Formula triggers use a DIFFERENT interaction model:
-    // Instead of autocomplete dropdown, they open a formula editor popover.
-    type: "custom-popover",
-    component: FormulaEditorPopover,
-    // The host provides the entire popover UI for this trigger.
-  },
-  tokenRenderer: {
-    type: "computed",    // Render shows the evaluated result, not the formula
-    display: (token, context) \=\> formulaEngine.evaluate(token.expression, context),
-    className: "token-formula",
-    editOnClick: true,   // Clicking re-opens the formula editor
-  },
-  tokenSerializer: {
-    serialize: (token) \=\> \`$\[${token.expression}\]\`,
-    deserialize: (raw) \=\> parseFormulaSyntax(raw),
-  },
-});
-
-engine.register({
-  trigger: "^",
-  name: "cross-reference",
-  activation: {
-    requireWhitespaceBefore: true,
-    minQueryLength: 1,
-    maxQueryLength: 100,
-    cancelChars: \["\\n"\],
-    escapeChar: "\\\\",
-    suppressIn: \["codeBlock"\],
-  },
-  dataSource: {
-    query: async (text) \=\> globalSearch.search(text),
-    // Searches across all entity types in the application.
-    // Returns results grouped by type: issues, documents, people, projects...
-    grouped: true,
-  },
-  tokenRenderer: {
-    type: "link",       // Render as a clickable hyperlink
-    display: (token) \=\> token.label,
-    href: (token) \=\> \`/app/${token.metadata.type}/${token.id}\`,
-    className: "token-crossref",
-  },
-  tokenSerializer: {
-    serialize: (token) \=\> \`^\[${token.label}\](${token.metadata.type}:${token.id})\`,
-    deserialize: (raw) \=\> parseCrossRefSyntax(raw),
-  },
-}); |
+| engine.register({  trigger: "@",  name: "mention",  activation: {    requireWhitespaceBefore: true,    minQueryLength: 0,    maxQueryLength: 30,    cancelChars: \[" ", "\\n"\],    escapeChar: "\\\\",    suppressIn: \["codeBlock", "inlineCode"\],  },  dataSource: {    query: async (text) \=\> peopleService.search(text),    // Returns: Array\<{ id, label, sublabel?, icon?, metadata? }\>  },  tokenRenderer: {    type: "pill",    // Render as an inline pill/chip    display: (token) \=\> \`@${token.label}\`,    className: "token-mention",  },  tokenSerializer: {    serialize: (token) \=\> \`@\[${token.label}\](user:${token.id})\`,    // Stored as: @\[Alice Chen\](user:u\_abc123)    deserialize: (raw) \=\> parseMentionSyntax(raw),  },});engine.register({  trigger: "\#",  name: "resource",  activation: {    requireWhitespaceBefore: true,    minQueryLength: 1,    maxQueryLength: 50,    cancelChars: \[" ", "\\n"\],    escapeChar: "\\\\",    suppressIn: \["codeBlock"\],  },  dataSource: {    query: async (text) \=\> resourceService.search(text),    // Could return issues, documents, projects, etc.    // Each result includes: { id, label, sublabel, icon, type }  },  tokenRenderer: {    type: "pill",    display: (token) \=\> \`\#${token.label}\`,    className: (token) \=\> \`token-resource token-${token.metadata.type}\`,  },  tokenSerializer: {    serialize: (token) \=\> \`\#\[${token.label}\](${token.metadata.type}:${token.id})\`,    deserialize: (raw) \=\> parseResourceSyntax(raw),  },});engine.register({  trigger: "$",  name: "formula",  activation: {    requireWhitespaceBefore: true,    minQueryLength: 0,    maxQueryLength: 200,    cancelChars: \[\],       // Formulas can contain spaces \-- never auto-cancel    escapeChar: "\\\\",    suppressIn: \["codeBlock"\],  },  dataSource: {    // Formula triggers use a DIFFERENT interaction model:    // Instead of autocomplete dropdown, they open a formula editor popover.    type: "custom-popover",    component: FormulaEditorPopover,    // The host provides the entire popover UI for this trigger.  },  tokenRenderer: {    type: "computed",    // Render shows the evaluated result, not the formula    display: (token, context) \=\> formulaEngine.evaluate(token.expression, context),    className: "token-formula",    editOnClick: true,   // Clicking re-opens the formula editor  },  tokenSerializer: {    serialize: (token) \=\> \`$\[${token.expression}\]\`,    deserialize: (raw) \=\> parseFormulaSyntax(raw),  },});engine.register({  trigger: "^",  name: "cross-reference",  activation: {    requireWhitespaceBefore: true,    minQueryLength: 1,    maxQueryLength: 100,    cancelChars: \["\\n"\],    escapeChar: "\\\\",    suppressIn: \["codeBlock"\],  },  dataSource: {    query: async (text) \=\> globalSearch.search(text),    // Searches across all entity types in the application.    // Returns results grouped by type: issues, documents, people, projects...    grouped: true,  },  tokenRenderer: {    type: "link",       // Render as a clickable hyperlink    display: (token) \=\> token.label,    href: (token) \=\> \`/app/${token.metadata.type}/${token.id}\`,    className: "token-crossref",  },  tokenSerializer: {    serialize: (token) \=\> \`^\[${token.label}\](${token.metadata.type}:${token.id})\`,    deserialize: (raw) \=\> parseCrossRefSyntax(raw),  },}); |
 | :---- |
 
 ### 25.3.2 Input Adapter Interface
 
 The engine does not directly manipulate DOM elements. Instead, it communicates through an adapter that abstracts the differences between input types. The host (or a provided adapter library) implements this interface per input type.
 
-| interface InputAdapter {
-  /\*\* The type identifier for this adapter. \*/
-  type: InputAdapterType;  // "plaintext" | "textarea" | "contenteditable" | "prosemirror" | "codemirror" | "monaco"
-
-  /\*\* Subscribe to keystroke events on the target input. \*/
-  onKeyDown(handler: (event: KeyEvent) \=\> void): Unsubscribe;
-  onInput(handler: (event: InputEvent) \=\> void): Unsubscribe;
-
-  /\*\* Get the current cursor position (character offset from start). \*/
-  getCursorPosition(): CursorPosition;
-
-  /\*\* Get the text content within a range (for context analysis). \*/
-  getTextInRange(start: number, end: number): string;
-
-  /\*\* Get the character(s) immediately before the cursor (for trigger detection). \*/
-  getTextBeforeCursor(charCount: number): string;
-
-  /\*\* Get the pixel coordinates of the cursor (for popover positioning). \*/
-  getCursorCoordinates(): { top: number; left: number; height: number };
-
-  /\*\* Replace a text range with new content. Used for token insertion. \*/
-  replaceRange(start: number, end: number, replacement: string | Node): void;
-
-  /\*\* Insert a non-editable inline token node at the current position.
-   \*  For plain text inputs, this inserts the serialized string.
-   \*  For rich text, this inserts a decorated inline node/widget. \*/
-  insertToken(token: ResolvedToken, renderer: TokenRenderer): void;
-
-  /\*\* Remove a token and replace with its serialized text. \*/
-  removeToken(tokenId: string): void;
-
-  /\*\* Get the full serialized content (with tokens in serialized form). \*/
-  getSerializedContent(): string;
-
-  /\*\* Set content from a serialized string (parsing tokens back to display). \*/
-  setSerializedContent(content: string, tokenSerializers: TokenSerializer\[\]): void;
-
-  /\*\* Get the context at the cursor (is cursor inside a code block, URL, etc.). \*/
-  getCursorContext(): CursorContext;
-
-  /\*\* Focus the input element. \*/
-  focus(): void;
-} |
+| interface InputAdapter {  /\*\* The type identifier for this adapter. \*/  type: InputAdapterType;  // "plaintext" | "textarea" | "contenteditable" | "prosemirror" | "codemirror" | "monaco"  /\*\* Subscribe to keystroke events on the target input. \*/  onKeyDown(handler: (event: KeyEvent) \=\> void): Unsubscribe;  onInput(handler: (event: InputEvent) \=\> void): Unsubscribe;  /\*\* Get the current cursor position (character offset from start). \*/  getCursorPosition(): CursorPosition;  /\*\* Get the text content within a range (for context analysis). \*/  getTextInRange(start: number, end: number): string;  /\*\* Get the character(s) immediately before the cursor (for trigger detection). \*/  getTextBeforeCursor(charCount: number): string;  /\*\* Get the pixel coordinates of the cursor (for popover positioning). \*/  getCursorCoordinates(): { top: number; left: number; height: number };  /\*\* Replace a text range with new content. Used for token insertion. \*/  replaceRange(start: number, end: number, replacement: string | Node): void;  /\*\* Insert a non-editable inline token node at the current position.   \*  For plain text inputs, this inserts the serialized string.   \*  For rich text, this inserts a decorated inline node/widget. \*/  insertToken(token: ResolvedToken, renderer: TokenRenderer): void;  /\*\* Remove a token and replace with its serialized text. \*/  removeToken(tokenId: string): void;  /\*\* Get the full serialized content (with tokens in serialized form). \*/  getSerializedContent(): string;  /\*\* Set content from a serialized string (parsing tokens back to display). \*/  setSerializedContent(content: string, tokenSerializers: TokenSerializer\[\]): void;  /\*\* Get the context at the cursor (is cursor inside a code block, URL, etc.). \*/  getCursorContext(): CursorContext;  /\*\* Focus the input element. \*/  focus(): void;} |
 | :---- |
 
 **Provided adapters (included with the engine):**
@@ -2943,41 +2979,14 @@ IDLE  →  trigger char detected  →  ACTIVE  →  user selects / cancels  → 
 
 **Concurrent triggers:** Only one trigger session can be active at a time. If user types @ while a \# session is active, the \# session is cancelled and @ begins.
 
-| interface TriggerSession {
-  triggerId: string;          // Which trigger definition is active
-  triggerStart: number;       // Cursor position where trigger char was typed
-  queryText: string;          // Characters typed after the trigger (updated per keystroke)
-  state: 'active' | 'resolved' | 'cancelled';
-} |
+| interface TriggerSession {  triggerId: string;          // Which trigger definition is active  triggerStart: number;       // Cursor position where trigger char was typed  queryText: string;          // Characters typed after the trigger (updated per keystroke)  state: 'active' | 'resolved' | 'cancelled';} |
 | :---- |
 
 ### 25.3.4 Popover Coordinator
 
 The engine does not render the autocomplete popover itself. Instead, it emits events that tell the host when and where to show a popover, and what data to display. The host renders its own popover UI (or uses the existing Mention/Autocomplete Popover.
 
-| interface PopoverEvents {
-  /\*\* Fired when a trigger session begins. Host should show a popover. \*/
-  onOpen(event: {
-    triggerId: string;
-    triggerDef: TriggerDefinition;
-    queryText: string;
-    position: { top: number; left: number; height: number }; // Cursor coords
-  }): void;
-
-  /\*\* Fired on each keystroke during an active session. Host should update results. \*/
-  onQueryChange(event: {
-    triggerId: string;
-    queryText: string;
-    position: { top: number; left: number; height: number };
-  }): void;
-
-  /\*\* Fired when the session ends (user cancelled, pressed Escape, etc.). 
-   \*  Host should hide the popover. \*/
-  onClose(event: {
-    triggerId: string;
-    reason: 'cancelled' | 'resolved' | 'blur' | 'escape';
-  }): void;
-} |
+| interface PopoverEvents {  /\*\* Fired when a trigger session begins. Host should show a popover. \*/  onOpen(event: {    triggerId: string;    triggerDef: TriggerDefinition;    queryText: string;    position: { top: number; left: number; height: number }; // Cursor coords  }): void;  /\*\* Fired on each keystroke during an active session. Host should update results. \*/  onQueryChange(event: {    triggerId: string;    queryText: string;    position: { top: number; left: number; height: number };  }): void;  /\*\* Fired when the session ends (user cancelled, pressed Escape, etc.).    \*  Host should hide the popover. \*/  onClose(event: {    triggerId: string;    reason: 'cancelled' | 'resolved' | 'blur' | 'escape';  }): void;} |
 | :---- |
 
 For standard autocomplete triggers (@, \#, ^), the host calls dataSource.query(queryText) on each onQueryChange, renders results in a popover at the given position, and calls engine.resolve(selectedItem) when the user selects one.
@@ -2985,46 +2994,14 @@ For standard autocomplete triggers (@, \#, ^), the host calls dataSource.query(q
 For custom-popover triggers ($ formula), the host renders an entirely different UI (e.g., a formula editor) at the given position, and calls engine.resolve(formulaResult) when the user confirms.  
 Keyboard navigation: The engine optionally intercepts arrow keys and Enter during an active session and forwards them to the popover. This is configurable — the host can manage keyboard navigation itself if preferred.
 
-| interface KeyboardDelegation {
-  /\*\* If true, engine captures ArrowUp/Down/Enter during active session
-   \*  and emits navigation events instead of modifying the input. \*/
-  delegateKeyboard: boolean;  // default: true
-
-  onNavigate(event: { direction: 'up' | 'down' }): void;
-  onSelect(): void;   // Enter pressed \-- host should confirm current selection
-  onDismiss(): void;  // Escape pressed \-- host should close popover
-} |
+| interface KeyboardDelegation {  /\*\* If true, engine captures ArrowUp/Down/Enter during active session   \*  and emits navigation events instead of modifying the input. \*/  delegateKeyboard: boolean;  // default: true  onNavigate(event: { direction: 'up' | 'down' }): void;  onSelect(): void;   // Enter pressed \-- host should confirm current selection  onDismiss(): void;  // Escape pressed \-- host should close popover} |
 | :---- |
 
 ### 25.3.5 Token Model
 
 When the user selects an item from the autocomplete (or confirms a formula), the engine inserts a token into the input.
 
-| interface ResolvedToken {
-  /\*\* Unique instance ID for this specific token occurrence. \*/
-  instanceId: string;          // Auto-generated UUID
-
-  /\*\* The trigger type that created this token. \*/
-  triggerName: string;         // "mention", "resource", "formula", "cross-reference"
-
-  /\*\* The resolved entity ID (from the data source). \*/
-  id: string;                  // e.g., "u\_abc123", "issue\_456", etc.
-
-  /\*\* Display label. \*/
-  label: string;               // e.g., "Alice Chen", "PROJ-123", "sum(revenue)"
-
-  /\*\* Optional sublabel for display. \*/
-  sublabel?: string;           // e.g., "Engineering Manager", "Feature Request"
-
-  /\*\* Optional icon URL or icon identifier. \*/
-  icon?: string;
-
-  /\*\* Arbitrary metadata from the data source. \*/
-  metadata: Record\<string, any\>;  // e.g., { type: "user", email: "alice@co.com" }
-
-  /\*\* The raw text range this token replaced. \*/
-  sourceRange: { start: number; end: number };
-} |
+| interface ResolvedToken {  /\*\* Unique instance ID for this specific token occurrence. \*/  instanceId: string;          // Auto-generated UUID  /\*\* The trigger type that created this token. \*/  triggerName: string;         // "mention", "resource", "formula", "cross-reference"  /\*\* The resolved entity ID (from the data source). \*/  id: string;                  // e.g., "u\_abc123", "issue\_456", etc.  /\*\* Display label. \*/  label: string;               // e.g., "Alice Chen", "PROJ-123", "sum(revenue)"  /\*\* Optional sublabel for display. \*/  sublabel?: string;           // e.g., "Engineering Manager", "Feature Request"  /\*\* Optional icon URL or icon identifier. \*/  icon?: string;  /\*\* Arbitrary metadata from the data source. \*/  metadata: Record\<string, any\>;  // e.g., { type: "user", email: "alice@co.com" }  /\*\* The raw text range this token replaced. \*/  sourceRange: { start: number; end: number };} |
 | :---- |
 
 **Token lifecycle:**
@@ -3038,24 +3015,7 @@ When the user selects an item from the autocomplete (or confirms a formula), the
 
 Each trigger defines how its tokens are stored and restored. The engine uses a serialization registry to convert between display and storage forms.
 
-| interface TokenSerializer {
-  /\*\* Convert a ResolvedToken to a string for storage. \*/
-  serialize(token: ResolvedToken): string;
-
-  /\*\* 
-   \* Given a raw content string, find all token occurrences and parse them.
-   \* Returns an array of { match, startIndex, endIndex, token } for each found token.
-   \*/
-  deserialize(rawContent: string): DeserializedToken\[\];
-}
-
-interface DeserializedToken {
-  rawMatch: string;            // The raw serialized text that was matched
-  startIndex: number;          // Position in the raw string
-  endIndex: number;
-  token: Partial\<ResolvedToken\>; // Parsed token data (may need async enrichment)
-  needsEnrichment: boolean;    // If true, host should fetch fresh data for this token
-} |
+| interface TokenSerializer {  /\*\* Convert a ResolvedToken to a string for storage. \*/  serialize(token: ResolvedToken): string;  /\*\*    \* Given a raw content string, find all token occurrences and parse them.   \* Returns an array of { match, startIndex, endIndex, token } for each found token.   \*/  deserialize(rawContent: string): DeserializedToken\[\];}interface DeserializedToken {  rawMatch: string;            // The raw serialized text that was matched  startIndex: number;          // Position in the raw string  endIndex: number;  token: Partial\<ResolvedToken\>; // Parsed token data (may need async enrichment)  needsEnrichment: boolean;    // If true, host should fetch fresh data for this token} |
 | :---- |
 
 Serialization format is host-defined. The engine suggests a default markdown-link-inspired syntax but does not enforce it:
@@ -3073,32 +3033,7 @@ The host can use any serialization format — the engine is agnostic. XML, JSON 
 
 Controls how tokens appear in the input during editing and in read-only display.
 
-| interface TokenRenderer {
-  /\*\* Rendering style. \*/
-  type: 'pill' | 'link' | 'computed' | 'inline-text' | 'custom';
-
-  /\*\* Generate display text from the token. \*/
-  display(token: ResolvedToken, context?: RenderContext): string;
-
-  /\*\* CSS class(es) to apply. Can be a string or function of token. \*/
-  className?: string | ((token: ResolvedToken) \=\> string);
-
-  /\*\* For 'link' type: generate the href. \*/
-  href?: (token: ResolvedToken) \=\> string;
-
-  /\*\* For 'computed' type: re-evaluate on context changes. \*/
-  reactive?: boolean;
-
-  /\*\* Should clicking the token open an editor/popover? (e.g., formula editing) \*/
-  editOnClick?: boolean;
-
-  /\*\* Tooltip content on hover. \*/
-  tooltip?: (token: ResolvedToken) \=\> string | TooltipContent;
-
-  /\*\* Custom render function for 'custom' type.
-   \*  Returns an HTML element or framework component. \*/
-  render?: (token: ResolvedToken, context?: RenderContext) \=\> HTMLElement | Component;
-} |
+| interface TokenRenderer {  /\*\* Rendering style. \*/  type: 'pill' | 'link' | 'computed' | 'inline-text' | 'custom';  /\*\* Generate display text from the token. \*/  display(token: ResolvedToken, context?: RenderContext): string;  /\*\* CSS class(es) to apply. Can be a string or function of token. \*/  className?: string | ((token: ResolvedToken) \=\> string);  /\*\* For 'link' type: generate the href. \*/  href?: (token: ResolvedToken) \=\> string;  /\*\* For 'computed' type: re-evaluate on context changes. \*/  reactive?: boolean;  /\*\* Should clicking the token open an editor/popover? (e.g., formula editing) \*/  editOnClick?: boolean;  /\*\* Tooltip content on hover. \*/  tooltip?: (token: ResolvedToken) \=\> string | TooltipContent;  /\*\* Custom render function for 'custom' type.   \*  Returns an HTML element or framework component. \*/  render?: (token: ResolvedToken, context?: RenderContext) \=\> HTMLElement | Component;} |
 | :---- |
 
 **Rendering types:**
@@ -3113,113 +3048,19 @@ Controls how tokens appear in the input during editing and in read-only display.
 
 ### 25.3.8 Engine API
 
-| interface SmartTextInputEngine {
-  // \-- Lifecycle \--
-  attach(element: HTMLElement, adapterType?: InputAdapterType): void;
-  detach(): void;
-
-  // \-- Configuration \--
-  register(trigger: TriggerDefinition): void;
-  unregister(triggerName: string): void;
-  getTriggers(): TriggerDefinition\[\];
-
-  // \-- Session control (called by host during active trigger session) \--
-  resolve(item: DataSourceResult): void;   // User selected an item → insert token
-  cancel(): void;                           // Programmatically cancel active session
-
-  // \-- Token management \--
-  getTokens(): ResolvedToken\[\];             // All tokens currently in the input
-  getTokensByType(triggerName: string): ResolvedToken\[\];
-  removeToken(instanceId: string): void;
-  replaceToken(instanceId: string, newToken: ResolvedToken): void;
-
-  // \-- Content \--
-  getSerializedContent(): string;           // Full content with tokens serialized
-  setSerializedContent(content: string): void;  // Load content, deserializing tokens
-  getPlainTextContent(): string;            // Content with tokens as display text only (no markup)
-
-  // \-- Events \--
-  on(event: 'trigger:open', handler: PopoverEvents\['onOpen'\]): Unsubscribe;
-  on(event: 'trigger:query', handler: PopoverEvents\['onQueryChange'\]): Unsubscribe;
-  on(event: 'trigger:close', handler: PopoverEvents\['onClose'\]): Unsubscribe;
-  on(event: 'token:inserted', handler: (token: ResolvedToken) \=\> void): Unsubscribe;
-  on(event: 'token:removed', handler: (token: ResolvedToken) \=\> void): Unsubscribe;
-  on(event: 'token:clicked', handler: (token: ResolvedToken) \=\> void): Unsubscribe;
-  on(event: 'navigate', handler: KeyboardDelegation\['onNavigate'\]): Unsubscribe;
-  on(event: 'select', handler: KeyboardDelegation\['onSelect'\]): Unsubscribe;
-  on(event: 'dismiss', handler: KeyboardDelegation\['onDismiss'\]): Unsubscribe;
-  on(event: 'content:change', handler: (content: string) \=\> void): Unsubscribe;
-
-  // \-- Configuration options \--
-  setOptions(options: Partial\<EngineOptions\>): void;
-}
-
-interface EngineOptions {
-  /\*\* Max concurrent trigger sessions (always 1 \-- reserved for future). \*/
-  maxConcurrentSessions: 1;
-
-  /\*\* Debounce interval for data source queries (ms). \*/
-  queryDebounceMs: number;       // default: 150
-
-  /\*\* Whether the engine captures arrow/enter keys during active session. \*/
-  delegateKeyboard: boolean;     // default: true
-
-  /\*\* Whether tokens are deleted as atomic units (whole pill on one backspace). \*/
-  atomicTokenDeletion: boolean;  // default: true
-
-  /\*\* Whether to show the trigger character in the resolved token display. \*/
-  showTriggerCharInToken: boolean;  // default: true (e.g., "@Alice" vs "Alice")
-} |
+| interface SmartTextInputEngine {  // \-- Lifecycle \--  attach(element: HTMLElement, adapterType?: InputAdapterType): void;  detach(): void;  // \-- Configuration \--  register(trigger: TriggerDefinition): void;  unregister(triggerName: string): void;  getTriggers(): TriggerDefinition\[\];  // \-- Session control (called by host during active trigger session) \--  resolve(item: DataSourceResult): void;   // User selected an item → insert token  cancel(): void;                           // Programmatically cancel active session  // \-- Token management \--  getTokens(): ResolvedToken\[\];             // All tokens currently in the input  getTokensByType(triggerName: string): ResolvedToken\[\];  removeToken(instanceId: string): void;  replaceToken(instanceId: string, newToken: ResolvedToken): void;  // \-- Content \--  getSerializedContent(): string;           // Full content with tokens serialized  setSerializedContent(content: string): void;  // Load content, deserializing tokens  getPlainTextContent(): string;            // Content with tokens as display text only (no markup)  // \-- Events \--  on(event: 'trigger:open', handler: PopoverEvents\['onOpen'\]): Unsubscribe;  on(event: 'trigger:query', handler: PopoverEvents\['onQueryChange'\]): Unsubscribe;  on(event: 'trigger:close', handler: PopoverEvents\['onClose'\]): Unsubscribe;  on(event: 'token:inserted', handler: (token: ResolvedToken) \=\> void): Unsubscribe;  on(event: 'token:removed', handler: (token: ResolvedToken) \=\> void): Unsubscribe;  on(event: 'token:clicked', handler: (token: ResolvedToken) \=\> void): Unsubscribe;  on(event: 'navigate', handler: KeyboardDelegation\['onNavigate'\]): Unsubscribe;  on(event: 'select', handler: KeyboardDelegation\['onSelect'\]): Unsubscribe;  on(event: 'dismiss', handler: KeyboardDelegation\['onDismiss'\]): Unsubscribe;  on(event: 'content:change', handler: (content: string) \=\> void): Unsubscribe;  // \-- Configuration options \--  setOptions(options: Partial\<EngineOptions\>): void;}interface EngineOptions {  /\*\* Max concurrent trigger sessions (always 1 \-- reserved for future). \*/  maxConcurrentSessions: 1;  /\*\* Debounce interval for data source queries (ms). \*/  queryDebounceMs: number;       // default: 150  /\*\* Whether the engine captures arrow/enter keys during active session. \*/  delegateKeyboard: boolean;     // default: true  /\*\* Whether tokens are deleted as atomic units (whole pill on one backspace). \*/  atomicTokenDeletion: boolean;  // default: true  /\*\* Whether to show the trigger character in the resolved token display. \*/  showTriggerCharInToken: boolean;  // default: true (e.g., "@Alice" vs "Alice")} |
 | :---- |
 
 ### 25.3.9 Integration Examples
 
 **Attaching to a plain textarea:**
 
-| const engine \= new SmartTextInputEngine();
-engine.register(mentionTrigger);
-engine.register(resourceTrigger);
-engine.attach(document.getElementById('comment-textarea'));
-
-// Host renders autocomplete using existing Mention Popover (§27.1)
-engine.on('trigger:open', ({ triggerId, queryText, position }) \=\> {
-  autocompletePopover.show(position);
-  autocompletePopover.setQuery(queryText);
-});
-
-engine.on('trigger:query', ({ queryText }) \=\> {
-  autocompletePopover.setQuery(queryText);
-});
-
-engine.on('trigger:close', () \=\> {
-  autocompletePopover.hide();
-});
-
-autocompletePopover.on('select', (item) \=\> {
-  engine.resolve(item);  // Engine inserts the token
-}); |
+| const engine \= new SmartTextInputEngine();engine.register(mentionTrigger);engine.register(resourceTrigger);engine.attach(document.getElementById('comment-textarea'));// Host renders autocomplete using existing Mention Popover (§27.1)engine.on('trigger:open', ({ triggerId, queryText, position }) \=\> {  autocompletePopover.show(position);  autocompletePopover.setQuery(queryText);});engine.on('trigger:query', ({ queryText }) \=\> {  autocompletePopover.setQuery(queryText);});engine.on('trigger:close', () \=\> {  autocompletePopover.hide();});autocompletePopover.on('select', (item) \=\> {  engine.resolve(item);  // Engine inserts the token}); |
 | :---- |
 
 **Attaching to a ProseMirror rich text editor:**
 
-| const engine \= new SmartTextInputEngine();
-engine.register(mentionTrigger);
-engine.register(formulaTrigger);
-engine.register(crossRefTrigger);
-engine.attach(proseMirrorView.dom, 'prosemirror');
-// Engine uses the ProseMirrorAdapter which inserts tokens as inline nodes
-
-Saving and loading content
-// Save
-const serialized \= engine.getSerializedContent();
-// → "Hey @\[Alice Chen\](user:u\_abc123), can you look at \#\[PROJ-123\](issue:iss\_456)? 
-//    Budget is $\[sum(Q1.actual)\] which seems high."
-await api.saveComment(serialized);
-
-// Load
-const stored \= await api.getComment(commentId);
-engine.setSerializedContent(stored);
-// → Engine parses tokens, calls deserialize, renders pills/links/computed values |
+| const engine \= new SmartTextInputEngine();engine.register(mentionTrigger);engine.register(formulaTrigger);engine.register(crossRefTrigger);engine.attach(proseMirrorView.dom, 'prosemirror');// Engine uses the ProseMirrorAdapter which inserts tokens as inline nodesSaving and loading content// Saveconst serialized \= engine.getSerializedContent();// → "Hey @\[Alice Chen\](user:u\_abc123), can you look at \#\[PROJ-123\](issue:iss\_456)? //    Budget is $\[sum(Q1.actual)\] which seems high."await api.saveComment(serialized);// Loadconst stored \= await api.getComment(commentId);engine.setSerializedContent(stored);// → Engine parses tokens, calls deserialize, renders pills/links/computed values |
 | :---- |
 
 ## 25.4 Interaction with Existing Components
@@ -3638,17 +3479,35 @@ The following patterns were identified during research but are already adequatel
 | 1.3 | Duration Picker | Pickers | DONE |
 | 1.4 | CRON Picker | Pickers | DONE |
 | 1.5 | Timezone Picker | Pickers | DONE |
+| 1.6 | Period Picker | Pickers | DONE |
+| 1.7 | Sprint Picker | Pickers | DONE |
 | 2.1 | Infinite Progress Modal | Progress | DONE |
 | 2.2 | Steppable Progress Modal | Progress | DONE |
+| 2.3 | Confirm Dialog | Progress | DONE |
+| 2.4 | Error Dialog | Progress | DONE |
+| 2.5 | Form Dialog | Progress | DONE |
+| 2.6 | Ribbon | Dialogs & Overlays | DONE |
+| 2.7 | Ribbon Builder | Dialogs & Overlays | DONE |
 | 3.1 | Editable Combo Box | Data Entry | DONE |
-| 3.2 | Multiselect Combo Box | Data Entry | NEW |
-| 3.3 | Non-Password Masked Entry & View | Data Entry | NEW |
+| 3.2 | Multiselect Combo Box | Data Entry | DONE |
+| 3.3 | Non-Password Masked Entry & View | Data Entry | DONE |
 | 3.4 | Query Builder (Structured) | Data Entry | NEW |
-| 3.5 | Color Picker | Data Entry | NEW |
+| 3.5 | Color Picker | Data Entry | DONE |
+| 3.6 | Slider | Data Entry | DONE |
+| 3.7 | Font Dropdown | Data Entry | DONE |
+| 3.8 | Symbol Picker | Data Entry | DONE |
+| 3.9 | Angle Picker | Data Entry | DONE |
+| 3.10 | Gradient Picker | Data Entry | DONE |
+| 3.11 | Orientation Picker | Pickers | DONE |
+| 3.12 | Sizes Picker | Pickers | DONE |
+| 3.13 | Margins Picker | Pickers | DONE |
+| 3.14 | Tool Color Picker | Pickers | DONE |
+| 3.15 | Columns Picker | Pickers | DONE |
+| 3.16 | Spacing Picker | Pickers | DONE |
 | 4.1 | Markdown Editor \+ Viewer | Rich Content | DONE |
-| 4.2 | Code Editor (JSON/YAML) | Rich Content | NEW |
+| 4.2 | Code Editor (JSON/YAML) | Rich Content | DONE |
 | 4.3 | Data Diff Viewer | Rich Content | NEW |
-| 5.1 | Data Grid | Data Grids | NEW |
+| 5.1 | Data Grid | Data Grids | DONE |
 | 5.2 | Composite Data Grid | Data Grids | NEW |
 | 5.3 | Pivot Table Builder | Data Grids | NEW |
 | 6.1 | Tree View | Tree Structures | DONE |
@@ -3656,70 +3515,98 @@ The following patterns were identified during research but are already adequatel
 | 7.1 | Tool / Action Bar | Toolbars | DONE |
 | 7.2 | Status Bar | Toolbars | DONE |
 | 7.3 | Banner Bar | Toolbars | DONE |
+| 7.4 | Graph Toolbar | Toolbars | DONE |
+| 7.5 | LineWidthPicker | Toolbars | DONE |
+| 7.6 | LineTypePicker | Toolbars | DONE |
+| 7.7 | LineShapePicker | Toolbars | DONE |
+| 7.8 | LineEndingPicker | Toolbars | DONE |
+| 7.9 | Magnifier | Toolbars | DONE |
+| 7.10 | Ruler | Toolbars | DONE |
 | 8.1 | Tabbed Panel | Containers | DONE |
 | 8.2 | Sidebar (L/R Dock) | Containers | DONE |
 | 9.1 | Conversation Container (MCP) | AI/ML | DONE |
 | 9.2 | Inference Trace Panel | AI/ML | NEW |
-| 9.3 | Reasoning Accordion | AI/ML | NEW |
+| 9.3 | Reasoning Accordion | AI/ML | DONE |
 | 9.4 | HITL Queue | AI/ML | NEW |
 | 9.5 | Model Performance Monitor | AI/ML | NEW |
-| 9.6 | Prompt Template Manager | AI/ML | NEW |
+| 9.6 | Prompt Template Manager | AI/ML | DONE |
 | 9.7 | Reasoning Explorer (Tree-of-Thought) | AI/ML | NEW |
 | 9.8 | Beam / Lane View | AI/ML | NEW |
 | 9.9 | Reasoning Sankey Diagram — Addendum C | AI/ML | NEW |
 | 10.1 | Gauge (Time/Value) | Metrics | DONE |
 | 10.2 | KPI / Metric Card | Metrics | NEW |
 | 10.3 | Dashboard Grid (Widget Layout) | Metrics | NEW |
+| 10.4 | SpineMap (Capability Map) | Metrics | DONE |
+| 10.5 | GraphCanvas (SVG Graph Visualization) | Metrics | DONE |
+| 10.6 | GraphCanvasMx (maxGraph Visualization) | Metrics | DONE |
+| 10.7 | Graph Legend | Metrics | DONE |
+| 10.8 | Graph Minimap | Metrics | DONE |
+| 12.6 | Context Menu | UX & Onboarding | DONE |
+| 7.7 | Inline Toolbar | Toolbars & Status | DONE |
+| 21.12 | Stack Layout | Layout Containers | DONE |
 | 11.1 | Event Timeline | Events | DONE |
-| 11.2 | Activity Feed | Events | NEW |
+| 11.2 | Activity Feed | Events | DONE |
 | 11.3 | Changelog / Release Notes | Events | NEW |
-| 12.1 | Walkthrough (Guided Tour) | UX | NEW |
-| 12.2 | Command Palette | UX | NEW |
+| 12.1 | Walkthrough (Guided Tour) | UX | DONE |
+| 12.2 | Command Palette | UX | DONE |
 | 12.3 | Contextual Hotspots | UX | NEW |
-| 12.4 | Empty State | UX | NEW |
-| 12.5 | Skeleton Loader | UX | NEW |
+| 12.4 | Empty State | UX | DONE |
+| 12.5 | Skeleton Loader | UX | DONE |
+| 12.6 | DocViewer (Documentation Layout) | UX | DONE |
+| 12.7 | HelpDrawer (Contextual Help Panel) | UX | DONE |
+| 12.8 | HelpTooltip (Contextual Help Icon) | UX | DONE |
 | 13.1 | Facet Filter Sidebar | Filtering | NEW |
-| 13.2 | Facet-Aware Search Bar | Filtering | NEW |
-| 13.3 | Freeform & Taxonomy Tagger | Filtering | NEW |
+| 13.2 | Facet-Aware Search Bar | Filtering | DONE |
+| 13.3 | Freeform & Taxonomy Tagger | Filtering | DONE |
 | 13.4 | Saved Views / Saved Filters | Filtering | NEW |
-| 14.1 | File Upload / Download Manager | Content | NEW |
+| 13.5 | Search Box | Filtering | DONE |
+| 14.1 | File Upload / Download Manager | Content | DONE |
 | 14.2 | Screenshot & Video Capture | Content | NEW |
-| 14.3 | File Explorer / Asset Browser | Content | NEW |
-| 15.1 | Multi-Tenant Workspace Switcher | Navigation | NEW |
+| 14.3 | File Explorer / Asset Browser | Content | DONE |
+| 15.1 | Multi-Tenant Workspace Switcher | Navigation | DONE |
 | 15.2 | Draggable Workspace Tabs | Navigation | NEW |
-| 15.3 | Breadcrumb Navigation | Navigation | NEW |
+| 15.3 | Breadcrumb Navigation | Navigation | DONE |
 | 15.4 | Multi-Level Collapsible Sidebar | Navigation | NEW |
-| 16.1 | RBAC Permission Matrix | Governance | NEW |
-| 16.2 | Immutable Audit Log Viewer | Governance | NEW |
+| 15.5 | User Menu | Navigation | DONE |
+| 15.6 | App Launcher | Navigation | DONE |
+| 16.1 | RBAC Permission Matrix | Governance | DONE |
+| 16.2 | Immutable Audit Log Viewer | Governance | DONE |
 | 16.3 | Secret / API Key Manager | Governance | NEW |
-| 17.1 | Notification Center (Bell) | Communication | NEW |
-| 17.2 | Commenting & Annotation Overlay | Communication | NEW |
+| 17.1 | Notification Center (Bell) | Communication | DONE |
+| 17.2 | Commenting & Annotation Overlay | Communication | DONE |
 | 18.1 | Visual Workflow Builder | Workflows | NEW |
-| 18.2 | Multi-Stage Stepper (Wizard) | Workflows | NEW |
+| 18.2 | Multi-Stage Stepper (Wizard) | Workflows | DONE |
 | 18.3 | Approval Flow Indicator | Workflows | NEW |
 | 19.1 | Kanban Board | Layout | NEW |
 | 19.2 | Calendar / Scheduler View | Layout | NEW |
 | 19.3 | Comparison Table | Layout | NEW |
-| 19.4 | Property Inspector (Drawer) | Layout | NEW |
-| 19.5 | Split / Resizable Panes | Layout | NEW |
-| 20.1 | Status Badges & Health Indicators | Feedback | NEW |
-| 20.2 | Toast / Snackbar Notifications | Feedback | NEW |
+| 19.4 | Property Inspector (Drawer) | Layout | DONE |
+| 19.5 | Split / Resizable Panes | Layout | DONE |
+| 20.1 | Status Badges & Health Indicators | Feedback | DONE |
+| 20.2 | Toast / Snackbar Notifications | Feedback | DONE |
 | 20.3 | Inline Validation & Field Feedback | Feedback | NEW |
-| 21.1 | Border Layout Container | Layout Containers | NEW |
-| 21.2 | Box Layout Container | Layout Containers | NEW |
-| 21.3 | Flow Layout Container | Layout Containers | NEW |
-| 21.4 | Grid Layout Container (Uniform) | Layout Containers | NEW |
-| 21.5 | Flex Grid Layout Container | Layout Containers | NEW |
-| 21.6 | Card Layout Container | Layout Containers | NEW |
-| 21.7 | Layer Layout Container (Z-Stack) | Layout Containers | NEW |
-| 21.8 | Anchor Layout Container | Layout Containers | NEW |
-| 21.9 | Dock Layout Container (IDE-Style) | Layout Containers | NEW |
-| 21.10 | Split Layout Container | Layout Containers | NEW |
+| 20.4 | Pill (Inline Entity Reference) | Feedback | DONE |
+| 20.5 | RichTextInput (Lightweight Rich Text) | Input | DONE |
+| 20.6 | PersonChip (Person Identity Chip) | People | DONE |
+| 20.7 | PeoplePicker (Person Selector) | People | DONE |
+| 20.8 | PresenceIndicator (Avatar Stack) | People | DONE |
+| 20.9 | ShareDialog (Share Modal) | People | DONE |
+| 20.10 | TypeBadge (Ontology Type Badge) | Feedback | DONE |
+| 21.1 | Border Layout Container | Layout Containers | DONE |
+| 21.2 | Box Layout Container | Layout Containers | DONE |
+| 21.3 | Flow Layout Container | Layout Containers | DONE |
+| 21.4 | Grid Layout Container (Uniform) | Layout Containers | DONE |
+| 21.5 | Flex Grid Layout Container | Layout Containers | DONE |
+| 21.6 | Card Layout Container | Layout Containers | DONE |
+| 21.7 | Layer Layout Container (Z-Stack) | Layout Containers | DONE |
+| 21.8 | Anchor Layout Container | Layout Containers | DONE |
+| 21.9 | Dock Layout Container (IDE-Style) | Layout Containers | DONE |
+| 21.10 | Split Layout Container | Layout Containers | DONE |
 | 22.1.1 | Dynamic Form Builder | Work Item & Record | NEW |
 | 22.1.2 | Custom Field Definition Manager | Work Item & Record | NEW |
 | 22.1.3 | Work Item Card (Configurable) | Work Item & Record | NEW |
 | 22.1.4 | Record Detail Page (Composable) | Work Item & Record | NEW |
-| 22.1.5 | Relationship / Link Manager | Work Item & Record | NEW |
+| 22.1.5 | Relationship / Link Manager | Work Item & Record | DONE |
 | 22.2.1 | Gantt / Timeline Chart | Planning & Tracking | NEW |
 | 22.2.2 | Backlog / Priority List | Planning & Tracking | NEW |
 | 22.2.3 | Sprint / Cycle Board | Planning & Tracking | NEW |
@@ -3749,20 +3636,20 @@ The following patterns were identified during research but are already adequatel
 | 31.1 | Service Catalog Browser | Service Catalog & Infra | NEW |
 | 31.2 | Service Scorecard | Service Catalog & Infra | NEW |
 | 31.3 | Resource Capacity Planner | Service Catalog & Infra | NEW |
-| 31.4 | Dependency Topology Map | Service Catalog & Infra | NEW |
+| 31.4 | Dependency Topology Map (GraphCanvas) | Service Catalog & Infra | DONE |
 | 32.1 | DORA Metrics Dashboard | Eng Intelligence & Flow | NEW |
 | 32.2 | Cycle Time Breakdown Chart | Eng Intelligence & Flow | NEW |
 | 32.3 | Investment Allocation Tracker | Eng Intelligence & Flow | NEW |
 | 33.1 | Knowledge Page Editor (Wiki) | Knowledge & Collaboration | NEW |
 | 33.2 | Status Update / Check-In Composer | Knowledge & Collaboration | NEW |
 | 33.3 | Runbook / Playbook Runner | Knowledge & Collaboration | NEW |
-| 34.1 | Log Console | Dev & Ops Tooling | NEW |
+| 34.1 | Log Console | Dev & Ops Tooling | DONE |
 | 35.1 | Social Post Composer | Enterprise Engagement | NEW |
 | 35.2 | Social Feed | Enterprise Engagement | NEW |
 | 35.3 | Poll / Survey Widget | Enterprise Engagement | NEW |
 | 35.4 | Praise / Recognition Card | Enterprise Engagement | NEW |
 | 35.5 | Announcement Banner (Targeted) | Enterprise Engagement | NEW |
-| 36.1 | Smart Text Input Engine | Behavioral / Non-UI | NEW |
+| 36.1 | Smart Text Input Engine | Behavioral / Non-UI | DONE |
 | 37.1 | Process Discovery Map | Process Mining | NEW |
 | 37.2 | BPMN Heatmap Overlay | Process Mining | NEW |
 | 37.3 | Variant Explorer | Process Mining | NEW |
@@ -3777,4 +3664,4 @@ The following patterns were identified during research but are already adequatel
 | 40.1 | Analytical List Page | ERP Patterns | NEW |
 | 40.2 | Business Process Instance Viewer | ERP / ITSM Patterns | NEW |
 
-Revised library totals: 137 components (63 original \+ 3 ToT \+ 10 layout containers \+ 22 Work Management \+ 19 Ops / Strategy / Change Mgmt / Automation \+ 6 Console / Engagement \+ 1 STIE \+ 13 ERP, ITSM, Process Mining, Orchestration & Agentic ).
+Revised library totals: 176 component entries (93 implemented, 83 planned). Implemented count includes 90 unique component directories covering pickers, progress, data entry, rich content, grids, trees, toolbars, containers, AI/ML, metrics, events, UX, filtering, content, navigation, governance, communication, workflows, layout, feedback, people, and layout containers.

@@ -8,9 +8,13 @@ Created: 2026
 -->
 
 <!-- AGENT: Marker guidance for fast navigation and shared conventions. -->
-# Agent Navigation Markers & Annotations
+# Agent Navigation Markers and Annotations
 
-To accelerate agent comprehension and navigation, we use a standard system of **Semantic Markers**. These markers act as high-speed indexing tags, allowing agents to understand a file's purpose, dependencies, and flow without analysing the entire content.
+To accelerate agent comprehension and navigation, we use a standard system of **Semantic Markers**. 
+These markers act as high-speed indexing tags, allowing agents to understand a file's purpose, dependencies,
+and flow without analysing the entire content.
+
+---
 
 ## 0. Principles
 
@@ -19,25 +23,40 @@ To accelerate agent comprehension and navigation, we use a standard system of **
 - **Keep them current:** If you change responsibility or flow, update markers in the same edit.
 - **Do not change logic:** Markers are comments or directives only.
 
+---
+
 ## 1. The "Fast-Read" File Header
 
-Every significant source file (Classes, Services, Controllers, Complex Components) must start with a **Structured Header Block**. This allows agents to read the first 20 lines of a file and immediately understand its context.
+Every significant source file (TypeScript components, SCSS component files, HTML templates, C# Code, Markdown Files)
+containing classes, services, controllers, components, utilities and more must start with a **Structured Header Block**. 
+This allows agents to read the first 20 lines of a file and immediately understand its context.
 
-**Format:**
-```csharp
-/* 
+### TypeScript Format
+
+```typescript
+/*
  * ----------------------------------------------------------------------------
  * ⚓ COMPONENT: [ComponentName]
  * 📜 PURPOSE: [Concise description of what this file does]
- * 🔗 RELATES: [Reference to related files or specs, e.g., [[AuthSpec]]]
+ * 🔗 RELATES: [Reference to related files or specs, e.g., [[LiterateErrors]]]
  * ⚡ FLOW: [Inbound Caller] -> [This Component] -> [Outbound Dependency]
- * 🛡️ SECURITY: [Security Role/Constraint, e.g., Requires 'Admin']
  * ----------------------------------------------------------------------------
  */
 ```
 
-**Example:**
 ```typescript
+/*
+ * ----------------------------------------------------------------------------
+ * ⚓ COMPONENT: ErrorDialog
+ * 📜 PURPOSE: Renders literate error messages in a Bootstrap 5 modal dialog.
+ * 🔗 RELATES: [[LiterateErrors]], [[ErrorDialogSpec]]
+ * ⚡ FLOW: [Consumer App] -> [showErrorDialog()] -> [Bootstrap Modal API]
+ * ----------------------------------------------------------------------------
+ */
+export function showErrorDialog(containerId: string, options: LiterateError): void
+{
+    // ...
+}
 /*
  * ----------------------------------------------------------------------------
  * ⚓ COMPONENT: UserProfileController
@@ -50,88 +69,47 @@ Every significant source file (Classes, Services, Controllers, Complex Component
 export class UserProfileController { ... }
 ```
 
-## 2. In-Code Semantic Tags
-
-Use these tags within comments to map logic flow and decision history.
-
-### 2.1 Navigation Tags
-*   `// @entrypoint`: Marks the start of a public API or execution flow.
-*   `// @dependency: [File/Service]`: Explicitly marks a hidden or key dependency.
-*   `// @maps_to: [DB_Table/Column]`: Links code entities to database schema.
-*   `// @config: [SettingName]`: Marks a dependency on a configuration value (env var, appsettings key).
-*   `// @middleware`: Marks a middleware or pipeline component that intercepts requests.
-*   `// @background`: Marks a background job, hosted service, or scheduled task.
-
-### 2.2 Logic Flow Indicators
-*   `// -> Dispatches: [EventName]`: Indicates an event emission.
-*   `// <- Handles: [EventName]`: Indicates an event handler.
-*   `// >> Delegates to: [Component]`: Indicates a hand-off of responsibility.
-
-### 2.3 Context Anchors
-*   `// ⚓ [ConceptName]`: Defines the canonical location for a business concept.
-    *   *Usage:* "If you are looking for how 'Tax' is calculated, look for `⚓ TaxCalculation`."
-
-### 2.4 Agent Work Tags
-
-Use these tags for targeted follow-up by other agents. Align with `COMMENTING.md`.
-
-*   `// @agent:test` — Requires tests or test coverage.
-*   `// @agent:security` — Requires security review.
-*   `// @agent:review` — Requires human verification.
-*   `// @agent:refactor` — Candidate for future refactor.
-
-### 2.5 Annotation Alignment
-
-The semantic markers above complement the standard annotations defined in `COMMENTING.md` (`TODO`, `FIXME`, `SECURITY`, `PERF`, etc.). Use annotations for *status* (what state is this code in?) and semantic markers for *navigation* (where does this code fit in the system?). Both are captured by the repository index (see `REPO_INDEX.md`).
-
-## 3. Global Concept Registry
-
-We use **Wiki-Style Links** `[[ConceptName]]` in comments to reference shared business logic across the stack.
-
-*   **Syntax:** `[[Concept]]`
-*   **Behavior:** Agents should search for `⚓ Concept` to find the definition.
-
-**Example:**
-```csharp
-// Validates the cart items against the [[InventoryRules]].
-public void ValidateCart() { ... }
-```
-
-## 4. Section Markers (Long Files)
-
-Use clear section headers so agents can scan large files quickly.
+### C# Format
 
 ```csharp
-// ============================================================================
-// PUBLIC API
-// ============================================================================
+/* 
+ * ----------------------------------------------------------------------------
+ * ⚓ COMPONENT: [ComponentName]
+ * 📜 PURPOSE: [Concise description of what this file does]
+ * 🔗 RELATES: [Reference to related files or specs, e.g., [[AuthSpec]]]
+ * ⚡ FLOW: [Inbound Caller] -> [This Component] -> [Outbound Dependency]
+ * 🛡️ SECURITY: [Security Role/Constraint, e.g., Requires 'Admin']
+ * ----------------------------------------------------------------------------
+ */
 ```
 
-## 5. Language-Specific Collapsible Regions
+### SCSS Format
 
-When supported by the language and tooling, use region directives to collapse large sections. In C#, use `#region` and `#endregion` for blocks that are meaningful as a unit (for example, "Public API", "Private Helpers"). Keep regions shallow; do not nest more than one level.
+Use `/* */` block comments so the header is preserved in unminified CSS output.
 
-```csharp
-#region Public API
-public Task<User> GetUserAsync(...) { ... }
-#endregion
+```scss
+/*
+ * ⚓ COMPONENT: MetricCard
+ * 📜 PURPOSE: Styles for the metric card dashboard component.
+ * 🔗 RELATES: [[EnterpriseTheme]], [[DashboardLayout]]
+ */
 ```
 
-## 6. HTML and CSS Files
+### HTML Format
 
-Apply markers using HTML comments. This is relevant for the vanilla HTML frontend files in `frontend/`.
+Apply markers using HTML comments. This is relevant for vanilla HTML frontend files.
 
-**HTML:**
 ```html
 <!--
-  ⚓ COMPONENT: SessionCanvas
-  📜 PURPOSE: Main canvas for Thinker brainstorm sessions.
-  🔗 RELATES: [[ThinkerSession]], [[IdeaBubble]]
+  ⚓ COMPONENT: ErrorDialogDemo
+  📜 PURPOSE: Demo markup showing all error dialog variants and configurations.
+  🔗 RELATES: [[ErrorDialog]], [[LiterateErrors]]
   ⚡ FLOW: [AppShell] -> [This] -> [SessionAPI]
 -->
 ```
 
-**CSS:**
+### CSS Format
+
 ```css
 /*
  * ⚓ COMPONENT: ThinkerStyles
@@ -140,7 +118,140 @@ Apply markers using HTML comments. This is relevant for the vanilla HTML fronten
  */
 ```
 
-## 7. Documentation and Playbooks
+---
+
+## 2. In-Code Semantic Tags
+
+Use these tags within comments to map logic flow and decision history.
+
+### 2.1 Navigation Tags
+
+- `// @entrypoint`: Marks the start of a public API or execution flow.
+- `// @dependency: [File/Service/Component]`: Explicitly marks a hidden or key dependency.
+- `// @maps_to: [DB_Table/Column]`: Links code entities to database schema.
+- `// @config: [SettingName]`: Marks a dependency on a configuration value (SCSS variable, build option, env var, appsettings key).
+- `// @middleware`: Marks a middleware or pipeline component that intercepts requests.
+- `// @background`: Marks a background job, hosted service, or scheduled task.
+
+### 2.2 Logic Flow Indicators
+
+- `// -> Dispatches: [EventName]`: Indicates an event emission (e.g., custom DOM events).
+- `// <- Handles: [EventName]`: Indicates an event handler.
+- `// >> Delegates to: [Component]`: Indicates a hand-off of responsibility (e.g., calling Bootstrap's Modal API).
+
+### 2.3 Context Anchors
+
+- `// ⚓ [ConceptName]`: Defines the canonical location for a design or business concept.
+    - *Usage:* "If you are looking for how 'Tax' is calculated, look for `⚓ TaxCalculation`."
+    - *Usage:* "If you are looking for how the enterprise colour palette is defined, look for `⚓ EnterpriseTheme`."
+
+### 2.4 Agent Work Tags
+
+Use these tags for targeted follow-up by other agents. Align with `COMMENTING.md`.
+
+- `// @agent:test` — Requires tests or test coverage.
+- `// @agent:security` — Requires security review (e.g., DOM injection risks).
+- `// @agent:review` — Requires human verification.
+- `// @agent:refactor` — Candidate for future refactor.
+
+### 2.5 Annotation Alignment
+
+The semantic markers above complement the standard annotations defined in `COMMENTING.md` 
+(`TODO`, `FIXME`, `SECURITY`, `PERF`, etc.). Use annotations for *status* (what state is this code in?) 
+and semantic markers for *navigation* (where does this code fit in the system?). 
+Both are captured by the repository index (see `REPO_INDEX.md`).
+
+---
+
+## 3. Global Concept Registry
+
+We use **Wiki-Style Links** `[[ConceptName]]` in comments to reference shared concepts or business logic across the stack.
+
+- **Syntax:** `[[Concept]]`
+- **Behavior:** Agents should search for `⚓ Concept` to find the definition.
+
+**Example:**
+
+```typescript
+// Renders the error message following the [[LiterateErrors]] guidelines.
+function renderErrorMessage(container: HTMLElement, error: LiterateError): void
+{
+    // ...
+}
+```
+
+```scss
+// Metric label — uses the [[EnterpriseTheme]] small font size and muted colour
+.metric-label {
+    font-size: $font-size-sm;
+    color: $gray-600;
+}
+```
+
+```csharp
+// Validates the cart items against the [[InventoryRules]].
+public void ValidateCart() { ... }
+```
+
+---
+
+## 4. Section Markers (Long Files)
+
+Use clear section headers so agents can scan large files quickly.
+
+**TypeScript:**
+
+```typescript
+// ============================================================================
+// PUBLIC API
+// ============================================================================
+
+// ============================================================================
+// PRIVATE HELPERS
+// ============================================================================
+
+// ============================================================================
+// EVENT HANDLERS
+// ============================================================================
+```
+
+**SCSS:**
+
+```scss
+// ============================================================================
+// CUSTOM COMPONENT STYLES
+// ============================================================================
+
+// ============================================================================
+// UTILITY CLASSES
+// ============================================================================
+```
+
+**C#:**
+
+```csharp
+// ============================================================================
+// PUBLIC API
+// ============================================================================
+```
+
+---
+
+## 5. Language-Specific Collapsible Regions
+
+When supported by the language and tooling, use region directives to collapse large sections. 
+In C#, use `#region` and `#endregion` for blocks that are meaningful as a unit 
+(for example, "Public API", "Private Helpers"). Keep regions shallow; do not nest more than one level.
+
+```csharp
+#region Public API
+public Task<User> GetUserAsync(...) { ... }
+#endregion
+```
+
+---
+
+## 6. Documentation and Playbooks
 
 Apply markers in Markdown and other documentation so agents can find intent quickly.
 
@@ -157,6 +268,8 @@ Apply markers in Markdown and other documentation so agents can find intent quic
 <!-- ⚓ ConceptName: Canonical explanation lives here -->
 ```
 
+---
+
 ## 8. Relationship to the Knowledge Base
 
 Markers and the knowledge base (`KNOWLEDGE_ARCHITECTURE.md`) serve different purposes but reinforce each other:
@@ -168,13 +281,16 @@ Markers and the knowledge base (`KNOWLEDGE_ARCHITECTURE.md`) serve different pur
 | `decisions.yaml` | Architectural decision log | `./agentknowledge/` |
 | Repository Index | Full-text + marker search | `./local/repo-index.sqlite` |
 
-When you add an `⚓ ConceptName` anchor to a source file, also ensure the concept is registered in `concepts.yaml` so agents can look it up without scanning every file.
+When you add an `⚓ ConceptName` anchor to a source file, also ensure the concept is registered in `concepts.yaml` 
+so agents can look it up without scanning every file.
+
+---
 
 ## 9. Do and Do Not
 
 **Do**
-- Add headers to all non-trivial files you touch.
-- Use `// @entrypoint` on public API surfaces.
+- Add headers to all non-trivial files you create or modify.
+- Use `// @entrypoint` on public API surfaces (such as public API functions in component TypeScript, C# Controller Classes etc.)
 - Keep markers in sync with code changes.
 - Update `concepts.yaml` when adding a new `⚓ ConceptName` anchor.
 - Rebuild the repository index after a marker migration pass (`python3 scripts/repo-index.py rebuild`).

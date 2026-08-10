@@ -11,15 +11,21 @@ Created: 2026
 
 # Technical Documentation Guidelines
 
-This document outlines the standards and workflows for generating and maintaining product documentation. As the **Principal Technical Writer**, it is your responsibility to ensure all documentation is comprehensive, accurate, and accessible.
+This document outlines the standards and workflows for generating and maintaining product documentation. 
+As the **Principal Technical Writer**, it is your responsibility to ensure all documentation is comprehensive, 
+accurate, and accessible.
+---
 
 ## Core Principles
 
-1.  **Audience-Centric:** Tailor content to the specific user persona (End User, Developer, Admin).
+1.  **Audience-Centric:** Tailor content to the specific user persona (End User, Developer, Admin) — 
+   whether they are an agent extending the library, a developer integrating it, or a beginner learning web development.
 2.  **Living Documentation:** Documentation must evolve synchronously with the codebase.
-3.  **Visual Consistency:** The documentation must mirror the application's styling, branding, and user interface patterns to ensure a seamless user experience.
+3.  **Visual Consistency:** The documentation must mirror the application's styling, branding, and user interface
+    patterns to ensure a seamless user experience.
 4.  **Language:** Strictly adhere to the guidelines in [LANGUAGE.md](./LANGUAGE.md).
-5.  **Visuals:** Use placeholders for rich media, acknowledging that agents cannot generate high-fidelity images or videos.
+5.  **Visuals:** Use placeholders for rich media like screenshots, videos, mock ups, and diagrams when needed, 
+    acknowledging that agents cannot generate high-fidelity images or videos.
 
 ---
 
@@ -134,17 +140,31 @@ Agents cannot generate screenshots or videos. Use the following HTML structure f
 ```
 
 **Usage Examples:**
-*   `[VIDEO: Tutorial on creating a new project]`
-*   `[SCREENSHOT: The 'Advanced Configuration' panel]`
-*   `[DIAGRAM: Authentication flow sequence]`
+-   `[VIDEO: Tutorial on creating a new project]`
+-   `[SCREENSHOT: The 'Advanced Configuration' panel]`
+-   `[DIAGRAM: Authentication flow sequence]`
 
 ---
 
 ## Style and Organization
 
-*   **Hierarchy:** Use clear headings (#, ##, ###) to structure content logically.
-*   **Navigation:** Ensure file names are descriptive and folder structures are intuitive.
-*   **Formatting:**
+- **Hierarchy:** Use clear headings (`#`, `##`, `###`) to structure content logically.
+- **Code blocks:** Use fenced code blocks with language hints (` ```html `, ` ```scss `, ` ```typescript `).
+- **Navigation:** Ensure file names are descriptive and folder structures are intuitive.
+-   **Formatting:**
     *   Use **bold** for UI elements (buttons, labels) and key terms.
     *   Use `code blocks` for file paths, commands, and snippets.
     *   Use lists for steps and item enumeration.
+    *   Use numbered lists for sequential steps, bullet lists for unordered items.
+    *   Use relative links to other files in the repository (e.g., `[CODING_STYLE.md](./CODING_STYLE.md)`).
+
+---
+
+## Workflow Integration
+
+Documentation is part of the "Definition of Done". A change is not complete until:
+
+1. The relevant documentation files are updated.
+2. `COMPONENTS.md` is updated if a component was added or changed.
+3. `demo/index.html` includes the new or changed component.
+4. `CONVERSATION.md` records the change.

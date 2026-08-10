@@ -11,26 +11,35 @@ Created: 2026
 
 # Agent Knowledge Base Architecture
 
-To optimize agent performance, we utilize a **Structured Local Knowledge Base** rooted in the repository. This doesn't replace the `CONVERSATION.md` or `./specs/<project>.status.md` files which are the human readable versions. Instead, it augments the agent with a system that is machine readable and has a queryable structure.
+To optimize agent performance, we utilize a **Structured Local Knowledge Base** rooted in the repository. 
+This supplements `CONVERSATION.md` or `./specs/*.md` files which are the human readable versions with a 
+machine-readable, queryable structure that agents can ingest quickly at the start of each session.
+
+---
 
 ## 1. The Challenge
-*   **Markdown files** are hard to query ("Find all bugs in module X").
-*   **SQLite binaries** cannot be checked into Git (merge conflicts).
-*   **Remote databases** add dependency and complexity.
+
+- **Markdown files** are hard to query ("Find all bugs in module X").
+- **SQLite binaries** cannot be checked into Git (merge conflicts).
+- **Remote databases** add dependency and complexity.
+- **Git log** is verbose and hard to parse for specific changes.
+- Agents need fast orientation when starting a new session.
 
 ## 2. The Solution: "Git-Native" Knowledge Graph
 
-We use a **Structured Text (YAML/JSONL)** source-of-truth that agents can ingest into an in-memory SQLite database for complex querying during their session.
+We use **Structured Text (YAML/JSONL)** files that agents read directly. These are source-of-truth files that agents
+can ingest into working memory for complex querying during their session.
 
 ### 2.1 Directory Structure
+
 All knowledge artifacts reside in the folder `./agentknowledge/`:
 
 ```
 ./agentknowledge/
 ├── concepts.yaml       # Dictionary of domain terms and code locations
 ├── decisions.yaml      # Architectural Decision Records (ADRs) lightweight format
-├── entities.yaml       # Map of Data Entities to Code Files
-├── history.jsonl       # Append-only log of tasks, bugs, and fixes
+├── entities.yaml       # Map of Data Entities or Data Models to Code Files (if applicable)
+└── history.jsonl       # Append-only log of tasks, changes, bugs and fixes.
 └── user_profile.yaml   # Per-user preferences (Ignored by Git if personal)
 ```
 
@@ -46,7 +55,9 @@ Maps business terms to their "Anchor" locations (see `MARKERS.md`).
 ```
 
 #### `decisions.yaml` (The "Why")
-Tracks why things are the way they are.
+
+Tracks why design and architectural choices were made.
+
 ```yaml
 - id: "ADR-001"
   title: "Use AES-256-GCM for Secrets"
@@ -56,15 +67,20 @@ Tracks why things are the way they are.
 ```
 
 #### `history.jsonl` (The Memory)
-An append-only log of what agents have done. Much easier to grep than git log.
+
+An append-only log of what agents have done. One JSON object per line. Much easier to grep than git log.
+
 ```json
 {"date": "2026-02-01", "task": "fix_login_bug", "files": ["Login.tsx"], "summary": "Fixed null check."}
 {"date": "2026-02-02", "task": "add_secret_encryption", "files": ["SecretService.cs"], "summary": "Implemented AES-GCM."}
 ```
 
+---
+
 ## 3. The "Runtime SQLite" Workflow
 
-When an agent needs to perform complex analysis (e.g., "Find all components related to 'Auth' modified in the last week"), it should:
+When an agent needs to perform complex analysis (e.g., "Find all components related to 'Auth' modified in the last week"), 
+it should:
 
 1.  **Read** the files in `./agentknowledge/`.
 2.  **(Optional) Load** them into an ephemeral SQLite table structure in memory (or a temp file).
@@ -73,8 +89,35 @@ When an agent needs to perform complex analysis (e.g., "Find all components rela
 
 This gives us the **power of SQL** for analysis with the **merge-ability of Text** for storage.
 
+---
+
 ## 4. Instructions for Agents
 
-1.  **Update on Change:** When completing a task, append a line to `history.jsonl`.
-2.  **Consult First:** Before asking "Where is X?", grep `concepts.yaml`.
-3.  **Record Decisions:** If a major architectural choice is made, add an entry to `decisions.yaml`.
+### Session Start — Read
+
+At the beginning of every session, read these files to orient yourself:
+
+1. `agentknowledge/concepts.yaml` — Locate code by concept name.
+2. `agentknowledge/decisions.yaml` — Understand past architectural choices before proposing alternatives.
+3. `agentknowledge/history.jsonl` — Understand recent changes.
+
+### Session End — Update
+
+Before your final commit, update these files if your work changed the codebase meaningfully:
+
+| Trigger | Action |
+|---------|--------|
+| Created a new component | Add a concept entry to `concepts.yaml`. |
+| Modified a data model or interface | Add or update an entry in `entities.yaml`. |
+| Made a design or architectural decision | Add an ADR entry to `decisions.yaml`. |
+| Completed any significant task | Append a JSON line to `history.jsonl`. |
+
+### Rules
+
+- **Consult First:** Before asking "Where is X?", grep `concepts.yaml`.
+- **Never delete** existing entries — only add or update.
+- **Never rewrite** `history.jsonl` — it is append-only.
+- Keep concept names in PascalCase and stable; other files may reference them.
+- If a decision is superseded, set its `status` to `Superseded` and add the replacement ADR id.
+
+

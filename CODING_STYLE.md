@@ -11,11 +11,13 @@ Created: 2026
 
 # Coding Style Guide
 
-A comprehensive guide for writing maintainable, readable, and consistent code across C#, TypeScript, JavaScript, and Python.
+A comprehensive guide for writing maintainable, readable, and consistent code across C#, TypeScript, JavaScript, 
+and Python.
 
 ## Core Philosophy
 
-**The Student Principle**: Assume that the code you write will be read, maintained, deployed, and operated by a less than gifted high school student. Write code with that in mind.
+**The Student Principle**: Assume that the code you write will be read, maintained, deployed, and operated 
+by a less than gifted high school student. Write code with that in mind.
 
 - **Explicit**: Write explicit code that reveals intent
 - **Simple**: Write concise code that gets the job done without cleverness
@@ -44,7 +46,7 @@ For Python:
 2. Follow [Google Python Style Guide](https://google.github.io/styleguide/pyguide.html)
 3. Apply the overrides in this document
 
-For HTML/CSS:
+For HTML/CSS/SCSS:
 1. Follow [Google HTML/CSS Style Guide](https://google.github.io/styleguide/htmlcssguide.html)
 2. Apply the overrides in this document
 
@@ -138,6 +140,18 @@ items.Select(x =>
 });
 ```
 
+```typescript
+// Bad
+if (isValid)
+    process();
+
+// Good
+if (isValid)
+{
+    process();
+}
+```
+
 ### Parentheses for Clarity
 
 Use parentheses around expressions even when operator precedence is obvious.
@@ -149,6 +163,14 @@ int result = a + b * c >> 2;
 // Good
 int result = (a + (b * c)) >> 2;
 
+// Bad
+if (a && b || c)
+
+// Good
+if ((a && b) || c)
+```
+
+```typescript
 // Bad
 if (a && b || c)
 
@@ -174,6 +196,22 @@ transactionCount += 1;
 
 ProcessNextItem();
 ValidateState();
+```
+
+```typescript
+// Bad
+const container = getContainer();
+containerCount += 1;
+processNext();
+validateState();
+
+// Good
+const container = getContainer();
+
+containerCount += 1;
+
+processNext();
+validateState();
 ```
 
 ### Parameter Alignment
@@ -202,6 +240,22 @@ var customerName    = "Acme Corp";
 var orderId         = 12345;
 var totalAmount     = 999.99m;
 var isHighPriority  = true;
+```
+
+```typescript
+// Short parameter list — single line
+function save(name: string, id: number): void
+
+// Long parameter list — align on new lines
+function showErrorDialog(
+    containerId: string,
+    title: string,
+    message: string,
+    suggestion: string | undefined,
+    technicalDetail: string | undefined): void
+{
+    // ...
+}
 ```
 
 ---
@@ -241,41 +295,84 @@ public class OrderProcessor : IOrderProcessor
 }
 ```
 
-### TypeScript/JavaScript Naming
+### TypeScript / JavaScript
 
 | Element | Convention | Example |
 |---------|------------|---------|
-| Classes | PascalCase | `OrderProcessor` |
-| Interfaces | PascalCase (no I prefix) | `OrderRepository` |
-| Type Aliases | PascalCase | `OrderResult` |
-| Functions | camelCase | `processOrder` |
-| Methods | camelCase | `getCustomer` |
-| Properties | camelCase | `customerName` |
-| Variables | camelCase | `orderTotal` |
+| Classes | PascalCase | `ErrorDialog` |
+| Interfaces | PascalCase (no I prefix) | `ErrorDialogOptions` |
+| Type Aliases | PascalCase | `DialogAction` |
+| Functions | camelCase | `showErrorDialog` |
+| Methods | camelCase | `renderContent` |
+| Properties | camelCase | `errorCode` |
+| Variables | camelCase | `containerElement` |
 | Constants | SCREAMING_SNAKE_CASE | `MAX_RETRY_COUNT` |
-| Enums | PascalCase | `OrderStatus.Pending` |
-| Private Members | #camelCase or _camelCase | `#repository` |
+| Enums | PascalCase | `DialogType.Error` |
+| Private Members | #camelCase or _camelCase | `#container` |
 
 ```typescript
-interface OrderRepository
+interface ErrorDialogOptions
 {
-    findById(id: number): Promise<Order>;
+    readonly title: string;
+    readonly message: string;
+    readonly suggestion?: string;
 }
 
-class OrderProcessor
+class ErrorDialog
 {
-    private static readonly MAX_RETRY_COUNT = 3;
-    private readonly #repository: OrderRepository;
-    
-    public customerName: string;
-    
-    public async processOrder(orderId: number): Promise<OrderResult>
+    private static readonly MAX_VISIBLE_ACTIONS = 3;
+    private readonly #container: HTMLElement;
+
+    public errorCode: string;
+
+    public async showDialog(options: ErrorDialogOptions): Promise<void>
     {
-        const order = await this.#repository.findById(orderId);
-        return this.validateAndExecute(order);
+        const dialog = this.#container.querySelector(".errordialog");
+        // ...
     }
 }
 ```
+
+### SCSS / CSS
+
+| Element | Convention | Example |
+|---------|------------|---------|
+| Class names | lowercase-hyphenated | `.metric-card`, `.toolbar-actions` |
+| Component prefix | component name | `.errordialog-header`, `.combobox-item` |
+| SCSS variables | $lowercase-hyphenated | `$primary`, `$font-size-sm` |
+| SCSS mixins | lowercase-hyphenated | `@mixin responsive-grid` |
+| SCSS placeholders | %lowercase-hyphenated | `%visually-hidden` |
+| BEM (if used) | block__element--modifier | `.card__header--compact` |
+
+```scss
+// Component-scoped class names
+.errordialog-header {
+    background-color: $gray-900;
+    color: white;
+    padding: $spacer;
+}
+
+.errordialog-body {
+    padding: $spacer;
+    font-size: $font-size-base;
+}
+
+.errordialog-suggestion {
+    color: $gray-600;
+    font-style: italic;
+}
+```
+
+### HTML Naming
+
+| Element | Convention | Example |
+|---------|------------|---------|
+| IDs | lowercase-hyphenated | `id="error-dialog-container"` |
+| Classes | lowercase-hyphenated | `class="metric-card"` |
+| Data attributes | lowercase-hyphenated | `data-dialog-type="error"` |
+| Custom elements | lowercase-hyphenated | `<error-dialog>` |
+
+---
 
 ### Python Naming
 
@@ -327,6 +424,58 @@ public class ReactionSimulator
 }
 ```
 
+## SCSS-Specific Rules
+
+### Variable Overrides
+
+Always override Bootstrap variables in `_variables.scss`, not in component files.
+
+```scss
+// Good — in _variables.scss
+$border-radius: 0 !default;
+
+// Bad — in a component file
+.my-component {
+    border-radius: 0; // Fights Bootstrap's default
+}
+```
+
+### Nesting Depth
+
+Limit SCSS nesting to 3 levels. Deep nesting produces overly specific selectors.
+
+```scss
+// Bad — too deep
+.sidebar {
+    .nav {
+        .nav-item {
+            .nav-link {
+                &:hover {
+                    // 5 levels deep
+                }
+            }
+        }
+    }
+}
+
+// Good — flattened
+.sidebar .nav-link {
+    // styles
+
+    &:hover {
+        // styles
+    }
+}
+```
+
+### Avoid `!important`
+
+Never use `!important` in component SCSS. If a style is not applying, the selector specificity is wrong — 
+fix the selector, not the declaration.
+
+The only exception is utility classes in the theme itself (e.g., `.p-compact`), where `!important` follows 
+Bootstrap's utility convention.
+
 ---
 
 ## File Organization
@@ -358,11 +507,12 @@ Rationale: Searching for files is faster than searching in files.
 
 ### Size Limits
 
-Keep methods between 25-30 lines of code. If a method exceeds this, break it into smaller functions.
+Keep functions or methods between 25-30 lines of code. If a function or method exceeds this, break it 
+into smaller functions or methods.
 
 ### Nesting Limits
 
-Limit nesting to 3-4 levels. The first statement in a method is level 1.
+Limit nesting to 3-4 levels. The first statement in a method is level 1. Use early returns to flatten logic.
 
 ```csharp
 // Bad - too deeply nested
@@ -419,13 +569,52 @@ private void ProcessItemIfEligible(OrderItem item)
 }
 ```
 
+```typescript
+// Bad — too deeply nested
+function processItems(items: Item[]): void
+{
+    for (const item of items)
+    {
+        if (item.isValid)
+        {
+            if (item.hasContent)
+            {
+                if (item.isVisible)
+                {
+                    renderItem(item);
+                }
+            }
+        }
+    }
+}
+
+// Good — early returns
+function processItems(items: Item[]): void
+{
+    for (const item of items)
+    {
+        processItem(item);
+    }
+}
+
+function processItem(item: Item): void
+{
+    if (!item.isValid || !item.hasContent || !item.isVisible)
+    {
+        return;
+    }
+
+    renderItem(item);
+}
+```
+
 ---
 
 ## Error Handling
 
 ### Early Returns (Guard Clauses)
 
-Use early returns to handle edge cases and invalid states at the beginning of methods.
+Use early returns to handle edge cases and invalid states at the beginning of functions or methods.
 
 ```csharp
 // Bad - deeply nested validation
@@ -479,9 +668,36 @@ public OrderResult ProcessOrder(Order order)
 }
 ```
 
+```typescript
+function showDialog(containerId: string, options: ErrorDialogOptions): void
+{
+    if (!containerId)
+    {
+        console.error("[ErrorDialog] No container ID provided");
+        return;
+    }
+
+    const container = document.getElementById(containerId);
+    if (!container)
+    {
+        console.error("[ErrorDialog] Container not found:", containerId);
+        return;
+    }
+
+    if (!options.title && !options.message)
+    {
+        console.warn("[ErrorDialog] No title or message provided");
+        return;
+    }
+
+    // Happy path — render the dialog
+    renderDialog(container, options);
+}
+```
+
 ### Assertions and Preconditions
 
-Use assertions to validate assumptions and catch programming errors early.
+Use assertions to validate assumptions and catch programming errors early in development.
 
 ```csharp
 // C# - Using Debug.Assert and ArgumentException
@@ -528,6 +744,21 @@ function calculateDiscount(order: Order, discountPercent: number): number
     
     const subtotal = order.items.reduce((sum, i) => sum + i.price, 0);
     return subtotal * (discountPercent / 100);
+}
+
+function calculateDiscount(price: number, percent: number): number
+{
+    if (percent < 0 || percent > 100)
+    {
+        throw new RangeError("Discount percent must be between 0 and 100");
+    }
+
+    console.assert(
+        price >= 0,
+        "Price should be non-negative"
+    );
+
+    return price * (percent / 100);
 }
 ```
 
@@ -701,6 +932,17 @@ public static void AddVectors(float[] a, float[] b, float[] result)
 }
 ```
 
+```typescript
+// Bad — clever but obscure
+const result = (b << 4 & b << 8) | (b >> 2);
+
+// Good — explicit and clear
+const shift4Bits = b << 4;
+const shift8Bits = b << 8;
+const divideBy4 = b >> 2;
+const mergedBits = (shift4Bits & shift8Bits) | divideBy4;
+```
+
 ---
 
 ## Language-Specific Patterns
@@ -813,9 +1055,12 @@ List<int> numbers = [1, 2, 3, 4, 5];
 - [ ] Allman braces (opening brace on new line)
 - [ ] Always use braces for control flow
 - [ ] Parentheses around expressions for clarity
-- [ ] Methods under 30 lines
+- [ ] Functions and methods under 30 lines
 - [ ] Max 3-4 levels of nesting
 - [ ] Early returns for guard clauses
 - [ ] Assertions for invariants
+- [ ] SCSS nesting max 3 levels
+- [ ] No `!important` in component SCSS
+- [ ] Component CSS classes prefixed with component name
 - [ ] Domain-appropriate naming
 - [ ] Explicit code over clever tricks

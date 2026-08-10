@@ -7,9 +7,12 @@ File GUID: e6b92026-a774-4b5d-9ffc-43db489aff13
 Created: 2026
 -->
 
+<!-- AGENT: UX and UI design principles for frontend components or the frontend of applications. -->
 # UX/UI Design Guidelines
 
-This document outlines the user experience (UX) and user interface (UI) design principles for the project. It complements the technical standards in `FRONTEND.md` and the strict mandates in `UI_UX_CONSISTENCY.md` by focusing on the *why* and *how* of user interaction.
+This document outlines the user experience (UX) and user interface (UI) design principles for the project. 
+It complements the technical standards in `FRONTEND.md` and the strict mandates in `UI_UX_CONSISTENCY.md` 
+by focusing on the *why* and *how* of user interaction.
 
 ## 1. Core Design Philosophy
 

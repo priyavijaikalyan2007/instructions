@@ -17,6 +17,19 @@ These instructions supplement the primary guidelines in `AGENTS.md`, `CODING_STY
 
 ## Coding
 
+### Context Efficiency (Token Discipline)
+
+- **"Read once, cite forever; research before you edit."**
+- **Cite, don't re-read.** If you have already read a file in the current session, refer to it by `path:line` (e.g., `frontend/component-studio.html:142`) instead of re-reading it. Only re-`Read` when:
+  1. The file has been edited since you last read it (by you or a hook), OR
+  2. You need lines outside the range you previously read, OR
+  3. Enough turns have passed that the content was likely compressed out of context.
+  When you do re-read a partial range, use `offset` and `limit` — never re-read a whole file to grab one function.
+- **Read tightly.** Prefer `Grep` with `-n` and small `-C` context (2–5 lines) over `Read` of an entire file. Reserve full `Read` for files under ~300 lines, or when you genuinely need the whole picture (e.g., understanding a class structure end-to-end).
+- **Read before edit; research before modify.** Before `Edit`/`Write` on a file, you must have read it in this session. Before modifying a function's signature or behaviour, `Grep` for all callers (by symbol name) so you know the blast radius. Editing blind causes failed edits, rollbacks, and rework — all of which cost more tokens than the upfront read.
+- **Target prompts to exact locations.** When delegating to subagents or describing work, name the file and line range (`In api/Services/AuthService.cs lines 80–140, the ValidateToken method...`). This prevents the subagent from re-discovering what you already know.
+- **Trust prior context within a session.** Do not re-verify file contents you just edited — `Edit`/`Write` would have errored if it failed. The harness tracks file state for you.
+
 ### Bootstrap Discipline
 
 - **"Override, don't overwrite."**
@@ -279,6 +292,13 @@ component source. Do NOT guess parameter order or option names from memory. Comm
 When using the CDN Toolbar component, ALL button state changes must go through `toolbar.setToolState()`.
 Never use direct DOM manipulation (`classList.toggle('active', ...)`) on toolbar buttons — this causes
 the component's internal state to diverge from the visual state.
+
+### UI State Management
+
+Every component should provide a mechanism to export and import its current UI state. 
+That is, what node is selected, whether nodes are expanded or collapsed, whether a sidebar is 
+expanded or collapsed, which ribbon tools are selected and more. This enables consuming applications to
+integrate UI state preservation and reload into their user experience.
 
 ## Settings
 

@@ -21,9 +21,11 @@ A comprehensive reference for generating well-commented, maintainable code.
 
 Write comments for:
 
-- **Future You** — You won't remember your reasoning in six months. Comments are documentation for your past self's thinking.
-- **The Less Experienced** — Assume the reader is a capable but inexperienced developer who needs context, not hand-holding.
-- **Posterity** — Someone will maintain this code long after you're gone. Days, weeks, years—they deserve context.
+- **Future You** — You won't remember your reasoning in six months. Comments are documentation for your past 
+  self's thinking.
+- **The Less Experienced** — Assume the reader is a capable but inexperienced developer who needs context, 
+  not hand-holding.
+- **Posterity** — Someone will maintain this code long after you're gone. Days, weeks, years - they deserve context.
 - **Agents** — Other AI agents (review, security, testing, refactoring) will parse this code. Guide them.
 
 ### 1.2 The Tone
@@ -40,7 +42,28 @@ Comments must adhere to the style and tone guidelines defined in [LANGUAGE.md](.
 
 ## 2. What to Comment
 
-### 2.1 All Entities
+### 2.1 General Guidance
+
+1. File-level comments
+
+   - Describe overall purpose of the file
+   - List key responsibilities and interactions
+   - Include any critical architectural notes
+
+2. Function/Method Comments
+
+   - Explain the purpose and expected behavior
+   - Document input parameters and return values
+   - Note any side effects or important preconditions/postconditions
+   - Highlight any non-obvious design choices
+
+3. Complex Logic Comments
+
+   - Explain complex algorithms or business rules
+   - Break down intricate conditional logic
+   - Provide rationale for specific implementation approaches
+
+### 2.2 All Entities
 
 Every named construct deserves a comment explaining its purpose and intended usage:
 
@@ -51,15 +74,22 @@ Every named construct deserves a comment explaining its purpose and intended usa
 | Functions / Methods | What it does, parameters, return value, side effects |
 | Fields / Properties | What it represents, valid values, units if applicable |
 | Enums | What the enumeration represents, each member's meaning |
+| SCSS Mixins | What it generates, parameters, where it is used |
+| SCSS Variables (custom) | What it controls, valid values, units |
 | Constants | Why this value, where it came from |
 
-### 2.2 Significant Logic Blocks
+### 2.3 Significant Logic Blocks
 
 Comment any non-trivial block of logic:
 
 - SQL transactions and queries
 - Object mappings and transformations
 - API calls (especially external services)
+- DOM manipulation sequences
+- Event handler registration and delegation
+- Bootstrap JavaScript API interactions
+- Complex SCSS calculations or selector chains
+- Build pipeline steps
 - Computation logic and algorithms
 - Configuration loading and validation
 - Authentication/authorization flows
@@ -68,21 +98,23 @@ Comment any non-trivial block of logic:
 - Concurrency and synchronization
 - File I/O operations
 
-### 2.3 Non-Obvious Decisions
+### 2.4 Non-Obvious Decisions
 
 Comment when:
 
 - The obvious approach wasn't taken (and why)
 - A workaround exists for a bug or limitation
+- A workaround exists for a browser bug or Bootstrap limitation
 - Performance considerations drove the design
 - Security or privacy concerns influenced the code
 - Regulatory or compliance requirements apply
+- Accessibility requirements influenced the code
 
 ---
 
 ## 3. How to Comment
 
-### 3.1 What, Why—Not How
+### 3.1 What, Why — Not How
 
 ```csharp
 // BAD: How (redundant with code)
@@ -100,6 +132,22 @@ foreach (var user in users)
 }
 ```
 
+```typescript
+// BAD: How (redundant with code)
+// Loop through items and check if element exists
+for (const item of items)
+{
+    if (document.getElementById(item.id)) { ... }
+}
+
+// GOOD: What and Why
+// Remove stale dialog elements — components may leave orphaned modals after errors
+for (const item of items)
+{
+    if (document.getElementById(item.id)) { ... }
+}
+```
+
 ### 3.2 Standard Annotations
 
 Use consistent annotations to mark code states and intentions:
@@ -111,7 +159,7 @@ Use consistent annotations to mark code states and intentions:
 | `BUG` | Documents a known bug |
 | `BUGFIX` | Explains why code exists to fix a bug |
 | `HACK` | Temporary workaround, not ideal |
-| `PERF` | Performance-related note or optimization |
+| `PERF` | Performance-related note or optimisation |
 | `SECURITY` | Security-sensitive code |
 | `PRIVACY` | Privacy-sensitive data handling |
 | `LOCALIZE` | Needs localization/i18n work |
@@ -127,6 +175,12 @@ Format: `// ANNOTATION: Description with context`
 // SECURITY: Input sanitized to prevent SQL injection
 ```
 
+```typescript
+// TODO: Add keyboard navigation for arrow keys (spec section 3.2)
+// BUGFIX: Chrome 120 requires explicit tabindex for focus — see issue #42
+// HACK: Bootstrap 5.3 modal backdrop z-index conflict — revisit after upgrade
+```
+
 ### 3.3 Agent Markers
 
 Guide automated tools with explicit markers:
@@ -136,6 +190,13 @@ Guide automated tools with explicit markers:
 // @agent:security — Validate this doesn't expose PII in logs
 // @agent:review — Complex logic, needs human verification
 // @agent:refactor — Candidate for extraction once patterns stabilize
+```
+
+```typescript
+// @agent:test — Cover edge case where container ID is null
+// @agent:security — Verify this does not inject unsanitised HTML
+// @agent:review — Complex selector logic, needs human verification
+// @agent:refactor — Candidate for extraction once more components exist
 ```
 
 ### 3.4 Section Headers
@@ -153,6 +214,20 @@ For longer files, use section comments to create navigable structure:
 
 // ============================================================================
 // PRIVATE HELPERS
+// ============================================================================
+```
+
+```typescript
+// ============================================================================
+// PUBLIC API
+// ============================================================================
+
+// ============================================================================
+// PRIVATE HELPERS
+// ============================================================================
+
+// ============================================================================
+// EVENT HANDLERS
 // ============================================================================
 ```
 
@@ -181,6 +256,16 @@ public decimal CalculateProratedCost(Plan plan, DateTime startDate, DateTime end
 Use JSDoc for functions and complex types:
 
 ```typescript
+/**
+ * Displays a structured error dialog using Bootstrap's modal.
+ *
+ * @param containerId - The DOM element ID where the modal will be injected
+ * @param options - The error information to display
+ * @returns void
+ */
+function showErrorDialog(containerId: string, options: ErrorDialogOptions): void {
+}
+
 /**
  * Debounces a function call to prevent rapid repeated execution.
  * 
@@ -239,6 +324,51 @@ WHERE s.tenant_id = @tenantId
   AND s.status = 'active';
 ```
 
+### 4.5 SCSS
+
+Use `/* */` block comments for file headers and section markers (preserved in compiled CSS when not minified). Use `//` line comments for inline explanations (stripped during compilation).
+
+```scss
+/*
+ * ⚓ COMPONENT: MetricCard
+ * 📜 PURPOSE: Styles for the metric card dashboard component.
+ * 🔗 RELATES: [[DashboardLayout]]
+ */
+
+// Card container — uses theme border and spacing variables
+.metric-card {
+    padding: $spacer;
+    border: 1px solid $gray-300;
+    // PERF: Using a simple border instead of box-shadow for rendering performance
+    background: white;
+}
+
+// Value display — large, bold, high contrast for readability
+.metric-value {
+    font-size: 1.5rem;
+    font-weight: $font-weight-bold;
+    color: $gray-900;
+}
+```
+
+### 4.6 HTML
+
+Use HTML comments for component markers and agent navigation:
+
+```html
+<!--
+  ⚓ COMPONENT: ErrorDialog
+  📜 PURPOSE: Demo markup for the error dialog component.
+  🔗 RELATES: [[LiterateErrors]]
+-->
+<div id="error-dialog-demo">
+    <!-- Action buttons — see spec section 4.1 for required actions -->
+    <div class="errordialog-actions">
+        ...
+    </div>
+</div>
+```
+
 ---
 
 ## 5. Maintaining Comments
@@ -247,10 +377,10 @@ WHERE s.tenant_id = @tenantId
 
 Comments must evolve with the code:
 
-- Update comments when logic changes
-- Remove comments for deleted code
-- Mark outdated comments for review if uncertain
-- Treat comment rot as a code smell
+- Update comments when logic changes.
+- Remove comments for deleted code.
+- Mark outdated comments for review if uncertain.
+- Treat comment rot as a code smell.
 
 ### 5.2 Review Checklist
 
@@ -308,6 +438,18 @@ user.Name = name;
 return result;
 ```
 
+```typescript
+// BAD: States the obvious
+// Increment the counter
+counter++;
+
+// Set the title text
+titleElement.textContent = title;
+
+// Return the result
+return result;
+```
+
 ---
 
 ## 7. Quick Reference
@@ -315,7 +457,7 @@ return result;
 ### Comment Decision Tree
 
 ```
-Is this an entity (class, function, field, etc.)?
+Is this an entity (class, function, field, mixin, variable, etc.)?
   → YES: Add purpose and usage comment
 
 Is this a significant logic block?

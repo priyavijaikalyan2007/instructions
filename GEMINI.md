@@ -7,7 +7,6 @@ File GUID: 8e03247f-925c-4901-9060-27f5a6d2da5b
 Created: 2026
 -->
 
-
 Consult AGENTS.md for general information.
 
 Your roles are primarily the following. 

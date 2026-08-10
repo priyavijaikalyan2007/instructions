@@ -13,104 +13,221 @@ Created: 2026
 
 ## 1.1. Standards Compliance
 
-- Use HTML5 and modern ECMAScript standards
-- Prioritize native HTML capabilities over complex JavaScript solutions
-- Ensure cross-browser compatibility
-- Maintain semantic HTML structure
+- Use HTML5 and modern ECMAScript standards.
+- Prioritize native HTML capabilities over complex JavaScript solutions.
+- Ensure cross-browser compatibility (latest Chrome, Firefox, Safari, Edge).
+- Maintain semantic HTML structure in all component templates and demo pages.
 - Use TypeScript files in the ./typescript/ folder instead of inline Javascript.
   - App specific TypeScript can be kept as separate modules.
 - Use CSS files in the frontend/ folder instead of inline CSS.
   - App specific CSS can be kept as separate files.
 
-## 1.2. Code Quality
+## 1.2. Performance Considerations
 
-- Use clear, descriptive naming conventions
-  - Functions: descriptive, verb-based names (e.g., `validateUserInput()`)
-  - Variables: meaningful, context-specific names
-  - Loop/temporary variables: short, standard names (i, j, k)
-- Keep code simple and readable
-- Avoid unnecessary complexity or "clever" programming tricks
-## 1.3. Structure and Organization
-
-- Modular design
-- Functions should be focused and do one task well
-- Maximum function length: 25 lines
-- Maximum line length: 120 characters
-- Limit nesting depth to 3 levels
-- Use K&R brace style
-## 1.4. Performance Considerations
-
-- Minimize DOM manipulations
-- Use efficient selector methods
-- Leverage CSS for animations and transitions
+- Minimise DOM manipulations in component JavaScript.
+- Use efficient selector methods (`getElementById`, `querySelector`).
+- Leverage CSS for animations and transitions — avoid JavaScript animation where CSS suffices.
+- Keep the compiled CSS output small; avoid generating redundant selectors.
+- Do not import the entirety of a library when only a small part is needed.
 - Implement lazy loading where appropriate
 - Use event delegation for dynamic elements
-## 1.5. Accessibility and Usability
 
-- Implement WCAG 2.1 guidelines
-- Provide clear focus states
-- Use semantic HTML elements
-- Include appropriate ARIA attributes
-- Ensure keyboard navigability
-## 1.6. Error Handling
+## 1.3. Accessibility and Usability
 
-- Implement graceful error management
+- Implement WCAG 2.1 AA guidelines.
+- Provide clear focus states on all interactive elements.
+- Use semantic HTML elements (`<button>`, `<nav>`, `<table>`, not styled `<div>`s).
+- Include appropriate ARIA attributes in component templates.
+- Ensure keyboard navigability for all interactive components.
+- Ensure responsive design for multiple device types.
+- Maintain sufficient color contrast.
+- Use legible font sizes.
+- Support screen reader compatibility.
+
+## 1.4. Error Handling
+
+- Implement graceful error management, specifically literate errors as outlined in LITERATE_ERRORS.md.
 - Provide user-friendly error messages
 - Log errors for debugging
 - Use try-catch blocks strategically
-### 1.6.1. Code Generation Annotations
 
-- Include clear comments explaining complex logic.
-- Add contextual markers for code understanding by AI agents.
-- Document function purposes and parameter expectations.
-### 1.6.2. Recommended Technologies
+## 1.5. Recommended Technologies
 
 - Use Bootstrap 5 as the primary UI and component framework.
-- Use TypeScript with a simple compile step to convert into Javascript. Fallback to vanilla Javascript. Do not use overcomplicated technologies like React. For smaller, simpler, projects you can consider using vanilla Javascript.
+- Use TypeScript with a simple compile step to convert into Javascript. Fallback to vanilla Javascript. 
+  Do not use overcomplicated technologies like React. For smaller, simpler, projects you can consider using 
+  vanilla Javascript.
 - Use CSS Grid / Flexbox for layouts.
 - Target modern, standards compliant web browsers ignoring older web browsers like Internet Explorer.
 - Use the Fetch API for AJAX API calls.
 - Use Service Workers for long running sync-style operations. 
 - Use web components for reusable elements.
-## 1.7. Application Structure
 
-- Implement a super-app model.
-- In the super-app model, there is a **platform menu-bar** at the top for the user, application dropdown, links to documentation, help, support etc. 
-- Individual sub-applications then render below this platform menu bar. The sub-application can have its own application menu bar that is specific to that application.
-- The bottom has a log console where application log messages are written. These are more relevant to the user such as *reading data, saving data* etc. 
-- All sub-applications should have a consistent UI / UX.
-## 1.8. Example Code Structure
-```javascript
-// Descriptive function with clear purpose
-function processUserRegistration(userData) {
-  try {
-    // Validation logic
-    if (!validateUserInput(userData)) {
-      throw new Error('Invalid user data');
-    }
-
-    // Processing logic
-    const sanitizedData = sanitizeUserInput(userData);
-
-    // API interaction
-    return submitRegistrationToServer(sanitizedData);
-  } catch (error) {
-    logError(error);
-    displayUserFriendlyError(error);
-  }
-}
-```
-## 1.9. Code Generation Best Practices
+## 1.6. Code Generation Best Practices
 
 - Prefer composition over inheritance.
 - Use immutable data structures where possible.
 - Minimize global variables.
 - Implement defensive programming techniques.
-- Map frontend types to backend types to database objects consistently preferably through some sort of consistent mapping layer. This prevents typos, translation problems etc. 
-* Prevent cluttering regular business logic with SQL queries, data transfer objects and more.
-* Prevent bugs now and in the future due to mismatch between the field names or types or validation expectations.
+- Map frontend types to backend types to database objects consistently preferably through 
+  some sort of consistent mapping layer. This prevents typos, translation problems etc. 
+- Prevent cluttering regular business logic with data transfer objects and more.
+- Prevent bugs now and in the future due to mismatch between the field names or types or validation expectations.
 
-# 2. UI Framework and Styling
+## 1.7. Error Handling
+
+- Use try-catch blocks in component TypeScript where DOM operations could fail.
+- Log errors using `console.error` with the `[ComponentName]` prefix (see `LOGGING.md`).
+- Never use `window.alert()` or `window.confirm()` in component code.
+- Fail gracefully: if a component cannot initialise, log the error and leave the DOM unchanged.
+
+## 1.8. Browser Compatibility
+
+- Support latest versions of:
+  - Chrome
+  - Firefox
+  - Safari
+  - Edge
+- Provide graceful degradation for older browsers
+
+## 1.9. Security Considerations
+
+Whether we are building an application or a component library or a theme library, security matters.
+
+- Implement secure authentication mechanisms.
+- Use HTTPS for all communications.
+- Sanitise any user-provided content before injecting it into the DOM in component TypeScript. 
+  Use `textContent` instead of `innerHTML` where possible. Sanitize user input in all components.
+- Prevent XSS and CSRF vulnerabilities in all components.
+- Do not include inline event handlers (`onclick="..."`) in component HTML templates.
+- Do not embed external scripts.
+
+## 1.10. Browser Compatibility
+
+Support the latest versions of:
+
+- Chrome
+- Firefox
+- Safari
+- Edge
+
+Do not support Internet Explorer. Use modern CSS features (Grid, Flexbox, custom properties) freely. 
+The PostCSS autoprefixer handles vendor prefixes for supported browsers.
+
+## 1.11. Commenting & Logging
+
+You must follow the same logging and commenting model as the backend for the frontend. 
+See COMMENTING.md and LOGGING.md. Again, in the frontend, make sure to log:
+
+1. Method/Function Entry/Exit
+   
+   - Log function name
+   - Log input parameters (scrubbed of sensitive data)
+   - Log return values or error conditions
+   - Include timing information when relevant
+
+2. External Service Interactions
+   
+   - Log remote request details
+   - Log response status
+   - Log request/response sizes
+   - Capture request/response timestamps
+   - Omit sensitive payload details
+
+3. Error and Exception Handling
+   
+   - Log full error stack traces
+   - Capture error context and triggering conditions
+   - Include relevant application state information
+
+4. State Changes
+   
+   - Log significant state transitions
+   - Record user actions leading to state changes
+   - Capture system events and configuration modifications
+   
+### 1.11.1. Logging Best Practices
+
+- Use structured logging.
+- Include correlation IDs to track request flows.
+- Implement log levels (DEBUG, INFO, WARN, ERROR).
+- Ensure logs are easily parseable by log management tools.
+
+### 1.11.2. Example Logging Structure
+
+```javascript
+function processUserOrder(userId, orderDetails) {
+  logger.info('Processing user order', {
+    userId: userId,
+    orderSize: orderDetails.items.length,
+    timestamp: new Date().toISOString()
+  });
+
+  try {
+    // Order processing logic
+    logger.debug('Order processing steps', { 
+      stage: 'validation', 
+      isValid: true 
+    });
+  } catch (error) {
+    logger.error('Order processing failed', {
+      userId: userId,
+      errorMessage: error.message,
+      errorCode: error.code
+    });
+    throw error;
+  }
+}
+```
+
+### 1.11.3. Performance Considerations
+
+- Implement efficient logging mechanisms
+- Use asynchronous logging to minimize performance impact
+
+### 1.11.4. Security Reminders
+
+- Never log:
+  - Authentication credentials
+  - Session tokens
+  - Personal identification information
+  - Encryption keys
+- Sanitize and mask sensitive data before logging
+
+## 1.12. Application Structure
+
+- Implement a super-app model.
+- In the super-app model, there is a **platform menu-bar** at the top for the user, application dropdown, 
+  links to documentation, help, support etc. 
+- Individual sub-applications then render below this platform menu bar. The sub-application can have its 
+  own application menu bar that is specific to that application.
+- The bottom has a log console where application log messages are written. These are more relevant to the user 
+  such as *reading data, saving data* etc. 
+- All sub-applications should have a consistent UI / UX.
+
+---
+
+## 2. Technology Stack
+
+This repository uses a deliberately simple stack:
+
+| Layer | Technology | Notes |
+|-------|-----------|-------|
+| Styling | SCSS (Sass) compiled to CSS | Bootstrap 5 variable overrides + custom component styles |
+| Logic | TypeScript compiled to JavaScript | For interactive components only |
+| Structure | HTML5 | Component templates and demo pages |
+| Build | npm scripts, Sass CLI, PostCSS | No bundler (Webpack/Vite) unless components require it |
+| Deployment | Cloudflare Pages via Wrangler | Static asset hosting |
+
+**Do not introduce:**
+- Use modern JavaScript (ES6+)
+- JavaScript frameworks (React, Vue, Angular, Svelte)
+- CSS-in-JS solutions (styled-components, Emotion)
+- Complex bundlers unless a component genuinely requires module resolution
+
+---
+
+# 3. UI Framework and Styling
 
 ## 2.1. Core Resources
 
@@ -124,20 +241,14 @@ function processUserRegistration(userData) {
 3. Prioritize functional design with accessibility considerations over fancy animations etc.
 4. Maintain consistent color schemes, typography, and layout across applications.
 5. Ensure responsive design for multiple device types.
+6. Start at `https://theme.priyavijai-kalyan2007.workers.dev/docs/COMPONENT_REFERENCE.md` to determine availabe
+   or to be built components. Do not invent new components yourself.
+
 # 3. User Experience Standards
-
-## 2.3 Additional Components
-
-- Start at theme.priyavijai-kalyan2007.workers.dev/docs/COMPONENT_REFERENCE.md
 
 ## 3.1. Keyboard Navigation
 
-- Implement standard keyboard shortcuts:
-  - Ctrl-C: Copy
-  - Ctrl-V: Paste
-  - Ctrl-Z: Undo
-  - Ctrl-Y: Redo
-  - Ctrl-A: Select All
+- Implement standard keyboard shortcuts. See KEYBOARD.md for guidance.
 - Ensure logical tab order for form and interactive elements
 
 ## 3.2. UI Interaction Patterns
@@ -157,14 +268,7 @@ function processUserRegistration(userData) {
 
 ## 3.4. Accessibility Guidelines
 
-### 3.4.1. Primary Considerations
-
-- Maintain sufficient color contrast
-- Use legible font sizes
-- Support screen reader compatibility
-- Implement ARIA labels where appropriate
-
-### 3.4.2. Accessibility Hierarchy
+### 3.4.1. Accessibility Hierarchy
 
 - Prioritize application functionality
 - Implement accessibility features without compromising core functionality
@@ -176,20 +280,7 @@ function processUserRegistration(userData) {
 - Use lazy loading for components
 - Optimize asset delivery
 - Implement efficient state management
-## 3.6. Browser Compatibility
 
-- Support latest versions of:
-  - Chrome
-  - Firefox
-  - Safari
-  - Edge
-- Provide graceful degradation for older browsers
-## 3.7. Security Considerations
-
-- Implement secure authentication mechanisms
-- Use HTTPS for all communications
-- Sanitize user inputs
-- Prevent XSS and CSRF vulnerabilities
 # 4. Framework & Library Selection Principles
 
 ## 4.1. General Approach
@@ -202,6 +293,7 @@ function processUserRegistration(userData) {
   - Strong community support
   - Performance optimization
   - Regular security updates
+  
 ## 4.2. Recommended Libraries by Function
 
 ### 4.2.1. Mapping
@@ -217,21 +309,25 @@ function processUserRegistration(userData) {
 - Charts.js: Lightweight, responsive charts
 - Highcharts: Enterprise-grade visualization
 - Grid.JS: Enterprise grade tabular data visualization with sorting, searching, pagination, coloring etc.
+
 ### 4.2.3. User Experience
 
 - IntroJS: Application walkthroughs
 - Popper.js: Tooltips and popovers
 - AnimeJS: Advanced animations
 - jQuery: DOM manipulation (if necessary)
+
 ### 4.2.4. Form Handling
 
 - SurveyJS: Dynamic form building
 - Alpaca: Complex form generation
 - Cleave.js: Input formatting
+
 ### 4.2.5. Datetime & Localization
 
 - MomentJS: Datetime manipulation
 - date-fns: Modern datetime library
+
 ### 4.2.6. Diagramming & Graph Visualization
 
 **Simple Graph/Network Visualization:**
@@ -262,6 +358,7 @@ function processUserRegistration(userData) {
 | Resizable vector shapes | maxGraph |
 
 **Note:** GoJS is powerful but requires a commercial license for production use.
+
 ## 4.3. Best Practices
 
 - Modular code design
@@ -270,6 +367,7 @@ function processUserRegistration(userData) {
 - Accessibility compliance
 - Cross-browser compatibility
 - Consistent coding standards
+
 ## 4.4. Performance Considerations
 
 - Minimize library and framework overhead
@@ -277,6 +375,7 @@ function processUserRegistration(userData) {
 - Implement lazy loading
 - Optimize asset delivery
 - Use modern bundling tools (Webpack, Vite)
+
 ## 4.5. Security Guidelines
 
 - Sanitize user inputs
@@ -285,12 +384,14 @@ function processUserRegistration(userData) {
 - Protect against XSS and CSRF
 - Keep dependencies updated
 - Follow OWASP guidelines for web applications.
+
 ## 4.6. Recommended Toolchain
 
 - Framework: Bootstrap 5.0
 - Code: TypeScript
 - Styling: Bootstrap, or CSS Modules
 - Testing: Jest
+
 # 5. API Centric Thinking
 
 ## 5.1. General Principles
@@ -317,6 +418,7 @@ function processUserRegistration(userData) {
      * Immediate background sync for critical updates
      * Periodic sync for non-critical changes
    - Provide placeholder functions for future API implementations
+   
 ## 5.2. Initial Development Setup
 
 ### 5.2.1. Backend API Hosting
@@ -324,6 +426,7 @@ function processUserRegistration(userData) {
 - Plan for modular API organization
   * Separate API files for different application components
   * Maintain clean, organized API structure
+  
 ## 5.3. Frontend Function Pattern
 
 ```javascript
@@ -356,130 +459,7 @@ async function apiFunction(parameters) {
 - Ensure responsive design
 - Optimize performance
 - Maintain clean, readable code
-## 5.5. Technology Recommendations
 
-- Use modern JavaScript (ES6+)
-- Do NOT use complicated frameworks like React.
-- Use TypeScript for type safety
-# 6. Commenting & Logging
-
-## 6.1. Code Commenting Principles
-
-### 6.1.1. Purpose of Comments
-
-- Comments should explain the "why" and "what" of code, not the "how"
-- Provide context that is not immediately obvious from the code itself
-- Focus on explaining business logic, complex algorithms, and design decisions
-- Consult COMMENTING.md.
-### 6.1.2. Comment Types
-
-1. File-level comments
-   
-   - Describe overall purpose of the file
-   - List key responsibilities and interactions
-   - Include any critical architectural notes
-
-2. Function/Method Comments
-   
-   - Explain the purpose and expected behavior
-   - Document input parameters and return values
-   - Note any side effects or important preconditions/postconditions
-   - Highlight any non-obvious design choices
-
-3. Complex Logic Comments
-   
-   - Explain complex algorithms or business rules
-   - Break down intricate conditional logic
-   - Provide rationale for specific implementation approaches
-
-### 6.1.3. Maintenance-Oriented Commenting
-
-- Write comments assuming a new developer will maintain the code in 6-12 months
-- Update comments whenever code changes
-- Avoid redundant comments that merely restate the code
-## 6.2. Logging Strategy
-
-### 6.2.1. Logging Principles
-
-- Log well to aid debugging and understanding system behavior
-- Include sufficient context without overwhelming log volume
-- Never log sensitive information (passwords, tokens, personal data)
-### 6.2.2. Recommended Logging Points
-
-1. Method/Function Entry/Exit
-   
-   - Log function name
-   - Log input parameters (scrubbed of sensitive data)
-   - Log return values or error conditions
-   - Include timing information when relevant
-
-2. External Service Interactions
-   
-   - Log remote request details
-   - Log response status
-   - Log request/response sizes
-   - Capture request/response timestamps
-   - Omit sensitive payload details
-
-3. Error and Exception Handling
-   
-   - Log full error stack traces
-   - Capture error context and triggering conditions
-   - Include relevant application state information
-
-4. State Changes
-   
-   - Log significant state transitions
-   - Record user actions leading to state changes
-   - Capture system events and configuration modifications
-### 6.2.3. Logging Best Practices
-
-- Use structured logging (JSON preferred)
-- Include correlation IDs to track request flows
-- Implement log levels (DEBUG, INFO, WARN, ERROR)
-- Ensure logs are easily parseable by log management tools
-### 6.2.4. Example Logging Structure
-
-```javascript
-function processUserOrder(userId, orderDetails) {
-  logger.info('Processing user order', {
-    userId: userId,
-    orderSize: orderDetails.items.length,
-    timestamp: new Date().toISOString()
-  });
-
-  try {
-    // Order processing logic
-    logger.debug('Order processing steps', { 
-      stage: 'validation', 
-      isValid: true 
-    });
-  } catch (error) {
-    logger.error('Order processing failed', {
-      userId: userId,
-      errorMessage: error.message,
-      errorCode: error.code
-    });
-    throw error;
-  }
-}
-```
-
-### 6.2.5. Performance Considerations
-
-- Implement efficient logging mechanisms
-- Use asynchronous logging to minimize performance impact
-- Configure log rotation and retention policies
-- Consider log sampling for high-volume environments
-
-### 6.2.6. Security Reminders
-
-- Never log:
-  - Authentication credentials
-  - Session tokens
-  - Personal identification information
-  - Encryption keys
-- Sanitize and mask sensitive data before logging
 
 # 7. Data Centric Thinking
 
@@ -822,15 +802,9 @@ if (!canEditSession) {
 
 Each app uses a different API wrapper. Always use the correct one.
 
-| App | API Variable | Auth Check |
-|-----|-------------|------------|
-| Thinker | `api` | `api.isAuthenticated() && api.tenantId` |
-| Checklists | `checklistsAPI` | `checklistsAPI.useBackend` |
-| Strukture | `strukturAPI` | `strukturAPI.useBackend` |
-
 ```javascript
 // CORRECT - use app-specific API
-if (!checklistsAPI || !checklistsAPI.useBackend) {
+if (!app || !app.useBackend) {
     alert('Please log in.');
     return;
 }
