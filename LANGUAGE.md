@@ -231,7 +231,27 @@ Use gender-neutral and non-discriminatory language. Refer to a person by role, n
 
 ## Format with restraint
 
-Use short, clear headings only when they help readers find information. Use sentence case. Keep formatting light. Avoid needless bold text, emojis, callout boxes, and repeated summaries.
+Use short, clear headings only when they help readers find information. Use sentence case. Keep formatting light. Avoid needless bold text and repeated summaries.
+
+### Approved uses for emojis
+
+Do not use an emoji for decoration, emphasis, or tone. Two uses are approved.
+
+The first approved use is a work marker. A work marker shows a state such as pass, fail, correct, incorrect, complete, blocked, or deferred. Keep the meaning of each symbol the same across all documents.
+
+The second approved use is a semantic marker. MARKERS.md defines these symbols for file headers and code navigation. Use the symbol that MARKERS.md assigns.
+
+Match the symbols that the file already uses. Do not add a new symbol when the file or MARKERS.md already defines one for that meaning.
+
+### Approved uses for callout boxes
+
+Do not use a callout box for emphasis. Do not use one to repeat nearby text. Three uses are approved:
+
+- An insight or a teaching point that explains why something works as it does
+- A safety statement, which the section "Write safety and risk statements explicitly" governs
+- A true aside that the reader can skip without losing an instruction, a limit, or an expected result
+
+The text inside a callout box follows every rule in this guide. A callout box changes where the text sits on the page. It does not relax the writing rules.
 
 Use a vertical list when a sentence contains many items, alternatives, conditions, or actions. Introduce the list with a complete lead-in and a colon. Keep the grammar of the items parallel. Do not use a semicolon at the end of a list item. This guidance adapts STE Rule 4.3.
 
@@ -260,9 +280,11 @@ Revise the response silently before sending it:
 17. Are procedures usable without notes?
 18. Do safety statements identify the action, hazard, and possible result?
 19. Are semicolons, contractions, Latin abbreviations, and chatty stage directions removed?
-20. If the text claims strict STE compliance, was every word checked for its approved meaning, part of speech, and form in the Issue 9 dictionary?
-21. Does the text use standard formal English grammar and American spelling?
-22. Are code comments and repository artifacts accurate, concise, and useful for their intended readers?
+20. Does each emoji serve as a work marker or a semantic marker, and does it match the symbols the file already uses?
+21. Does each callout box hold an insight, a safety statement, or a true aside, and does its text follow every rule in this guide?
+22. If the text claims strict STE compliance, was every word checked for its approved meaning, part of speech, and form in the Issue 9 dictionary?
+23. Does the text use standard formal English grammar and American spelling?
+24. Are code comments and repository artifacts accurate, concise, and useful for their intended readers?
 
 If plain language and technical accuracy conflict, keep the correct term and add a plain explanation.
 
