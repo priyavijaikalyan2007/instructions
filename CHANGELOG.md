@@ -1,0 +1,16 @@
+<!--
+SPDX-FileCopyrightText: 2026 Priya Vijai Kalyan <priyavijai.kalyan2007@proton.me>
+SPDX-FileCopyrightText: 2026 Outcrop Inc
+SPDX-License-Identifier: MIT
+Repository: instructions
+File GUID: 5076ba94-0e32-4a38-a40e-f4b9e2c77c51
+Created: 2026
+-->
+
+<!-- AGENT: User-visible changes to the shared instruction repository. -->
+
+# Changelog
+
+## 14 October 2026
+
+- Added a cross-repository instruction review, source inventory, and proposed migration plan for owner review.
