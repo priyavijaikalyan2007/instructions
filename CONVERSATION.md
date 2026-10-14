@@ -27,3 +27,9 @@ The instruction rewrite waits for the requested plan review.
 
 Validation covers the planning artifacts and source inventory.
 No application tests or absent lifecycle scripts are claimed as executed.
+
+The planning commit was pushed and the remote branch matches the local branch.
+Draft PR creation failed through the CLI.
+The browser comparison page confirms that the repository owner disabled PR creation.
+The CLI account also has read-only access.
+No PR exists. The pushed comparison remains available for plan review.
