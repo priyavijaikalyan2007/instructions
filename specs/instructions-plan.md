@@ -11,7 +11,33 @@ Created: 2026
 
 # Instruction migration plan
 
-Status: awaiting owner review. Date: 14 October 2026.
+Status: original reorganization proposal superseded on 15 October 2026.
+
+## Current plan: surgical edits in place
+
+The owner requested smaller steps and no file reorganization.
+Keep existing instruction files, paths, and engineering thresholds.
+Apply language-specific conventions within the existing sections, then merge selected reusable lessons from the working repositories.
+The original proposal below is historical context and does not authorize reorganization or broader testing-policy changes.
+
+1. Update language conventions in the existing files.
+   Files: `README.md`, `AGENTS.md`, `CODING_STYLE.md`, `COMMENTING.md`, `MARKERS.md`, `GOF_PATTERNS.md`, `MIGRATIONS.md`, `TESTING.md`, `LOGGING.md`, and `PERFORMANCE.md`.
+2. Fold in reusable lessons from apps, identity, and theme.
+   Files: `ADDITIONAL_INSTRUCTIONS.md`, `PRAGMATIC_PROGRAMMER.md`, `BACKEND.md`, `SECURITY_GUIDELINES.md`, `KNOWLEDGE_ARCHITECTURE.md`, `DOCUMENTATION.md`, `TESTING.md`, `CODING_STYLE.md`, and `UI_UX_CONSISTENCY.md`.
+3. Update existing planning and progress records.
+   Files: this plan, the review, source inventory, status, `CONVERSATION.md`, `CHANGELOG.md`, and `agentknowledge/history.jsonl`.
+4. Validate the diff and commit each focused change.
+   Check added links, fences, headers, history records, retained encoding, and the absence of renamed or deleted files.
+5. Push the branch and check PR access.
+   Create the PR if access permits. Record the actual result.
+
+No pattern required - simple function/class suffices.
+This change edits documentation only and introduces no runtime interfaces, services, or data models.
+The source repositories remain read-only.
+No validator framework, guide directories, templates, or application code are part of this change.
+Existing test-first requirements and coverage thresholds are not changed.
+
+## Historical proposal
 
 Use `AGENTS.md` as a short entry point that selects guidance from independent layers.
 Keep project architecture and commands in a project profile.

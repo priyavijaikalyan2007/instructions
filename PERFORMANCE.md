@@ -13,7 +13,7 @@ This document outlines the performance standards and best practices for our high
 
 **Target**: Low latency (< 100ms interactions), minimal CPU/Memory footprint, supporting devices ranging from low-power corporate laptops to high-end workstations.
 
-**Stack**:
+**Example web stack**:
 *   **Frontend**: Vanilla JS / TypeScript (ES6), HTML5, Bootstrap 5.
 *   **Backend**: ASP.NET Core 10.0 (API + Static Serving).
 *   **Database**: PostgreSQL 17.6 (Supabase).
@@ -41,6 +41,13 @@ This document outlines the performance standards and best practices for our high
 *   Yield to the main thread frequently during long tasks.
 
 ---
+
+### 1.4 Native Apps and Tools
+
+Web paint metrics apply to browser surfaces. Define native app and tool budgets for their actual workloads and target devices.
+For Swift apps, measure launch time, UI responsiveness, memory, and energy use. Keep blocking work off the main actor.
+For Go, Rust, and Java tools or services, measure latency, throughput, allocations, and bounded concurrency before optimizing.
+Use representative workloads and the project's profiler or benchmark tools. Record the baseline and test environment.
 
 ## 2. Frontend Performance (TS/JS & HTML/CSS)
 

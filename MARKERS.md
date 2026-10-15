@@ -27,7 +27,7 @@ and flow without analysing the entire content.
 
 ## 1. The "Fast-Read" File Header
 
-Every significant source file (TypeScript components, SCSS component files, HTML templates, C# Code, Markdown Files)
+Every significant source file (C#, Swift, Go, Rust, Java, TypeScript, SCSS, HTML, and Markdown)
 containing classes, services, controllers, components, utilities and more must start with a **Structured Header Block**. 
 This allows agents to read the first 20 lines of a file and immediately understand its context.
 
@@ -82,6 +82,18 @@ export class UserProfileController { ... }
  * ----------------------------------------------------------------------------
  */
 ```
+
+### Swift, Go, Rust, and Java Format
+
+Use the same `COMPONENT`, `PURPOSE`, `RELATES`, `FLOW`, and optional `SECURITY` fields in ordinary comments.
+A block comment works in all four languages. Go may use `//` lines instead.
+Keep public documentation comments separate as described in [COMMENTING.md](./COMMENTING.md).
+
+Preserve required positions and blank lines for tool directives, Go build constraints, cgo preambles, and Rust crate attributes.
+Do not insert markers between a documentation comment or annotation and its declaration.
+Use ASCII field names when a parser or file format does not support the marker symbols.
+Do not add comments to formats that prohibit them, such as JSON.
+Keep required copyright information in the existing file header.
 
 ### SCSS Format
 
@@ -250,6 +262,10 @@ public Task<User> GetUserAsync(...) { ... }
 ```
 
 ---
+
+Swift uses `// MARK: - Section name` for Xcode navigation.
+Go, Rust, and Java use ordinary section comments unless the project declares supported IDE folding markers.
+Do not copy C# `#region` directives into another language.
 
 ## 6. Documentation and Playbooks
 

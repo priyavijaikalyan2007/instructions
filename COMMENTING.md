@@ -34,7 +34,7 @@ Comments must adhere to the style and tone guidelines defined in [LANGUAGE.md](.
 
 - Simple, concise, and precise
 - Neutral, unemotional, and objective
-- Standard British English for business communication
+- Neutral international English with American spelling, as specified in `LANGUAGE.md`
 - Free of technical jargon, profanity, or overly complex words
 - Upleveled but accessible to non-native speakers
 
@@ -368,6 +368,34 @@ Use HTML comments for component markers and agent navigation:
     </div>
 </div>
 ```
+
+---
+
+### 4.7 Swift
+
+Use `///` documentation comments for public APIs, following [Swift API conventions](https://www.swift.org/documentation/api-design-guidelines/).
+Describe parameters, return values, thrown errors, actor isolation, and cancellation when relevant.
+Use `// MARK: - Section name` for sections that benefit Xcode navigation.
+
+### 4.8 Go
+
+Follow [Go doc comments](https://go.dev/doc/comment). Start exported declaration comments with the declared name.
+Place a documentation comment directly before the declaration it describes.
+Document error behavior, context cancellation, ownership, and concurrent-use guarantees when relevant.
+Keep navigation headers separate so they do not become an unrelated declaration's documentation.
+
+### 4.9 Rust
+
+Use `///` for item documentation and `//!` for module or crate documentation, following [rustdoc conventions](https://doc.rust-lang.org/rustdoc/how-to-write-documentation.html).
+Document errors, panics, ownership, and examples where relevant.
+Document caller obligations under `# Safety` for unsafe APIs and explain each unsafe block's safety invariant.
+Use ordinary comments for navigation markers rather than exposing internal markers as public API documentation.
+
+### 4.10 Java
+
+Use `/** ... */` Javadoc comments directly before documented declarations, following the [Javadoc specification](https://docs.oracle.com/en/java/javase/21/docs/specs/javadoc/doc-comment-spec.html).
+Document parameters, results, exceptions, resource ownership, and thread-safety guarantees when relevant.
+Keep ordinary navigation comments separate from Javadoc.
 
 ---
 

@@ -59,7 +59,7 @@ Now that the code compiles, does it actually work?
 Once tests pass, the code is safe to improve. This is NOT optional for any change that introduces new classes, services, or modifies more than one file.
 
 1.  **Structural improvements**: Apply Martin Fowler refactoring techniques (Extract Method, Extract Class, Replace Conditional with Polymorphism, etc.) to achieve clean architecture. Consult `GOF_PATTERNS.md` for pattern applicability.
-2.  **Compliance check**: Verify the refactored code meets `CODING_STYLE.md` (max 30-line methods, max 3 nesting levels, one type per file, Allman braces).
+2.  **Compliance check**: Verify the refactored code meets `CODING_STYLE.md` (max 30-line methods, max 3 nesting levels, language-specific braces and file organization).
 3.  **Idiomatic polish**: Replace direct translations with language-specific features (e.g., changing a `for` loop to a LINQ query or `.map()`).
 4.  **Verify**: Run tests after EACH refactoring step. If a test fails, revert the last change and investigate.
 

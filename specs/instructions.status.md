@@ -11,25 +11,19 @@ Created: 2026
 
 # Instruction repository status
 
-Updated: 14 October 2026.
+Updated: 15 October 2026.
 
-The review and migration proposal are complete and await owner review.
-The branch is `docs/multilanguage-instructions-plan`.
-The branch contains planning documents only.
-Existing instruction policy remains unchanged.
+The owner requested surgical edits in place and deferred file reorganization.
+The branch remains `docs/multilanguage-instructions-plan`.
+The first change extends language conventions within existing instruction files.
+The next change folds in selected reusable lessons from apps, identity, and theme.
+Existing testing thresholds remain unchanged.
 
-PR creation is blocked.
-The GitHub comparison page states that the repository owner disabled the ability to open pull requests.
-The CLI also rejected creation through the `knobbyadmin` account, which has read-only repository access.
-The branch is pushed and available for review through the [comparison page](https://github.com/priyavijaikalyan2007/instructions/compare/main...docs/multilanguage-instructions-plan).
-No PR exists yet.
+The [current plan](./instructions-plan.md#current-plan-surgical-edits-in-place) defines the authorized scope.
+The [review](./instructions-review.md) and [inventory](./instructions-source-inventory.md) retain the original evidence.
+Their proposed file moves are superseded and must not be implemented.
 
-The [review](./instructions-review.md) records findings and reusable lessons from the three working repositories.
-The [plan](./instructions-plan.md) defines scope, file changes, routing, tests, compatibility, and owner decisions.
-The [inventory](./instructions-source-inventory.md) records source snapshots and migration destinations.
-
-After owner review, implement the agreed structure on this branch.
-Create the PR when the repository owner resolves PR access.
-Do not treat proposed policy changes as approved instructions.
-Refresh source hashes before implementation because the working repositories contain local changes.
-Keep those repositories read-only during this shared-repository change.
+PR creation failed on 14 October 2026 because GitHub reported that the owner disabled pull requests.
+The CLI account also had read-only repository access.
+No PR exists as of that attempt. Recheck access after the in-place changes are pushed.
+Keep the three source repositories read-only.

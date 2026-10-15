@@ -11,7 +11,11 @@ Created: 2026
 
 # Instruction source inventory
 
-Captured: 14 October 2026. Status: proposed destinations, pending owner review.
+Captured: 14 October 2026. Status: historical review snapshot.
+
+On 15 October 2026, the owner requested in-place edits and deferred all file reorganization.
+The destination column below records the superseded proposal. It does not authorize file moves.
+The [current plan](./instructions-plan.md#current-plan-surgical-edits-in-place) defines the active scope.
 
 This inventory compares top-level Markdown files, including their working-copy changes.
 Hashes identify file bytes and show the first 16 hexadecimal digits of SHA-256.

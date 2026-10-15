@@ -17,7 +17,10 @@ The CLAUDE.md and GEMINI.md file reference AGENTS.md and then specify the role t
 
 Instead of using a monolithic, single instruction file, the AGENTS.md file references multiple individual files for specific instructions. It also tells the agent how to clean, build, test and run the code. 
 
-The instructions in this repository assume a particular technology stack. You should make a copy of these instructions (or fork or consume as a git submodule) and modify them to match your setup. 
+These instructions cover Swift apps for macOS and iOS, Go and Rust tools, Java and .NET 10.0+ applications, and TypeScript/JavaScript/HTML projects.
+Existing Python, SQL, CSS, and SCSS guidance also applies where those languages are used.
+Some sections describe a .NET SaaS example. Apply those sections only when they match the consuming repository.
+Keep project-specific architecture, toolchain versions, and commands consistent with that repository's README and build configuration.
 
 These instructrions are live. They are updated as and when new behaviors are encountered and need guidance. 
 

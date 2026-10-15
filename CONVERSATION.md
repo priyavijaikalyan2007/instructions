@@ -33,3 +33,16 @@ Draft PR creation failed through the CLI.
 The browser comparison page confirms that the repository owner disabled PR creation.
 The CLI account also has read-only access.
 No PR exists. The pushed comparison remains available for plan review.
+
+## 15 October 2026: incremental edits in place
+
+### User request
+
+> Ah. Your plan is much more radical. Let us take this in small steps. First, let's update the files in place, where they make sense for the new languages. Things like commenting style, semantic markers, code style, braces, etc. Then let's fold in the changes from the other repos. Don't do any file reorganization just yet. Do small surgical inplace edits instead.
+
+### First change
+
+Updated existing language sections for Swift, Go, Rust, and Java.
+Added language-specific naming, formatting, comments, markers, tests, logging, and performance guidance.
+Scoped the .NET SaaS layout as an example and retained existing file paths and engineering thresholds.
+Marked the original reorganization proposal as superseded.

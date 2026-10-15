@@ -715,6 +715,31 @@ Our applications use multiple technologies. Testing strategies must account for 
 - Test against real infrastructure in test environments
 - Use pytest fixtures for resource management
 
+### Swift (macOS and iOS)
+
+Use the project's Swift Testing or XCTest setup for unit and integration tests.
+Use XCTest UI tests for native application flows, accessibility, and lifecycle behavior.
+Run `swift test` for Swift packages and the documented Xcode scheme and destination for application tests.
+Test supported deployment targets and cancellation, persistence, and state restoration where affected.
+
+### Go
+
+Use the standard `testing` package, table-driven tests where useful, and `go test ./...`.
+Run `go test -race ./...` for concurrency changes on a supported target.
+Use fuzz tests for parsers and other input boundaries when appropriate.
+
+### Rust
+
+Use unit tests, integration tests, and documentation tests through `cargo test`.
+Check relevant feature combinations and targets declared by the project.
+Run `cargo fmt --check` and the configured Clippy checks alongside behavior tests.
+
+### Java
+
+Use the project's existing test framework and Maven or Gradle wrapper.
+Run the documented unit and integration tasks rather than assuming that `test` includes every integration suite.
+For host extensions, test against the host runtime and dependency versions actually shipped.
+
 ### Cross-Stack Testing
 
 When a feature spans multiple stacks, ensure tests exist at each layer:

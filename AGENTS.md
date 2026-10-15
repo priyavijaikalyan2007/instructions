@@ -15,7 +15,13 @@ First, read `README.md` to understand the situation, background and problem stat
 
 # Structure
 
-This folder contains the root of an enterprise SaaS. This SaaS follows a super-app model where the index.html in the `frontend/` folder contains the main frontend shell of the application. Each individual application's frontend code is contained in a separate sub-folder within `frontend/` such as `tenant/`. The backend is Asp.Net Core 10.0 application whose code is in the `api/` folder. All APIs are served by this backend; all frontend routes are served as static files middleware in this application as well. Thus, `api/` and `frontend/` are combined together as a single standalone Asp.NET Core 10.0 application and deployed together in a single Docker container deployed on GCP Cloud Run.
+The structure, stack, folders, and local endpoints below describe a .NET SaaS example.
+This instruction repository also supports Swift macOS/iOS apps, Go and Rust tools, Java web applications, and TypeScript/JavaScript/HTML websites and applications.
+Use the consuming repository's README, manifests, and scripts to confirm its actual stack and commands.
+Apply browser component rules to browser UIs, and use native platform conventions for Apple UIs.
+Read language-specific conventions in `CODING_STYLE.md`, `COMMENTING.md`, `MARKERS.md`, `TESTING.md`, and `LOGGING.md`.
+
+The example is an enterprise SaaS application. This SaaS follows a super-app model where the index.html in the `frontend/` folder contains the main frontend shell of the application. Each individual application's frontend code is contained in a separate sub-folder within `frontend/` such as `tenant/`. The backend is Asp.Net Core 10.0 application whose code is in the `api/` folder. All APIs are served by this backend; all frontend routes are served as static files middleware in this application as well. Thus, `api/` and `frontend/` are combined together as a single standalone Asp.NET Core 10.0 application and deployed together in a single Docker container deployed on GCP Cloud Run.
 
 # Instructions
 
@@ -81,7 +87,7 @@ this sequence. **Never write implementation code before writing a failing test.*
 + **Implement (Green):** Write the minimum code needed to make the failing tests pass. This is the "Green" phase of TDD.
   1. Focus on correctness, not elegance. Get the tests to pass with the simplest implementation.
   2. Apply the GoF patterns identified in the Plan step.
-  3. Follow `CODING_STYLE.md` (Allman braces, max 30-line methods, max 3 nesting levels, guard clauses).
+  3. Follow `CODING_STYLE.md` (language-specific braces and file organization, max 30-line methods, max 3 nesting levels, guard clauses).
   4. Add logging per `LOGGING.md`, comments per `COMMENTING.md`, and markers per `MARKERS.md`.
   5. Run the tests - they MUST pass (Green). If they fail, fix the implementation, NOT the tests.
 
@@ -179,6 +185,9 @@ consistent, thoughtful and complete end to end experience.
 - Generate a concise summary of changes for each set of changes and commit the Git code. Don't push yet.
 
 ## Local Development
+
+Use the following commands when the consuming repository provides these scripts.
+Otherwise, use its documented build and test commands for the configured toolchain.
 
 ### Clean
 ```bash

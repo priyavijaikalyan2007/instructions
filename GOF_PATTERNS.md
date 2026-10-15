@@ -1672,6 +1672,10 @@ class NodeA
 ---
 
 ## Usage Guidance in This Codebase
+
+Choose a pattern for the problem, then express it through the language's normal constructs.
+Swift protocols, Go interfaces and functions, Rust traits and enums, and Java interfaces need not reproduce a C# class hierarchy.
+Prefer a direct function or type when a pattern adds no useful separation.
 - Prefer Strategy for pluggable AI providers, pricing, validation, or formatting.
 - Use Factory/Abstract Factory when supporting multiple backend providers with consistent interfaces.
 - Use Command and Memento for undo/redo and user actions that require audit trails.
@@ -1709,5 +1713,5 @@ Before applying a pattern, ask:
 - Will another developer recognise this pattern quickly?
 - Is there a smaller, clearer alternative (Extract Method before Extract Class)?
 - Does the product roadmap justify the extensibility this pattern provides?
-- Are we complying with `CODING_STYLE.md` (max 30-line methods, Allman braces, one type per file)?
+- Are we complying with `CODING_STYLE.md` (max 30-line methods, language-specific braces and file organization)?
 - Have we established a test baseline per `MIGRATIONS.md` Phase 1?

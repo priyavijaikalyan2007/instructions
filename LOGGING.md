@@ -11,6 +11,24 @@ Created: 2026
 
 # Background
 
+## Language and runtime integration
+
+Use the application's established logging API and configuration. A reusable library must not take control of the host's logging pipeline.
+Use [FRONTEND_LOGGING.md](./FRONTEND_LOGGING.md) for the component logging mechanism when that guide applies.
+
+| Language or runtime | Integration guidance |
+| --- | --- |
+| Swift macOS/iOS | Use the project's logging API, such as `Logger` from `OSLog`, with appropriate privacy annotations. |
+| Go | Use the established logger, such as standard-library `log/slog`, and propagate request context. |
+| Rust | Use the configured `tracing` or `log` facade. Let the application configure subscribers or backends. |
+| Java | Use the project's logging facade or the host platform's logger. Avoid competing runtime logging backends in plugins. |
+| C# / .NET | Use the configured `ILogger` pipeline and scopes. |
+| TypeScript / JavaScript | Use the declared browser or server logger and preserve useful error context. |
+
+For command-line tools, keep machine-readable results on stdout and diagnostics on stderr unless the command contract states otherwise.
+Do not add a new logging dependency when the existing API meets the requirement.
+
+
 In high scale web services, logging is crucial to understand what happened when an issue occurs. 
 Metrics are important to understand where something is happening and how the service is behaving.
 

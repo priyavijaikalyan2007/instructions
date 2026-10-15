@@ -11,8 +11,7 @@ Created: 2026
 
 # Coding Style Guide
 
-A comprehensive guide for writing maintainable, readable, and consistent code across C#, TypeScript, JavaScript, 
-and Python.
+A guide for maintainable code in C#, Swift, Go, Rust, Java, TypeScript, JavaScript, Python, HTML, CSS, and SCSS.
 
 ## Core Philosophy
 
@@ -55,6 +54,20 @@ For HTML/CSS/SCSS:
 ## Formatting Rules
 
 ### Indentation and Line Length
+
+Language-specific rules below take precedence over the general formatting defaults.
+Use the repository's configured formatter and supported toolchain version.
+Do not reformat unrelated code as part of a behavior change.
+
+| Language | Formatting and braces |
+| --- | --- |
+| C#, TypeScript, JavaScript | Keep the Allman style below unless the project declares a different style. |
+| Swift | Use the project's Swift formatter configuration. Keep opening braces on the declaration or control-flow line. |
+| Go | Use `gofmt`, including its tabs and same-line opening braces. Do not impose the general space or line-length rules. |
+| Rust | Use `cargo fmt` and the project's `rustfmt` configuration, including same-line opening braces. |
+| Java | Use the project's formatter and existing brace style. For new projects, use same-line opening braces. |
+
+The following indentation and line-length defaults apply where the table does not specify otherwise:
 
 - Use 4 spaces for indentation (no tabs)
 - Maximum line length: 120 characters
@@ -400,6 +413,18 @@ class OrderProcessor:
         return self._validate_and_execute(order)
 ```
 
+### Swift, Go, Rust, and Java Naming
+
+| Language | Types | Functions, methods, and values | Packages or modules |
+| --- | --- | --- | --- |
+| Swift | `Order`, `OrderStore` for types and protocols | `loadOrder`, `orderID` | Follow the package and target names. |
+| Go | `Order` when exported, `order` when unexported | `LoadOrder` when exported, `loadOrder` when unexported | Short lowercase package names, such as `orders`. |
+| Rust | `Order`, `OrderStore` for types and traits | `load_order`, `order_id`. Constants use `MAX_RETRIES`. | `snake_case`, such as `order_store`. |
+| Java | `Order`, `OrderStore` for classes and interfaces | `loadOrder`, `orderId`. Constants use `MAX_RETRIES`. | Lowercase package names. |
+
+Use meaningful argument labels in Swift. Do not copy C# interface prefixes or async naming into other languages.
+Use [Swift API conventions](https://www.swift.org/documentation/api-design-guidelines/), [Go conventions](https://go.dev/doc/effective_go), and the [Rust style guide](https://doc.rust-lang.org/style-guide/).
+
 ### Variable Naming Guidelines
 
 - Use short names for counters and indexes: `i`, `j`, `k`, `n`
@@ -482,7 +507,12 @@ Bootstrap's utility convention.
 
 ### One Type Per File
 
-Keep only one type per file, even if they are related.
+Keep one type per file in C# and TypeScript/JavaScript.
+Keep one primary type per file in Swift and Java.
+Keep Swift extensions and nested helper types together when they form one cohesive unit.
+For Java, match the source filename to its public top-level type.
+For Go and Rust, group related declarations by package or module responsibility rather than creating a file for every type.
+The C# example below illustrates the one-type rule.
 
 ```
 // Bad - all in Person.cs
@@ -1016,6 +1046,38 @@ function processResult<T>(result: Result<T>): T | null
 }
 ```
 
+### Swift-Specific
+
+- Prefer `let` when a value does not change. Use value types when they match the model's semantics.
+- Handle optionals explicitly. Avoid force unwraps and `try!` in paths that can fail at runtime.
+- Use structured concurrency, propagate cancellation, and respect actor isolation when sharing mutable state.
+- Keep UI updates on the main actor. Release observers, timers, and other owned resources at the correct lifecycle boundary.
+- Use protocols or injected functions where they provide a useful contract. Do not add protocols solely to mirror classes.
+
+### Go-Specific
+
+- Return and check `error` values. Add useful context without losing the wrapped error.
+- Pass `context.Context` to operations that support cancellation or deadlines. Do not use panic for expected failures.
+- Give each goroutine a defined lifetime and shutdown path. Synchronize shared mutable state.
+- Define small interfaces where consumers need them. Avoid copying inheritance-based designs into Go.
+- Close owned resources and preserve meaningful errors from final writes, flushes, and closes.
+
+### Rust-Specific
+
+- Use ownership and borrowing to express resource lifetimes. Do not clone values solely to avoid understanding a borrow error.
+- Use `Result` for recoverable failures and `Option` for an expected absence. Avoid `unwrap` and `expect` on fallible external input.
+- Keep `unsafe` blocks narrow and document their safety invariants.
+- Choose shared ownership and an async runtime only when the requirements justify them.
+- Propagate cancellation and release resources when tasks finish or stop.
+
+### Java-Specific
+
+- Use the JDK and Maven or Gradle toolchain configured by the repository.
+- Use try-with-resources for owned `AutoCloseable` resources. Preserve interruption when handling `InterruptedException`.
+- State nullability and mutability expectations in API contracts. Use the project's established error model.
+- Keep business logic separate from HTTP handlers and framework extension entry points.
+- Match host-provided APIs and dependency versions when building plugins or providers.
+
 ### C#-Specific
 
 ```csharp
@@ -1049,10 +1111,9 @@ List<int> numbers = [1, 2, 3, 4, 5];
 
 ## Summary Checklist
 
-- [ ] One type per file
-- [ ] Max 120 characters per line
-- [ ] 4 spaces for indentation (no tabs)
-- [ ] Allman braces (opening brace on new line)
+- [ ] File organization follows the language-specific rules
+- [ ] Line length and indentation follow the language-specific formatter or defaults
+- [ ] Brace style follows the language-specific rules
 - [ ] Always use braces for control flow
 - [ ] Parentheses around expressions for clarity
 - [ ] Functions and methods under 30 lines

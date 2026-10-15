@@ -11,6 +11,10 @@ Created: 2026
 
 # Changelog
 
+## 15 October 2026
+
+- Changed existing language conventions to cover Swift, Go, Rust, and Java without reorganizing instruction files.
+
 ## 14 October 2026
 
 - Added a cross-repository instruction review, source inventory, and proposed migration plan for owner review.

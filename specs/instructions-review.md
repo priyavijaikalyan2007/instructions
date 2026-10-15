@@ -11,7 +11,11 @@ Created: 2026
 
 # Instruction review
 
-Review date: 14 October 2026. Status: proposal for owner review.
+Review date: 14 October 2026. Updated scope: 15 October 2026.
+
+The owner superseded the reorganization proposal with surgical edits to existing files.
+The findings below remain review evidence, while proposed moves and broader policy changes are deferred.
+Use the [current plan](./instructions-plan.md#current-plan-surgical-edits-in-place) for the authorized scope.
 
 The repository needs a shared foundation plus guides selected by language, product, and task.
 Its current entry point describes one enterprise SaaS application, so agents inherit assumptions that do not fit other projects.
