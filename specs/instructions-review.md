@@ -164,3 +164,26 @@ Detailed framework instructions need verification during implementation.
 
 Several Apple documentation pages require JavaScript and were not fully readable through the text browser.
 Their detailed requirements remain to be checked during implementation through a supported documentation view.
+
+## In-place updates on 15 October 2026
+
+The current branch implements selected reusable lessons within existing files.
+No instruction files were moved, renamed, or added in this follow-up.
+The existing coverage thresholds and test-first workflow remain unchanged.
+
+| Source | In-place update |
+| --- | --- |
+| Apps build-output rules and theme insights. | Source verification and task-specific staging in `ADDITIONAL_INSTRUCTIONS.md`. |
+| Apps backend and identity runtime insights. | Atomic writes, database tests, host compatibility, and exact-artifact reproduction in `BACKEND.md`. |
+| Apps degraded-behavior rules and theme fabricated-read rules. | Failure signals and protection against destructive saves in `PRAGMATIC_PROGRAMMER.md`. |
+| Apps tenant ownership and fail-closed permission guidance. | Resource ownership, application-role checks, and cross-tenant tests in `SECURITY_GUIDELINES.md`. |
+| Apps lifecycle guidance and theme appearance/state lessons. | Save ordering, deep-link tests, contrast checks, and resource cleanup in `UI_UX_CONSISTENCY.md`. |
+| Apps verified facts and theme publication/consumer contracts. | Authoritative facts and published-output checks in `DOCUMENTATION.md`. |
+| Theme test reachability, counting, and artifact lessons. | Negative probes, classifier checks, packaged artifacts, and test-result evidence in `TESTING.md`. |
+| Theme typed browser globals and logging authority. | Typed API declarations in `CODING_STYLE.md` and the corrected example in `FRONTEND_LOGGING.md`. |
+| Theme history serialization rule. | Safe appends and record validation in `KNOWLEDGE_ARCHITECTURE.md`. |
+
+The language update also adds native secret-storage boundaries in `SECRET_HANDLING.md`.
+The logging examples now exclude secrets instead of suggesting that Base64 or a weak hash protects them.
+Project-specific domains, trackers, deployment roles, migration numbering, legal retention claims, and conflicting push rules were not imported.
+The original writing guide and source component catalogs were not replaced with older or product-specific copies.

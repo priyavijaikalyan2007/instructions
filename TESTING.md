@@ -98,6 +98,18 @@ Contract tests verify that services honor their API contracts with consumers.
 - Public API endpoints
 - Event-driven integrations
 
+## Evidence That Tests Exercise the Behavior
+
+Confirm that a regression test reaches the defective path and fails for the expected reason before the fix.
+Use isolated negative fixtures or temporary mutations when needed to verify that a gate detects its named defect.
+Restore temporary mutations before committing. Do not weaken a valid assertion to make a run pass.
+For counting tools, test the classifier and exclusions rather than trusting a matching total.
+When the measured code changes shape, check representative classifications again.
+Use real browsers for layout, resource loading, and other behavior that a simulated DOM cannot reproduce.
+Verify packaged artifacts and consumer-facing APIs as well as source modules.
+For a claimed type-only change, compare compiled output through the same build settings before and after the change.
+Retain machine-readable test results when the runner supports them. Distinguish passed, failed, skipped, and unexecuted checks.
+
 ## Test Structure and Organization
 
 ### One Test Per Scenario

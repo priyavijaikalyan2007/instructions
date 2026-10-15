@@ -7,6 +7,8 @@ File GUID: 73b56f31-ea7f-4e62-a9b7-e0da9e52d562
 Created: 2026
 -->
 
+<!-- AGENT: Shared construction principles, including safe failure and degraded behavior. -->
+
 # Pragmatic Programmer Instructions for Agents
 
 This document outlines the core principles and practices from *The Pragmatic Programmer* by Andrew Hunt and David Thomas. All coding agents MUST adhere to these guidelines to ensure the production of robust, maintainable, and flexible software.
@@ -52,6 +54,16 @@ This document outlines the core principles and practices from *The Pragmatic Pro
     - Do not "catch and swallow" exceptions.
     - If a state is impossible, use an assertion to crash the program during development.
     - Do not return "magic values" (like -1 or null) to indicate errors if the language supports exceptions or Result types.
+
+#### Degraded behavior and data integrity
+
+A failed read must remain distinguishable from a successful read of empty data.
+Do not return plausible defaults, empty documents, or null-object implementations that callers can mistake for authoritative state.
+A degraded component must report its failure and must not supply fabricated state to a write or autosave.
+Preserve the last known state when a load or save fails.
+Read-only views and explicitly stale cached values are valid degraded modes when callers can identify their limits.
+Apply this rule to dependency failures, native document loads, browser storage, and service responses.
+Test both the failure signal and the prevention of destructive writes.
 
 ### Assertive Programming
 - **Mandate**: If it can't happen, use assertions to ensure it doesn't.

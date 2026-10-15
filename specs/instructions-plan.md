@@ -23,7 +23,7 @@ The original proposal below is historical context and does not authorize reorgan
 1. Update language conventions in the existing files.
    Files: `README.md`, `AGENTS.md`, `CODING_STYLE.md`, `COMMENTING.md`, `MARKERS.md`, `GOF_PATTERNS.md`, `MIGRATIONS.md`, `TESTING.md`, `LOGGING.md`, and `PERFORMANCE.md`.
 2. Fold in reusable lessons from apps, identity, and theme.
-   Files: `ADDITIONAL_INSTRUCTIONS.md`, `PRAGMATIC_PROGRAMMER.md`, `BACKEND.md`, `SECURITY_GUIDELINES.md`, `KNOWLEDGE_ARCHITECTURE.md`, `DOCUMENTATION.md`, `TESTING.md`, `CODING_STYLE.md`, and `UI_UX_CONSISTENCY.md`.
+   Files: `ADDITIONAL_INSTRUCTIONS.md`, `PRAGMATIC_PROGRAMMER.md`, `BACKEND.md`, `SECURITY_GUIDELINES.md`, `KNOWLEDGE_ARCHITECTURE.md`, `DOCUMENTATION.md`, `TESTING.md`, `CODING_STYLE.md`, `UI_UX_CONSISTENCY.md`, `LOGGING.md`, `FRONTEND_LOGGING.md`, `SECRET_HANDLING.md`, and `PERFORMANCE.md`.
 3. Update existing planning and progress records.
    Files: this plan, the review, source inventory, status, `CONVERSATION.md`, `CHANGELOG.md`, and `agentknowledge/history.jsonl`.
 4. Validate the diff and commit each focused change.

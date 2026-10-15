@@ -14,6 +14,7 @@ Created: 2026
 ## 15 October 2026
 
 - Changed existing language conventions to cover Swift, Go, Rust, and Java without reorganizing instruction files.
+- Changed existing guides to include reusable lessons from apps, identity, and theme, and corrected unsafe secret-logging examples.
 
 ## 14 October 2026
 

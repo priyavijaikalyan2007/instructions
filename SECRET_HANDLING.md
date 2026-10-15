@@ -7,13 +7,25 @@ File GUID: 1a28d4da-1388-469f-9dfc-d30a06166c89
 Created: 2026
 -->
 
+<!-- AGENT: Server-owned secret protection and native-client secure storage boundaries. -->
+
 # Secret Handling & Encryption Architecture
 
 This document defines the mandatory architecture for handling "Static Secrets" within the application. Static secrets include third-party API keys (e.g., OpenAI, Stripe), database credentials, and system certificates.
 
-**Scope:** This applies to long-lived secrets. It does not apply to ephemeral tokens (like OAuth access tokens for user sessions), which are handled by the Identity Provider.
+**Scope:** The server architecture below applies to long-lived backend secrets.
+The native-client section covers credentials and tokens legitimately held by a client.
+Use the established identity flow for token issuance and renewal.
 
 ---
+
+## Native clients and tools
+
+The database envelope model below applies to server-owned secrets stored by a backend.
+For native macOS/iOS clients, use [Keychain services](https://developer.apple.com/documentation/security/keychain-services) for credentials and tokens the client legitimately owns.
+Do not store those values in `UserDefaults`, ordinary files, source code, or logs.
+Never ship backend API keys, database credentials, or master encryption keys inside an app, website, or distributed tool.
+For Go, Rust, and Java tools, use the project's approved OS credential store or secret provider when persistence is required.
 
 ## 1. Core Security Principles
 

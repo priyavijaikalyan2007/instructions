@@ -46,3 +46,18 @@ Updated existing language sections for Swift, Go, Rust, and Java.
 Added language-specific naming, formatting, comments, markers, tests, logging, and performance guidance.
 Scoped the .NET SaaS layout as an example and retained existing file paths and engineering thresholds.
 Marked the original reorganization proposal as superseded.
+
+### Second change
+
+Merged reusable source-repository lessons into existing instruction files.
+Covered atomic writes, host compatibility, safe failed reads and saves, tenant ownership, typed globals, test evidence, and published contracts.
+Added native credential-storage boundaries and corrected unsafe secret-logging examples.
+Kept project-specific source policies and the earlier reorganization proposal outside the implemented scope.
+
+Document validation checks modified links, section anchors, fences, headers, retained encoding, and JSON Lines framing.
+The browser logging example passes strict TypeScript checking through an isolated Window contract fixture.
+Its emitted JavaScript matches the previous example.
+No application code changed, and no application test suite is claimed as executed.
+
+The GitHub API still reports `has_pull_requests: false` on 15 October 2026.
+The active CLI account has read-only API access. PR creation remains blocked by repository access and settings.

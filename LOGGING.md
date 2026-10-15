@@ -60,17 +60,11 @@ we need to look at logs to understand what is causing it. This could take many f
 
 ## Sensitive Data
 
-Application and system logs may often contain sensitive data such as secret keys, user IDs, 
-continuation tokens, emails and more. If logged, these must be one way hashed before uploading the 
-log file for retention or there is a potential problem of data loss from unauthorized log file access. 
-There are frameworks that do this, most often provided by the OWASP foundation but sometimes other open source. 
-These frameworks may require both configuration as well as escaping of sensitive data with special tags. 
-
-Typically:
-
-- For the development environment (desktop, dev box, test environments), no hashing of values is needed.
-- For the production environment, one way hashing of sensitive data is required.
-- Sensitive data is always tagged so that the one way hashing can happen in post-processing of logs.
+Exclude passwords, access tokens, private keys, and other secret values before emitting a log in any environment.
+Redact or pseudonymize personal data according to the project's logging policy.
+Do not rely on later upload processing to remove plaintext secrets already written to local logs.
+Hashing does not make every sensitive value safe to log.
+Follow [OWASP logging guidance](https://cheatsheetseries.owasp.org/cheatsheets/Logging_Cheat_Sheet.html) and the application's retention and access policy.
 
 ## Log Rotation
 
@@ -137,8 +131,8 @@ form of YAML. Other systems may have other configurations.
 
 - Log all function or method enters and exits.
 - Log at the start of all branches indicating why that branch was taken. For example, every `if`, `else` and `then` clause is logged.
-- Log method or function parameter names and values. If it is potentially sensitive, tag it appropriately for post-processing.
-- Log all configuration values read from external sources.
+- Log useful, non-sensitive parameter names and values. Apply the Sensitive Data rules before emission.
+- Log relevant configuration names and non-sensitive values. Never log secret configuration values.
 - Log all inversion of control wiring or injection choices.
 - Log all function or method return values.
 - Log all logical actions such as:
@@ -150,8 +144,7 @@ form of YAML. Other systems may have other configurations.
 	- Rendering a page.
 	- Writing to a queue.
 - Log all exceptions at the location they are caught and handled.
-* For command line applications, log the application path (usually the first argument) and all command line parameters.
-* For all applications, log all environment variables making sure to treat sensitive data in environment variables such as keys or secrets using the sensitive data handling protocol.
+* For command-line parameters and environment variables, allowlist diagnostic fields and redact sensitive values before logging.
 
 # Logging Instructions
 
@@ -296,8 +289,8 @@ This metadata **must be injected automatically**, not manually appended in each 
 * Never log secrets, tokens, passwords, keys.
 * Sensitive fields must be:
 
-  * One-way hashed
-  * Deterministically masked (same input → same output)
+  * Redacted before emission, or
+  * Pseudonymized through the project's approved policy when correlation is required
 
 ### 7.2 Mask at the Logger Level
 
@@ -506,9 +499,8 @@ public class OrderService {
     }
 
     private void processData(String input) {
-        // MASKING: One-way hash for sensitive data
-        String maskedInput = oneWayHash(input); 
-        logger.debug("Entering processData with inputHash={}", maskedInput);
+        // SECURITY: Exclude the sensitive input from logs.
+        logger.debug("Entering processData");
         
         // ... logic
     }
@@ -518,9 +510,6 @@ public class OrderService {
         return System.currentTimeMillis() + "-" + "192.168.1.1"; 
     }
     
-    private String oneWayHash(String raw) {
-        return Integer.toHexString(raw.hashCode()); // Simplified for example
-    }
 }
 ```
 
@@ -576,7 +565,6 @@ public class PaymentService
 ```python
 import logging
 import contextvars
-import hashlib
 
 # Context variables for async safety
 correlation_id_ctx = contextvars.ContextVar("correlation_id", default="N/A")
@@ -590,14 +578,9 @@ logging.basicConfig(format='%(asctime)s [%(correlation_id)s] %(message)s', level
 logger = logging.getLogger(__name__)
 logger.addFilter(ContextFilter())
 
-def hash_sensitive(value):
-    # SECURITY: One-way hash
-    return hashlib.sha256(value.encode()).hexdigest()
-
 def process_user_data(user_data):
-    # TRACE: Entry with masked data
-    safe_data = hash_sensitive(user_data['secret'])
-    logger.debug(f"Entering process_user_data. SecretHash={safe_data}")
+    # SECURITY: Exclude credentials and tokens from logs.
+    logger.debug("Entering process_user_data")
 
     try:
         # QUERY LOGGING
@@ -642,9 +625,8 @@ const logger = winston.createLogger({
 });
 
 async function sensitiveOperation(input: string) {
-    // MASKING
-    const hashedInput = Buffer.from(input).toString('base64'); // Simple hash example
-    logger.info(`Entering sensitiveOperation. InputHash=${hashedInput}`);
+    // SECURITY: Encoding a secret does not make it safe to log.
+    logger.info("Entering sensitiveOperation");
 
     // BRANCHING
     const condition = input.length > 5;

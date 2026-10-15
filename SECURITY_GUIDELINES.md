@@ -7,6 +7,8 @@ File GUID: ac1f4467-68fc-4137-a805-1f47b737a128
 Created: 2026
 -->
 
+<!-- AGENT: Security controls scoped by runtime, language, and resource ownership. -->
+
 # Security Guidelines for Coding Agents
 
 **Goal:** Correct the inherent bias of LLMs towards generating insecure "happy path" code. All generated code must be secure-by-design, assuming a hostile environment.
@@ -15,6 +17,15 @@ Created: 2026
 *   **Zero Trust:** Never trust input from the client, database, or internal APIs. Validate at every boundary.
 *   **Least Privilege:** Grants only the absolute minimum permissions required (IAM roles, Database users, CORS policies).
 *   **Defense in Depth:** If one control fails (e.g., frontend validation), another must exist (backend validation).
+
+### Ownership and authorization
+
+Authorize the requested resource as well as the caller's role.
+For tenant-owned data, scope reads and writes to the authorized tenant, including cache keys and background work.
+Do not assume that a primary-key lookup or an administrator role proves resource ownership.
+Verify row-level security through the application's actual database role before claiming it enforces isolation.
+Client-side permission flags are UI hints. Missing flags deny access, and the server rechecks every sensitive action.
+Test cross-tenant reads and writes, missing permission data, and stale authorization state.
 
 ## 2. Backend Security (ASP.NET Core)
 *   **Authentication & Authorization:**
@@ -70,6 +81,10 @@ Created: 2026
 *   **Go:**
     *   **Concurrency:** Use `mutex` to prevent race conditions on shared maps/slices.
     *   **Input:** Check for `nil` pointers on all external inputs.
+
+*   **Swift:** Keep private credentials in platform secure storage as described in `SECRET_HANDLING.md`. Request only necessary platform permissions.
+*   **Rust:** Validate inputs at unsafe and foreign-function boundaries. Document and test the safety invariants.
+*   **All languages:** Bound work from untrusted input. Validate structured commands against an allowlist before execution.
 
 ## 7. Agent Checklist
 Before outputting code, the agent MUST verify:

@@ -7,6 +7,8 @@ File GUID: 04125933-4c89-4e50-8e5f-69d99bf68e40
 Created: 2026
 -->
 
+<!-- AGENT: Performance budgets and measurement guidance for web, native, and tool workloads. -->
+
 # Performance Guidelines
 
 This document outlines the performance standards and best practices for our high-performance web application.

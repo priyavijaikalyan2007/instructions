@@ -11,7 +11,7 @@ Created: 2026
 
 # Additional Instructions for Coding Agents
 
-These instructions supplement the primary guidelines in `AGENTS.md`, `CODING_STYLE.md`, and `FRONTEND.md`. They capture lessons learned and non-obvious rules specific to this Bootstrap 5 theme and component library.
+These instructions supplement the primary guidelines in `AGENTS.md`, `CODING_STYLE.md`, and `FRONTEND.md`. They capture reusable lessons for apps, tools, websites, and web applications. Bootstrap-specific rules apply to projects that use that library.
 
 ---
 
@@ -29,6 +29,15 @@ These instructions supplement the primary guidelines in `AGENTS.md`, `CODING_STY
 - **Read before edit; research before modify.** Before `Edit`/`Write` on a file, you must have read it in this session. Before modifying a function's signature or behaviour, `Grep` for all callers (by symbol name) so you know the blast radius. Editing blind causes failed edits, rollbacks, and rework — all of which cost more tokens than the upfront read.
 - **Target prompts to exact locations.** When delegating to subagents or describing work, name the file and line range (`In api/Services/AuthService.cs lines 80–140, the ValidateToken method...`). This prevents the subagent from re-discovering what you already know.
 - **Trust prior context within a session.** Do not re-verify file contents you just edited — `Edit`/`Write` would have errored if it failed. The harness tracks file state for you.
+
+### Source and Contract Verification
+
+- Edit source files rather than generated or copied build output. Confirm the source/output mapping before changing an unfamiliar file.
+- Verify dependency APIs against the version actually shipped. Check the host runtime before adding a replacement for an existing service.
+- For Java extensions, match host APIs and avoid bundling host-provided classes. Use the build's declared dependency scope.
+- Stage only files that belong to the task. Preserve unrelated working-tree changes and useful failure evidence.
+- Record accepted quality deviations with a reason, owner, resolution plan, and review trigger in the project's existing tracking record.
+- Treat measured counts as dated evidence. Record the file set, counting rule, command, and known exclusions.
 
 ### Bootstrap Discipline
 
@@ -115,7 +124,8 @@ These instructions supplement the primary guidelines in `AGENTS.md`, `CODING_STY
 ### Dependency Discipline (The "No New Toys" Rule)
 
 - **"Use what is already there."**
-- **Duplicate Check:** Before adding a new package (npm or NuGet), check `package.json` or check `.csproj` files. This library has minimal dependencies by design (Bootstrap, Sass, PostCSS, Wrangler). Adding a dependency requires justification.
+- **Duplicate Check:** Before adding a package, check the project manifests and lockfiles for an existing dependency that meets the need.
+  Include `Package.swift`, `go.mod`, `Cargo.toml`, Maven/Gradle files, `package.json`, and `.csproj` files where applicable. Adding a dependency requires justification.
   - If `Day.js` is installed, **do not** install `Moment.js`.
   - If `Newtonsoft.Json` is used, **do not** introduce `System.Text.Json` unless part of a documented migration.
 - **Triviality Check:** Do not add libraries for trivial one-line functions (e.g., `is-odd`, `left-pad`). Write the helper function yourself.
@@ -266,9 +276,9 @@ PGPASSWORD=<password> psql -h <host> -p <port> -U <user> -d <database> -f <migra
 ### CDN Component Integration
 
 **Fallback Code Prohibition:**
-Do NOT write fallback code assuming shared UI components break. Assume that they should work and the UI
-team is committed to fixing them. This additional complexity is unnecessary. If there is an issue with
-a component, produce a bug report instead.
+Do not substitute a component that reports fabricated data or success when initialization fails.
+Follow the degraded-behavior rules in `PRAGMATIC_PROGRAMMER.md`. Report the failure and preserve the user's state.
+When a shared component is defective, fix its source or report the defect through the project's workflow.
 
 **Peer Dependency Loading:**
 CDN components may wrap third-party libraries (e.g., MarkdownEditor wraps Vditor, Diagrams wraps

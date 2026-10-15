@@ -245,3 +245,33 @@ The implementation must assign every remaining substantive difference an adoptio
 A matching filename, newer commit, or higher version number is insufficient evidence that a rule is generic.
 The snapshot does not claim that every incident note or application security statement is correct.
 Primary technical references and relevant source configuration must verify those claims before promotion.
+
+## Source refresh on 15 October 2026
+
+The in-place updates use the following refreshed working-copy evidence.
+The earlier snapshot and proposed destinations remain historical.
+Source repositories were read without modifying their files.
+
+| Source | HEAD |
+| --- | --- |
+| apps | `b28616198eca0c2a8ac4d875be11affcc40aed4e` |
+| idp | `be7e3e0a9d919d738e4c42a1fce8ae21129735d6` |
+| theme | `114bf9755e3d48b0e711982f133d11d3d7e97f9d` |
+
+| Source | Reviewed file | Working-copy SHA-256 prefix |
+| --- | --- | --- |
+| apps | `AGENTS.md` | `fe2af67b943c09b3` |
+| apps | `BACKEND.md` | `f26ba65018632f2a` |
+| apps | `PRAGMATIC_PROGRAMMER.md` | `ffff1c95c508b277` |
+| apps | `SECURITY_GUIDELINES.md` | `8c129fd75b7c5a10` |
+| apps | `DOCUMENTATION.md` | `97fea9b19cd8a8d8` |
+| apps | `UI_UX_CONSISTENCY.md` | `e0a431f0b3bb39c4` |
+| idp | `AGENT_INSIGHTS.md` | `f91a3cbe1a83ec3f` |
+| theme | `AGENTS.md` | `23ce63474a0fc171` |
+| theme | `TESTING.md` | `ce1908f4c2982a3b` |
+| theme | `FRONTEND_LOGGING.md` | `a6f00da42c50f33f` |
+| theme | `DOCUMENTATION.md` | `6bcd2a5a09bd704f` |
+| theme | `AGENT_INSIGHTS.md` | `7d4aafe3e309ca7e` |
+| theme | `CDN_CONTRACT.md` | `503a7bf4cd01d4e7` |
+
+The [in-place update record](./instructions-review.md#in-place-updates-on-15-october-2026) identifies where the selected lessons were merged.

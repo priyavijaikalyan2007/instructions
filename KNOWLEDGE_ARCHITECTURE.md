@@ -95,6 +95,9 @@ This gives us the **power of SQL** for analysis with the **merge-ability of Text
 
 ### Session Start — Read
 
+Read the knowledge files that exist. If this is a new repository, use the README and the schemas here to bootstrap only relevant records.
+Do not invent application models or architectural decisions to fill an empty file.
+
 At the beginning of every session, read these files to orient yourself:
 
 1. `agentknowledge/concepts.yaml` — Locate code by concept name.
@@ -117,6 +120,9 @@ Before your final commit, update these files if your work changed the codebase m
 - **Consult First:** Before asking "Where is X?", grep `concepts.yaml`.
 - **Never delete** existing entries — only add or update.
 - **Never rewrite** `history.jsonl` — it is append-only.
+- Append JSON Lines through a JSON serializer, with exactly one object and one terminating newline per record.
+- Check the existing final newline before appending. Parse the resulting records to detect malformed JSON or merged lines.
+- Validate modified YAML through a safe YAML parser when available. State explicitly when a format check did not run.
 - Keep concept names in PascalCase and stable; other files may reference them.
 - If a decision is superseded, set its `status` to `Superseded` and add the replacement ADR id.
 

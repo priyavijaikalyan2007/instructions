@@ -24,10 +24,18 @@ accurate, and accessible.
 3.  **Visual Consistency:** The documentation must mirror the application's styling, branding, and user interface
     patterns to ensure a seamless user experience.
 4.  **Language:** Strictly adhere to the guidelines in [LANGUAGE.md](./LANGUAGE.md).
-5.  **Visuals:** Use placeholders for rich media like screenshots, videos, mock ups, and diagrams when needed, 
-    acknowledging that agents cannot generate high-fidelity images or videos.
+5.  **Visuals:** Use actual screenshots, diagrams, or recordings when the available tools support them.
+    Use a clearly labeled placeholder when required media cannot be produced.
 
 ---
+
+## Verified facts and published contracts
+
+Keep each changing fact in one authoritative location and link to it from other documents.
+Separate implemented behavior, planned work, estimates, and verified results.
+For public API, component, or artifact changes, update the consumer contract in the same change.
+Register new guides and demos in the project's navigation and publication pipeline.
+Verify the published output and its links, not only the source file's existence.
 
 ## Documentation Categories
 
@@ -80,7 +88,8 @@ accurate, and accessible.
 
 ## Hosting and Deployment Architecture
 
-The documentation is hosted as part of the monolithic application. Coding agents must ensure the build and deployment pipeline adheres to these rules:
+For the .NET monolith example, documentation is hosted with the application and follows the packaging rules below.
+Native apps, tools, static websites, and other services use their repository's documented delivery pipeline.
 
 1.  **Repository Structure:**
     *   All external-facing documentation source files must reside in `/docs/external/`.
@@ -118,7 +127,8 @@ Documentation is part of the "Definition of Done". No feature or fix is complete
 
 ## Media and Placeholders
 
-Agents cannot generate screenshots or videos. Use the following HTML structure for placeholders to indicate where human-generated media is required.
+Capture actual application output when the available tools support it.
+If required media cannot be captured, use the following labeled placeholder and state what remains to be verified.
 
 **Requirement:** All placeholders must have a mild drop shadow and clear label.
 

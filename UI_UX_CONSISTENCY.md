@@ -7,9 +7,15 @@ File GUID: 145ce583-b7d1-4e68-8a0a-961886e1e100
 Created: 2026
 -->
 
+<!-- AGENT: UI consistency, state preservation, safe saves, and appearance checks. -->
+
 # UI/UX Consistency Standards for Coding Agents
 
 This document defines the strict consistency standards that all coding agents MUST adhere to when building or modifying sub-applications within the super-app ecosystem. Consistency is not optional; it is fundamental to user efficiency, muscle memory, and the "enterprise-grade" feel of the platform.
+
+The browser shell, CSS, and Bootstrap examples below apply to web UIs.
+For native macOS/iOS apps, use the project's SwiftUI, AppKit, or UIKit conventions and platform-appropriate controls and keyboard shortcuts.
+Use native state restoration and persistence rather than browser storage APIs.
 
 ## 1. Component Usage & Styling
 
@@ -96,3 +102,21 @@ function restoreUIState() {
 ### 4.2. Error Handling
 *   Write errors to the **Log Console** (§8.2 of `FRONTEND.md`) instead of using modal dialogs for non-critical failures.
 *   Critical failures that require immediate user acknowledgement should use standard Bootstrap Modals, never browser `alert()` or `confirm()`.
+
+## 5. Save and Navigation Safety
+
+Await saves whose result controls navigation or a later operation. Do not report success before persistence confirms it.
+Coalesce autosave requests without losing mutations made during a pending save.
+On failure, retain dirty state and give the user an actionable error.
+Follow `PRAGMATIC_PROGRAMMER.md` when a failed load could otherwise overwrite saved data.
+Test switching resources, reopening the app, and opening a deep link from a fresh launch.
+Route fresh-launch and in-app navigation through the same resource-loading contract.
+For native apps, test the relevant document and scene lifecycle events.
+
+## 6. Appearance and Component Lifecycle
+
+Use the project's semantic appearance tokens and test supported light and dark modes.
+Treat foreground and background colors as a pair. Verify contrast in the states where the colors actually meet.
+In browser UIs, avoid inline literal colors that prevent theme changes from applying.
+Release event listeners, observers, timers, and owned resources when a component is destroyed.
+Test capture/restore round trips when a component's state must survive unmounting or virtualization.

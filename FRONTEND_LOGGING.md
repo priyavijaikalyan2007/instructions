@@ -11,6 +11,11 @@ Created: 2026
 
 # Logging
 
+## 0. Which document governs
+
+`LOGGING.md` defines shared logging principles. This guide defines the mechanism for browser components using the described `LogUtility` contract.
+Where the mechanisms differ, this guide governs those components. The host application still owns its logging pipeline.
+
 ## 1. Scope and Rationale
 
 This is a **reusable theme and component library**. Components from this library are embedded into larger SaaS applications 
@@ -30,7 +35,7 @@ component library ships with its own logging utility `LogUtility`. This is also 
 /** Log prefix for all console messages from this component. */
 const LOG_PREFIX = "[COMPONENT_NAME]";
 
-const _lu = (typeof (window as any).createLogUtility === "function") ? (window as any).createLogUtility().getLogger(LOG_PREFIX.slice(1, -1)) : null;
+const _lu = (typeof window.createLogUtility === "function") ? window.createLogUtility().getLogger(LOG_PREFIX.slice(1, -1)) : null;
 function logInfo(...a: unknown[]): void { _lu ? _lu.info(...a) : console.log(new Date().toISOString(), "[INFO]", LOG_PREFIX, ...a); }
 function logWarn(...a: unknown[]): void { _lu ? _lu.warn(...a) : console.warn(new Date().toISOString(), "[WARN]", LOG_PREFIX, ...a); }
 function logError(...a: unknown[]): void { _lu ? _lu.error(...a) : console.error(new Date().toISOString(), "[ERROR]", LOG_PREFIX, ...a); }
@@ -38,7 +43,11 @@ function logDebug(...a: unknown[]): void { _lu ? _lu.debug(...a) : console.debug
 function logTrace(...a: unknown[]): void { _lu ? _lu.trace(...a) : console.debug(new Date().toISOString(), "[TRACE]", LOG_PREFIX, ...a); }
 ```
 
-* **Use only `_lu` logger** abstraction for logging.
+Declare `window.createLogUtility` in the project's browser-global type declarations using its actual contract.
+The lookup above resolves once at component load. Load `logutility.js` first when routing through it is required.
+A host that omits the optional utility uses the documented console fallback.
+
+* **Use only the `log*` helpers** for logging.
 * **Do not install logging dependencies.** Do not introduce ANY other logging frameworks, wrappers, or abstractions. No Winston, Pino, log4js, or similar libraries.
 
 The host application owns the logging pipeline. Our components simply write to the console, and the host can 

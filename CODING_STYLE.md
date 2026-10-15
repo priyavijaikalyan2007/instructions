@@ -1009,6 +1009,11 @@ class Customer:
 
 ### TypeScript-Specific
 
+Use the project's strict type checks and validate external data at runtime boundaries.
+Declare public browser globals in the project's type declarations rather than using `window as any` or chained assertions.
+For a closed set of property names, use a union or `keyof` instead of broadening the whole object to an untyped record.
+Preserve the published global API when changing declarations, aliases, or bundle structure.
+
 ```typescript
 // Use strict null checks
 function getCustomerName(customer: Customer | null): string
