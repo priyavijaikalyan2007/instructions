@@ -34,6 +34,11 @@ Document checks retain existing file encodings, headers, test-first rules, and c
 Temporary validation tools and dependencies remain under /tmp.
 Application code and test suites are outside this documentation-only change.
 
+The public-use correction replaces private project references in AGENTS.md with self-contained architecture descriptions.
+The application serves frontend routes and APIs, including pages when needed.
+Truly static assets may use a CDN. Air-gapped deployments package required assets locally without external network dependencies.
+The correction preserves the existing layout and shared style rules.
+
 On 16 October 2026, the GitHub API still reports `has_pull_requests: false`.
 The active CLI account also has read-only API access. No PR exists.
 On 16 October 2026, the owner authorized pushing the pending commits and will merge the branch.

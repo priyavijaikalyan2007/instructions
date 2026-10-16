@@ -106,3 +106,18 @@ The remote comparison still contains the earlier pushed changes.
 The owner authorized pushing the pending commits on `docs/multilanguage-instructions-plan`.
 This request supersedes the earlier instruction to keep the follow-up local.
 The owner will merge the branch.
+
+## 16 October 2026: public project descriptions and asset delivery
+
+### User request
+
+> Ok some corrections: 1) You should use the local folders I pointed to for learning, but directly including them in the AGENTS.md is not useful. Those other folders are not open source; the instructions repo is. So on line 22 in AGENTS.md, you really should expand the details rather than link to inaccessible local folders. 2) In Stack on Line 44: It's not always true that browser assets should be served from the same application. Frontend routes and APIs should be served from teh application including pages as necessary. But truly static browser assets can come from a CDN unless the application is meant for air-gapped environments. Otherwise, this looks good.
+
+### Outcome
+
+Replaced private repository references in AGENTS.md with self-contained architecture and responsibility descriptions.
+Removed source-repository labels from the stack and native layout guidance.
+Clarified that the application serves frontend routes and APIs, including pages when needed.
+Truly static assets may use a CDN. Air-gapped deployments package required assets locally and avoid external network dependencies.
+Document checks cover headers, links, fences, private-path removal, and append-only history.
+The corrections stay on the existing branch for the owner to merge.

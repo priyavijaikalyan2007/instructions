@@ -19,17 +19,17 @@ Choose the project model from the consuming repository's README, source, manifes
 A repository may contain several models, such as native apps plus their public website.
 The choices below guide work within existing projects. They do not authorize moving files or changing architecture.
 
-| Project model | Reference | Main responsibilities |
+| Project model | Typical architecture | Main responsibilities |
 | --- | --- | --- |
-| Enterprise SaaS application | `~/Work/knobby/apps` | Tenant-aware APIs, browser apps, persistence, background work, and operations. |
-| Enterprise identity service | `~/Work/knobby/idp` | Java extensions, identity flows, browser themes, and identity-service operations. |
-| Native Apple applications | `~/Work/pvk2007/rapid` | Shared Swift logic plus macOS, iOS, and iPadOS application targets. |
-| Reusable component library | `~/Work/pvk2007/theme` | TypeScript components, SCSS, assets, consumer contracts, demos, and published bundles. |
-| Local tools | Proposed Go, Rust, or Python layouts below | Command-line input, local processing, files, diagnostics, and release binaries or packages. |
-| Website | The consuming website's source and build | Content, navigation, assets, forms, accessibility, and static or server delivery. |
+| Enterprise SaaS application | .NET or Java backend, browser frontend, persistent storage, and background workers. | Tenant-aware APIs, frontend routes and pages, authorization, data ownership, and operations. |
+| Enterprise identity service | Java extensions hosted by an identity server, browser themes, and a configured runtime or container. | Sign-in flows, identity federation, tokens, extension compatibility, and identity-service operations. |
+| Native Apple applications | Swift targets for macOS, iOS, and iPadOS, with shared logic and platform-specific views and adapters. | Native lifecycle, local persistence, permissions, accessibility, platform layouts, signing, and releases. |
+| Reusable component library | TypeScript components, CSS/SCSS, licensed assets, build tools, and generated distribution bundles. | Public contracts, reusable controls, state capture and restoration, cleanup, demos, documentation, and consumer compatibility. |
+| Local tools | Go, Rust, or Python executables or packages, with thin command entry points and testable processing code. | Arguments, local files, cancellation, diagnostics, exit status, and release binaries or packages. |
+| Website | Static or server-rendered HTML and CSS, with optional TypeScript modules and backend services. | Content, navigation, assets, forms, accessibility, and static or server delivery. |
 
-The references illustrate project choices. Read their current configuration before copying a version, command, API, or path.
-No working Go or Rust repository was supplied. Their layouts below are recommendations rather than observed implementations.
+These models are starting points. Select versions, commands, APIs, and paths from the consuming repository's configuration.
+Use the stack and layout guidance below without depending on another repository's files.
 Prefer Allman braces throughout. Keep four-space indentation, no tabs, one type per file, and lines at most 120 characters.
 Follow the syntax limits documented in `CODING_STYLE.md` rather than emitting invalid code.
 Read `CODING_STYLE.md`, `COMMENTING.md`, `MARKERS.md`, `TESTING.md`, and `LOGGING.md` for shared construction rules and examples.
@@ -40,8 +40,10 @@ Read `CODING_STYLE.md`, `COMMENTING.md`, `MARKERS.md`, `TESTING.md`, and `LOGGIN
 
 ### Enterprise SaaS application
 
-- Use the project's configured backend. The apps reference uses ASP.NET Core 10.0+ with a self-contained deployment.
-- Serve APIs and browser assets through the same application when the project uses that hybrid model.
+- Use the project's configured backend, such as ASP.NET Core 10.0+ or Java. Match its runtime and deployment mode.
+- Serve frontend routes and APIs through the application, including pages when needed.
+- Truly static browser assets may come from a content delivery network (CDN).
+- For air-gapped environments, package required assets locally and serve them without external network dependencies.
 - Use TypeScript for non-trivial browser scripting, with HTML, CSS/SCSS, and the declared component library.
 - Keep the configured Vite source/output mapping. Do not edit compiled JavaScript as a substitute for its TypeScript source.
 - Use the configured PostgreSQL and data-access versions. Keep executable SQL migration scripts in the project's migration directory.
@@ -49,7 +51,7 @@ Read `CODING_STYLE.md`, `COMMENTING.md`, `MARKERS.md`, `TESTING.md`, and `LOGGIN
 
 ### Enterprise identity service or Java web application
 
-- The identity reference uses Java, the configured JDK, Keycloak extensions, browser themes, and a container deployment.
+- Use Java and the configured JDK for identity-server extensions. Keycloak projects may include providers, browser themes, and a container deployment.
 - Match extension APIs to the host runtime and distinguish host-provided dependencies from bundled dependencies.
 - Use the Maven or Gradle wrapper and the repository's configured toolchain.
 - A general Java web application uses its declared web framework. Keycloak is an identity-service choice, not a universal Java backend.
@@ -66,7 +68,7 @@ Read `CODING_STYLE.md`, `COMMENTING.md`, `MARKERS.md`, `TESTING.md`, and `LOGGIN
 
 ### Reusable component library
 
-- The theme reference uses vanilla TypeScript, HTML, CSS/SCSS, Bootstrap, Node.js build tools, and browser-delivered assets.
+- Use the library's declared stack, such as vanilla TypeScript, HTML, CSS/SCSS, Bootstrap, and Node.js build tools.
 - Keep source components separate from generated bundles, generated documentation, and distribution output.
 - Document each component's factory, options, events, public types, state capture/restore, dependencies, and cleanup contract.
 - Use unit, browser, accessibility, visual, and consumer-artifact checks as appropriate.
@@ -126,7 +128,8 @@ The identity extension roots and standard Java roots are alternatives, not dupli
 
 ### Native Apple applications
 
-The rapid reference keeps each application under `src/<app-name>/` and gives it its own build, tests, and documentation.
+For a repository with several native applications, use `src/<app-name>/` when a new layout is needed.
+Give each application its own build, tests, and documentation.
 
 ```text
 src/<app-name>/

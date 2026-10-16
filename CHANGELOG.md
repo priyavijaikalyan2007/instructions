@@ -13,6 +13,8 @@ Created: 2026
 
 ## 16 October 2026
 
+- Changed AGENTS.md to describe project models without private repository references and permit CDN delivery of static assets outside air-gapped deployments.
+
 - Changed project choices, stacks, and layouts for SaaS, native Apple apps, component libraries, websites, and local tools.
 - Changed shared style to four spaces, no tabs, one type per file, 120-character lines, and Allman braces within language syntax limits.
 - Added detailed Python, Swift, Go, Java, and Rust examples for names, comments, markers, tests, and all 23 GoF patterns.
