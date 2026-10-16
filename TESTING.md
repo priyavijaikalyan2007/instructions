@@ -631,6 +631,12 @@ public class OrderProcessingTests
 - Use pytest-cov
 - Run with `pytest --cov=src --cov-report=html`
 
+**Swift:** Collect coverage through the configured Xcode test plan or `swift test --enable-code-coverage` for packages.
+**Go:** Use `go test ./... -coverprofile=coverage.out` and `go tool cover -func=coverage.out`.
+**Rust:** Use the project's configured coverage tool, such as `cargo llvm-cov`, with its declared targets and features.
+**Java:** Use the project's configured JaCoCo or equivalent Maven/Gradle integration and retain its reports.
+Do not install or switch a coverage stack merely because an example names one.
+
 ### Running Coverage
 
 ```bash
@@ -727,6 +733,24 @@ Our applications use multiple technologies. Testing strategies must account for 
 - Test against real infrastructure in test environments
 - Use pytest fixtures for resource management
 
+```python
+# File: tests/test_order_summary.py
+import unittest
+from order_summary import OrderSummary
+
+class OrderSummaryTests(unittest.TestCase):
+    def test_display_label_with_positive_quantity_includes_quantity(self) -> None:
+        order = OrderSummary("order-1", "Sample Customer", 2)
+        self.assertEqual(order.display_label(), "Sample Customer: 2")
+
+    def test_constructor_with_zero_quantity_raises(self) -> None:
+        with self.assertRaises(ValueError):
+            OrderSummary("order-1", "Sample Customer", 0)
+```
+
+Use temporary directories for file-processing tests. Inject clocks, HTTP clients, and subprocess runners at real external boundaries.
+Test cancellation and resource cleanup separately from successful output. Do not mock the function whose behavior the test should verify.
+
 ### Swift (macOS and iOS)
 
 Use the project's Swift Testing or XCTest setup for unit and integration tests.
@@ -734,23 +758,129 @@ Use XCTest UI tests for native application flows, accessibility, and lifecycle b
 Run `swift test` for Swift packages and the documented Xcode scheme and destination for application tests.
 Test supported deployment targets and cancellation, persistence, and state restoration where affected.
 
+```swift
+// File: OrderSummaryTests.swift
+import XCTest
+
+final class OrderSummaryTests: XCTestCase
+{
+    func testDisplayLabelWithPositiveQuantityIncludesQuantity() throws
+    {
+        let order = try OrderSummary(orderID: "order-1", customerName: "Sample Customer", quantity: 2)
+        XCTAssertEqual(order.displayLabel(), "Sample Customer: 2")
+    }
+
+    func testConstructorWithZeroQuantityThrows()
+    {
+        XCTAssertThrowsError(try OrderSummary(orderID: "order-1", customerName: "Sample Customer", quantity: 0))
+    }
+}
+```
+
+Add the test file to the correct test target and import the application module with `@testable` where needed.
+Keep shared-model tests independent of platform views. Use native UI tests for scene transitions, permission flows, and iPad layouts.
+Exercise signed-device behavior separately when sandboxing, entitlements, or file access can differ from the simulator.
+
 ### Go
 
 Use the standard `testing` package, table-driven tests where useful, and `go test ./...`.
 Run `go test -race ./...` for concurrency changes on a supported target.
 Use fuzz tests for parsers and other input boundaries when appropriate.
 
+```go
+// File: order_summary_test.go
+package orders
+
+import "testing"
+
+func TestDisplayLabelWithPositiveQuantityIncludesQuantity(t *testing.T) {
+    order, err := NewOrderSummary("order-1", "Sample Customer", 2)
+    if err != nil {
+        t.Fatalf("create test order: %v", err)
+    }
+    if actual := order.DisplayLabel(); actual != "Sample Customer: 2" {
+        t.Errorf("label = %q, want %q", actual, "Sample Customer: 2")
+    }
+}
+
+func TestConstructorWithZeroQuantityReturnsError(t *testing.T) {
+    _, err := NewOrderSummary("order-1", "Sample Customer", 0)
+    if err == nil {
+        t.Fatal("expected a quantity validation error")
+    }
+}
+```
+
+Use `t.TempDir()` and `t.Cleanup` for owned resources. Mark tests parallel only when their state and external resources are independent.
+Race checks supplement behavior tests. They do not prove that cancellation, timeouts, or goroutine shutdown follow the contract.
+
 ### Rust
 
 Use unit tests, integration tests, and documentation tests through `cargo test`.
 Check relevant feature combinations and targets declared by the project.
-Run `cargo fmt --check` and the configured Clippy checks alongside behavior tests.
+Run the configured style and Clippy checks alongside behavior tests.
+Do not use default `cargo fmt` output to override the Allman and indentation rules in `CODING_STYLE.md`.
+
+```rust
+// File: order_summary.rs, nested test module beside the owning type.
+#[cfg(test)]
+mod tests
+{
+    use super::OrderSummary;
+
+    #[test]
+    fn display_label_with_positive_quantity_includes_quantity()
+    {
+        let order = OrderSummary::new("order-1".into(), "Sample Customer".into(), 2)
+            .expect("the fixture quantity is valid");
+        assert_eq!(order.display_label(), "Sample Customer: 2");
+    }
+
+    #[test]
+    fn constructor_with_zero_quantity_returns_error()
+    {
+        assert!(OrderSummary::new("order-1".into(), "Sample Customer".into(), 0).is_err());
+    }
+}
+```
+
+`expect` is appropriate for a known-valid test fixture. It is not permission to panic on fallible production input.
+Use `tests/` for public-boundary integration tests. Test declared features, foreign-function boundaries, and drop/cancellation behavior where affected.
 
 ### Java
 
 Use the project's existing test framework and Maven or Gradle wrapper.
 Run the documented unit and integration tasks rather than assuming that `test` includes every integration suite.
 For host extensions, test against the host runtime and dependency versions actually shipped.
+
+```java
+// File: OrderSummaryTests.java
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
+final class OrderSummaryTests
+{
+    @Test
+    void displayLabelWithPositiveQuantityIncludesQuantity()
+    {
+        OrderSummary order = new OrderSummary("order-1", "Sample Customer", 2);
+        assertEquals("Sample Customer: 2", order.displayLabel());
+    }
+
+    @Test
+    void constructorWithZeroQuantityThrows()
+    {
+        assertThrows(IllegalArgumentException.class, () ->
+        {
+            new OrderSummary("order-1", "Sample Customer", 0);
+        });
+    }
+}
+```
+
+This example uses JUnit Jupiter. Retain the configured framework rather than introducing a second framework for a single test.
+Use the project's container or host-runtime harness for database and extension behavior. Preserve interrupt status and close test-owned resources.
 
 ### Cross-Stack Testing
 
@@ -1285,3 +1415,4 @@ public async Task GetResource_IncludesAccessLevelInResponse()
     var okResult = result.Should().BeOfType<OkObjectResult>().Subject;
     // Verify response includes access_level, can_edit, can_share, can_delete
 }
+```

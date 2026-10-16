@@ -51,6 +51,51 @@ For Swift apps, measure launch time, UI responsiveness, memory, and energy use. 
 For Go, Rust, and Java tools or services, measure latency, throughput, allocations, and bounded concurrency before optimizing.
 Use representative workloads and the project's profiler or benchmark tools. Record the baseline and test environment.
 
+### 1.5 Swift and Apple Platforms
+
+- Measure cold launch, document opening, scrolling, export latency, memory, and energy on supported devices.
+- Use Instruments and Xcode diagnostics to investigate the measured bottleneck rather than guessing from source size.
+- Keep UI changes on the main actor and expensive processing off the UI path.
+- Cancel obsolete work when a user changes documents or scenes. Bound decoded-image and temporary-buffer memory.
+- Release observers, timers, and security-scoped access at their owning lifecycle boundary.
+- Compare simulator results with physical-device results when graphics, memory pressure, thermal limits, or signing can change behavior.
+
+### 1.6 Go Tools and Services
+
+- Use representative benchmarks and allocation measurements, such as `go test -bench . -benchmem`.
+- Use the project's CPU, heap, goroutine, and blocking profiles when a measurement indicates a regression.
+- Bound goroutine fan-out, queue depth, buffer sizes, and external calls.
+- Propagate context deadlines and cancellation. Ensure abandoned work does not keep consuming resources.
+- Measure serialization and I/O before adding caches, pools, or custom memory reuse.
+- Benchmark release-like builds on the target architecture and retain the baseline and workload.
+
+### 1.7 Rust Tools and Services
+
+- Measure the release profile and actual target. Debug-build performance is not a release baseline.
+- Use the project's benchmark harness and record relevant feature flags, allocator, and async runtime configuration.
+- Avoid unnecessary clones and allocations, but do not trade ownership clarity or memory safety for an unmeasured saving.
+- Bound task spawning and buffering. Keep blocking I/O off an async executor's worker threads when the runtime requires it.
+- Inspect resource lifetimes and dropped tasks when memory or file handles grow over time.
+- Treat unsafe optimizations as a separate, justified change with safety tests and measured benefit.
+
+### 1.8 Java Applications and Extensions
+
+- Separate JVM warmup from steady-state measurements. Use the project's benchmark harness when optimizing hot methods.
+- Use Java Flight Recorder and allocation/GC evidence to investigate latency or memory changes.
+- Bound executor queues and connection pools. Do not assume that a different thread model removes resource limits.
+- Close owned resources and preserve interruption so canceled work can stop.
+- Test with the actual host runtime and classpath for extensions rather than a convenient standalone JVM configuration.
+- Compare packaged startup and runtime behavior with the deployed launch mode.
+
+### 1.9 Python Tools and Services
+
+- Use `cProfile`, `timeit`, or the project's profiler with representative data and the configured interpreter.
+- Measure peak memory as well as duration for large files and collections.
+- Prefer streaming or bounded batches when the complete input need not remain in memory.
+- Use async I/O for suitable I/O-bound work. Do not assume that async makes CPU-bound Python work parallel.
+- Keep blocking work off an event loop and account for process startup and serialization when choosing worker processes.
+- Optimize a measured hot path. Do not replace readable Python with a native extension without a demonstrated need.
+
 ## 2. Frontend Performance (TS/JS & HTML/CSS)
 
 ### 2.1 Loading & Bundle Size

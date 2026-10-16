@@ -11,6 +11,13 @@ Created: 2026
 
 # Changelog
 
+## 16 October 2026
+
+- Changed project choices, stacks, and layouts for SaaS, native Apple apps, component libraries, websites, and local tools.
+- Changed shared style to four spaces, no tabs, one type per file, 120-character lines, and Allman braces within language syntax limits.
+- Added detailed Python, Swift, Go, Java, and Rust examples for names, comments, markers, tests, and all 23 GoF patterns.
+- Changed logging guidance to preserve useful diagnostic context through field policies and stable scoped HMAC identifiers.
+
 ## 15 October 2026
 
 - Changed existing language conventions to cover Swift, Go, Rust, and Java without reorganizing instruction files.

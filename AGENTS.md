@@ -15,40 +15,164 @@ First, read `README.md` to understand the situation, background and problem stat
 
 # Structure
 
-The structure, stack, folders, and local endpoints below describe a .NET SaaS example.
-This instruction repository also supports Swift macOS/iOS apps, Go and Rust tools, Java web applications, and TypeScript/JavaScript/HTML websites and applications.
-Use the consuming repository's README, manifests, and scripts to confirm its actual stack and commands.
-Apply browser component rules to browser UIs, and use native platform conventions for Apple UIs.
-Read language-specific conventions in `CODING_STYLE.md`, `COMMENTING.md`, `MARKERS.md`, `TESTING.md`, and `LOGGING.md`.
+Choose the project model from the consuming repository's README, source, manifests, and build scripts.
+A repository may contain several models, such as native apps plus their public website.
+The choices below guide work within existing projects. They do not authorize moving files or changing architecture.
 
-The example is an enterprise SaaS application. This SaaS follows a super-app model where the index.html in the `frontend/` folder contains the main frontend shell of the application. Each individual application's frontend code is contained in a separate sub-folder within `frontend/` such as `tenant/`. The backend is Asp.Net Core 10.0 application whose code is in the `api/` folder. All APIs are served by this backend; all frontend routes are served as static files middleware in this application as well. Thus, `api/` and `frontend/` are combined together as a single standalone Asp.NET Core 10.0 application and deployed together in a single Docker container deployed on GCP Cloud Run.
+| Project model | Reference | Main responsibilities |
+| --- | --- | --- |
+| Enterprise SaaS application | `~/Work/knobby/apps` | Tenant-aware APIs, browser apps, persistence, background work, and operations. |
+| Enterprise identity service | `~/Work/knobby/idp` | Java extensions, identity flows, browser themes, and identity-service operations. |
+| Native Apple applications | `~/Work/pvk2007/rapid` | Shared Swift logic plus macOS, iOS, and iPadOS application targets. |
+| Reusable component library | `~/Work/pvk2007/theme` | TypeScript components, SCSS, assets, consumer contracts, demos, and published bundles. |
+| Local tools | Proposed Go, Rust, or Python layouts below | Command-line input, local processing, files, diagnostics, and release binaries or packages. |
+| Website | The consuming website's source and build | Content, navigation, assets, forms, accessibility, and static or server delivery. |
+
+The references illustrate project choices. Read their current configuration before copying a version, command, API, or path.
+No working Go or Rust repository was supplied. Their layouts below are recommendations rather than observed implementations.
+Prefer Allman braces throughout. Keep four-space indentation, no tabs, one type per file, and lines at most 120 characters.
+Follow the syntax limits documented in `CODING_STYLE.md` rather than emitting invalid code.
+Read `CODING_STYLE.md`, `COMMENTING.md`, `MARKERS.md`, `TESTING.md`, and `LOGGING.md` for shared construction rules and examples.
 
 # Instructions
 
 ## Stack
 
-**Hybrid Model**: Single server serves both APIs and web pages
-- Backend: ASP.NET Core 10.0 (Self-contained deployment)
-- Frontend: Vanilla HTML + Javascript (small) + TypeScript (large) + Bootstrap 5 in the folder `./frontend/`
-- Frontend Scripts: TypeScript (in the folder `./typescript/` which when compiled with Vite copies compiled files to `./frontend/`)
-  - **NOTE**: For all non-trivial frontend scripting, you MUST use TypeScript. The moment any inline Javascript becomes more than 10 lines of code, you should migrate to TypeScript. It is best to write TypeScript from the beginning.
-- Database: PostgreSQL 17.6 with Dotnet EF Core. Mirgation and other SQL scripts are placed in `./sql/`. Always write SQL scripts for migration that can be run by the user against the appropriate environment.
-- Image Size: ~280-300MB (runtime-deps base + runtime + frontend)
-- Deployment: Self-contained (includes .NET runtime) to Cloud Run on Google Cloud Platform.
-- **Swagger UI** - http://localhost:8080/swagger. 
+### Enterprise SaaS application
+
+- Use the project's configured backend. The apps reference uses ASP.NET Core 10.0+ with a self-contained deployment.
+- Serve APIs and browser assets through the same application when the project uses that hybrid model.
+- Use TypeScript for non-trivial browser scripting, with HTML, CSS/SCSS, and the declared component library.
+- Keep the configured Vite source/output mapping. Do not edit compiled JavaScript as a substitute for its TypeScript source.
+- Use the configured PostgreSQL and data-access versions. Keep executable SQL migration scripts in the project's migration directory.
+- Read deployment configuration for containers, Cloud Run, background roles, and resource limits. Do not assume a fixed image size.
+
+### Enterprise identity service or Java web application
+
+- The identity reference uses Java, the configured JDK, Keycloak extensions, browser themes, and a container deployment.
+- Match extension APIs to the host runtime and distinguish host-provided dependencies from bundled dependencies.
+- Use the Maven or Gradle wrapper and the repository's configured toolchain.
+- A general Java web application uses its declared web framework. Keycloak is an identity-service choice, not a universal Java backend.
+- Use TypeScript for non-trivial browser logic. Preserve the host's template, security-header, and asset-delivery contracts.
+
+### Native macOS, iOS, and iPadOS applications
+
+- Use Swift and the project's SwiftUI, AppKit, or UIKit targets. Share platform-independent logic without duplicating it across targets.
+- Read the Xcode project and build scripts for deployment targets, SDKs, architectures, schemes, signing, and capabilities.
+- Use native persistence and state restoration. A local app does not require a server, database, login, or analytics by default.
+- Test platform permissions, document access, app lifecycle, accessibility, and platform-specific layouts where affected.
+- Treat building, signing, archiving, uploading, submitting for review, and releasing as separate operations.
+- Follow the repository's release scripts. Keep private signing material and service credentials out of source and app bundles.
+
+### Reusable component library
+
+- The theme reference uses vanilla TypeScript, HTML, CSS/SCSS, Bootstrap, Node.js build tools, and browser-delivered assets.
+- Keep source components separate from generated bundles, generated documentation, and distribution output.
+- Document each component's factory, options, events, public types, state capture/restore, dependencies, and cleanup contract.
+- Use unit, browser, accessibility, visual, and consumer-artifact checks as appropriate.
+- The consuming application owns authentication, persistence, and the host logging pipeline.
+
+### Local Go, Rust, and Python tools
+
+- Go uses its configured `go.mod` toolchain and standard module layout. Rust uses Cargo and the declared Rust edition/toolchain.
+- Python uses the project's interpreter, `pyproject.toml`, environment, and dependency lock policy.
+- Keep argument parsing and process setup separate from testable processing logic.
+- Keep machine-readable output on stdout and diagnostics on stderr. Document exit status, cancellation, and partial-output behavior.
+- Bound memory, concurrency, and file operations. Preserve user data when processing fails.
+- Add network services, databases, or native UI dependencies only when the tool's requirements need them.
+
+### Websites and browser scripting
+
+- A static website may use HTML and CSS with no backend or JavaScript.
+- Use the project's asset and delivery pipeline. Apply API guidance only when the website actually calls or serves APIs.
+- Use TypeScript for non-trivial browser scripting. Move inline JavaScript beyond ten lines into a TypeScript module.
+- Apply browser component rules to browser UIs. Native apps use platform controls and their declared design conventions.
 
 ## Folder & File Structure
 
-+ typescript/        - All Typesript that will be compiled into Javascript goes here. All compiled output should be placed in frontend/
-+ frontend/          - All frontend code (HTML, Javasript, CSS) goes here.
-+ api/               - Asp.net Core 10.0 project and code for the monolith backend server. This monolith serves both static routes & APIs.
-+ playwrighttests/   - .Net Core 10.0 based Playwright UI tests. 
-+ integrationtests/  - .Net Core 10.0 based system integration tests.
-+ unittests/         - .Net Core 10.0 based unit tests.
-+ sql/               - All SQL code for database creation, modification, updates, migration should be placed here.
-+ specs/             - All product specifications (both raw, product requirements etc.) will be found here.
-+ playbooks/         - All generated documentation, guides, tutorials etc. relevant to product development and testing should be placed here.
-+ docs/              - All product documentation relevant to customers or users or integrators should be placed here.
+Preserve the consuming repository's established layout. Use the following examples when a new project needs a layout.
+Keep specifications in `specs/`, operator guides in `playbooks/`, and user/integrator documentation in `docs/` where those conventions apply.
+Keep one type per source file, including short structs. See `CODING_STYLE.md` for nested-type and extension exceptions.
+
+### Enterprise SaaS application
+
+```text
+api/                   .NET backend, domain services, HTTP boundaries, and persistence
+frontend/              Browser HTML, CSS, and source assets
+typescript/            TypeScript source compiled into the browser output
+unittests/             Backend unit tests
+integrationtests/      Real service and database integration tests
+playwrighttests/       Browser workflows and accessibility checks
+sql/migrations/        Ordered, executable database migrations
+specs/                 Product requirements, designs, and progress
+playbooks/             Operator and development procedures
+docs/                  User and integrator documentation
+```
+
+### Enterprise identity service or Java backend
+
+```text
+src/providers/         Java host extensions, with their own Maven/Gradle source and test roots
+src/themes/            Host-rendered templates, styles, and browser assets
+src/main/java/         Application Java code when this is a standard Java backend
+src/main/resources/    Application configuration and packaged resources
+src/test/java/         Unit and integration tests under the configured runner
+sql/                   Application-owned database scripts, when applicable
+Dockerfile             Container build, when the deployment uses containers
+target/ or build/      Generated output, never the source to edit
+```
+
+The identity extension roots and standard Java roots are alternatives, not duplicate homes for the same code.
+
+### Native Apple applications
+
+The rapid reference keeps each application under `src/<app-name>/` and gives it its own build, tests, and documentation.
+
+```text
+src/<app-name>/
+    Shared/            Swift logic and resources shared between platform targets
+    <AppName>/         macOS application entry point, views, and platform adapters
+    <AppName>Mobile/   iOS/iPadOS entry point, views, and platform adapters
+    <AppName>Tests/    Unit and integration tests
+    <AppName>.xcodeproj/  Targets, schemes, build settings, and project membership
+    Testing/           Manual regression plans and nonprivate sample data
+    AppStore/          Product metadata, review notes, and media plans
+    scripts/           App-specific build, archive, signing, and upload procedures
+    build/             Generated artifacts, excluded from source control
+src/web/               Public website, when this repository also owns one
+```
+
+For a Swift package, use `Sources/<Target>/` and `Tests/<Target>Tests/` with `Package.swift` instead of inventing an Xcode layout.
+Adding a source file also requires checking target membership and resource packaging.
+
+### Reusable component library
+
+```text
+components/<name>/     Component TypeScript, styles, tests, and usage documentation
+scss/                  Theme variables, shared styles, and component imports
+assets/                Source icons, fonts, and other licensed assets
+demo/                  Discoverable component examples and integration scenarios
+docs/                  Consumer contracts, API references, and integration guides
+scripts/               Build, bundle, validation, and publication tools
+tests/                 Browser, distribution, and cross-component tests
+dist/                  Generated bundles, assets, demos, and documentation
+```
+
+Keep source and generated documents distinguishable. Register new demos and guides in the library's discovery and publication pipeline.
+
+### Local tools
+
+| Purpose | Go | Rust | Python |
+| --- | --- | --- | --- |
+| Manifest | `go.mod`, `go.sum` | `Cargo.toml`, configured `Cargo.lock` policy | `pyproject.toml`, project lockfile |
+| Entry point | `cmd/<tool>/main.go` | `src/main.rs` | `src/<package>/__main__.py` |
+| Processing code | `internal/<package>/` | `src/<module>/`, exposed through `src/lib.rs` | `src/<package>/` |
+| Public reusable API | Dedicated package only when needed | Deliberate library exports in `src/lib.rs` | Deliberate package exports |
+| Tests | Beside code as `*_test.go` | Module tests and `tests/` integration tests | `tests/` or the established colocated convention |
+| Build output | Ignored `bin/` or `build/` | Ignored `target/` | Ignored `build/`, `dist/`, and environment directories |
+
+Keep Go type files in the appropriate existing package. Register Rust type files in their parent module and set visibility deliberately.
+Do not create a package or crate for every type merely to satisfy the file rule.
 
 ## Operating Style
 
@@ -72,6 +196,7 @@ this sequence. **Never write implementation code before writing a failing test.*
   3. **Interface design** - define the public interfaces (method signatures, DTOs) BEFORE thinking about implementation.
   4. **Layering check** - confirm that business logic is in services (not controllers), 
      HTTP concerns are in controllers, cross-cutting concerns use middleware or filters.
+     For native apps and tools, keep UI or CLI entry points thin and put processing logic in testable services or functions.
   5. **Review the plan** against project conventions (`CODING_STYLE.md`, `SECURITY_GUIDELINES.md`, 
      `API_GUIDELINES.md`, `PERFORMANCE.md`). Ensure the approach is idiomatic and low-risk.
      
@@ -87,7 +212,7 @@ this sequence. **Never write implementation code before writing a failing test.*
 + **Implement (Green):** Write the minimum code needed to make the failing tests pass. This is the "Green" phase of TDD.
   1. Focus on correctness, not elegance. Get the tests to pass with the simplest implementation.
   2. Apply the GoF patterns identified in the Plan step.
-  3. Follow `CODING_STYLE.md` (language-specific braces and file organization, max 30-line methods, max 3 nesting levels, guard clauses).
+  3. Follow `CODING_STYLE.md` (Allman braces, 4-space indentation, one type per file, max 30-line methods, max 3 nesting levels, guard clauses).
   4. Add logging per `LOGGING.md`, comments per `COMMENTING.md`, and markers per `MARKERS.md`.
   5. Run the tests - they MUST pass (Green). If they fail, fix the implementation, NOT the tests.
 
@@ -104,7 +229,7 @@ this sequence. **Never write implementation code before writing a failing test.*
   7. Run the tests after EACH refactoring step. If tests fail, revert the last refactoring.
 
 + **Verify (Full):** Execute the new tests AND all relevant regression tests. Ensure everything passes locally. 
-  Run `./test.sh` for full suite validation.
+  Run the project's full validation command. Use `./test.sh` when that script exists.
 
 + **Commit:** Stage the verified changes and create a commit with a concise, conventional message 
   (e.g., `fix: ...`, `feat: ...`, `refactor: ...`). One logical change per commit.
@@ -146,10 +271,10 @@ consistent, thoughtful and complete end to end experience.
   before changing any code.
 - When creating backend code, consult BACKEND.md.
 - When selecting libaries for backend functionality, always consult BACKEND_LIBRARY_SELECTION.md for guidelines 
-  and DOTNETFX_SELECTION.md for pre-canned recommendations. 
+  and, for .NET projects, DOTNETFX_SELECTION.md for pre-canned recommendations.
 - When selecting libraries for frontend functionality, always consult FRONTEND_LIBRARY_SELECTION.md for guidelines 
   and FRONTEND_SELECTION.md for pre-canned recommendations.
-- Before building new UI components, always consult the file 
+- Before building new browser UI components, always consult the file
   `https://theme.priyavijai-kalyan2007.workers.dev/docs/COMPONENT_INDEX.md` to see 
   if a reusable component exists. If a resuable component exists, then consult 
   `https://theme.priyavijai-kalyan2007.workers.dev/docs/COMPONENT_REFERENCE.md` 
@@ -186,6 +311,10 @@ consistent, thoughtful and complete end to end experience.
 
 ## Local Development
 
+For native apps, use the app-specific build modes and Xcode schemes documented by the repository.
+For component libraries, use the declared package scripts. Go, Rust, and Python tools use their documented module/package commands.
+A build or test command does not authorize deployment, signing-key export, app-store submission, or release.
+
 Use the following commands when the consuming repository provides these scripts.
 Otherwise, use its documented build and test commands for the configured toolchain.
 
@@ -216,8 +345,10 @@ Otherwise, use its documented build and test commands for the configured toolcha
 
 ## Local Endpoints
 
-After `run.sh` starts, about 1 minute later, the app should be available at `http://localhost:8080`. 
-The local database is PostgreSQL. User name is `postgres` and password is `postgres`. Database is `postgres`.
+Read the consuming repository's README, launch configuration, and scripts for ports, health checks, and local dependencies.
+The SaaS, identity service, component demo, and website may each use different endpoints.
+Native apps and local tools need no listening port unless their design explicitly includes a service.
+Use configured local credentials. Never copy example credentials into a deployed environment.
 
 # Agent Knowledge Base (CRITICAL)
 

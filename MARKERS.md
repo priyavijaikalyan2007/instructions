@@ -95,6 +95,115 @@ Use ASCII field names when a parser or file format does not support the marker s
 Do not add comments to formats that prohibit them, such as JSON.
 Keep required copyright information in the existing file header.
 
+### Python Format
+
+```python
+# File: quantity_policy.py
+# COMPONENT: QuantityPolicy
+# PURPOSE: Validates quantities before an order is created.
+# RELATES: [[OrderValidation]]
+# FLOW: CLI or UI -> quantity policy -> order constructor
+# SECURITY: Does not accept a quantity without validation.
+
+# @entrypoint
+# @config: maximum_quantity
+# OrderValidation: Canonical quantity boundary.
+def is_valid_quantity(quantity: int, maximum_quantity: int) -> bool:
+    """Returns whether the quantity is within the permitted range."""
+    return 0 < quantity <= maximum_quantity
+```
+
+Use `#` rather than `//`. Keep shebangs, encoding declarations, and module docstrings in their required positions.
+
+### Swift Format
+
+```swift
+// File: QuantityPolicy.swift
+/*
+ * COMPONENT: QuantityPolicy
+ * PURPOSE: Validates a quantity before constructing an order.
+ * RELATES: [[OrderValidation]]
+ * FLOW: Native view -> quantity policy -> order constructor
+ * SECURITY: Validate imported values before storing them.
+ */
+
+// MARK: - Public API
+// @entrypoint
+func isValidQuantity(_ quantity: Int) -> Bool
+{
+    return quantity > 0
+}
+```
+
+### Go Format
+
+```go
+// File: quantity_policy.go
+// COMPONENT: QuantityPolicy
+// PURPOSE: Validates a quantity before constructing an order.
+// RELATES: [[OrderValidation]]
+// FLOW: Command -> quantity policy -> order constructor
+// SECURITY: Validate external values before storing them.
+
+package quantities
+
+// @entrypoint
+// IsValidQuantity reports whether the quantity is positive.
+func IsValidQuantity(quantity int) bool {
+    return quantity > 0
+}
+```
+
+The blank line before `package` separates navigation metadata from package documentation.
+Preserve Go build constraints and the cgo preamble when adding a header.
+
+### Rust Format
+
+```rust
+// File: quantity_policy.rs
+/*
+ * COMPONENT: QuantityPolicy
+ * PURPOSE: Validates a quantity before constructing an order.
+ * RELATES: [[OrderValidation]]
+ * FLOW: Command -> quantity policy -> order constructor
+ * SECURITY: Validate external values before storing them.
+ */
+
+// @entrypoint
+/// Returns whether a signed external quantity is positive.
+pub fn is_valid_quantity(quantity: i64) -> bool
+{
+    quantity > 0
+}
+```
+
+Keep `//!` module documentation and crate attributes valid. Use ordinary comments for navigation tags rather than publishing them as rustdoc.
+
+### Java Format
+
+```java
+// File: QuantityPolicy.java
+/*
+ * COMPONENT: QuantityPolicy
+ * PURPOSE: Validates a quantity before constructing an order.
+ * RELATES: [[OrderValidation]]
+ * FLOW: HTTP or CLI boundary -> quantity policy -> order constructor
+ * SECURITY: Validate external values before storing them.
+ */
+public final class QuantityPolicy
+{
+    // @entrypoint
+    /** Returns whether the quantity is positive. */
+    public static boolean isValidQuantity(int quantity)
+    {
+        return quantity > 0;
+    }
+}
+```
+
+These examples spell out the standard fields in ASCII. The corresponding symbols used elsewhere in this guide carry the same meanings.
+Preserve annotation and documentation attachment. Never insert a marker between an annotation and the declaration it controls.
+
 ### SCSS Format
 
 Use `/* */` block comments so the header is preserved in unminified CSS output.

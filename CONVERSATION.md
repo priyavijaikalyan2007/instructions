@@ -61,3 +61,36 @@ No application code changed, and no application test suite is claimed as execute
 
 The GitHub API still reports `has_pull_requests: false` on 15 October 2026.
 The active CLI account has read-only API access. PR creation remains blocked by repository access and settings.
+
+## 16 October 2026: detailed language and project refinements
+
+### User request
+
+> ok, that's much more focused. Some minor fixes: 1) In AGENTS.md -- Prefer Allman braces, always. Not language specific. Line 84. 2) In CODING_STYLE.md, looks like you didn't add code snippets/examples similar to how I have shown for Cshapr, typescript, scss etc. You shoul ddo that for Rust, Go, Java & Swift too. Then, your naming model is so terse; if you intend it to be similar to C#, then merge the two -- show the regular naming ocnvention adn the differences for each language as you have shown. For example, in C# & Typescript, I have explicited called out for each type of field, type etc. 3) In One Type Per File; actually, I do prefer one type per file in all languages unless they are nested types or extensions that make sense to keep in one file. But, Ideally I much prefer separate files. Even if it is a 5 line struct, prefer a separate file. it's much easier to search the filesystem than to search contents. 4) In Summary Checklist, yes, all languages should use the same style: 4 spaces for indentation, no tabs, one type per file, max 120chars per line, Allman braces always. 5) In AGENTS.md line 24 - you retain the super app SaaS enterprise application instruction. I think that is a placeholder. I think we need to expand that to be a choice. a] from ~/Work/knobby/apps & ~/Work/knobby/idp -- Enterprise SaaS app b] from ~/Work/pvk2007/rapid -- iOS/macOS/iPadOS apps c] From ~/Work/pvk2007/theme -- a reusable component library. I don't have any Go or Rust samples at this time though. 6) Similarly, "Stack" is right for tne etnerprise saas but not for the apps or the theme library. 7) I think File & FOlder structure needs an update. As things have eovlved, we should separat einto whats a good structure for apps, web saas, a component library, local tools using go or rust. 8) GOF_PATTERNS.md needs updates for the new languages along with the existing examples. 9) Looks like you truncated the instructions for Sensitive Data (LOGGING.md Line 43); same for What to Log; remember that not all sensitive data should be strippd from logging. For example, a customer usename may be oneway hashed so that when looking at logs, it is possible to find matches on that hash. 10) I would do another pass and not be lazy about including the same level of detail for Python, Swift, Go, Java & Rust as exists for C#, Typescript, HTML, CSS and SQL.
+
+### Outcome
+
+Completed another in-place pass for the ten requested refinements.
+The shared style now requires four spaces, no tabs, one type per file, a 120-character line limit, and Allman braces.
+Go retains only grammar-required same-line braces. Python uses indentation-based blocks.
+The Go compiler rejects Allman function braces, so the guide documents that syntax limit explicitly.
+
+AGENTS.md now separates project choices, stacks, and layouts for SaaS, Java identity/web services, native Apple apps, component libraries, websites, and local tools.
+The native example uses rapid. Go and Rust layouts are labeled recommendations because no source repository was supplied.
+CODING_STYLE.md adds shared naming principles, detailed naming categories, complete examples, and language-specific construction examples.
+COMMENTING.md, MARKERS.md, TESTING.md, and PERFORMANCE.md add corresponding detail for Python, Swift, Go, Java, and Rust.
+GOF_PATTERNS.md retains every existing C#, TypeScript, and JavaScript example and adds all five languages to all 23 patterns.
+LOGGING.md restores detailed field policies and diagnostic events, including stable tenant-scoped HMAC identifiers and matching helpers in five languages.
+
+Validation covers 115 pattern compiler/import checks, 25 pattern behavior checks, 15 additional example checks, and the published unit-test examples.
+The five HMAC implementations match the documented vector. Boundary tests cover scope, key rotation, byte limits, and ambiguous field concatenation.
+Swift OSLog and Rust tracing examples compile. Java tests run through JUnit Jupiter, and Swift tests run through XCTest.
+Checks also cover links, fences, headers, retained encoding, append-only history, unchanged testing thresholds, and existing-file-only changes.
+Temporary toolchains, downloaded dependencies, and validation harnesses remain under /tmp.
+No application test suite or source repository was modified.
+
+GitHub still reports that pull requests are disabled, and the active CLI identity has read-only API access.
+The comparison link remains the review entry point until the owner enables PR creation.
+
+The refreshed AGENTS.md instructions say not to push yet. The detailed follow-up remains a local branch commit.
+The remote comparison still contains the earlier pushed changes.

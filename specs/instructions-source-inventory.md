@@ -275,3 +275,23 @@ Source repositories were read without modifying their files.
 | theme | `CDN_CONTRACT.md` | `503a7bf4cd01d4e7` |
 
 The [in-place update record](./instructions-review.md#in-place-updates-on-15-october-2026) identifies where the selected lessons were merged.
+
+## Project-choice refresh on 16 October 2026
+
+This follow-up adds rapid as the native Apple reference and rechecks the source project models.
+The source instruction entry files in apps, identity, and theme retain their previously reviewed content hashes.
+Application work advanced the apps and theme HEADs during this session.
+The snapshots below identify the final read-only refresh, not a new wholesale import.
+
+| Source | HEAD | README SHA-256 prefix |
+| --- | --- | --- |
+| apps | `475213cfab7e134b0413d34e1e377ec4c789c834` | `18f4465415c844e9` |
+| idp | `be7e3e0a9d919d738e4c42a1fce8ae21129735d6` | `d45cd01426c2254d` |
+| theme | `9ae8d2ea58ae7ac59cfeac22ad099095bdec41ad` | `0ea31b8aa507b92f` |
+| rapid | `3b8593a881e154412c452ce6e2d420712f0624c1` | `27dfb3078711f969` |
+
+The native review also uses `rapid/src/cropprint/README.md`, SHA-256 prefix `f1774a7a24e731b9`.
+Rapid has no root AGENTS.md. Its README and app README establish the target layout and build ownership.
+Apps and identity have unrelated working-copy edits. This task does not modify or claim ownership of those edits.
+Theme and rapid are clean at this refresh.
+No Go or Rust source project was supplied. Their proposed layouts use language tooling conventions.

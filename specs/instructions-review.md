@@ -187,3 +187,23 @@ The language update also adds native secret-storage boundaries in `SECRET_HANDLI
 The logging examples now exclude secrets instead of suggesting that Base64 or a weak hash protects them.
 Project-specific domains, trackers, deployment roles, migration numbering, legal retention claims, and conflicting push rules were not imported.
 The original writing guide and source component catalogs were not replaced with older or product-specific copies.
+
+## Detailed follow-up completed on 16 October 2026
+
+The follow-up keeps the existing files and expands their current sections.
+All five added languages now have detailed naming tables, complete naming examples, comments, markers, tests, and performance guidance.
+Each of the 23 GoF patterns retains the existing three language examples and gains Python, Swift, Go, Java, and Rust examples.
+
+The house style is shared across languages. Go's grammar requires same-line braces in functions and control flow.
+The guide explains that narrow exception and retains four-space indentation in Go.
+Python uses indentation rather than control-flow braces. Small types still receive separate files.
+
+The project entry point now distinguishes SaaS, identity/Java web applications, native Apple apps, component libraries, websites, and local tools.
+The native model uses rapid as its reference. Go and Rust layouts are proposals, not claimed source-repository facts.
+Logging restores the detailed event list and permits approved one-way identifiers for matching customer events.
+HMAC examples use a shared encoding contract, protected keys, tenant scope, bounded inputs, and versioned metadata.
+
+Validation passes for 115 pattern compiler/import checks, 25 pattern behavior checks, and 15 other example checks.
+The published unit-test examples pass in all five languages. All five logging helpers match the same HMAC vector.
+Swift OSLog and Rust tracing checks pass. Document checks retain file encodings, headers, test-first rules, and coverage thresholds.
+The checks use temporary fixtures. They do not claim a build of any consuming application.

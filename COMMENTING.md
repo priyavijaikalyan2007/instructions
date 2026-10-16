@@ -301,6 +301,28 @@ def calculate_prorated_cost(plan: Plan, start_date: date, end_date: date) -> Dec
     """
 ```
 
+A Python docstring also states ownership and concurrency guarantees when callers need them.
+Use `Raises` for expected runtime failures rather than presenting them as assertions.
+
+```python
+def parse_quantity(text: str) -> int:
+    """Parses a positive decimal quantity without retaining the input.
+
+    Args:
+        text: The complete decimal quantity.
+
+    Returns:
+        The positive quantity.
+
+    Raises:
+        ValueError: If the text is invalid or the quantity is nonpositive.
+    """
+    quantity = int(text)
+    if quantity <= 0:
+        raise ValueError("Quantity must be positive.")
+    return quantity
+```
+
 ### 4.4 SQL
 
 Comment tables, columns, and complex queries:
@@ -377,12 +399,50 @@ Use `///` documentation comments for public APIs, following [Swift API conventio
 Describe parameters, return values, thrown errors, actor isolation, and cancellation when relevant.
 Use `// MARK: - Section name` for sections that benefit Xcode navigation.
 
+```swift
+/// Parses a positive quantity from user-entered text.
+/// - Parameter text: The complete decimal quantity, without surrounding spaces.
+/// - Returns: The quantity, or nil when the text is invalid or nonpositive.
+/// - Important: This function does not log or retain the input.
+func parseQuantity(_ text: String) -> Int?
+{
+    guard let quantity = Int(text), quantity > 0 else
+    {
+        return nil
+    }
+    return quantity
+}
+```
+
 ### 4.8 Go
 
 Follow [Go doc comments](https://go.dev/doc/comment). Start exported declaration comments with the declared name.
 Place a documentation comment directly before the declaration it describes.
 Document error behavior, context cancellation, ownership, and concurrent-use guarantees when relevant.
 Keep navigation headers separate so they do not become an unrelated declaration's documentation.
+
+```go
+package quantities
+
+import (
+    "fmt"
+    "strconv"
+)
+
+// ParseQuantity parses a positive decimal quantity.
+// It returns an error for invalid text, overflow, or a nonpositive value.
+// It does not retain the input and is safe for concurrent calls.
+func ParseQuantity(text string) (int, error) {
+    quantity, err := strconv.Atoi(text)
+    if err != nil {
+        return 0, fmt.Errorf("parse quantity: %w", err)
+    }
+    if quantity <= 0 {
+        return 0, fmt.Errorf("quantity must be positive")
+    }
+    return quantity, nil
+}
+```
 
 ### 4.9 Rust
 
@@ -391,11 +451,56 @@ Document errors, panics, ownership, and examples where relevant.
 Document caller obligations under `# Safety` for unsafe APIs and explain each unsafe block's safety invariant.
 Use ordinary comments for navigation markers rather than exposing internal markers as public API documentation.
 
+```rust
+/// Parses a positive quantity without retaining the input.
+///
+/// # Errors
+/// Returns an error for invalid decimal text, overflow, or zero.
+///
+/// # Examples
+/// The caller handles the error instead of treating a failed parse as zero.
+pub fn parse_quantity(text: &str) -> Result<u32, String>
+{
+    let quantity = text.parse::<u32>().map_err(|_|
+    {
+        "invalid quantity".to_owned()
+    })?;
+    if quantity == 0
+    {
+        return Err("quantity must be positive".to_owned());
+    }
+    Ok(quantity)
+}
+```
+
 ### 4.10 Java
 
 Use `/** ... */` Javadoc comments directly before documented declarations, following the [Javadoc specification](https://docs.oracle.com/en/java/javase/21/docs/specs/javadoc/doc-comment-spec.html).
 Document parameters, results, exceptions, resource ownership, and thread-safety guarantees when relevant.
 Keep ordinary navigation comments separate from Javadoc.
+
+```java
+// File: QuantityParser.java
+public final class QuantityParser
+{
+    /**
+     * Parses a positive decimal quantity without retaining the input.
+     * @param text the complete decimal quantity
+     * @return the positive quantity
+     * @throws NumberFormatException if the text is invalid or exceeds the integer range
+     * @throws IllegalArgumentException if the parsed value is nonpositive
+     */
+    public static int parseQuantity(String text)
+    {
+        int quantity = Integer.parseInt(text);
+        if (quantity <= 0)
+        {
+            throw new IllegalArgumentException("Quantity must be positive.");
+        }
+        return quantity;
+    }
+}
+```
 
 ---
 

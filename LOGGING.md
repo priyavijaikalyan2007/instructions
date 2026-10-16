@@ -22,6 +22,7 @@ Use [FRONTEND_LOGGING.md](./FRONTEND_LOGGING.md) for the component logging mecha
 | Go | Use the established logger, such as standard-library `log/slog`, and propagate request context. |
 | Rust | Use the configured `tracing` or `log` facade. Let the application configure subscribers or backends. |
 | Java | Use the project's logging facade or the host platform's logger. Avoid competing runtime logging backends in plugins. |
+| Python | Use configured `logging` handlers and `contextvars` for operation context across async tasks. |
 | C# / .NET | Use the configured `ILogger` pipeline and scopes. |
 | TypeScript / JavaScript | Use the declared browser or server logger and preserve useful error context. |
 
@@ -60,11 +61,245 @@ we need to look at logs to understand what is causing it. This could take many f
 
 ## Sensitive Data
 
-Exclude passwords, access tokens, private keys, and other secret values before emitting a log in any environment.
-Redact or pseudonymize personal data according to the project's logging policy.
-Do not rely on later upload processing to remove plaintext secrets already written to local logs.
-Hashing does not make every sensitive value safe to log.
-Follow [OWASP logging guidance](https://cheatsheetseries.owasp.org/cheatsheets/Logging_Cheat_Sheet.html) and the application's retention and access policy.
+Keep enough diagnostic context to trace an operation while controlling how each field enters the log.
+Sensitive data is not one category with one transformation. Classify fields by their diagnostic purpose and disclosure risk.
+
+| Field class | Logging treatment | Example |
+| --- | --- | --- |
+| Authentication and encryption secrets | Exclude the value in every environment. | Passwords, private keys, bearer tokens, session credentials. |
+| Personal identifiers needed for correlation | Use a stable, scoped, one-way pseudonym under the approved policy. | Customer username or email mapped to `user_key`. |
+| Personal or business content | Omit, redact, or retain only the approved summary. | Document text, payment details, message bodies. |
+| Non-sensitive diagnostic data | Preserve the useful value and its meaning. | Operation name, attempt count, duration, public error code. |
+| Configuration and external parameters | Log names and approved values, with field-specific transformations. | Endpoint name and timeout, with a secret value excluded. |
+
+A customer username may be one-way hashed so operators can match events without storing the raw username.
+For enumerable identifiers such as usernames and emails, prefer HMAC-SHA-256 with a protected logging key to an unkeyed hash.
+The same canonical identifier, tenant, key, and algorithm version produce the same pseudonym.
+An authorized diagnostic tool can compute that pseudonym to find matching events. The application must not log the lookup input.
+Pseudonyms remain linkable data. Apply retention, access control, and export rules to them.
+
+Define canonicalization explicitly before hashing. Do not merge case-sensitive accounts by blindly lowercasing their names.
+Prefer a stable user identifier when renames would otherwise break correlation.
+Separate tenant and environment scopes to prevent unintended correlation between customers or deployments.
+Use a distinct, randomly generated logging key per environment. Environment metadata alone does not change the pseudonym.
+Record a non-secret key version in event metadata. Rotation changes the resulting hash, so retain or retire lookup capability under policy.
+Never log the HMAC key or reuse an authentication, encryption, or signing key for this purpose.
+
+Transform fields before any console, file, system-log, or remote sink receives them.
+A logger-level policy should enforce the transformation so application developers do not need to remember it at every call.
+Post-processing alone leaves plaintext in local logs. Base64, `hashCode`, and reversible encodings do not provide one-way protection.
+Use [OWASP logging guidance](https://cheatsheetseries.owasp.org/cheatsheets/Logging_Cheat_Sheet.html) and the project's explicit field policy.
+
+### Correlation-safe user keys
+
+The following helpers illustrate the same contract in five languages. Put the helper in the project's central privacy/logging facility.
+They accept a protected key and already-canonical text. They do not fetch secrets, change username semantics, or configure logging.
+The payload starts with `log-user-v1` plus a zero byte, then length-prefixed tenant and username UTF-8 bytes.
+Each length is an unsigned four-byte big-endian value. This encoding prevents ambiguous concatenation of fields.
+The key must contain at least 32 bytes, and each input field is bounded to 1,024 UTF-8 bytes.
+The result is `user-hmac-v1:` plus a lowercase hexadecimal HMAC-SHA-256 digest.
+The surrounding log metadata carries the non-secret key version and environment.
+
+Python uses the standard library:
+
+```python
+# File: log_identity.py
+import hashlib
+import hmac
+
+def user_log_key(key: bytes, tenant_id: str, canonical_username: str) -> str:
+    """Returns a stable tenant-scoped pseudonym for approved log correlation."""
+    if len(key) < 32:
+        raise ValueError("A logging key needs at least 32 bytes.")
+    payload = bytearray(b"log-user-v1\x00")
+    for field in (tenant_id, canonical_username):
+        encoded = field.encode("utf-8")
+        if len(encoded) > 1024:
+            raise ValueError("A log identity field exceeds its limit.")
+        payload.extend(len(encoded).to_bytes(4, "big"))
+        payload.extend(encoded)
+    digest = hmac.new(key, payload, hashlib.sha256).hexdigest()
+    return "user-hmac-v1:" + digest
+```
+
+Go uses the standard library and four-space indentation:
+
+```go
+// File: log_identity.go
+package logidentity
+
+import (
+    "crypto/hmac"
+    "crypto/sha256"
+    "encoding/binary"
+    "encoding/hex"
+    "errors"
+)
+
+// UserLogKey returns a stable tenant-scoped pseudonym for approved log correlation.
+func UserLogKey(key []byte, tenantID string, canonicalUsername string) (string, error) {
+    if len(key) < 32 {
+        return "", errors.New("a logging key needs at least 32 bytes")
+    }
+    payload := []byte("log-user-v1\x00")
+    for _, field := range []string{tenantID, canonicalUsername} {
+        encoded := []byte(field)
+        if len(encoded) > 1024 {
+            return "", errors.New("a log identity field exceeds its limit")
+        }
+        payload = binary.BigEndian.AppendUint32(payload, uint32(len(encoded)))
+        payload = append(payload, encoded...)
+    }
+    mac := hmac.New(sha256.New, key)
+    _, _ = mac.Write(payload) // Standard hash writers do not return write errors.
+    return "user-hmac-v1:" + hex.EncodeToString(mac.Sum(nil)), nil
+}
+```
+
+Java uses JDK cryptography and hexadecimal utilities:
+
+```java
+// File: LogIdentity.java
+import java.nio.ByteBuffer;
+import java.nio.charset.StandardCharsets;
+import java.security.GeneralSecurityException;
+import java.util.HexFormat;
+import javax.crypto.Mac;
+import javax.crypto.spec.SecretKeySpec;
+
+public final class LogIdentity
+{
+    public static String userLogKey(byte[] key, String tenantId, String canonicalUsername)
+        throws GeneralSecurityException
+    {
+        if (key.length < 32)
+        {
+            throw new IllegalArgumentException("A logging key needs at least 32 bytes.");
+        }
+        byte[] payload = payload(tenantId, canonicalUsername);
+        Mac mac = Mac.getInstance("HmacSHA256");
+        mac.init(new SecretKeySpec(key, "HmacSHA256"));
+        return "user-hmac-v1:" + HexFormat.of().formatHex(mac.doFinal(payload));
+    }
+
+    private static byte[] payload(String tenantId, String canonicalUsername)
+    {
+        byte[] domain = "log-user-v1\0".getBytes(StandardCharsets.UTF_8);
+        byte[] tenant = tenantId.getBytes(StandardCharsets.UTF_8);
+        byte[] user = canonicalUsername.getBytes(StandardCharsets.UTF_8);
+        if (tenant.length > 1024 || user.length > 1024)
+        {
+            throw new IllegalArgumentException("A log identity field exceeds its limit.");
+        }
+        return ByteBuffer.allocate(domain.length + 8 + tenant.length + user.length)
+            .put(domain).putInt(tenant.length).put(tenant).putInt(user.length).put(user).array();
+    }
+}
+```
+
+Swift uses CryptoKit. A distributed app must not contain a shared backend logging key.
+Use a protected local key for local correlation or a server-issued opaque identifier for cross-device server correlation.
+
+```swift
+// File: LogIdentity.swift
+import CryptoKit
+import Foundation
+
+struct LogIdentity
+{
+    enum ValidationError: Error
+    {
+        case invalidKey
+        case oversizedField
+    }
+
+    static func userLogKey(key: Data, tenantID: String, canonicalUsername: String) throws -> String
+    {
+        guard key.count >= 32 else
+        {
+            throw ValidationError.invalidKey
+        }
+        let payload = try identityPayload(tenantID: tenantID, canonicalUsername: canonicalUsername)
+        let digest = HMAC<SHA256>.authenticationCode(for: payload, using: SymmetricKey(data: key))
+        return "user-hmac-v1:" + digest.map
+        {
+            String(format: "%02x", $0)
+        }.joined()
+    }
+
+    private static func identityPayload(tenantID: String, canonicalUsername: String) throws -> Data
+    {
+        var payload = Data("log-user-v1\0".utf8)
+        for field in [tenantID, canonicalUsername]
+        {
+            let bytes = Array(field.utf8)
+            guard bytes.count <= 1024 else
+            {
+                throw ValidationError.oversizedField
+            }
+            let length = UInt32(bytes.count)
+            payload.append(contentsOf: [24, 16, 8, 0].map
+            {
+                UInt8((length >> $0) & 0xff)
+            })
+            payload.append(contentsOf: bytes)
+        }
+        return payload
+    }
+}
+```
+
+Rust uses the established RustCrypto implementations. These versions illustrate compatible APIs, not a universal dependency upgrade requirement:
+
+```toml
+[dependencies]
+hmac = "0.13"
+sha2 = "0.11"
+```
+
+```rust
+// File: log_identity.rs
+use hmac::{Hmac, KeyInit, Mac};
+use sha2::Sha256;
+
+/// Returns a stable tenant-scoped pseudonym for approved log correlation.
+pub fn user_log_key(key: &[u8], tenant_id: &str, canonical_username: &str) -> Result<String, &'static str>
+{
+    if key.len() < 32
+    {
+        return Err("a logging key needs at least 32 bytes");
+    }
+    let mut mac = Hmac::<Sha256>::new_from_slice(key).map_err(|_|
+    {
+        "invalid logging key"
+    })?;
+    mac.update(b"log-user-v1\0");
+    for field in [tenant_id, canonical_username]
+    {
+        let bytes = field.as_bytes();
+        if bytes.len() > 1024
+        {
+            return Err("a log identity field exceeds its limit");
+        }
+        mac.update(&(bytes.len() as u32).to_be_bytes());
+        mac.update(bytes);
+    }
+    let hex = mac.finalize().into_bytes().iter().map(|byte|
+    {
+        format!("{byte:02x}")
+    }).collect::<String>();
+    Ok(format!("user-hmac-v1:{hex}"))
+}
+```
+
+For a non-secret test key containing bytes 0 through 31, tenant `tenant-a`, and username `alice`, every helper returns:
+
+```text
+user-hmac-v1:cac1ffd631eda70d4e2e98de334d4a04dc40badb2867a5637b3eb213686cb21b
+```
+
+Test repeatability, different tenants, different keys, UTF-8 input, field-boundary ambiguity, and rejected oversized fields.
+Keep real customer identifiers and real logging keys out of fixtures.
 
 ## Log Rotation
 
@@ -129,22 +364,25 @@ form of YAML. Other systems may have other configurations.
 
 # What to Log
 
-- Log all function or method enters and exits.
-- Log at the start of all branches indicating why that branch was taken. For example, every `if`, `else` and `then` clause is logged.
-- Log useful, non-sensitive parameter names and values. Apply the Sensitive Data rules before emission.
-- Log relevant configuration names and non-sensitive values. Never log secret configuration values.
-- Log all inversion of control wiring or injection choices.
-- Log all function or method return values.
-- Log all logical actions such as:
-	- Loading data from a configuration file.
-	- Fetching data from a database.
-	- Validating a user session.
-	- Logging in a user.
-	- Reading data from a data source.
-	- Rendering a page.
-	- Writing to a queue.
-- Log all exceptions at the location they are caught and handled.
-* For command-line parameters and environment variables, allowlist diagnostic fields and redact sensitive values before logging.
+Preserve execution and diagnostic detail at the appropriate level. Apply the field policy before emitting each value.
+A transformed identifier is useful context, not a reason to remove the entire event.
+
+- Log function entry and exit at TRACE or DEBUG, including the operation, relevant transformed parameters, and outcome.
+- Log branch decisions and the approved values that explain them. Include a threshold or reason when it explains the branch.
+- Log useful return values or bounded summaries, including whether a result is empty, partial, stale, canceled, or failed.
+- Log configuration sources, key names, effective non-secret values, and the non-secret versions of applied secret configuration.
+- Log dependency selection and inversion-of-control choices that explain which implementation executed.
+- Log database and external-service operations with duration, affected-row or item count, retry attempt, and safe query/request metadata.
+- Log user and tenant context through approved opaque identifiers or correlation-safe pseudonyms when raw values are sensitive.
+- Log lifecycle actions, including initialization, configuration loading, session validation, rendering, queue operations, and disposal.
+- Log handled errors with a useful cause, safe technical context, and correlation/request identifiers.
+- Log cleanup, cancellation, timeout, fallback, and partial-write decisions when they change the operation's outcome.
+- For CLI arguments and environment variables, preserve names and approved values. Transform identifiers and exclude credential values.
+- For requests, responses, and documents, log approved fields or summaries rather than dumping unbounded or unclassified payloads.
+
+For example, keep `operation=save_order`, `user_key=<stable HMAC>`, `attempt=2`, and `error_code=WRITE_TIMEOUT` together.
+Operators can then follow the affected user and operation while the raw username remains outside the log.
+Apply the same policy to exception messages and nested objects. Logging an entire exception or object must not bypass the field controls.
 
 # Logging Instructions
 
@@ -188,7 +426,12 @@ Wrap all highly detailed log levels such as DEBUG/TRACE with an if check to make
 
 ### 2.3 Output Targets
 
-* Always support **both**:
+For services and local tools, support the configured console and durable collection targets.
+For native Apple apps, use unified logging and an explicit support-export policy.
+A component library uses the host's logger and must not create independent file or remote sinks.
+Container stdout may feed durable platform collection without a local log file.
+
+* Where the deployment requires these sinks, support both:
 
   * Console output (local / interactive)
   * File output (staging / production)
@@ -289,8 +532,8 @@ This metadata **must be injected automatically**, not manually appended in each 
 * Never log secrets, tokens, passwords, keys.
 * Sensitive fields must be:
 
-  * Redacted before emission, or
-  * Pseudonymized through the project's approved policy when correlation is required
+  * One-way pseudonymized when correlation is required, using the Sensitive Data contract above, or
+  * Redacted, summarized, or excluded when the field policy requires it
 
 ### 7.2 Mask at the Logger Level
 
@@ -307,8 +550,8 @@ This metadata **must be injected automatically**, not manually appended in each 
 ### 8.1 Application Startup
 
 * All configuration sources
-* All environment variables (masked)
-* Effective configuration values (masked)
+* Relevant environment-variable names and approved transformed values
+* Effective configuration values under the field policy, including non-secret key versions
 
 ### 8.2 Requests and Responses
 
@@ -318,7 +561,7 @@ This metadata **must be injected automatically**, not manually appended in each 
   * Payload summaries (size, counts)
   * Status codes
   * Duration
-* Full payloads only at TRACE/DEBUG.
+* Full payloads require explicit approval under the field policy and TRACE/DEBUG. A low log level does not authorize disclosure.
 
 ### 8.3 Queries
 
@@ -339,7 +582,7 @@ This metadata **must be injected automatically**, not manually appended in each 
   * Query used in transaction.
   * API invoked.
   * API invocation result.
-* Full request, response, query, results, file contents or directory listing only at TRACE/DEBUG.
+* Full requests, responses, queries, results, file contents, and directory listings require field-policy approval and TRACE/DEBUG.
 ---
 
 ## 9. Control Flow Logging (Very Important)
@@ -403,11 +646,12 @@ This metadata **must be injected automatically**, not manually appended in each 
 
 ## 12. Language-Specific Examples
 
-Below are **minimal, correct patterns** showing compliance.
+The examples show API usage and context propagation. Production logger setup remains configuration-driven.
+Use the correlation-safe helper for sensitive identifiers instead of logging their raw values.
 
 ---
 
-### Go (zap + context)
+### Go (slog + context)
 
 ```go
 package main
@@ -415,7 +659,6 @@ package main
 import (
     "context"
     "log/slog"
-    "os"
 )
 
 // Key for Context
@@ -433,7 +676,7 @@ func withContext(ctx context.Context, correlationID, tenantID string) context.Co
 }
 
 // Logger helper to extract context
-func logInfo(ctx context.Context, msg string, args ...any) {
+func logAt(ctx context.Context, level slog.Level, msg string, args ...any) {
     // Extract context
     cID, _ := ctx.Value(correlationIDKey).(string)
     tID, _ := ctx.Value(tenantIDKey).(string)
@@ -445,26 +688,26 @@ func logInfo(ctx context.Context, msg string, args ...any) {
     }
     finalArgs := append(baseArgs, args...)
     
-    slog.Info(msg, finalArgs...)
+    slog.Log(ctx, level, msg, finalArgs...)
 }
 
 func processOrder(ctx context.Context, orderID string, amount float64) {
-    // TRACE: Entry
-    logInfo(ctx, "Entering processOrder", slog.String("order_id", orderID))
+    // TRACE: Entry. Configure level -8 in the application's slog handler.
+    logAt(ctx, slog.Level(-8), "Entering processOrder", slog.String("order_id", orderID))
 
     // BRANCHING: Log condition data before "if"
     isHighValue := amount > 1000.0
-    logInfo(ctx, "Evaluating high value check", slog.Bool("is_high_value", isHighValue))
+    logAt(ctx, slog.LevelDebug, "Evaluating high value check", slog.Bool("is_high_value", isHighValue))
 
     if isHighValue {
-        logInfo(ctx, "Branch taken: High Value Protocol")
+        logAt(ctx, slog.LevelDebug, "Branch taken: High Value Protocol")
         // ... logic
     } else {
-        logInfo(ctx, "Branch taken: Standard Protocol")
+        logAt(ctx, slog.LevelDebug, "Branch taken: Standard Protocol")
     }
 
     // EXIT
-    logInfo(ctx, "Exiting processOrder")
+    logAt(ctx, slog.Level(-8), "Exiting processOrder")
 }
 ```
 
@@ -477,37 +720,45 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.MDC;
 
-public class OrderService {
+public class OrderService
+{
     private static final Logger logger = LoggerFactory.getLogger(OrderService.class);
 
-    public void handleRequest(String userRequestID, String tenantID) {
+    public void handleRequest(String userRequestID, String tenantID)
+    {
         // CONTEXT: Setup MDC at entry point
         String correlationID = java.util.UUID.randomUUID().toString();
         MDC.put("correlation_id", correlationID);
         MDC.put("request_id", userRequestID != null ? userRequestID : generateMangledID());
         MDC.put("tenant_id", tenantID);
 
-        try {
+        try
+        {
             logger.info("Request processing started");
             processData("sensitive_value");
-        } catch (Exception e) {
+        }
+        catch (Exception e)
+        {
             logger.error("Exception encountered", e);
-        } finally {
+        }
+        finally
+        {
             logger.info("Request processing finished");
             MDC.clear(); // Cleanup thread local
         }
     }
 
-    private void processData(String input) {
+    private void processData(String input)
+    {
         // SECURITY: Exclude the sensitive input from logs.
         logger.debug("Entering processData");
         
         // ... logic
     }
 
-    private String generateMangledID() {
-        // Reversable ID logic: Timestamp + HostIP
-        return System.currentTimeMillis() + "-" + "192.168.1.1"; 
+    private String generateMangledID()
+    {
+        return java.util.UUID.randomUUID().toString();
     }
     
 }
@@ -603,49 +854,52 @@ process_user_data({"secret": "my_password"})
 
 ---
 
-### TypeScript / Node.js (Pino + AsyncLocalStorage)
+### TypeScript / Node.js (Winston + AsyncLocalStorage)
 
 ```ts
-import { AsyncLocalStorage } from 'async_hooks';
+import { AsyncLocalStorage } from 'node:async_hooks';
 import * as winston from 'winston';
 
 const asyncLocalStorage = new AsyncLocalStorage<Map<string, string>>();
-
-const logger = winston.createLogger({
-  format: winston.format.combine(
-    winston.format.timestamp(),
-    winston.format.printf(({ timestamp, level, message }) => {
-      const store = asyncLocalStorage.getStore();
-      const corrId = store?.get('correlationId') || 'no-context';
-      const tenantId = store?.get('tenantId') || 'unknown';
-      return `${timestamp} [${corrId}] [${tenantId}] ${level}: ${message}`;
-    })
-  ),
-  transports: [new winston.transports.Console()]
+const logger = winston.createLogger(
+{
+    format: winston.format.combine(
+        winston.format.timestamp(),
+        winston.format.printf(({ timestamp, level, message }) =>
+        {
+            const store = asyncLocalStorage.getStore();
+            const correlationID = store?.get('correlationId') ?? 'no-context';
+            const tenantID = store?.get('tenantId') ?? 'unknown';
+            return `${timestamp} [${correlationID}] [${tenantID}] ${level}: ${message}`;
+        })
+    ),
+    transports: [new winston.transports.Console()]
 });
 
-async function sensitiveOperation(input: string) {
-    // SECURITY: Encoding a secret does not make it safe to log.
-    logger.info("Entering sensitiveOperation");
-
-    // BRANCHING
+function sensitiveOperation(input: string): void
+{
+    // SECURITY: Log approved branch metadata rather than the sensitive input.
+    logger.debug("Entering sensitiveOperation");
     const condition = input.length > 5;
     logger.debug(`Evaluating condition: input.length > 5 is ${condition}`);
-
-    if (condition) {
-        logger.info("Branch: Long input path");
-    } else {
-        logger.info("Branch: Short input path");
+    if (condition)
+    {
+        logger.debug("Branch: Long input path");
     }
+    else
+    {
+        logger.debug("Branch: Short input path");
+    }
+    logger.debug("Exiting sensitiveOperation");
 }
 
-// Middleware simulation
-function requestHandler() {
+function requestHandler(): void
+{
     const store = new Map<string, string>();
     store.set('correlationId', 'uuid-1234-5678');
     store.set('tenantId', 'tenant-A');
-
-    asyncLocalStorage.run(store, () => {
+    asyncLocalStorage.run(store, () =>
+    {
         sensitiveOperation("secretData");
     });
 }
@@ -654,6 +908,71 @@ requestHandler();
 ```
 
 ---
+
+### Swift (OSLog + explicit operation context)
+
+Pass approved context into the operation. Use a protected local pseudonym or a server-issued identifier, not a raw username.
+Mark only approved fields public. Native unified logging controls storage and collection, so do not create a duplicate plaintext sink by default.
+
+```swift
+// File: OrderDiagnostics.swift
+import OSLog
+
+struct OrderDiagnostics
+{
+    let logger: Logger
+
+    func recordValidation(correlationID: String, userKey: String, quantity: Int) -> Bool
+    {
+        logger.debug("validation.start correlation_id=\(correlationID, privacy: .public)")
+        defer
+        {
+            logger.debug("validation.end correlation_id=\(correlationID, privacy: .public)")
+        }
+        guard quantity > 0 else
+        {
+            logger.error("validation.failed user_key=\(userKey, privacy: .public) reason=nonpositive_quantity")
+            return false
+        }
+        logger.info("validation.ok user_key=\(userKey, privacy: .public) quantity=\(quantity)")
+        return true
+    }
+}
+```
+
+The application creates the logger with its configured subsystem and category.
+Attach task, scene, or document identifiers when they help diagnose concurrency and lifecycle behavior.
+Do not assume that a thread identifier identifies an async operation.
+
+### Rust (tracing + operation spans)
+
+Use the project's configured subscriber and sinks. This synchronous example enters a span and receives an already-approved user key.
+For async work, instrument the future instead of holding a synchronous entered-span guard across `await`.
+
+```rust
+// File: order_diagnostics.rs
+pub fn validate_quantity(correlation_id: &str, user_key: &str, quantity: i64) -> Result<i64, &'static str>
+{
+    let span = tracing::info_span!("validate_quantity", correlation_id, user_key);
+    let _entered = span.enter();
+    tracing::trace!("operation started");
+    let result = if quantity > 0
+    {
+        tracing::debug!(quantity, "positive quantity branch");
+        Ok(quantity)
+    }
+    else
+    {
+        tracing::warn!(reason = "nonpositive_quantity", "validation failed");
+        Err("quantity must be positive")
+    };
+    tracing::trace!(success = result.is_ok(), "operation finished");
+    result
+}
+```
+
+The example assumes the existing `tracing` dependency. It does not install a subscriber from library code.
+Keep structured fields stable so tools can filter by correlation ID, user key, operation, and failure reason.
 
 ## 13. Enforcement Checklist for Agents
 
@@ -665,7 +984,8 @@ Before delivering code, the agent **must verify**:
   * [ ] Structured logs are used
   * [ ] Context propagation exists
   * [ ] Correlation/request IDs included
-  * [ ] Sensitive data masked
+  * [ ] Useful identifier correlation is preserved through approved stable pseudonyms
+  * [ ] Secrets are excluded and other fields follow the explicit transformation policy
   * [ ] Entry, exit, branches logged
   * [ ] Errors always logged
   * [ ] Dynamic verbosity supported

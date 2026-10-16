@@ -37,6 +37,22 @@ The source repositories remain read-only.
 No validator framework, guide directories, templates, or application code are part of this change.
 Existing test-first requirements and coverage thresholds are not changed.
 
+## Detailed follow-up accepted on 15 October 2026
+
+Complete the ten requested refinements within existing files.
+Keep the shared style consistent and document only syntax-required exceptions.
+Use separate types even when they contain only a few lines.
+Add detailed names and runnable examples for Python, Swift, Go, Rust, and Java.
+Add the five languages beside the existing examples for all 23 GoF patterns.
+Restore logging detail and show safe identifier correlation without removing useful events.
+Choose stacks and layouts from apps, identity, rapid, and theme. Label proposed tool layouts as recommendations.
+
+Files: `AGENTS.md`, `CODING_STYLE.md`, `COMMENTING.md`, `MARKERS.md`, `GOF_PATTERNS.md`, `MIGRATIONS.md`, `TESTING.md`, `LOGGING.md`, and `PERFORMANCE.md`.
+Update the existing plan, review, inventory, status, conversation, changelog, and history records.
+Check the actual document examples through compilers, native test runners, and targeted behavior probes.
+Keep verification fixtures and dependency downloads outside the repository.
+No application build, file reorganization, or new tracked validation framework is needed.
+
 ## Historical proposal
 
 Use `AGENTS.md` as a short entry point that selects guidance from independent layers.
