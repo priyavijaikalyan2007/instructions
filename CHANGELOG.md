@@ -13,6 +13,8 @@ Created: 2026
 
 ## 16 October 2026
 
+- Completed the reviewed in-place instruction updates through a direct merge into main authorized by the owner.
+
 - Changed AGENTS.md to describe project models without private repository references and permit CDN delivery of static assets outside air-gapped deployments.
 
 - Changed project choices, stacks, and layouts for SaaS, native Apple apps, component libraries, websites, and local tools.

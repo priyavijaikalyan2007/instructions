@@ -121,3 +121,17 @@ Clarified that the application serves frontend routes and APIs, including pages 
 Truly static assets may use a CDN. Air-gapped deployments package required assets locally and avoid external network dependencies.
 Document checks cover headers, links, fences, private-path removal, and append-only history.
 The corrections stay on the existing branch for the owner to merge.
+
+## 16 October 2026: direct merge into main
+
+### User request
+
+> Great. Merge directly from the other branch to main locally and then push everything and update everything.
+
+### Outcome
+
+Refreshed the remote branches and confirmed that both local branches matched their remote copies.
+Fast-forwarded local `main` from `d4bf763` to `e890878`, preserving all seven reviewed commits without conflicts.
+Updated the plan, review, status, changelog, and history to record completion on `main`.
+The owner authorized pushing `main` and synchronizing the retained review branch to the final completion commit.
+Document integrity and local/remote branch synchronization are the final checks.

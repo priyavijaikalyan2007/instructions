@@ -14,7 +14,9 @@ Created: 2026
 Updated: 16 October 2026.
 
 The owner requested surgical edits in place and deferred file reorganization.
-The branch remains `docs/multilanguage-instructions-plan`.
+The accepted updates are merged into `main` from `docs/multilanguage-instructions-plan`.
+The merge was a fast-forward and preserved every reviewed commit.
+The review branch is retained for history.
 The first commit extends language conventions within existing instruction files.
 The second change folds in selected reusable lessons from apps, identity, and theme.
 Existing testing thresholds remain unchanged.
@@ -39,9 +41,10 @@ The application serves frontend routes and APIs, including pages when needed.
 Truly static assets may use a CDN. Air-gapped deployments package required assets locally without external network dependencies.
 The correction preserves the existing layout and shared style rules.
 
-On 16 October 2026, the GitHub API still reports `has_pull_requests: false`.
-The active CLI account also has read-only API access. No PR exists.
-On 16 October 2026, the owner authorized pushing the pending commits and will merge the branch.
-This request supersedes the earlier instruction to keep the detailed follow-up local.
-Review the [branch comparison](https://github.com/priyavijaikalyan2007/instructions/compare/main...docs/multilanguage-instructions-plan).
+PR creation was blocked during review by the repository setting.
+On 16 October 2026, the owner authorized a direct local merge into `main` and a push of the completed work.
+This request replaces the earlier plan for the owner to merge the branch.
+The direct merge completes the review workflow without a PR.
+The owner authorized publishing `main` and synchronizing the retained review branch.
+Document integrity and branch synchronization are checked before completion.
 Keep all four source repositories read-only.

@@ -12,6 +12,7 @@ Created: 2026
 # Instruction review
 
 Review date: 14 October 2026. Updated scope: 15 October 2026.
+Completion: accepted in-place updates merged into `main` on 16 October 2026.
 
 The owner superseded the reorganization proposal with surgical edits to existing files.
 The findings below remain review evidence, while proposed moves and broader policy changes are deferred.
@@ -207,3 +208,11 @@ Validation passes for 115 pattern compiler/import checks, 25 pattern behavior ch
 The published unit-test examples pass in all five languages. All five logging helpers match the same HMAC vector.
 Swift OSLog and Rust tracing checks pass. Document checks retain file encodings, headers, test-first rules, and coverage thresholds.
 The checks use temporary fixtures. They do not claim a build of any consuming application.
+
+## Completion on 16 October 2026
+
+The owner authorized merging the reviewed branch directly into local `main` and pushing the completed work.
+The fast-forward merge preserves all reviewed commits, including the public project descriptions and CDN delivery correction.
+The original reorganization proposal remains superseded.
+The accepted instruction edits stay within the existing files and retain the established testing thresholds.
+PR creation is no longer a completion dependency because the owner authorized the direct merge.

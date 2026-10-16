@@ -7,11 +7,12 @@ File GUID: 9363fbba-e59d-4a14-aa8c-3f9cf8c33d52
 Created: 2026
 -->
 
-<!-- AGENT: Proposed structure, migration steps, and acceptance checks awaiting owner review. -->
+<!-- AGENT: Completed in-place update plan, acceptance checks, and superseded reorganization proposal. -->
 
 # Instruction migration plan
 
-Status: original reorganization proposal superseded on 15 October 2026.
+Status: in-place updates merged into main on 16 October 2026.
+The original reorganization proposal was superseded on 15 October 2026.
 
 ## Current plan: surgical edits in place
 
@@ -28,8 +29,9 @@ The original proposal below is historical context and does not authorize reorgan
    Files: this plan, the review, source inventory, status, `CONVERSATION.md`, `CHANGELOG.md`, and `agentknowledge/history.jsonl`.
 4. Validate the diff and commit each focused change.
    Check added links, fences, headers, history records, retained encoding, and the absence of renamed or deleted files.
-5. Push the branch and check PR access.
-   Create the PR if access permits. Record the actual result.
+5. Publish the accepted changes through the owner-authorized direct merge into `main`.
+   PR creation was blocked during review. The owner replaced that workflow with a local merge and push.
+   Synchronize the retained review branch and verify local and remote commit IDs.
 
 No pattern required - simple function/class suffices.
 This change edits documentation only and introduces no runtime interfaces, services, or data models.
