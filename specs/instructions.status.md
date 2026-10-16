@@ -36,8 +36,7 @@ Application code and test suites are outside this documentation-only change.
 
 On 16 October 2026, the GitHub API still reports `has_pull_requests: false`.
 The active CLI account also has read-only API access. No PR exists.
-The detailed follow-up is committed locally. The refreshed AGENTS.md instructions say not to push yet.
-The [remote comparison](https://github.com/priyavijaikalyan2007/instructions/compare/main...docs/multilanguage-instructions-plan) contains the earlier pushed changes.
-It will include this follow-up after a later authorized push.
-Create the PR when the repository owner resolves PR access.
+On 16 October 2026, the owner authorized pushing the pending commits and will merge the branch.
+This request supersedes the earlier instruction to keep the detailed follow-up local.
+Review the [branch comparison](https://github.com/priyavijaikalyan2007/instructions/compare/main...docs/multilanguage-instructions-plan).
 Keep all four source repositories read-only.

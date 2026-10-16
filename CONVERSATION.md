@@ -94,3 +94,15 @@ The comparison link remains the review entry point until the owner enables PR cr
 
 The refreshed AGENTS.md instructions say not to push yet. The detailed follow-up remains a local branch commit.
 The remote comparison still contains the earlier pushed changes.
+
+## 16 October 2026: push authorization
+
+### User request
+
+> push the commits. I will merge myself.
+
+### Outcome
+
+The owner authorized pushing the pending commits on `docs/multilanguage-instructions-plan`.
+This request supersedes the earlier instruction to keep the follow-up local.
+The owner will merge the branch.
