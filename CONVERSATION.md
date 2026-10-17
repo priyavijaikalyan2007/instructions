@@ -164,3 +164,15 @@ Application code and runtime dependencies are unchanged.
 
 The implementation is complete on `docs/language-guides` for review.
 The commit remains local under the instruction not to push yet. Main retains the previously merged phase.
+
+## 17 October 2026: publish language guides for review
+
+### User request
+
+> push so I can diff on the website.
+
+### Outcome
+
+The owner authorized pushing `docs/language-guides` for website comparison with `main`.
+This request supersedes the earlier instruction to keep the extraction local.
+The language-guide branch remains separate from main for review.

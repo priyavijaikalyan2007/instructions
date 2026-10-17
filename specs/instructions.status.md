@@ -16,7 +16,8 @@ Updated: 17 October 2026.
 ## Current phase: language guides
 
 Implementation and document checks are complete on `docs/language-guides` for review.
-The commit remains local under the instruction not to push yet.
+On 17 October 2026, the owner authorized pushing this branch for website review.
+Review the [language-guide comparison](https://github.com/priyavijaikalyan2007/instructions/compare/main...docs/language-guides).
 The earlier in-place updates remain merged into `main` at `7278ab3`.
 The owner authorized this limited language split after reviewing that earlier phase.
 Broader product/task folder reorganization remains deferred.
