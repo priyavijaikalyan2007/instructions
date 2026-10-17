@@ -7,14 +7,38 @@ File GUID: 9363fbba-e59d-4a14-aa8c-3f9cf8c33d52
 Created: 2026
 -->
 
-<!-- AGENT: Completed in-place update plan, acceptance checks, and superseded reorganization proposal. -->
+<!-- AGENT: Active language extraction plan, completed in-place updates, and superseded broader reorganization. -->
 
 # Instruction migration plan
 
-Status: in-place updates merged into main on 16 October 2026.
+Status: language guide extraction complete on docs/language-guides as of 17 October 2026.
+The earlier in-place updates merged into main on 16 October 2026.
 The original reorganization proposal was superseded on 15 October 2026.
 
+## Current plan: language guide extraction
+
+The owner authorized a limited language split on 17 October 2026.
+Keep the existing topic guides as the authority for common rules.
+Move language-specific instructions and examples into root-level language guides.
+The earlier product/task folder reorganization remains outside this change.
+
+1. Create `CSHARP.md`, `SWIFT.md`, `GO.md`, `RUST.md`, `JAVA.md`, `PYTHON.md`, `JAVASCRIPT.md`, and `TYPESCRIPT.md`.
+2. Create `HTML.md`, `CSS.md`, `SCSS.md`, `SQL.md`, and `SHELL.md` for their existing syntax and examples.
+3. Extract language sections from `CODING_STYLE.md`, `COMMENTING.md`, `MARKERS.md`, `TESTING.md`, `LOGGING.md`, `PERFORMANCE.md`, and `GOF_PATTERNS.md`.
+4. Move the language-specific migration example and secret-handling details from `MIGRATIONS.md` and `SECRET_HANDLING.md`.
+5. Add explicit language selection to `AGENTS.md` and explain selective reading in `README.md`.
+6. Retain common policies, established topic paths, section anchors, source encodings, and all existing examples.
+7. Verify extraction completeness, link targets, headings, copyright headers, and append-only history.
+8. Update this plan, the status, review, source inventory, changelog, conversation, and task history.
+
+TypeScript reads the shared JavaScript runtime rules. SCSS reads the shared CSS rules.
+Other languages do not require unrelated language guides.
+No pattern required - this change reorganizes documentation without introducing runtime code or interfaces.
+Use a separate branch, `docs/language-guides`, for this phase.
+
 ## Current plan: surgical edits in place
+
+This earlier phase completed on 16 October 2026. The language extraction above is the active plan.
 
 The owner requested smaller steps and no file reorganization.
 Keep existing instruction files, paths, and engineering thresholds.

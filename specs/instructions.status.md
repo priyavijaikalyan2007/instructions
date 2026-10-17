@@ -11,40 +11,45 @@ Created: 2026
 
 # Instruction repository status
 
-Updated: 16 October 2026.
+Updated: 17 October 2026.
 
-The owner requested surgical edits in place and deferred file reorganization.
-The accepted updates are merged into `main` from `docs/multilanguage-instructions-plan`.
-The merge was a fast-forward and preserved every reviewed commit.
-The review branch is retained for history.
-The first commit extends language conventions within existing instruction files.
-The second change folds in selected reusable lessons from apps, identity, and theme.
-Existing testing thresholds remain unchanged.
-No files were moved, renamed, or added during this follow-up.
+## Current phase: language guides
 
-The [current plan](./instructions-plan.md#current-plan-surgical-edits-in-place) defines the authorized scope.
-The [review](./instructions-review.md) and [inventory](./instructions-source-inventory.md) retain the original evidence.
-Their proposed file moves are superseded and must not be implemented.
+Implementation and document checks are complete on `docs/language-guides` for review.
+On 17 October 2026, the owner authorized pushing this branch for website review.
+Review the [language-guide comparison](https://github.com/priyavijaikalyan2007/instructions/compare/main...docs/language-guides).
+The earlier in-place updates remain merged into `main` at `7278ab3`.
+The owner authorized this limited language split after reviewing that earlier phase.
+Broader product/task folder reorganization remains deferred.
 
-The detailed follow-up completes the owner's ten requested refinements within the existing files.
-It adds shared style rules, project choices and layouts, detailed examples, all 23 GoF patterns, and correlation-safe logging.
+The new root-level guides cover C#, Swift, Go, Rust, Java, Python, JavaScript, TypeScript, HTML, CSS, SCSS, SQL, and shell scripts.
+AGENTS.md selects guides from changed source and affected boundaries rather than loading every language.
+TypeScript also reads JavaScript. SCSS also reads CSS.
+Shared topic guides retain common policies and point to the selected language's details and examples.
+LANGUAGE.md continues to govern natural-language writing.
 
-Validation passes for 115 pattern compiler/import checks, 25 behavior checks, and 15 other example checks.
-Published unit-test examples pass for Python, Swift, Go, Rust, and Java.
-All five HMAC helpers match the documented vector. Swift OSLog and Rust tracing examples compile.
-Document checks retain existing file encodings, headers, test-first rules, and coverage thresholds.
-Temporary validation tools and dependencies remain under /tmp.
-Application code and test suites are outside this documentation-only change.
+The [current plan](./instructions-plan.md#current-plan-language-guide-extraction) defines the authorized scope.
+The [review](./instructions-review.md#language-guide-extraction-on-17-october-2026) explains the extraction.
+The [inventory](./instructions-source-inventory.md#language-extraction-snapshot-on-17-october-2026) records its baseline and source topics.
 
-The public-use correction replaces private project references in AGENTS.md with self-contained architecture descriptions.
-The application serves frontend routes and APIs, including pages when needed.
-Truly static assets may use a CDN. Air-gapped deployments package required assets locally without external network dependencies.
-The correction preserves the existing layout and shared style rules.
+## Verification
 
-PR creation was blocked during review by the repository setting.
-On 16 October 2026, the owner authorized a direct local merge into `main` and a push of the completed work.
-This request replaces the earlier plan for the owner to merge the branch.
-The direct merge completes the review workflow without a PR.
-The owner authorized publishing `main` and synchronizing the retained review branch.
-Document integrity and branch synchronization are checked before completion.
-Keep all four source repositories read-only.
+All existing code blocks remain intact after normalization of outer Markdown indentation and trailing whitespace.
+The coverage command block is split into three language-specific examples without changing its commands.
+All 184 GoF examples remain in their matching language guides.
+Existing topic paths, section anchors, source encodings, copyright headers, and append-only history remain intact.
+Shared formatting rules, test-first guidance, and coverage thresholds remain unchanged.
+Language dependencies and Markdown links pass checks.
+The seven main shared topic guides shrink from 9,662 to 2,426 lines, a 74.9 percent reduction.
+
+The earlier phase verified 115 pattern compiler/import checks, 25 behavior checks, and 15 other example checks.
+Published unit-test and HMAC examples also passed in that phase.
+This extraction preserves their code and does not claim a new application build or runtime test run.
+Temporary extraction and validation scripts remain under /tmp.
+
+## Previous phase
+
+The owner authorized a direct merge and push on 16 October 2026 after PR creation was blocked during review.
+Both local and remote branches reached `7278ab3` for that completed phase.
+The public project descriptions and CDN/air-gap delivery corrections are included in that baseline.
+All application source repositories remain unchanged by this phase.

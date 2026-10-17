@@ -22,10 +22,9 @@ Use the established identity flow for token issuance and renewal.
 ## Native clients and tools
 
 The database envelope model below applies to server-owned secrets stored by a backend.
-For native macOS/iOS clients, use [Keychain services](https://developer.apple.com/documentation/security/keychain-services) for credentials and tokens the client legitimately owns.
-Do not store those values in `UserDefaults`, ordinary files, source code, or logs.
+For native client credentials and tokens, use the storage rules in the selected language guide.
 Never ship backend API keys, database credentials, or master encryption keys inside an app, website, or distributed tool.
-For Go, Rust, and Java tools, use the project's approved OS credential store or secret provider when persistence is required.
+For tools, use the project's approved OS credential store or secret provider when persistence is required.
 
 ## 1. Core Security Principles
 
@@ -71,25 +70,7 @@ In the database entity (e.g., `TenantSettings`, `IntegrationConfig`), the column
 
 Coding agents must implement/use a centralised service for all secret operations. Do not implement ad-hoc encryption logic in Controllers or Services.
 
-```csharp
-public interface ISecretProtectionService
-{
-    /// <summary>
-    /// Encrypts a plaintext secret using the current active key version.
-    /// </summary>
-    /// <param name="plaintext">The raw secret.</param>
-    /// <returns>The serialized JSON envelope string.</returns>
-    Task<string> ProtectAsync(string plaintext);
-
-    /// <summary>
-    /// Decrypts a protected secret. Automatically resolves the correct key 
-    /// based on the version metadata in the envelope.
-    /// </summary>
-    /// <param name="envelopeJson">The serialized JSON envelope.</param>
-    /// <returns>The plaintext secret.</returns>
-    Task<string> UnprotectAsync(string envelopeJson);
-}
-```
+See [C#](./CSHARP.md#31-the-isecretprotectionservice).
 
 ### 3.2 Algorithm Requirements
 

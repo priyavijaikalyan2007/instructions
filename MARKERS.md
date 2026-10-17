@@ -33,213 +33,55 @@ This allows agents to read the first 20 lines of a file and immediately understa
 
 ### TypeScript Format
 
-```typescript
-/*
- * ----------------------------------------------------------------------------
- * ⚓ COMPONENT: [ComponentName]
- * 📜 PURPOSE: [Concise description of what this file does]
- * 🔗 RELATES: [Reference to related files or specs, e.g., [[LiterateErrors]]]
- * ⚡ FLOW: [Inbound Caller] -> [This Component] -> [Outbound Dependency]
- * ----------------------------------------------------------------------------
- */
-```
-
-```typescript
-/*
- * ----------------------------------------------------------------------------
- * ⚓ COMPONENT: ErrorDialog
- * 📜 PURPOSE: Renders literate error messages in a Bootstrap 5 modal dialog.
- * 🔗 RELATES: [[LiterateErrors]], [[ErrorDialogSpec]]
- * ⚡ FLOW: [Consumer App] -> [showErrorDialog()] -> [Bootstrap Modal API]
- * ----------------------------------------------------------------------------
- */
-export function showErrorDialog(containerId: string, options: LiterateError): void
-{
-    // ...
-}
-/*
- * ----------------------------------------------------------------------------
- * ⚓ COMPONENT: UserProfileController
- * 📜 PURPOSE: Handles fetching and updating user profile settings and avatars.
- * 🔗 RELATES: [[UserProfileService]], [[AvatarUpload]]
- * ⚡ FLOW: [Router] -> [This] -> [Database]
- * 🛡️ SECURITY: Requires 'AuthenticatedUser' policy.
- * ----------------------------------------------------------------------------
- */
-export class UserProfileController { ... }
-```
+See [TypeScript](./TYPESCRIPT.md#navigation-markers).
 
 ### C# Format
 
-```csharp
-/* 
- * ----------------------------------------------------------------------------
- * ⚓ COMPONENT: [ComponentName]
- * 📜 PURPOSE: [Concise description of what this file does]
- * 🔗 RELATES: [Reference to related files or specs, e.g., [[AuthSpec]]]
- * ⚡ FLOW: [Inbound Caller] -> [This Component] -> [Outbound Dependency]
- * 🛡️ SECURITY: [Security Role/Constraint, e.g., Requires 'Admin']
- * ----------------------------------------------------------------------------
- */
-```
+See [C#](./CSHARP.md#navigation-markers).
 
 ### Swift, Go, Rust, and Java Format
 
-Use the same `COMPONENT`, `PURPOSE`, `RELATES`, `FLOW`, and optional `SECURITY` fields in ordinary comments.
-A block comment works in all four languages. Go may use `//` lines instead.
+Use the header syntax and directive-placement rules in the selected language guide.
+Keep public documentation comments separate from navigation metadata.
+Use the standard COMPONENT, PURPOSE, RELATES, FLOW, and optional SECURITY fields.
+Do not add comments to formats that prohibit them, such as JSON.
 Keep public documentation comments separate as described in [COMMENTING.md](./COMMENTING.md).
-
-Preserve required positions and blank lines for tool directives, Go build constraints, cgo preambles, and Rust crate attributes.
 Do not insert markers between a documentation comment or annotation and its declaration.
 Use ASCII field names when a parser or file format does not support the marker symbols.
-Do not add comments to formats that prohibit them, such as JSON.
+Preserve the directive positions and blank lines required by the selected language.
 Keep required copyright information in the existing file header.
 
 ### Python Format
 
-```python
-# File: quantity_policy.py
-# COMPONENT: QuantityPolicy
-# PURPOSE: Validates quantities before an order is created.
-# RELATES: [[OrderValidation]]
-# FLOW: CLI or UI -> quantity policy -> order constructor
-# SECURITY: Does not accept a quantity without validation.
-
-# @entrypoint
-# @config: maximum_quantity
-# OrderValidation: Canonical quantity boundary.
-def is_valid_quantity(quantity: int, maximum_quantity: int) -> bool:
-    """Returns whether the quantity is within the permitted range."""
-    return 0 < quantity <= maximum_quantity
-```
-
-Use `#` rather than `//`. Keep shebangs, encoding declarations, and module docstrings in their required positions.
+See [Python](./PYTHON.md#navigation-markers).
 
 ### Swift Format
 
-```swift
-// File: QuantityPolicy.swift
-/*
- * COMPONENT: QuantityPolicy
- * PURPOSE: Validates a quantity before constructing an order.
- * RELATES: [[OrderValidation]]
- * FLOW: Native view -> quantity policy -> order constructor
- * SECURITY: Validate imported values before storing them.
- */
-
-// MARK: - Public API
-// @entrypoint
-func isValidQuantity(_ quantity: Int) -> Bool
-{
-    return quantity > 0
-}
-```
+See [Swift](./SWIFT.md#navigation-markers).
 
 ### Go Format
 
-```go
-// File: quantity_policy.go
-// COMPONENT: QuantityPolicy
-// PURPOSE: Validates a quantity before constructing an order.
-// RELATES: [[OrderValidation]]
-// FLOW: Command -> quantity policy -> order constructor
-// SECURITY: Validate external values before storing them.
-
-package quantities
-
-// @entrypoint
-// IsValidQuantity reports whether the quantity is positive.
-func IsValidQuantity(quantity int) bool {
-    return quantity > 0
-}
-```
-
-The blank line before `package` separates navigation metadata from package documentation.
-Preserve Go build constraints and the cgo preamble when adding a header.
+See [Go](./GO.md#navigation-markers).
 
 ### Rust Format
 
-```rust
-// File: quantity_policy.rs
-/*
- * COMPONENT: QuantityPolicy
- * PURPOSE: Validates a quantity before constructing an order.
- * RELATES: [[OrderValidation]]
- * FLOW: Command -> quantity policy -> order constructor
- * SECURITY: Validate external values before storing them.
- */
-
-// @entrypoint
-/// Returns whether a signed external quantity is positive.
-pub fn is_valid_quantity(quantity: i64) -> bool
-{
-    quantity > 0
-}
-```
-
-Keep `//!` module documentation and crate attributes valid. Use ordinary comments for navigation tags rather than publishing them as rustdoc.
+See [Rust](./RUST.md#navigation-markers).
 
 ### Java Format
 
-```java
-// File: QuantityPolicy.java
-/*
- * COMPONENT: QuantityPolicy
- * PURPOSE: Validates a quantity before constructing an order.
- * RELATES: [[OrderValidation]]
- * FLOW: HTTP or CLI boundary -> quantity policy -> order constructor
- * SECURITY: Validate external values before storing them.
- */
-public final class QuantityPolicy
-{
-    // @entrypoint
-    /** Returns whether the quantity is positive. */
-    public static boolean isValidQuantity(int quantity)
-    {
-        return quantity > 0;
-    }
-}
-```
-
-These examples spell out the standard fields in ASCII. The corresponding symbols used elsewhere in this guide carry the same meanings.
-Preserve annotation and documentation attachment. Never insert a marker between an annotation and the declaration it controls.
+See [Java](./JAVA.md#navigation-markers).
 
 ### SCSS Format
 
-Use `/* */` block comments so the header is preserved in unminified CSS output.
-
-```scss
-/*
- * ⚓ COMPONENT: MetricCard
- * 📜 PURPOSE: Styles for the metric card dashboard component.
- * 🔗 RELATES: [[EnterpriseTheme]], [[DashboardLayout]]
- */
-```
+See [SCSS](./SCSS.md#navigation-markers).
 
 ### HTML Format
 
-Apply markers using HTML comments. This is relevant for vanilla HTML frontend files.
-
-```html
-<!--
-  ⚓ COMPONENT: ErrorDialogDemo
-  📜 PURPOSE: Demo markup showing all error dialog variants and configurations.
-  🔗 RELATES: [[ErrorDialog]], [[LiterateErrors]]
-  ⚡ FLOW: [AppShell] -> [This] -> [SessionAPI]
--->
-```
+See [HTML](./HTML.md#navigation-markers).
 
 ### CSS Format
 
-```css
-/*
- * ⚓ COMPONENT: ThinkerStyles
- * 📜 PURPOSE: Styles for the Thinker brainstorm canvas and idea bubbles.
- * 🔗 RELATES: [[SessionCanvas]]
- */
-```
-
----
+See [CSS](./CSS.md#navigation-markers).
 
 ## 2. In-Code Semantic Tags
 
@@ -293,26 +135,11 @@ We use **Wiki-Style Links** `[[ConceptName]]` in comments to reference shared co
 
 **Example:**
 
-```typescript
-// Renders the error message following the [[LiterateErrors]] guidelines.
-function renderErrorMessage(container: HTMLElement, error: LiterateError): void
-{
-    // ...
-}
-```
+See [TypeScript](./TYPESCRIPT.md#3-global-concept-registry).
 
-```scss
-// Metric label — uses the [[EnterpriseTheme]] small font size and muted colour
-.metric-label {
-    font-size: $font-size-sm;
-    color: $gray-600;
-}
-```
+See [SCSS](./SCSS.md#3-global-concept-registry).
 
-```csharp
-// Validates the cart items against the [[InventoryRules]].
-public void ValidateCart() { ... }
-```
+See [C#](./CSHARP.md#3-global-concept-registry).
 
 ---
 
@@ -322,59 +149,21 @@ Use clear section headers so agents can scan large files quickly.
 
 **TypeScript:**
 
-```typescript
-// ============================================================================
-// PUBLIC API
-// ============================================================================
-
-// ============================================================================
-// PRIVATE HELPERS
-// ============================================================================
-
-// ============================================================================
-// EVENT HANDLERS
-// ============================================================================
-```
+See [TypeScript](./TYPESCRIPT.md#4-section-markers-long-files).
 
 **SCSS:**
 
-```scss
-// ============================================================================
-// CUSTOM COMPONENT STYLES
-// ============================================================================
-
-// ============================================================================
-// UTILITY CLASSES
-// ============================================================================
-```
+See [SCSS](./SCSS.md#4-section-markers-long-files).
 
 **C#:**
 
-```csharp
-// ============================================================================
-// PUBLIC API
-// ============================================================================
-```
+See [C#](./CSHARP.md#4-section-markers-long-files).
 
 ---
 
 ## 5. Language-Specific Collapsible Regions
 
-When supported by the language and tooling, use region directives to collapse large sections. 
-In C#, use `#region` and `#endregion` for blocks that are meaningful as a unit 
-(for example, "Public API", "Private Helpers"). Keep regions shallow; do not nest more than one level.
-
-```csharp
-#region Public API
-public Task<User> GetUserAsync(...) { ... }
-#endregion
-```
-
----
-
-Swift uses `// MARK: - Section name` for Xcode navigation.
-Go, Rust, and Java use ordinary section comments unless the project declares supported IDE folding markers.
-Do not copy C# `#region` directives into another language.
+Use folding syntax from the selected language guide when the project supports it. Keep regions shallow.
 
 ## 6. Documentation and Playbooks
 

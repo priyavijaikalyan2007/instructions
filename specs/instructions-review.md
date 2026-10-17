@@ -13,10 +13,11 @@ Created: 2026
 
 Review date: 14 October 2026. Updated scope: 15 October 2026.
 Completion: accepted in-place updates merged into `main` on 16 October 2026.
+Language phase: root-level guide extraction authorized and completed on 17 October 2026.
 
-The owner superseded the reorganization proposal with surgical edits to existing files.
-The findings below remain review evidence, while proposed moves and broader policy changes are deferred.
-Use the [current plan](./instructions-plan.md#current-plan-surgical-edits-in-place) for the authorized scope.
+The first phase used surgical edits to existing files. The owner then authorized a limited language-guide split on 17 October 2026.
+The findings below remain review evidence. Broader product/task folder moves and policy changes remain deferred.
+Use the [current plan](./instructions-plan.md#current-plan-language-guide-extraction) for the authorized scope.
 
 The repository needs a shared foundation plus guides selected by language, product, and task.
 Its current entry point describes one enterprise SaaS application, so agents inherit assumptions that do not fit other projects.
@@ -216,3 +217,23 @@ The fast-forward merge preserves all reviewed commits, including the public proj
 The original reorganization proposal remains superseded.
 The accepted instruction edits stay within the existing files and retain the established testing thresholds.
 PR creation is no longer a completion dependency because the owner authorized the direct merge.
+
+## Language guide extraction on 17 October 2026
+
+The language phase creates 13 root-level guides and preserves the existing common topic files as policy authorities.
+AGENTS.md selects guides from changed source, embedded languages, manifests, and affected boundaries.
+Language examples in this instructions repository do not select languages for a consuming project.
+TypeScript requires the shared JavaScript rules. SCSS requires the shared CSS rules.
+Other language guides do not declare dependencies on unrelated language guides.
+
+The extraction covers style, naming, comments, markers, tests, coverage, logging, performance, patterns, migrations, and secret-handling examples.
+All 184 GoF examples remain available in their matching language guides.
+Common guide paths and section anchors remain available as entry points.
+Shared formatting, test-first rules, and coverage thresholds remain unchanged.
+The seven main shared topic guides shrink from 9,662 to 2,426 lines.
+
+Validation compares the normalized contents and multiplicity of every existing code block.
+One coverage example is split into three language-specific blocks without changing its commands.
+Checks also cover Markdown links and anchors, language dependencies, source encodings, copyright headers, and append-only history.
+The earlier compiler and behavior results remain evidence for the unchanged snippets. No application build is claimed for this extraction.
+The implementation remains on `docs/language-guides` for review. No broader folder reorganization is included.

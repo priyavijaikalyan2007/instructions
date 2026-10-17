@@ -295,3 +295,30 @@ Rapid has no root AGENTS.md. Its README and app README establish the target layo
 Apps and identity have unrelated working-copy edits. This task does not modify or claim ownership of those edits.
 Theme and rapid are clean at this refresh.
 No Go or Rust source project was supplied. Their proposed layouts use language tooling conventions.
+
+## Language extraction snapshot on 17 October 2026
+
+This phase uses this repository at `7278ab3` as its baseline.
+It does not re-import or modify any working application repository.
+
+| Existing source | Language-specific material moved |
+| --- | --- |
+| `CODING_STYLE.md` | References, formatting exceptions, naming, type filenames, construction rules, and examples. |
+| `COMMENTING.md` | Comment syntax, API documentation conventions, and examples. |
+| `MARKERS.md` | Source headers, directive placement, section markers, and folding syntax. |
+| `TESTING.md` | Frameworks, language examples, coverage commands, and C# authorization fixtures. |
+| `LOGGING.md` | Runtime integration, HMAC helper implementations, and logging examples. |
+| `PERFORMANCE.md` | Swift, Go, Rust, Java, Python, .NET, and PostgreSQL specifics and language examples. |
+| `GOF_PATTERNS.md` | All 23 patterns in each of eight programming languages, totaling 184 code examples. |
+| `MIGRATIONS.md` | JavaScript-to-TypeScript migration example. |
+| `SECRET_HANDLING.md` | Native Apple credential storage and the C# protection interface example. |
+
+Destinations are `CSHARP.md`, `SWIFT.md`, `GO.md`, `RUST.md`, `JAVA.md`, `PYTHON.md`, `JAVASCRIPT.md`, and `TYPESCRIPT.md`.
+Additional destinations are `HTML.md`, `CSS.md`, `SCSS.md`, `SQL.md`, and `SHELL.md`.
+Common policy remains in the original topic guides. Their existing section anchors remain available.
+
+Validation compares normalized fenced code before and after extraction, including repeated examples.
+The coverage command block splits into three examples for .NET, JavaScript, and Python.
+All commands and code tokens remain unchanged. Outer Markdown indentation and trailing whitespace are normalized.
+Original file encodings and copyright headers remain intact.
+The earlier source-repository inventory remains historical evidence rather than a prerequisite for reading the public language guides.
