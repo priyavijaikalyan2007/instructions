@@ -116,37 +116,9 @@ Comment when:
 
 ### 3.1 What, Why — Not How
 
-```csharp
-// BAD: How (redundant with code)
-// Loop through users and check if email contains @
-foreach (var user in users)
-{
-    if (user.Email.Contains("@")) { ... }
-}
+See [C#](./CSHARP.md#31-what-why--not-how).
 
-// GOOD: What and Why
-// Filter to valid users only—external imports may lack email validation
-foreach (var user in users)
-{
-    if (user.Email.Contains("@")) { ... }
-}
-```
-
-```typescript
-// BAD: How (redundant with code)
-// Loop through items and check if element exists
-for (const item of items)
-{
-    if (document.getElementById(item.id)) { ... }
-}
-
-// GOOD: What and Why
-// Remove stale dialog elements — components may leave orphaned modals after errors
-for (const item of items)
-{
-    if (document.getElementById(item.id)) { ... }
-}
-```
+See [TypeScript](./TYPESCRIPT.md#31-what-why--not-how).
 
 ### 3.2 Standard Annotations
 
@@ -166,70 +138,27 @@ Use consistent annotations to mark code states and intentions:
 | `DEPRECATED` | Scheduled for removal |
 | `REVIEW` | Needs human review |
 
-Format: `// ANNOTATION: Description with context`
+Format each annotation using the comment syntax in the selected language guide: `ANNOTATION: Description with context`.
 
-```csharp
-// TODO: Replace with batch API call once available (Q3 2025)
-// BUGFIX: Null check added—legacy records may have missing tenant IDs (see issue #1234)
-// PERF: Cached here to avoid N+1 query in the parent loop
-// SECURITY: Input sanitized to prevent SQL injection
-```
+See [C#](./CSHARP.md#32-standard-annotations).
 
-```typescript
-// TODO: Add keyboard navigation for arrow keys (spec section 3.2)
-// BUGFIX: Chrome 120 requires explicit tabindex for focus — see issue #42
-// HACK: Bootstrap 5.3 modal backdrop z-index conflict — revisit after upgrade
-```
+See [TypeScript](./TYPESCRIPT.md#32-standard-annotations).
 
 ### 3.3 Agent Markers
 
 Guide automated tools with explicit markers:
 
-```csharp
-// @agent:test — Cover edge case where input is empty collection
-// @agent:security — Validate this doesn't expose PII in logs
-// @agent:review — Complex logic, needs human verification
-// @agent:refactor — Candidate for extraction once patterns stabilize
-```
+See [C#](./CSHARP.md#33-agent-markers).
 
-```typescript
-// @agent:test — Cover edge case where container ID is null
-// @agent:security — Verify this does not inject unsanitised HTML
-// @agent:review — Complex selector logic, needs human verification
-// @agent:refactor — Candidate for extraction once more components exist
-```
+See [TypeScript](./TYPESCRIPT.md#33-agent-markers).
 
 ### 3.4 Section Headers
 
 For longer files, use section comments to create navigable structure:
 
-```csharp
-// ============================================================================
-// CONFIGURATION
-// ============================================================================
+See [C#](./CSHARP.md#34-section-headers).
 
-// ============================================================================
-// PUBLIC API
-// ============================================================================
-
-// ============================================================================
-// PRIVATE HELPERS
-// ============================================================================
-```
-
-```typescript
-// ============================================================================
-// PUBLIC API
-// ============================================================================
-
-// ============================================================================
-// PRIVATE HELPERS
-// ============================================================================
-
-// ============================================================================
-// EVENT HANDLERS
-// ============================================================================
-```
+See [TypeScript](./TYPESCRIPT.md#34-section-headers).
 
 ---
 
@@ -237,272 +166,43 @@ For longer files, use section comments to create navigable structure:
 
 ### 4.1 C# / .NET
 
-Use XML documentation for public APIs:
-
-```csharp
-/// <summary>
-/// Calculates the pro-rated subscription cost for a partial billing period.
-/// </summary>
-/// <param name="plan">The subscription plan to calculate for.</param>
-/// <param name="startDate">The start of the partial period.</param>
-/// <param name="endDate">The end of the partial period.</param>
-/// <returns>The pro-rated cost in the plan's currency.</returns>
-/// <exception cref="ArgumentException">Thrown when endDate precedes startDate.</exception>
-public decimal CalculateProratedCost(Plan plan, DateTime startDate, DateTime endDate)
-```
+See [C#](./CSHARP.md#comments).
 
 ### 4.2 TypeScript / JavaScript
 
-Use JSDoc for functions and complex types:
-
-```typescript
-/**
- * Displays a structured error dialog using Bootstrap's modal.
- *
- * @param containerId - The DOM element ID where the modal will be injected
- * @param options - The error information to display
- * @returns void
- */
-function showErrorDialog(containerId: string, options: ErrorDialogOptions): void {
-}
-
-/**
- * Debounces a function call to prevent rapid repeated execution.
- * 
- * @param fn - The function to debounce
- * @param delayMs - Milliseconds to wait before executing
- * @returns A debounced version of the input function
- */
-function debounce<T extends (...args: unknown[]) => void>(
-  fn: T,
-  delayMs: number
-): (...args: Parameters<T>) => void
-```
+See [TypeScript](./TYPESCRIPT.md#comments).
 
 ### 4.3 Python
 
-Use docstrings following Google or NumPy style:
-
-```python
-def calculate_prorated_cost(plan: Plan, start_date: date, end_date: date) -> Decimal:
-    """
-    Calculates the pro-rated subscription cost for a partial billing period.
-
-    Args:
-        plan: The subscription plan to calculate for.
-        start_date: The start of the partial period.
-        end_date: The end of the partial period.
-
-    Returns:
-        The pro-rated cost in the plan's currency.
-
-    Raises:
-        ValueError: When end_date precedes start_date.
-    """
-```
-
-A Python docstring also states ownership and concurrency guarantees when callers need them.
-Use `Raises` for expected runtime failures rather than presenting them as assertions.
-
-```python
-def parse_quantity(text: str) -> int:
-    """Parses a positive decimal quantity without retaining the input.
-
-    Args:
-        text: The complete decimal quantity.
-
-    Returns:
-        The positive quantity.
-
-    Raises:
-        ValueError: If the text is invalid or the quantity is nonpositive.
-    """
-    quantity = int(text)
-    if quantity <= 0:
-        raise ValueError("Quantity must be positive.")
-    return quantity
-```
+See [Python](./PYTHON.md#comments).
 
 ### 4.4 SQL
 
-Comment tables, columns, and complex queries:
-
-```sql
--- Tenant table: Root entity for multi-tenancy isolation
--- All user data is partitioned by tenant_id for security and performance
-CREATE TABLE tenants (
-    id UUID PRIMARY KEY,           -- Immutable identifier
-    name VARCHAR(255) NOT NULL,    -- Display name, user-editable
-    slug VARCHAR(100) UNIQUE,      -- URL-safe identifier for routing
-    created_at TIMESTAMPTZ DEFAULT NOW()
-);
-
--- Fetch active subscriptions with plan details
--- PERF: Uses covering index on (tenant_id, status) for the WHERE clause
-SELECT s.*, p.name as plan_name, p.price
-FROM subscriptions s
-JOIN plans p ON s.plan_id = p.id
-WHERE s.tenant_id = @tenantId
-  AND s.status = 'active';
-```
+See [SQL](./SQL.md#comments).
 
 ### 4.5 SCSS
 
-Use `/* */` block comments for file headers and section markers (preserved in compiled CSS when not minified). Use `//` line comments for inline explanations (stripped during compilation).
-
-```scss
-/*
- * ⚓ COMPONENT: MetricCard
- * 📜 PURPOSE: Styles for the metric card dashboard component.
- * 🔗 RELATES: [[DashboardLayout]]
- */
-
-// Card container — uses theme border and spacing variables
-.metric-card {
-    padding: $spacer;
-    border: 1px solid $gray-300;
-    // PERF: Using a simple border instead of box-shadow for rendering performance
-    background: white;
-}
-
-// Value display — large, bold, high contrast for readability
-.metric-value {
-    font-size: 1.5rem;
-    font-weight: $font-weight-bold;
-    color: $gray-900;
-}
-```
+See [SCSS](./SCSS.md#comments).
 
 ### 4.6 HTML
 
-Use HTML comments for component markers and agent navigation:
-
-```html
-<!--
-  ⚓ COMPONENT: ErrorDialog
-  📜 PURPOSE: Demo markup for the error dialog component.
-  🔗 RELATES: [[LiterateErrors]]
--->
-<div id="error-dialog-demo">
-    <!-- Action buttons — see spec section 4.1 for required actions -->
-    <div class="errordialog-actions">
-        ...
-    </div>
-</div>
-```
-
----
+See [HTML](./HTML.md#comments).
 
 ### 4.7 Swift
 
-Use `///` documentation comments for public APIs, following [Swift API conventions](https://www.swift.org/documentation/api-design-guidelines/).
-Describe parameters, return values, thrown errors, actor isolation, and cancellation when relevant.
-Use `// MARK: - Section name` for sections that benefit Xcode navigation.
-
-```swift
-/// Parses a positive quantity from user-entered text.
-/// - Parameter text: The complete decimal quantity, without surrounding spaces.
-/// - Returns: The quantity, or nil when the text is invalid or nonpositive.
-/// - Important: This function does not log or retain the input.
-func parseQuantity(_ text: String) -> Int?
-{
-    guard let quantity = Int(text), quantity > 0 else
-    {
-        return nil
-    }
-    return quantity
-}
-```
+See [Swift](./SWIFT.md#comments).
 
 ### 4.8 Go
 
-Follow [Go doc comments](https://go.dev/doc/comment). Start exported declaration comments with the declared name.
-Place a documentation comment directly before the declaration it describes.
-Document error behavior, context cancellation, ownership, and concurrent-use guarantees when relevant.
-Keep navigation headers separate so they do not become an unrelated declaration's documentation.
-
-```go
-package quantities
-
-import (
-    "fmt"
-    "strconv"
-)
-
-// ParseQuantity parses a positive decimal quantity.
-// It returns an error for invalid text, overflow, or a nonpositive value.
-// It does not retain the input and is safe for concurrent calls.
-func ParseQuantity(text string) (int, error) {
-    quantity, err := strconv.Atoi(text)
-    if err != nil {
-        return 0, fmt.Errorf("parse quantity: %w", err)
-    }
-    if quantity <= 0 {
-        return 0, fmt.Errorf("quantity must be positive")
-    }
-    return quantity, nil
-}
-```
+See [Go](./GO.md#comments).
 
 ### 4.9 Rust
 
-Use `///` for item documentation and `//!` for module or crate documentation, following [rustdoc conventions](https://doc.rust-lang.org/rustdoc/how-to-write-documentation.html).
-Document errors, panics, ownership, and examples where relevant.
-Document caller obligations under `# Safety` for unsafe APIs and explain each unsafe block's safety invariant.
-Use ordinary comments for navigation markers rather than exposing internal markers as public API documentation.
-
-```rust
-/// Parses a positive quantity without retaining the input.
-///
-/// # Errors
-/// Returns an error for invalid decimal text, overflow, or zero.
-///
-/// # Examples
-/// The caller handles the error instead of treating a failed parse as zero.
-pub fn parse_quantity(text: &str) -> Result<u32, String>
-{
-    let quantity = text.parse::<u32>().map_err(|_|
-    {
-        "invalid quantity".to_owned()
-    })?;
-    if quantity == 0
-    {
-        return Err("quantity must be positive".to_owned());
-    }
-    Ok(quantity)
-}
-```
+See [Rust](./RUST.md#comments).
 
 ### 4.10 Java
 
-Use `/** ... */` Javadoc comments directly before documented declarations, following the [Javadoc specification](https://docs.oracle.com/en/java/javase/21/docs/specs/javadoc/doc-comment-spec.html).
-Document parameters, results, exceptions, resource ownership, and thread-safety guarantees when relevant.
-Keep ordinary navigation comments separate from Javadoc.
-
-```java
-// File: QuantityParser.java
-public final class QuantityParser
-{
-    /**
-     * Parses a positive decimal quantity without retaining the input.
-     * @param text the complete decimal quantity
-     * @return the positive quantity
-     * @throws NumberFormatException if the text is invalid or exceeds the integer range
-     * @throws IllegalArgumentException if the parsed value is nonpositive
-     */
-    public static int parseQuantity(String text)
-    {
-        int quantity = Integer.parseInt(text);
-        if (quantity <= 0)
-        {
-            throw new IllegalArgumentException("Quantity must be positive.");
-        }
-        return quantity;
-    }
-}
-```
-
----
+See [Java](./JAVA.md#comments).
 
 ## 5. Maintaining Comments
 
@@ -559,29 +259,9 @@ Example structure:
 
 Don't comment self-evident operations:
 
-```csharp
-// BAD: States the obvious
-// Increment the counter
-counter++;
+See [C#](./CSHARP.md#62-obvious-code).
 
-// Set the user's name
-user.Name = name;
-
-// Return the result
-return result;
-```
-
-```typescript
-// BAD: States the obvious
-// Increment the counter
-counter++;
-
-// Set the title text
-titleElement.textContent = title;
-
-// Return the result
-return result;
-```
+See [TypeScript](./TYPESCRIPT.md#62-obvious-code).
 
 ---
 

@@ -116,87 +116,24 @@ Retain machine-readable test results when the runner supports them. Distinguish 
 
 Each test should validate exactly one scenario or behavior. Never combine multiple test cases into a single test method.
 
-```csharp
-// Correct: One scenario per test
-[Fact]
-public async Task CreateUser_WithValidEmail_ReturnsCreatedUser()
-
-[Fact]
-public async Task CreateUser_WithDuplicateEmail_ThrowsConflictException()
-
-[Fact]
-public async Task CreateUser_WithInvalidEmail_ThrowsValidationException()
-
-// Incorrect: Multiple scenarios in one test
-[Fact]
-public async Task CreateUser_VariousScenarios_HandlesAllCases()
-```
+See [C#](./CSHARP.md#one-test-per-scenario).
 
 ### One Test Class Per Feature or Component
 
 Group related tests into a single test class. The class should correspond to the production class or feature being tested.
 
-```
-Tests/
-├── Unit/
-│   ├── Services/
-│   │   ├── UserServiceTests.cs
-│   │   ├── OrderServiceTests.cs
-│   │   └── PaymentServiceTests.cs
-│   └── Validators/
-│       ├── EmailValidatorTests.cs
-│       └── PhoneValidatorTests.cs
-├── Integration/
-│   ├── Repositories/
-│   │   ├── UserRepositoryTests.cs
-│   │   └── OrderRepositoryTests.cs
-│   └── Api/
-│       ├── UsersControllerTests.cs
-│       └── OrdersControllerTests.cs
-└── E2E/
-    ├── Authentication/
-    │   ├── LoginTests.cs
-    │   └── RegistrationTests.cs
-    └── Checkout/
-        └── PurchaseFlowTests.cs
-```
+See [C#](./CSHARP.md#test-examples).
 
 ### Arrange-Act-Assert Pattern
 
 Structure every test using the Arrange-Act-Assert pattern. Use blank lines or comments to delineate sections in longer tests.
 
-```csharp
-[Fact]
-public async Task CalculateDiscount_ForPremiumCustomer_AppliesTwentyPercentDiscount()
-{
-    // Arrange: Set up the test scenario
-    var customer = CustomerFactory.CreatePremium();
-    var order = OrderFactory.Create(subtotal: 100.00m);
-    var calculator = new DiscountCalculator();
-
-    // Act: Execute the behavior under test
-    var discount = await calculator.CalculateDiscount(customer, order);
-
-    // Assert: Verify the expected outcome
-    Assert.Equal(20.00m, discount);
-}
-```
+See [C#](./CSHARP.md#arrange-act-assert-pattern).
 
 ### Test Naming Conventions
 
-Test names should clearly communicate what is being tested, under what conditions, and what the expected outcome is. Use the pattern: `MethodName_Scenario_ExpectedBehavior`.
-
-**Good Names:**
-- `ValidateEmail_WithMissingAtSymbol_ReturnsFalse`
-- `ProcessPayment_WhenCardDeclined_ThrowsPaymentFailedException`
-- `GetUserById_WhenUserNotFound_ReturnsNull`
-- `SendNotification_ToMultipleRecipients_SendsToAll`
-
-**Avoid:**
-- `Test1`, `TestValidation`, `EmailTest`
-- Names longer than 60 characters
-- Implementation details in the name
-- Negative framing when positive is clearer
+Name the operation, scenario, and expected behavior using the selected language's conventions.
+Keep names within 60 characters. Avoid vague names, implementation details, and unnecessary negative framing.
 
 ### Test Independence and Isolation
 
@@ -208,44 +145,7 @@ Tests must be completely independent. They should not rely on execution order, s
 - Use unique identifiers for test data to prevent collision
 - Reset shared resources between tests
 
-```csharp
-public class UserRepositoryTests : IAsyncLifetime
-{
-    private readonly TestDatabase _database;
-    private readonly List<Guid> _createdUserIds = new();
-
-    public async Task InitializeAsync()
-    {
-        // Set up clean test database
-        _database = await TestDatabase.CreateAsync();
-    }
-
-    public async Task DisposeAsync()
-    {
-        // Clean up all test data
-        foreach (var userId in _createdUserIds)
-        {
-            await _database.Users.DeleteAsync(userId);
-        }
-        await _database.DisposeAsync();
-    }
-
-    [Fact]
-    public async Task CreateUser_WithValidData_PersistsToDatabase()
-    {
-        // Arrange
-        var user = UserFactory.CreateValid();
-
-        // Act
-        var createdUser = await _repository.CreateAsync(user);
-        _createdUserIds.Add(createdUser.Id);  // Track for cleanup
-
-        // Assert
-        var retrieved = await _repository.GetByIdAsync(createdUser.Id);
-        Assert.NotNull(retrieved);
-    }
-}
-```
+See [C#](./CSHARP.md#test-independence-and-isolation).
 
 ## Test Data Management
 
@@ -253,125 +153,21 @@ public class UserRepositoryTests : IAsyncLifetime
 
 Use factory methods or builder patterns to create test data. This centralizes data creation, reduces duplication, and makes tests more readable.
 
-```csharp
-// Factory pattern for common test objects
-public static class UserFactory
-{
-    public static User CreateValid(Action<User>? customize = null)
-    {
-        var user = new User
-        {
-            Id = Guid.NewGuid(),
-            Email = $"test-{Guid.NewGuid()}@example.com",
-            Name = "Test User",
-            CreatedAt = DateTime.UtcNow
-        };
-        customize?.Invoke(user);
-        return user;
-    }
+See [C#](./CSHARP.md#test-factories-and-builders).
 
-    public static User CreatePremium() =>
-        CreateValid(u => u.Tier = CustomerTier.Premium);
-
-    public static User CreateWithExpiredSubscription() =>
-        CreateValid(u => u.SubscriptionExpiresAt = DateTime.UtcNow.AddDays(-1));
-}
-```
-
-```typescript
-// Builder pattern for complex objects
-class OrderBuilder {
-  private order: Partial<Order> = {
-    id: crypto.randomUUID(),
-    status: 'pending',
-    items: [],
-    createdAt: new Date()
-  };
-
-  withItems(items: OrderItem[]): this {
-    this.order.items = items;
-    return this;
-  }
-
-  withStatus(status: OrderStatus): this {
-    this.order.status = status;
-    return this;
-  }
-
-  forCustomer(customerId: string): this {
-    this.order.customerId = customerId;
-    return this;
-  }
-
-  build(): Order {
-    return this.order as Order;
-  }
-}
-
-// Usage in tests
-const order = new OrderBuilder()
-  .forCustomer('cust-123')
-  .withItems([itemA, itemB])
-  .withStatus('confirmed')
-  .build();
-```
+See [TypeScript](./TYPESCRIPT.md#test-factories-and-builders).
 
 ### Test Fixtures
 
 For complex setup that is shared across multiple tests, use fixtures. Fixtures should be immutable or should provide fresh copies to each test.
 
-```csharp
-public class DatabaseFixture : IAsyncLifetime
-{
-    public TestDatabase Database { get; private set; } = null!;
-    public User SeedUser { get; private set; } = null!;
-
-    public async Task InitializeAsync()
-    {
-        Database = await TestDatabase.CreateAsync();
-        SeedUser = await Database.Users.CreateAsync(UserFactory.CreateValid());
-    }
-
-    public async Task DisposeAsync()
-    {
-        await Database.DisposeAsync();
-    }
-}
-
-[CollectionDefinition("Database")]
-public class DatabaseCollection : ICollectionFixture<DatabaseFixture> { }
-
-[Collection("Database")]
-public class UserServiceTests
-{
-    private readonly DatabaseFixture _fixture;
-
-    public UserServiceTests(DatabaseFixture fixture)
-    {
-        _fixture = fixture;
-    }
-}
-```
+See [C#](./CSHARP.md#test-fixtures).
 
 ### Avoiding Magic Values
 
 Never use unexplained literal values in tests. Use named constants, factory methods, or well-named variables that communicate intent.
 
-```csharp
-// Incorrect: Magic values obscure intent
-Assert.Equal(42, result.Count);
-Assert.Equal("error", response.Status);
-
-// Correct: Named values communicate intent
-const int ExpectedItemCount = 42;
-const string ErrorStatus = "error";
-Assert.Equal(ExpectedItemCount, result.Count);
-Assert.Equal(ErrorStatus, response.Status);
-
-// Also correct: Inline when obvious from context
-var user = UserFactory.CreateWithAge(18);
-Assert.True(validator.IsAdult(user));  // 18 is clearly the boundary being tested
-```
+See [C#](./CSHARP.md#avoiding-magic-values).
 
 ## Mocking and Test Doubles
 
@@ -395,85 +191,13 @@ Use mocks to isolate the unit under test from its dependencies. Mock external se
 
 ### Mocking Best Practices
 
-```csharp
-// Use interfaces for dependencies to enable mocking
-public class OrderService
-{
-    private readonly IPaymentGateway _paymentGateway;
-    private readonly IOrderRepository _orderRepository;
-    private readonly IEventPublisher _eventPublisher;
-
-    public OrderService(
-        IPaymentGateway paymentGateway,
-        IOrderRepository orderRepository,
-        IEventPublisher eventPublisher)
-    {
-        _paymentGateway = paymentGateway;
-        _orderRepository = orderRepository;
-        _eventPublisher = eventPublisher;
-    }
-}
-
-// Test with mocks
-[Fact]
-public async Task ProcessOrder_WhenPaymentSucceeds_PublishesOrderConfirmedEvent()
-{
-    // Arrange
-    var mockPaymentGateway = new Mock<IPaymentGateway>();
-    mockPaymentGateway
-        .Setup(p => p.ChargeAsync(It.IsAny<PaymentRequest>()))
-        .ReturnsAsync(PaymentResult.Success());
-
-    var mockEventPublisher = new Mock<IEventPublisher>();
-    var mockRepository = new Mock<IOrderRepository>();
-
-    var service = new OrderService(
-        mockPaymentGateway.Object,
-        mockRepository.Object,
-        mockEventPublisher.Object);
-
-    var order = OrderFactory.CreateValid();
-
-    // Act
-    await service.ProcessAsync(order);
-
-    // Assert
-    mockEventPublisher.Verify(
-        p => p.PublishAsync(It.Is<OrderConfirmedEvent>(e => e.OrderId == order.Id)),
-        Times.Once);
-}
-```
+See [C#](./CSHARP.md#mocking-best-practices).
 
 ### Prefer Fakes Over Mocks for Complex Interactions
 
 When testing complex interactions, consider using in-memory fakes instead of mocks. Fakes provide more realistic behavior and catch more bugs.
 
-```csharp
-// In-memory fake for testing
-public class InMemoryUserRepository : IUserRepository
-{
-    private readonly Dictionary<Guid, User> _users = new();
-
-    public Task<User?> GetByIdAsync(Guid id) =>
-        Task.FromResult(_users.GetValueOrDefault(id));
-
-    public Task<User> CreateAsync(User user)
-    {
-        _users[user.Id] = user;
-        return Task.FromResult(user);
-    }
-
-    public Task DeleteAsync(Guid id)
-    {
-        _users.Remove(id);
-        return Task.CompletedTask;
-    }
-
-    // Test helper methods
-    public void Clear() => _users.Clear();
-    public int Count => _users.Count;
-}
-```
+See [C#](./CSHARP.md#prefer-fakes-over-mocks-for-complex-interactions).
 
 ## Comments and Documentation
 
@@ -483,58 +207,19 @@ Tests should be well-commented. Refer to COMMENTING.md for comprehensive comment
 
 Test code should be self-explanatory through good naming and structure. Use comments to explain non-obvious decisions, edge cases, or the business context.
 
-```csharp
-[Fact]
-public async Task ApplyDiscount_ForOrderOver500_CapsAtMaximumDiscount()
-{
-    // The business rule caps discounts at $50 to prevent margin erosion
-    // on high-value orders. This was a Q2 2024 policy change.
-    var order = OrderFactory.Create(subtotal: 1000.00m);
-    var customer = CustomerFactory.CreatePremium();  // 20% discount tier
-
-    var discount = await _calculator.ApplyDiscount(customer, order);
-
-    // Without the cap, this would be $200 (20% of $1000)
-    Assert.Equal(50.00m, discount);
-}
-```
+See [C#](./CSHARP.md#comment-the-why-not-the-what).
 
 ### Document Test Scenarios in Class Headers
 
 Add a summary comment to test classes explaining what scenarios are covered.
 
-```csharp
-/// <summary>
-/// Tests for the UserService class covering:
-/// - User creation with validation
-/// - User retrieval by ID and email
-/// - User update operations
-/// - User deletion and soft-delete behavior
-/// - Permission checks for user operations
-/// </summary>
-public class UserServiceTests
-{
-    // ...
-}
-```
+See [C#](./CSHARP.md#document-test-scenarios-in-class-headers).
 
 ### Document Non-Obvious Test Data
 
 When test data represents specific scenarios, document what it represents.
 
-```csharp
-[Fact]
-public async Task ValidateAddress_WithPuertoRicoZipCode_AcceptsAsValidUSAddress()
-{
-    // Puerto Rico uses 5-digit ZIP codes starting with 006-009
-    // and is a valid US shipping destination
-    var address = AddressFactory.Create(zipCode: "00907", state: "PR");
-
-    var result = await _validator.ValidateAsync(address);
-
-    Assert.True(result.IsValid);
-}
-```
+See [C#](./CSHARP.md#document-non-obvious-test-data).
 
 ## Logging in Tests
 
@@ -550,47 +235,7 @@ Tests should include strategic logging to aid debugging when tests fail. Refer t
 
 ### How to Log
 
-```csharp
-public class OrderProcessingTests
-{
-    private readonly ITestOutputHelper _output;
-    private readonly ILogger<OrderProcessingTests> _logger;
-
-    public OrderProcessingTests(ITestOutputHelper output)
-    {
-        _output = output;
-        _logger = LoggerFactory
-            .Create(builder => builder.AddXUnit(output))
-            .CreateLogger<OrderProcessingTests>();
-    }
-
-    [Fact]
-    public async Task ProcessOrder_WithMultipleItems_CalculatesTotalCorrectly()
-    {
-        // Arrange
-        var items = new[]
-        {
-            OrderItemFactory.Create(price: 10.00m, quantity: 2),
-            OrderItemFactory.Create(price: 25.00m, quantity: 1)
-        };
-        var order = OrderFactory.Create(items);
-
-        _logger.LogInformation(
-            "Testing order {OrderId} with {ItemCount} items, expected total: {ExpectedTotal}",
-            order.Id, items.Length, 45.00m);
-
-        // Act
-        var result = await _processor.ProcessAsync(order);
-
-        _logger.LogInformation(
-            "Processing complete. Actual total: {ActualTotal}",
-            result.Total);
-
-        // Assert
-        Assert.Equal(45.00m, result.Total);
-    }
-}
-```
+See [C#](./CSHARP.md#how-to-log).
 
 ## Code Coverage
 
@@ -618,38 +263,12 @@ public class OrderProcessingTests
 
 ### Coverage Tools by Stack
 
-**C# / .NET:**
-- Use Coverlet for collecting coverage
-- Use ReportGenerator for HTML reports
-- Integrate with `dotnet test --collect:"XPlat Code Coverage"`
-
-**TypeScript / JavaScript:**
-- Use Jest's built-in coverage or c8 for Node.js
-- Configure in jest.config.js: `collectCoverage: true`
-
-**Python:**
-- Use pytest-cov
-- Run with `pytest --cov=src --cov-report=html`
-
-**Swift:** Collect coverage through the configured Xcode test plan or `swift test --enable-code-coverage` for packages.
-**Go:** Use `go test ./... -coverprofile=coverage.out` and `go tool cover -func=coverage.out`.
-**Rust:** Use the project's configured coverage tool, such as `cargo llvm-cov`, with its declared targets and features.
-**Java:** Use the project's configured JaCoCo or equivalent Maven/Gradle integration and retain its reports.
+Use coverage tools and commands from the selected language guide.
 Do not install or switch a coverage stack merely because an example names one.
 
 ### Running Coverage
 
-```bash
-# .NET
-dotnet test --collect:"XPlat Code Coverage"
-reportgenerator -reports:**/coverage.cobertura.xml -targetdir:coverage-report
-
-# TypeScript/JavaScript
-npm test -- --coverage
-
-# Python
-pytest --cov=src --cov-report=html --cov-report=term-missing
-```
+Run the project's configured coverage command. See the selected language guide for examples.
 
 ## Handling Test Failures
 
@@ -692,195 +311,31 @@ Our applications use multiple technologies. Testing strategies must account for 
 
 ### TypeScript and JavaScript (Frontend)
 
-**Unit Tests:**
-- Use Jest or Vitest as the test runner
-- Test React components with React Testing Library
-- Test hooks with @testing-library/react-hooks
-- Mock API calls with MSW (Mock Service Worker)
-
-**Integration Tests:**
-- Test component interactions
-- Test API client functions against mock servers
-
-**E2E Tests:**
-- Use Playwright for browser automation
-- Test critical user flows end-to-end
+See [JavaScript](./JAVASCRIPT.md#testing).
 
 ### C# and .NET Core (Backend)
 
-**Unit Tests:**
-- Use xUnit as the test framework
-- Use Moq or NSubstitute for mocking
-- Use FluentAssertions for readable assertions
-
-**Integration Tests:**
-- Use WebApplicationFactory for API testing
-- Use Testcontainers for database integration tests
-- Use Respawn for database cleanup between tests
-
-**E2E Tests:**
-- Coordinate with frontend Playwright tests
-- May include direct API scenario tests
+See [C#](./CSHARP.md#testing).
 
 ### Python (Operational Scripts)
 
-**Unit Tests:**
-- Use pytest as the test framework
-- Use pytest-mock for mocking
-- Use hypothesis for property-based testing
-
-**Integration Tests:**
-- Test against real infrastructure in test environments
-- Use pytest fixtures for resource management
-
-```python
-# File: tests/test_order_summary.py
-import unittest
-from order_summary import OrderSummary
-
-class OrderSummaryTests(unittest.TestCase):
-    def test_display_label_with_positive_quantity_includes_quantity(self) -> None:
-        order = OrderSummary("order-1", "Sample Customer", 2)
-        self.assertEqual(order.display_label(), "Sample Customer: 2")
-
-    def test_constructor_with_zero_quantity_raises(self) -> None:
-        with self.assertRaises(ValueError):
-            OrderSummary("order-1", "Sample Customer", 0)
-```
-
-Use temporary directories for file-processing tests. Inject clocks, HTTP clients, and subprocess runners at real external boundaries.
-Test cancellation and resource cleanup separately from successful output. Do not mock the function whose behavior the test should verify.
+See [Python](./PYTHON.md#testing).
 
 ### Swift (macOS and iOS)
 
-Use the project's Swift Testing or XCTest setup for unit and integration tests.
-Use XCTest UI tests for native application flows, accessibility, and lifecycle behavior.
-Run `swift test` for Swift packages and the documented Xcode scheme and destination for application tests.
-Test supported deployment targets and cancellation, persistence, and state restoration where affected.
-
-```swift
-// File: OrderSummaryTests.swift
-import XCTest
-
-final class OrderSummaryTests: XCTestCase
-{
-    func testDisplayLabelWithPositiveQuantityIncludesQuantity() throws
-    {
-        let order = try OrderSummary(orderID: "order-1", customerName: "Sample Customer", quantity: 2)
-        XCTAssertEqual(order.displayLabel(), "Sample Customer: 2")
-    }
-
-    func testConstructorWithZeroQuantityThrows()
-    {
-        XCTAssertThrowsError(try OrderSummary(orderID: "order-1", customerName: "Sample Customer", quantity: 0))
-    }
-}
-```
-
-Add the test file to the correct test target and import the application module with `@testable` where needed.
-Keep shared-model tests independent of platform views. Use native UI tests for scene transitions, permission flows, and iPad layouts.
-Exercise signed-device behavior separately when sandboxing, entitlements, or file access can differ from the simulator.
+See [Swift](./SWIFT.md#testing).
 
 ### Go
 
-Use the standard `testing` package, table-driven tests where useful, and `go test ./...`.
-Run `go test -race ./...` for concurrency changes on a supported target.
-Use fuzz tests for parsers and other input boundaries when appropriate.
-
-```go
-// File: order_summary_test.go
-package orders
-
-import "testing"
-
-func TestDisplayLabelWithPositiveQuantityIncludesQuantity(t *testing.T) {
-    order, err := NewOrderSummary("order-1", "Sample Customer", 2)
-    if err != nil {
-        t.Fatalf("create test order: %v", err)
-    }
-    if actual := order.DisplayLabel(); actual != "Sample Customer: 2" {
-        t.Errorf("label = %q, want %q", actual, "Sample Customer: 2")
-    }
-}
-
-func TestConstructorWithZeroQuantityReturnsError(t *testing.T) {
-    _, err := NewOrderSummary("order-1", "Sample Customer", 0)
-    if err == nil {
-        t.Fatal("expected a quantity validation error")
-    }
-}
-```
-
-Use `t.TempDir()` and `t.Cleanup` for owned resources. Mark tests parallel only when their state and external resources are independent.
-Race checks supplement behavior tests. They do not prove that cancellation, timeouts, or goroutine shutdown follow the contract.
+See [Go](./GO.md#testing).
 
 ### Rust
 
-Use unit tests, integration tests, and documentation tests through `cargo test`.
-Check relevant feature combinations and targets declared by the project.
-Run the configured style and Clippy checks alongside behavior tests.
-Do not use default `cargo fmt` output to override the Allman and indentation rules in `CODING_STYLE.md`.
-
-```rust
-// File: order_summary.rs, nested test module beside the owning type.
-#[cfg(test)]
-mod tests
-{
-    use super::OrderSummary;
-
-    #[test]
-    fn display_label_with_positive_quantity_includes_quantity()
-    {
-        let order = OrderSummary::new("order-1".into(), "Sample Customer".into(), 2)
-            .expect("the fixture quantity is valid");
-        assert_eq!(order.display_label(), "Sample Customer: 2");
-    }
-
-    #[test]
-    fn constructor_with_zero_quantity_returns_error()
-    {
-        assert!(OrderSummary::new("order-1".into(), "Sample Customer".into(), 0).is_err());
-    }
-}
-```
-
-`expect` is appropriate for a known-valid test fixture. It is not permission to panic on fallible production input.
-Use `tests/` for public-boundary integration tests. Test declared features, foreign-function boundaries, and drop/cancellation behavior where affected.
+See [Rust](./RUST.md#testing).
 
 ### Java
 
-Use the project's existing test framework and Maven or Gradle wrapper.
-Run the documented unit and integration tasks rather than assuming that `test` includes every integration suite.
-For host extensions, test against the host runtime and dependency versions actually shipped.
-
-```java
-// File: OrderSummaryTests.java
-import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-
-final class OrderSummaryTests
-{
-    @Test
-    void displayLabelWithPositiveQuantityIncludesQuantity()
-    {
-        OrderSummary order = new OrderSummary("order-1", "Sample Customer", 2);
-        assertEquals("Sample Customer: 2", order.displayLabel());
-    }
-
-    @Test
-    void constructorWithZeroQuantityThrows()
-    {
-        assertThrows(IllegalArgumentException.class, () ->
-        {
-            new OrderSummary("order-1", "Sample Customer", 0);
-        });
-    }
-}
-```
-
-This example uses JUnit Jupiter. Retain the configured framework rather than introducing a second framework for a single test.
-Use the project's container or host-runtime harness for database and extension behavior. Preserve interrupt status and close test-owned resources.
+See [Java](./JAVA.md#testing).
 
 ### Cross-Stack Testing
 
@@ -913,39 +368,10 @@ Scripts (Python):
 - Verify data integrity after migrations
 - Test rollback scenarios
 
-```csharp
-[Fact]
-public async Task Migration_AddUserPreferencesTable_CreatesTableWithCorrectSchema()
-{
-    // Arrange
-    await _database.MigrateToVersionAsync("20240101_AddUserPreferencesTable");
-
-    // Act & Assert
-    var tableExists = await _database.TableExistsAsync("user_preferences");
-    Assert.True(tableExists);
-
-    var columns = await _database.GetTableColumnsAsync("user_preferences");
-    Assert.Contains(columns, c => c.Name == "user_id" && c.Type == "uuid");
-    Assert.Contains(columns, c => c.Name == "preferences" && c.Type == "jsonb");
-}
-```
+See [C#](./CSHARP.md#sql-and-database-migrations).
 
 **Test stored procedures and functions:**
-```csharp
-[Fact]
-public async Task CalculateMonthlyRevenue_ForJanuary2024_ReturnsCorrectTotal()
-{
-    // Arrange
-    await SeedOrdersForMonth(2024, 1, expectedTotal: 10000.00m);
-
-    // Act
-    var result = await _database.ExecuteScalarAsync<decimal>(
-        "SELECT calculate_monthly_revenue(2024, 1)");
-
-    // Assert
-    Assert.Equal(10000.00m, result);
-}
-```
+See [C#](./CSHARP.md#sql-and-database-migrations).
 
 ### Infrastructure as Code (Terraform)
 
@@ -961,61 +387,17 @@ terraform plan -detailed-exitcode
 ```
 
 **Test with Terratest (Go):**
-```go
-func TestVpcModule(t *testing.T) {
-    terraformOptions := &terraform.Options{
-        TerraformDir: "../modules/vpc",
-        Vars: map[string]interface{}{
-            "environment": "test",
-            "cidr_block":  "10.0.0.0/16",
-        },
-    }
-
-    defer terraform.Destroy(t, terraformOptions)
-    terraform.InitAndApply(t, terraformOptions)
-
-    vpcId := terraform.Output(t, terraformOptions, "vpc_id")
-    assert.NotEmpty(t, vpcId)
-}
-```
+See [Go](./GO.md#infrastructure-as-code-terraform).
 
 ### Configuration Files
 
 Test that configuration files are valid and complete:
 
-```csharp
-[Fact]
-public void AppSettings_Production_ContainsAllRequiredSettings()
-{
-    var config = new ConfigurationBuilder()
-        .AddJsonFile("appsettings.Production.json")
-        .Build();
-
-    Assert.NotNull(config["ConnectionStrings:Database"]);
-    Assert.NotNull(config["Authentication:JwtSecret"]);
-    Assert.NotNull(config["Redis:ConnectionString"]);
-}
-```
+See [C#](./CSHARP.md#configuration-files).
 
 ### Shell Scripts
 
-Test shell scripts using BATS (Bash Automated Testing System):
-
-```bash
-#!/usr/bin/env bats
-
-@test "backup script creates timestamped file" {
-    run ./backup.sh /tmp/test-data
-    [ "$status" -eq 0 ]
-    [ -f "/tmp/backups/test-data-$(date +%Y%m%d).tar.gz" ]
-}
-
-@test "backup script fails gracefully for missing directory" {
-    run ./backup.sh /nonexistent/path
-    [ "$status" -eq 1 ]
-    [[ "$output" == *"Directory not found"* ]]
-}
-```
+See [Shell](./SHELL.md#testing).
 
 ## Asynchronous Testing
 
@@ -1023,67 +405,17 @@ Test shell scripts using BATS (Bash Automated Testing System):
 
 Async operations require special consideration to avoid race conditions and ensure deterministic tests.
 
-```csharp
-// Correct: Await async operations
-[Fact]
-public async Task SendEmail_WithValidRecipient_ReturnsSuccess()
-{
-    var result = await _emailService.SendAsync(email);
-    Assert.True(result.Success);
-}
-
-// Incorrect: Fire and forget (test may pass before operation completes)
-[Fact]
-public void SendEmail_WithValidRecipient_ReturnsSuccess()
-{
-    var task = _emailService.SendAsync(email);  // Not awaited!
-    Assert.True(task.Result.Success);  // Blocks, but may hide issues
-}
-```
+See [C#](./CSHARP.md#testing-async-code).
 
 ### Testing Event-Driven Systems
 
-```csharp
-[Fact]
-public async Task OrderCreated_Event_TriggersInventoryReservation()
-{
-    // Arrange
-    var eventReceived = new TaskCompletionSource<InventoryReservedEvent>();
-    _eventBus.Subscribe<InventoryReservedEvent>(e =>
-    {
-        eventReceived.SetResult(e);
-        return Task.CompletedTask;
-    });
-
-    // Act
-    await _orderService.CreateAsync(order);
-
-    // Assert: Wait for event with timeout
-    var receivedEvent = await eventReceived.Task.WaitAsync(TimeSpan.FromSeconds(5));
-    Assert.Equal(order.Id, receivedEvent.OrderId);
-}
-```
+See [C#](./CSHARP.md#testing-event-driven-systems).
 
 ### Handling Timeouts
 
 Always include timeouts when waiting for async operations in tests:
 
-```csharp
-// Use cancellation tokens
-[Fact]
-public async Task LongRunningOperation_CompletesWithinTimeout()
-{
-    using var cts = new CancellationTokenSource(TimeSpan.FromSeconds(30));
-
-    var result = await _service.ProcessAsync(data, cts.Token);
-
-    Assert.NotNull(result);
-}
-
-// Or use WaitAsync
-var result = await _service.ProcessAsync(data)
-    .WaitAsync(TimeSpan.FromSeconds(30));
-```
+See [C#](./CSHARP.md#handling-timeouts).
 
 ## Flaky Test Prevention and Handling
 
@@ -1098,49 +430,13 @@ var result = await _service.ProcessAsync(data)
 ### Prevention Strategies
 
 **Inject time dependencies:**
-```csharp
-public interface IClock
-{
-    DateTime UtcNow { get; }
-}
-
-public class SystemClock : IClock
-{
-    public DateTime UtcNow => DateTime.UtcNow;
-}
-
-public class TestClock : IClock
-{
-    public DateTime UtcNow { get; set; } = new DateTime(2024, 1, 15, 10, 30, 0, DateTimeKind.Utc);
-}
-```
+See [C#](./CSHARP.md#prevention-strategies).
 
 **Use deterministic identifiers:**
-```csharp
-// Instead of relying on auto-generated IDs
-var orderId = Guid.NewGuid();
-var order = OrderFactory.Create(id: orderId);
-
-// Assert using the known ID
-var retrieved = await _repository.GetByIdAsync(orderId);
-Assert.Equal(orderId, retrieved.Id);
-```
+See [C#](./CSHARP.md#prevention-strategies).
 
 **Isolate external dependencies:**
-```csharp
-// Use testcontainers for databases
-public class DatabaseFixture : IAsyncLifetime
-{
-    private readonly PostgreSqlContainer _container = new PostgreSqlBuilder()
-        .WithImage("postgres:15")
-        .Build();
-
-    public string ConnectionString => _container.GetConnectionString();
-
-    public async Task InitializeAsync() => await _container.StartAsync();
-    public async Task DisposeAsync() => await _container.DisposeAsync();
-}
-```
+See [C#](./CSHARP.md#prevention-strategies).
 
 ### Handling Existing Flaky Tests
 
@@ -1151,16 +447,7 @@ When you encounter a flaky test:
 3. **Create a ticket:** Track the fix as technical debt
 4. **Fix the root cause:** Do not just retry the test
 
-```csharp
-[Fact]
-[Trait("Category", "Flaky")]
-// TODO: Flaky due to race condition in event handler. See ticket #1234.
-// Fails approximately 1 in 20 runs in CI.
-public async Task ProcessOrder_PublishesEventBeforeReturning()
-{
-    // ...
-}
-```
+See [C#](./CSHARP.md#handling-existing-flaky-tests).
 
 ## CI/CD Integration
 
@@ -1168,51 +455,15 @@ public async Task ProcessOrder_PublishesEventBeforeReturning()
 
 Configure CI pipelines to run tests at appropriate stages:
 
-```yaml
-# Example GitHub Actions workflow
-jobs:
-  test:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-
-      - name: Run Unit Tests
-        run: dotnet test --filter "Category!=Integration&Category!=E2E"
-
-      - name: Run Integration Tests
-        run: dotnet test --filter "Category=Integration"
-
-      - name: Upload Coverage
-        uses: codecov/codecov-action@v3
-
-  e2e:
-    needs: test
-    runs-on: ubuntu-latest
-    steps:
-      - name: Run E2E Tests
-        run: npx playwright test
-```
+See [C#](./CSHARP.md#test-execution-in-pipelines).
 
 ### Test Parallelization
 
 Enable parallel test execution where safe:
 
-```csharp
-// xUnit runs test classes in parallel by default
-// Disable for tests that cannot run in parallel
-[Collection("Sequential")]
-public class DatabaseMigrationTests
-{
-    // These tests modify shared database schema
-}
-```
+See [C#](./CSHARP.md#test-parallelization).
 
-```javascript
-// Jest parallel configuration
-module.exports = {
-  maxWorkers: '50%',  // Use half of available CPU cores
-};
-```
+See [JavaScript](./JAVASCRIPT.md#test-parallelization).
 
 ### Test Artifacts
 
@@ -1240,103 +491,29 @@ Preserve test artifacts for debugging failed CI runs:
 
 ### Simple Performance Assertions
 
-```csharp
-[Fact]
-public async Task GetUserById_CompletesWithinAcceptableTime()
-{
-    var stopwatch = Stopwatch.StartNew();
-
-    var user = await _repository.GetByIdAsync(knownUserId);
-
-    stopwatch.Stop();
-    Assert.True(stopwatch.ElapsedMilliseconds < 100,
-        $"Query took {stopwatch.ElapsedMilliseconds}ms, expected <100ms");
-}
-```
+See [C#](./CSHARP.md#simple-performance-assertions).
 
 ### Benchmark Tests
 
 Use BenchmarkDotNet for detailed performance analysis:
 
-```csharp
-[MemoryDiagnoser]
-public class SerializationBenchmarks
-{
-    private readonly User _user = UserFactory.CreateValid();
-
-    [Benchmark(Baseline = true)]
-    public string JsonSerialize() =>
-        JsonSerializer.Serialize(_user);
-
-    [Benchmark]
-    public string MessagePackSerialize() =>
-        MessagePackSerializer.SerializeToJson(_user);
-}
-```
+See [C#](./CSHARP.md#benchmark-tests).
 
 ## Security Testing
 
 ### Input Validation Tests
 
-```csharp
-[Theory]
-[InlineData("<script>alert('xss')</script>")]
-[InlineData("'; DROP TABLE users; --")]
-[InlineData("../../../etc/passwd")]
-public async Task CreateUser_WithMaliciousInput_SanitizesOrRejects(string maliciousInput)
-{
-    var request = new CreateUserRequest { Name = maliciousInput };
-
-    var result = await _service.CreateAsync(request);
-
-    // Either the input is sanitized or the request is rejected
-    Assert.True(
-        result.IsFailure ||
-        !result.Value.Name.Contains("<script>"),
-        "Malicious input should be handled safely");
-}
-```
+See [C#](./CSHARP.md#input-validation-tests).
 
 ### Authentication and Authorization Tests
 
-```csharp
-[Fact]
-public async Task GetUserData_WithoutAuthentication_Returns401()
-{
-    var client = _factory.CreateClient();  // No auth token
-
-    var response = await client.GetAsync("/api/users/me");
-
-    Assert.Equal(HttpStatusCode.Unauthorized, response.StatusCode);
-}
-
-[Fact]
-public async Task DeleteUser_AsRegularUser_Returns403()
-{
-    var client = _factory.CreateAuthenticatedClient(role: "User");
-
-    var response = await client.DeleteAsync("/api/users/other-user-id");
-
-    Assert.Equal(HttpStatusCode.Forbidden, response.StatusCode);
-}
-```
+See [C#](./CSHARP.md#authentication-and-authorization-tests).
 
 ## Accessibility Testing
 
 Include accessibility checks in E2E tests:
 
-```typescript
-import { test, expect } from '@playwright/test';
-import AxeBuilder from '@axe-core/playwright';
-
-test('registration page is accessible', async ({ page }) => {
-  await page.goto('/register');
-
-  const results = await new AxeBuilder({ page }).analyze();
-
-  expect(results.violations).toEqual([]);
-});
-```
+See [TypeScript](./TYPESCRIPT.md#accessibility-testing).
 
 ## Summary Checklist
 
@@ -1358,61 +535,20 @@ Before considering a feature complete, verify:
 
 ## Authorization Service Testing
 
-When testing controllers that use `IAuthorizationService`, ensure mocks match the actual service methods being called.
+See [C#](./CSHARP.md#authorization-service-testing).
 
 ### Common Authorization Methods to Mock
 
-The authorization service has evolved over time. When writing or updating tests, use the correct mock setup:
-
-| Method | Purpose | When to Use |
-|--------|---------|-------------|
-| `GetUserAccessLevelAsync()` | Returns user's access level (owner/editor/viewer/null) | Checking if user has ANY access to a resource |
-| `CheckAsync()` | Returns boolean for specific permission | Checking specific permissions like `thinker.session.edit` |
-| `ListAccessibleObjectsAsync()` | Returns list of object IDs user can access | Filtering list endpoints |
-| `ListSubjectsWithAccessAsync()` | Returns list of users/groups with access | Displaying sharing settings |
+See [C#](./CSHARP.md#authorization-service-testing).
 
 ### Example: Mocking Access Level Checks
 
-```csharp
-// CORRECT: Mock GetUserAccessLevelAsync for access level checks
-authServiceMock
-    .Setup(s => s.GetUserAccessLevelAsync(
-        resourceId, "thinker", "session", It.IsAny<CancellationToken>()))
-    .ReturnsAsync("viewer");  // or "owner", "editor", null
-
-// INCORRECT: Using HasRelationAsync when controller uses GetUserAccessLevelAsync
-// This will cause tests to fail with ForbidResult
-authServiceMock
-    .Setup(s => s.HasRelationAsync("viewer", resourceId, ...))
-    .ReturnsAsync(true);  // Won't work if controller calls GetUserAccessLevelAsync
-```
+See [C#](./CSHARP.md#authorization-service-testing).
 
 ### Keeping Mocks in Sync with Implementation
 
-When controller code changes which authorization method it calls, tests must be updated accordingly:
-
-1. **Read the controller code** to see which `IAuthorizationService` methods are actually called
-2. **Update mock setups** to match the actual method signatures
-3. **Verify return types** - `GetUserAccessLevelAsync` returns `string?`, `CheckAsync` returns `bool`
+See [C#](./CSHARP.md#authorization-service-testing).
 
 ### Testing Access Level Responses
 
-When testing endpoints that return access level information:
-
-```csharp
-[Fact]
-public async Task GetResource_IncludesAccessLevelInResponse()
-{
-    // Arrange
-    authServiceMock
-        .Setup(s => s.GetUserAccessLevelAsync(resourceId, "myapp", "resource", It.IsAny<CancellationToken>()))
-        .ReturnsAsync("editor");
-
-    // Act
-    var result = await controller.GetResource(resourceId);
-
-    // Assert
-    var okResult = result.Should().BeOfType<OkObjectResult>().Subject;
-    // Verify response includes access_level, can_edit, can_share, can_delete
-}
-```
+See [C#](./CSHARP.md#authorization-service-testing).

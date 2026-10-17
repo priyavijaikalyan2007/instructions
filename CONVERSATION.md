@@ -135,3 +135,32 @@ Fast-forwarded local `main` from `d4bf763` to `e890878`, preserving all seven re
 Updated the plan, review, status, changelog, and history to record completion on `main`.
 The owner authorized pushing `main` and synchronizing the retained review branch to the final completion commit.
 Document integrity and local/remote branch synchronization are the final checks.
+
+## 17 October 2026: selective language guides
+
+### User request
+
+> Great. Now, let's start segregating a bit. Let's split language specific instructions into their own files. For example, CSHARP.md, SWIFT.md so that instead of having to read absolutely all instructions nad discard them, the agent needs to pull in only those that are absolutely needed.
+
+### Outcome
+
+Created root-level guides for C#, Swift, Go, Rust, Java, Python, JavaScript, TypeScript, HTML, CSS, SCSS, SQL, and shell scripts.
+AGENTS.md now selects language guides from the source and boundaries changed by the task.
+TypeScript also reads shared JavaScript rules. SCSS also reads shared CSS rules.
+LANGUAGE.md remains the natural-language writing guide.
+
+Moved language conventions and examples out of the common style, commenting, marker, testing, logging, performance, and pattern guides.
+Moved the JavaScript-to-TypeScript migration example and language-specific secret-handling details to their language guides.
+Product, framework, and component references remain in place and are selected by the task.
+This phase does not implement the earlier product/task folder reorganization.
+
+Retained existing topic paths and section anchors. Preserved every existing code example, including all 184 GoF examples.
+The combined seven main topic guides shrink from 9,662 to 2,426 lines, a 74.9 percent reduction.
+Checks compare code blocks after normalizing outer indentation and trailing whitespace.
+One multi-language coverage block splits into three language-specific examples.
+Shared formatting rules, test-first guidance, coverage thresholds, copyright headers, and existing source encodings remain intact.
+Document links, dependency declarations, and append-only history also pass validation.
+Application code and runtime dependencies are unchanged.
+
+The implementation is complete on `docs/language-guides` for review.
+The commit remains local under the instruction not to push yet. Main retains the previously merged phase.

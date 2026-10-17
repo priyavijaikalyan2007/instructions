@@ -11,6 +11,12 @@ Created: 2026
 
 # Changelog
 
+## 17 October 2026
+
+- Added 13 root-level language guides and task-based language selection in AGENTS.md.
+- Changed common topic guides to link to language-specific conventions and examples while retaining shared policies and existing anchors.
+- Moved all 184 GoF examples into the matching language guides and preserved existing code examples and testing thresholds.
+
 ## 16 October 2026
 
 - Completed the reviewed in-place instruction updates through a direct merge into main authorized by the owner.

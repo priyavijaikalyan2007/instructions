@@ -13,6 +13,42 @@ Created: 2026
 
 First, read `README.md` to understand the situation, background and problem statement we are addressing and the solution we are building. Then continue from here.
 
+## Select language guides
+
+Select guides from the source files and boundaries that the task changes.
+Use manifests and build scripts to confirm the language and runtime.
+Code examples in this instruction repository do not select a language for the consuming project.
+
+| Changed source or configuration | Read |
+| --- | --- |
+| C#, .NET, or C# in Razor views | [CSHARP.md](./CSHARP.md) |
+| Swift and native Apple target configuration | [SWIFT.md](./SWIFT.md) |
+| Go source and module configuration | [GO.md](./GO.md) |
+| Rust source and Cargo configuration | [RUST.md](./RUST.md) |
+| Java source and JVM build configuration | [JAVA.md](./JAVA.md) |
+| Python source and package configuration | [PYTHON.md](./PYTHON.md) |
+| JavaScript source and runtime configuration | [JAVASCRIPT.md](./JAVASCRIPT.md) |
+| TypeScript source, declarations, and compiler configuration | [TYPESCRIPT.md](./TYPESCRIPT.md) and its shared [JavaScript rules](./JAVASCRIPT.md) |
+| HTML markup and markup in templates or views | [HTML.md](./HTML.md) |
+| CSS stylesheets | [CSS.md](./CSS.md) |
+| SCSS source and Sass build configuration | [SCSS.md](./SCSS.md) and its shared [CSS rules](./CSS.md) |
+| SQL queries, schema changes, and migrations | [SQL.md](./SQL.md) |
+| Shell scripts, Bash, and BATS tests | [SHELL.md](./SHELL.md) |
+
+Read every language involved in the changed behavior, including embedded SQL, markup, or styles.
+For example, a C# API change may need only CSHARP.md. A Swift model change may need only SWIFT.md.
+A TypeScript component with HTML and SCSS changes needs the JavaScript, TypeScript, HTML, CSS, and SCSS guides.
+Follow language links only when they match the selected languages. Read each selected section once per task.
+
+Start with the selected guide's references, formatting, naming, and file organization sections.
+Read its task sections as needed. Read design-pattern examples only for patterns selected during planning.
+The shared topic guides remain authoritative for common rules. Their language indexes are references for the selected languages.
+LANGUAGE.md governs natural-language writing and is separate from the programming-language guides.
+
+For documentation-only changes, read LANGUAGE.md and DOCUMENTATION.md.
+Read a programming-language guide when the task changes or verifies examples in that language.
+Product, framework, and component reference files remain selected by the task under Development below.
+
 # Structure
 
 Choose the project model from the consuming repository's README, source, manifests, and build scripts.
@@ -32,7 +68,8 @@ These models are starting points. Select versions, commands, APIs, and paths fro
 Use the stack and layout guidance below without depending on another repository's files.
 Prefer Allman braces throughout. Keep four-space indentation, no tabs, one type per file, and lines at most 120 characters.
 Follow the syntax limits documented in `CODING_STYLE.md` rather than emitting invalid code.
-Read `CODING_STYLE.md`, `COMMENTING.md`, `MARKERS.md`, `TESTING.md`, and `LOGGING.md` for shared construction rules and examples.
+Before writing code, read `CODING_STYLE.md`, `COMMENTING.md`, and `MARKERS.md` for shared construction rules.
+For testing and logging work, read the shared topic guide and the matching sections in the selected language guides.
 
 # Instructions
 
@@ -200,8 +237,9 @@ this sequence. **Never write implementation code before writing a failing test.*
   4. **Layering check** - confirm that business logic is in services (not controllers), 
      HTTP concerns are in controllers, cross-cutting concerns use middleware or filters.
      For native apps and tools, keep UI or CLI entry points thin and put processing logic in testable services or functions.
-  5. **Review the plan** against project conventions (`CODING_STYLE.md`, `SECURITY_GUIDELINES.md`, 
-     `API_GUIDELINES.md`, `PERFORMANCE.md`). Ensure the approach is idiomatic and low-risk.
+  5. **Review the plan** against applicable project conventions and the selected language guides.
+     Use `CODING_STYLE.md` and `SECURITY_GUIDELINES.md`. Read `API_GUIDELINES.md` for API work and relevant `PERFORMANCE.md` sections.
+     Ensure the approach is idiomatic and low-risk.
      
 + **Test First (Red):** Write the tests BEFORE writing any implementation code. This is the "Red" phase of TDD.
   1. Write unit tests that describe the expected behaviour of the new code. Follow `TESTING.md` conventions 
@@ -217,6 +255,7 @@ this sequence. **Never write implementation code before writing a failing test.*
   2. Apply the GoF patterns identified in the Plan step.
   3. Follow `CODING_STYLE.md` (Allman braces, 4-space indentation, one type per file, max 30-line methods, max 3 nesting levels, guard clauses).
   4. Add logging per `LOGGING.md`, comments per `COMMENTING.md`, and markers per `MARKERS.md`.
+     Use the corresponding language-guide sections for syntax, APIs, and examples.
   5. Run the tests - they MUST pass (Green). If they fail, fix the implementation, NOT the tests.
 
 + **Refactor (Clean):** Now that tests pass, improve the code structure without changing behaviour. 
@@ -243,7 +282,7 @@ are important in making sure the software and documentation we provide our users
 consistent, thoughtful and complete end to end experience.
 
 ## Development (CRITICAL)
-- You must adhere to the language conventions provided in LANGUAGE.md.
+- Use LANGUAGE.md for writing style. Use only the programming-language guides selected above for code conventions.
 - You must utilize the navigation markers defined in [MARKERS.md](./MARKERS.md) in all generated code. 
   See the Agent Knowledge Base section below for how to read and update `./agentknowledge/` every session. 
   In additon, use the Git Log, CONVERSATION.md files, specifications in ./specs/ and language server plugins 

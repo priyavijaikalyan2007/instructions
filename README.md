@@ -22,6 +22,33 @@ Existing Python, SQL, CSS, and SCSS guidance also applies where those languages 
 Some sections describe a .NET SaaS example. Apply those sections only when they match the consuming repository.
 Keep project-specific architecture, toolchain versions, and commands consistent with that repository's README and build configuration.
 
+## Selective language reading
+
+Start at [AGENTS.md](./AGENTS.md#select-language-guides) and select guides for the files and boundaries the task changes.
+Language guides live at the repository root. Each guide contains conventions and task examples for its language.
+Common rules remain in the existing topic files, including style, comments, markers, testing, logging, performance, and patterns.
+Read applicable topic sections together with the selected language guide. Follow other language links only when the task needs them.
+
+| Language | Guide |
+| --- | --- |
+| C# | [CSHARP.md](./CSHARP.md) |
+| Swift | [SWIFT.md](./SWIFT.md) |
+| Go | [GO.md](./GO.md) |
+| Rust | [RUST.md](./RUST.md) |
+| Java | [JAVA.md](./JAVA.md) |
+| Python | [PYTHON.md](./PYTHON.md) |
+| JavaScript | [JAVASCRIPT.md](./JAVASCRIPT.md) |
+| TypeScript | [TYPESCRIPT.md](./TYPESCRIPT.md), plus shared JavaScript rules |
+| HTML | [HTML.md](./HTML.md) |
+| CSS | [CSS.md](./CSS.md) |
+| SCSS | [SCSS.md](./SCSS.md), plus shared CSS rules |
+| SQL | [SQL.md](./SQL.md) |
+| Shell | [SHELL.md](./SHELL.md) |
+
+For example, a Swift-only model change does not require C#, Java, or Rust instructions.
+The file [LANGUAGE.md](./LANGUAGE.md) continues to define natural-language writing style.
+Existing topic paths and section anchors remain available as entry points to the extracted material.
+
 These instructrions are live. They are updated as and when new behaviors are encountered and need guidance. 
 
 The instructions in this repository are *horizontal* in nature. That is, they are about how to write reasonably good code in a clean, structured manner. These instructions should be combined with other instructions for architecture, code structure, do's and don'ts to get output that works.

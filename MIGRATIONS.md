@@ -68,24 +68,7 @@ Once tests pass, the code is safe to improve. This is NOT optional for any chang
 
 ## Example Scenario: JavaScript to TypeScript
 
-1.  **Phase 1**:
-    *   User asks to migrate `utils.js`.
-    *   *Agent Action*: Check for `utils.test.js`. If missing, create it. Run `jest utils.test.js` to confirm it passes.
-
-2.  **Phase 2**:
-    *   *Agent Action*: Rename `utils.js` to `utils.ts`. Add type annotations (`any` is acceptable temporarily if strictness causes blocks, but aim for specific types).
-    *   Run `tsc`. Fix "Implicit any" or "Property does not exist" errors.
-
-3.  **Phase 3**:
-    *   *Agent Action*: Rename `utils.test.js` to `utils.test.ts`.
-    *   Run `jest`.
-    *   *Error*: "Expected 5, got '5'".
-    *   *Fix*: Update `utils.ts` to ensure return type is `number`, not string.
-
-4.  **Phase 4**:
-    *   *Agent Action*: Change `interface` definitions to be more specific. Run tests. Pass.
-
----
+See [TypeScript](./TYPESCRIPT.md#migration-from-javascript).
 
 ## Checklist for Agents
 
