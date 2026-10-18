@@ -25,7 +25,7 @@ Use only the grammar exceptions stated in this guide.
 If an example shows several top-level types, put each type in its own file in production.
 Examples may omit surrounding project types or test fixtures. Use the repository's configured dependencies and contracts.
 
-Read by task: [Naming](#naming), [File organization](#file-organization), [Comments](#comments), [Navigation markers](#navigation-markers), [Testing](./FRONTEND.md#browser-testing), [Test examples](#test-examples), [Coverage](#coverage), [Logging](#logging), [Performance examples](#performance-examples), [Design patterns](#design-patterns).
+Read by task: [Naming](#naming), [File organization](#file-organization), [Async style](#consistent-async-style), [Comments](#comments), [Navigation markers](#navigation-markers), [Testing](./FRONTEND.md#browser-testing), [Test examples](#test-examples), [Coverage](#coverage), [Logging](#logging), [Performance examples](#performance-examples), [Design patterns](#design-patterns).
 
 ## Naming
 
@@ -42,6 +42,11 @@ Read by task: [Naming](#naming), [File organization](#file-organization), [Comme
 ## File organization
 
 Use one top-level type per file, such as `order.js`, `order-store.js`, and `order-status.js`.
+
+## Consistent async style
+
+- **"One style, everywhere."**
+- If the codebase uses `async/await`, use it exclusively. Do not mix `Promise.then()` chains with `async/await` in the same component.
 
 ## Comments
 
@@ -624,8 +629,3 @@ class NodeA
     }
 }
 ```
-
-## Consistent async style
-
-- **"One style, everywhere."**
-- If the codebase uses `async/await`, use it exclusively. Do not mix `Promise.then()` chains with `async/await` in the same component.

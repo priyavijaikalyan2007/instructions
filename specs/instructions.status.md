@@ -15,7 +15,7 @@ Updated: 18 October 2026.
 
 ## Current phase: subject consolidation
 
-The approved follow-up is implemented and locally verified on `docs/target-guides` for [PR #2](https://github.com/priyavijaikalyan2007/instructions/pull/2).
+The approved follow-up is implemented, verified, and pushed on `docs/target-guides` for [PR #2](https://github.com/priyavijaikalyan2007/instructions/pull/2).
 Main remains unchanged while the owner reviews the PR.
 
 AGENTS.md selects shared repository work, target, shared concern, and language independently.

@@ -261,4 +261,7 @@ All 551 parsed baseline/source code blocks retain their content and multiplicity
 Instruction coverage, links, source encodings, headers, GUIDs, and append-only history pass checks.
 Shared style, the operating workflow, test-first sections, and coverage thresholds remain unchanged.
 No application build or runtime test run applies to this documentation-only change.
-The update will be committed and pushed to the existing PR for owner review. Main remains unchanged.
+Published the consolidation in commit `6b14b43` to PR #2 and updated its title and description.
+The C# namespace-import rule is placed with C# file organization. Shared hierarchical-data logic lives in CODE_COMPLETE.md.
+The browser async-style lesson is directly reachable from the JavaScript task index.
+The PR remains open and unmerged. Main remains unchanged.

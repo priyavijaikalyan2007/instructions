@@ -75,7 +75,8 @@ PERFORMANCE.md shrinks from 198 to 44 lines. Shared topic and target guides no l
 Validation preserves 551 code blocks, including all ten examples from the supplied UI source.
 All 26 source sections and their non-heading instruction lines are accounted for, with recorded scope and overlap resolutions.
 Shared style, the AGENTS.md operating workflow, test-first guidance, and coverage thresholds remain intact.
-Commit and push this follow-up to the existing PR. The owner will review and merge.
+Published the consolidation in commit `6b14b43` to PR #2.
+The PR title and description now reflect the final structure and validation. The owner will review and merge.
 
 
 ## Current plan: language guide extraction

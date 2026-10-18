@@ -463,6 +463,10 @@ public class OrderProcessor : IOrderProcessor
 
 `Order.cs`, `IOrderStore.cs`, and `OrderStatus.cs`.
 
+### Namespace imports
+
+* Please place `using` statements inside the namespace.
+
 ## Language constructs
 
 ```csharp
@@ -2105,7 +2109,3 @@ public sealed class NodeA : INode
     }
 }
 ```
-
-## Namespace imports
-
-* Please place `using` statements inside the namespace.
