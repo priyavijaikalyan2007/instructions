@@ -13,6 +13,8 @@ Created: 2026
 
 ## 18 October 2026
 
+- Removed a private-project EF snapshot update mandate from the shared backend guidance after PR review.
+
 - Changed AGENTS.md to select target guides separately from language guides and support several targets within one repository.
 - Grouped existing instructions under backend, frontend, SaaS, native apps, CLI tools, static websites, static assets, and SDK references.
 - Preserved existing engineering rules, code examples, topic anchors, and shared policies. Closed a missing frontend Markdown fence.

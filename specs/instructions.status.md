@@ -53,3 +53,9 @@ TypeScript also reads JavaScript. SCSS also reads CSS. LANGUAGE.md remains the n
 The in-place instruction updates remain merged at `7278ab3`.
 The owner authorized that direct merge and push on 16 October 2026.
 Application source repositories remain unchanged by the instruction extraction phases.
+
+## PR review follow-up
+
+Removed the project-specific EF snapshot mandate from BACKEND.md after owner review.
+The review also proposes fewer redirects, PERSISTENCE.md, REPO.md, and a shared UI/UX entry point with focused references.
+The larger consolidation remains a proposal for discussion. The supplied UI source remains unchanged and unimported.

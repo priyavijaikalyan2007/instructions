@@ -47,6 +47,30 @@ The branch is pushed. [PR #2](https://github.com/priyavijaikalyan2007/instructio
 The PR remains unmerged.
 
 
+## Proposed follow-up from PR review
+
+The owner requested discussion of the guide boundaries and supplied `~/Work/uiexperience.md` as a new source.
+The source contains 2,349 lines of enterprise UI behavior, semantic controls, component contracts, and review checks.
+The following changes are recommendations for discussion, not completed extraction work.
+The removed project-specific snapshot mandate is the only immediate instruction correction in this follow-up.
+
+1. Remove empty redirect sections from ADDITIONAL_INSTRUCTIONS.md and update this repository's incoming links directly.
+2. Move remaining lessons into their subject authorities or matching target guides, then retire the catch-all if nothing remains.
+3. Create PERSISTENCE.md for existing storage, transaction, integrity, migration, and persistence-test guidance across targets.
+4. Keep SQL syntax, naming, comments, and engine-specific SQL examples in SQL.md, referenced where needed.
+5. Create REPO.md for existing shared setup, build/test/run commands, artifacts, and repository workflow lessons.
+6. Keep backend container details, native signing, and static bundle delivery in their respective target guides.
+7. Combine shared UI/UX design, consistency, state, validation, and recovery guidance under UI_UX.md.
+8. Keep detailed component requirements from the supplied source separately selectable through UI_UX_COMPONENTS.md.
+9. Keep KEYBOARD.md as the detailed registry linked from UI_UX.md, with platform and component scope made explicit.
+10. Keep super-app shell layouts in SAAS.md, browser implementation in FRONTEND.md, and native platform guidance in APPS.md.
+11. Compare overlapping source requirements and identify conflicts before selecting or replacing behavior.
+12. Update AGENTS.md, affected references, examples, and review records, then verify links and content preservation with documented exclusions.
+
+General lessons belong in existing construction, testing, security, or error guides when they apply across targets.
+A lesson about one component, runtime, or private project must retain that scope or be excluded from the shared requirements.
+No new engineering policies are proposed beyond material already in the repository or the owner-supplied UI source.
+
 ## Current plan: language guide extraction
 
 The owner authorized a limited language split on 17 October 2026.

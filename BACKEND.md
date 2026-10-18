@@ -175,7 +175,6 @@ Always prefer writing plain SQL scripts for database migrations instead of using
   VALUES ('YYYYMMDD_MigrationName', '10.0.2')
   ON CONFLICT ("MigrationId") DO NOTHING;
   ```
-- Update the model snapshot (`KnobbyDbContextModelSnapshot.cs`) manually to keep EF Core in sync
 
 ### Running Migrations
 Use `psql` directly to run migrations:

@@ -358,3 +358,13 @@ All 171 code blocks across edited documents retain their content and multiplicit
 The frontend baseline needs one missing closing fence to parse correctly. The output closes that boundary without changing the code.
 Headers and source encodings remain intact. Each new file receives its own GUID and the existing SPDX authors and MIT license.
 Shared style, test-first rules, and coverage thresholds remain unchanged.
+
+## Follow-up source and exclusion
+
+On 18 October 2026, the owner supplied `~/Work/uiexperience.md` for the UI/UX consolidation review.
+The file contains 2,349 lines. It was read without modification and has not yet been imported.
+The proposed destinations are shared UI_UX.md behavior and separately selectable UI_UX_COMPONENTS.md details.
+
+The private-project snapshot mandate mentioning `KnobbyDbContextModelSnapshot.cs` is deliberately removed from BACKEND.md.
+Its manual update requirement is not promoted into generic persistence guidance.
+All existing code blocks remain unchanged by this correction.

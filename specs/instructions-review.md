@@ -276,3 +276,20 @@ Target routes cover mixed repositories, component libraries, backend-only work, 
 One pre-existing missing fence after the frontend Share button example is closed without changing the JavaScript.
 There is no application build or runtime test claim for this documentation-only change.
 Temporary extraction and validation artifacts remain under `/tmp/target-guide-extraction/`.
+
+## Follow-up review on 18 October 2026
+
+The redirect-only sections preserve old anchors but add reading overhead within an open reorganization PR.
+The owner questioned that tradeoff and requested discussion of persistence, repository operations, and a unified UI/UX entry point.
+The proposed next extraction is recorded in the plan. It remains a proposal.
+
+Removed the instruction to manually update `KnobbyDbContextModelSnapshot.cs` from BACKEND.md.
+Both the filename and the mandatory manual-update procedure belong to a particular project's migration workflow.
+The existing shared requirement to follow the consuming repository's migration convention remains.
+This is an intentional exclusion from the prior text-preservation baseline. No code example changed.
+The adjacent PostgreSQL and EF history-table example also requires an explicit project-model scope during the proposed persistence extraction.
+
+The supplied UI source contains reusable experience rules and enterprise component contracts.
+Its HelpTooltip, HelpDrawer, expression editor, directory intelligence, and browser accessibility details need explicit scope.
+Existing universal progress-modal guidance and the source's background-progress behavior overlap and need reconciliation.
+The source is read for this review and remains unchanged. It has not yet been imported into the public repository.

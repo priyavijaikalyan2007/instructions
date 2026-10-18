@@ -209,3 +209,26 @@ Committed the extraction as `c8c3b32` and pushed `docs/target-guides`.
 Opened [PR #2](https://github.com/priyavijaikalyan2007/instructions/pull/2) against `main` through the owner's existing browser session.
 The CLI account `knobbyadmin` lacked permission to create the PR. No repository or authentication settings were changed.
 The PR is open and unmerged for owner review.
+
+## 18 October 2026: target-guide review comments
+
+### User request
+
+> ok. Looking at the PR some comments: 1) Multiple sections in ADDITIONAL_INSTRUCTIONS.md just seem to point to another file. Why retain the sections then? 2) Should some of the more "pattern" like instructions in ADDITIONAL_INSTRUCTIONS.md jsut be folded into BACKEND.md, FRONTEND.md, SDKs.md etc as appropriate? ADDITIONAL_INSTRUCTIONS.md evolved as I found specific problems but it seems like this a good opportunity to fold those lessons back in? 3) Should we have a separate DATABASE.md or PERSISTENCE.md instead of combining both into BACKEND.md? 4) Then, in ~/Work/ there is a file called uiexperience.md which I wrote which talks to "how intuitive"  a UI should be. I would like to bring that in as appropriate as well. Seems like UI_UX_CONSISTECY.md and uiexperience.md belong together. WDYT? In addition, UI/UX probably belongs together? KEYBOARD.md as well. WDYT? 5) Why do build instructions live in BACKEND.md? That's usually common across a repo right? Perhaps it should be extracted to a REPO.md instead?
+
+> This instruciton on line 178 of BACKEND.md "- Update the model snapshot (`KnobbyDbContextModelSnapshot.cs`) manually to keep EF Core in sync" is not a generic instruction though right?
+
+### Review and immediate correction
+
+Reviewed ADDITIONAL_INSTRUCTIONS.md, target routing, persistence/build sections, UI/UX guides, and KEYBOARD.md.
+Read the supplied UI source's structure and relevant sections. Its 2,349 lines cover general experience rules and detailed enterprise component contracts.
+Recommended removing empty redirects and integrating remaining lessons into the matching authorities.
+Recommended PERSISTENCE.md across targets and REPO.md for shared repository operations.
+Recommended one shared UI_UX.md entry point, separately selectable component detail, and the existing keyboard registry.
+Platform and enterprise component rules need explicit scope. Conflicting requirements need review before consolidation.
+These structural recommendations remain a proposal, not implemented changes.
+
+Removed the project-specific manual snapshot mandate from BACKEND.md.
+The existing instruction to follow the consuming repository's migration convention remains.
+The private UI source remains unchanged and is not yet imported.
+This correction changes no code example or shared style, TDD, or coverage policy.
