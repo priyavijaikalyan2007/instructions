@@ -265,3 +265,7 @@ Published the consolidation in commit `6b14b43` to PR #2 and updated its title a
 The C# namespace-import rule is placed with C# file organization. Shared hierarchical-data logic lives in CODE_COMPLETE.md.
 The browser async-style lesson is directly reachable from the JavaScript task index.
 The PR remains open and unmerged. Main remains unchanged.
+
+The full committed-diff check identified trailing spaces carried over from the UI source.
+Removed those spaces and preserved the field-label example as separate blockquote paragraphs.
+Rechecked the full branch diff, instruction provenance, and all 551 code blocks.

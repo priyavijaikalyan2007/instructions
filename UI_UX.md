@@ -159,13 +159,14 @@ Every editable field must support the following field structure:
 
 Do not use an asterisk as the only indication that a field is required.
 
-Optional fields should normally include `(optional)` in the label. GOV.UK also recommends this pattern and advises against required-field asterisks. 
+Optional fields should normally include `(optional)` in the label. GOV.UK also recommends this pattern and advises against required-field asterisks.
 
 When a required value is not self-explanatory, explain why it is required.
 
 Use:
 
-> **Business unit**  
+> **Business unit**
+>
 > Required. The system uses this value to select the approval policy.
 
 Do not use:
@@ -177,7 +178,7 @@ Do not use:
 Every form field must provide field-level help.
 
 The browser profile names `HelpTooltip` for brief guidance, `HelpDrawer` for persistent contextual help, and `HoverCard` for richer previews.
-These names identify roles for the corresponding help surfaces. 
+These names identify roles for the corresponding help surfaces.
 
 Each field must support three levels of help.
 
@@ -219,7 +220,7 @@ Opening help must not reset the form.
 
 The drawer must preserve its topic when the user moves between nearby fields, unless the user requests automatic topic changes.
 
-WCAG 2.2 includes a Consistent Help criterion. Help mechanisms should therefore remain in a predictable location and order. 
+WCAG 2.2 includes a Consistent Help criterion. Help mechanisms should therefore remain in a predictable location and order.
 
 ### Keyboard behavior is part of the component
 
@@ -237,11 +238,11 @@ The general convention is:
 - `Escape` dismisses the current temporary interaction.
 - `Home` and `End` move to logical boundaries where useful.
 
-This convention follows the WAI-ARIA Authoring Practices Guide. It uses Tab between components and arrow keys within composite components. 
+This convention follows the WAI-ARIA Authoring Practices Guide. It uses Tab between components and arrow keys within composite components.
 
 Components must not create keyboard traps.
 
-Keyboard focus must remain visible and must not be hidden behind sticky headers, overlays, or other content. WCAG 2.2 adds explicit requirements for focus visibility and focus obstruction. 
+Keyboard focus must remain visible and must not be hidden behind sticky headers, overlays, or other content. WCAG 2.2 adds explicit requirements for focus visibility and focus obstruction.
 
 ### Focus management
 
@@ -267,7 +268,7 @@ When a modal closes, focus must return to the control that opened it, unless the
 
 All core behavior must work without drag, hover, or a precision pointer.
 
-Any operation that uses drag must provide a non-drag alternative. WCAG 2.2 includes this requirement for dragging interactions. 
+Any operation that uses drag must provide a non-drag alternative. WCAG 2.2 includes this requirement for dragging interactions.
 
 Examples include:
 
@@ -425,7 +426,7 @@ At minimum, every component must support:
 - Non-drag alternatives.
 - Predictable help.
 
-WCAG 2.2 specifically adds requirements concerning focus obstruction, dragging, minimum target size, consistent help, and redundant data entry. 
+WCAG 2.2 specifically adds requirements concerning focus obstruction, dragging, minimum target size, consistent help, and redundant data entry.
 
 ---
 
@@ -518,7 +519,7 @@ An error must state:
 1. What is wrong.
 2. How the user can correct it.
 
-GOV.UK recommends an error summary together with field-level errors for forms that contain errors. 
+GOV.UK recommends an error summary together with field-level errors for forms that contain errors.
 
 Use:
 
@@ -568,7 +569,7 @@ A system error should include:
 - Correlation or request identifier when useful.
 - Expandable technical details when appropriate.
 
-The browser library profile uses `Error Dialog` for structured application failures. 
+The browser library profile uses `Error Dialog` for structured application failures.
 
 ---
 
@@ -609,7 +610,7 @@ Do not show an invented percentage.
 
 For multi-stage work, show meaningful steps.
 
-The browser profile uses `Steppable Progress Modal` for blocking multi-stage work with pending, active, done, and error steps. 
+The browser profile uses `Steppable Progress Modal` for blocking multi-stage work with pending, active, done, and error steps.
 
 Show:
 
@@ -878,12 +879,12 @@ A UI implementation is not complete until the engineer or reviewer checks all ap
 The enterprise browser profiles use the component catalog as their implementation vocabulary.
 They name help, form, editor, identity, policy, validation, workflow, and Smart Text Input Engine roles.
 
-The accessibility requirements use WCAG 2.2 and the WAI-ARIA Authoring Practices Guide. These sources define established behavior for keyboard navigation, focus, composite widgets, dragging, target size, and consistent help. 
+The accessibility requirements use WCAG 2.2 and the WAI-ARIA Authoring Practices Guide. These sources define established behavior for keyboard navigation, focus, composite widgets, dragging, target size, and consistent help.
 
-The form and validation rules also use GOV.UK Design System guidance. That guidance emphasizes clear questions, explicit optional fields, field-level errors, and error summaries. 
+The form and validation rules also use GOV.UK Design System guidance. That guidance emphasizes clear questions, explicit optional fields, field-level errors, and error summaries.
 
-The Expression Workbench requirements use the capabilities of CEL and modern language-aware editors as their technical basis. CEL provides a typed declaration environment that can validate identifiers and function use before runtime.  Language Server Protocol patterns provide a mature model for diagnostics, completion, hover help, and other editor intelligence. 
+The Expression Workbench requirements use the capabilities of CEL and modern language-aware editors as their technical basis. CEL provides a typed declaration environment that can validate identifiers and function use before runtime.  Language Server Protocol patterns provide a mature model for diagnostics, completion, hover help, and other editor intelligence.
 
-The email recipient requirements use enterprise mail and directory patterns. Microsoft Graph MailTips provides recipient conditions such as automatic replies, delivery restrictions, moderation, external membership, and mailbox-full status. 
+The email recipient requirements use enterprise mail and directory patterns. Microsoft Graph MailTips provides recipient conditions such as automatic replies, delivery restrictions, moderation, external membership, and mailbox-full status.
 
 The writing in this specification follows the supplied language guide. That guide requires clear technical language, direct verbs, consistent terminology, and preservation of technical meaning.

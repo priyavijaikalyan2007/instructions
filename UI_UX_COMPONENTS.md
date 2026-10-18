@@ -71,7 +71,7 @@ Rich-text controls must support:
 - Predictable paste behavior from common office applications.
 
 In the browser profile, Smart Text Input Engine enriches text, rich text, Markdown, CodeMirror, and Monaco inputs.
-Domain semantics remain in the host application. 
+Domain semantics remain in the host application.
 
 ### Identifier, name, and slug
 
@@ -351,7 +351,7 @@ The editor must provide:
 - Search.
 - Undo and redo.
 
-Language Server Protocol patterns standardize editor features such as completion, diagnostics, hover information, and language-aware assistance. 
+Language Server Protocol patterns standardize editor features such as completion, diagnostics, hover information, and language-aware assistance.
 
 #### Explain
 
@@ -415,7 +415,7 @@ The environment should describe:
 - Examples.
 - Security classification when useful.
 
-CEL specifically supports declarations that its type checker can use to verify identifier and function references. 
+CEL specifically supports declarations that its type checker can use to verify identifier and function references.
 
 Completion must therefore be based on the actual host environment.
 
@@ -625,7 +625,7 @@ Each identity can include:
 - Directory source.
 - Delivery status metadata.
 
-The browser profile names `PersonChip` and `PeoplePicker` for this interaction. 
+The browser profile names `PersonChip` and `PeoplePicker` for this interaction.
 
 ### Recipient entry
 
@@ -725,7 +725,7 @@ Different external domains can receive distinct visual treatment when that infor
 
 Before sending, the application should evaluate available recipient intelligence.
 
-Microsoft Graph MailTips can expose recipient information such as automatic replies, delivery restrictions, moderation requirements, external group membership, and mailbox-full state. 
+Microsoft Graph MailTips can expose recipient information such as automatic replies, delivery restrictions, moderation requirements, external group membership, and mailbox-full state.
 
 The editor should surface relevant conditions such as:
 
@@ -983,7 +983,7 @@ Examples include:
 - Page sizes shown proportionally.
 - Layout algorithms shown with diagrams.
 
-The browser picker profiles use this visual-selection pattern. 
+The browser picker profiles use this visual-selection pattern.
 
 ### Recent choices
 
@@ -1274,7 +1274,7 @@ A tooltip should show exact values rather than forcing users to estimate from th
 
 Charts that communicate decision-relevant values must expose an accessible data alternative.
 
-The browser `Chart Panel` profile uses a table for screen readers. 
+The browser `Chart Panel` profile uses a table for screen readers.
 
 ### Cross-filtering
 
@@ -1322,7 +1322,7 @@ Examples include:
 
 Workflow and policy editors should provide test or dry-run behavior.
 
-The browser profiles include simulation for policy rules and dry-run execution for workflow tooling. 
+The browser profiles include simulation for policy rules and dry-run execution for workflow tooling.
 
 Testing should show:
 
@@ -1386,7 +1386,7 @@ Before a consequential agent action, the UI should show:
 
 Agent workflows must support human intervention when the workflow requires judgment or approval.
 
-The browser profile names context, recommendation, override, escalation, and batch review as human-intervention roles. 
+The browser profile names context, recommendation, override, escalation, and batch review as human-intervention roles.
 
 ### Trace and explanation
 
@@ -1413,11 +1413,11 @@ Users should be able to compare the old and new result when the difference matte
 
 ## Smart Text Input Engine integration
 
-The catalog defines the Smart Text Input Engine as a reusable behavioral layer for mentions, references, formulas, and commands. It supports adapters for plain inputs, rich text, CodeMirror, and Monaco. 
+The catalog defines the Smart Text Input Engine as a reusable behavioral layer for mentions, references, formulas, and commands. It supports adapters for plain inputs, rich text, CodeMirror, and Monaco.
 
 Use STIE only for text-oriented controls.
 
-Do not attach STIE to structured controls such as password, numeric, date, select, file, or read-only inputs. The catalog explicitly excludes these cases. 
+Do not attach STIE to structured controls such as password, numeric, date, select, file, or read-only inputs. The catalog explicitly excludes these cases.
 
 STIE-enabled inputs must preserve the standard keyboard contract.
 
@@ -1430,7 +1430,7 @@ Its autocomplete behavior must:
 - Announce inserted tokens.
 - Expose active results through ARIA.
 
-These behaviors form the STIE browser accessibility profile. 
+These behaviors form the STIE browser accessibility profile.
 
 ---
 
