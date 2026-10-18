@@ -18,7 +18,7 @@ Use [FRONTEND_LOGGING.md](./FRONTEND_LOGGING.md) for the component logging mecha
 
 Read the logging integration section in the selected language guide.
 
-For command-line tools, keep machine-readable results on stdout and diagnostics on stderr unless the command contract states otherwise.
+See [TOOLS.md](./TOOLS.md#existing-cli-output-and-diagnostics).
 Do not add a new logging dependency when the existing API meets the requirement.
 
 

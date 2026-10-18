@@ -172,9 +172,8 @@ Swift uses `// MARK: - Section name` for Xcode navigation.
 ## Testing
 
 Use the project's Swift Testing or XCTest setup for unit and integration tests.
-Use XCTest UI tests for native application flows, accessibility, and lifecycle behavior.
+See [APPS.md](./APPS.md#existing-apple-application-testing).
 Run `swift test` for Swift packages and the documented Xcode scheme and destination for application tests.
-Test supported deployment targets and cancellation, persistence, and state restoration where affected.
 
 ```swift
 // File: OrderSummaryTests.swift
@@ -196,8 +195,6 @@ final class OrderSummaryTests: XCTestCase
 ```
 
 Add the test file to the correct test target and import the application module with `@testable` where needed.
-Keep shared-model tests independent of platform views. Use native UI tests for scene transitions, permission flows, and iPad layouts.
-Exercise signed-device behavior separately when sandboxing, entitlements, or file access can differ from the simulator.
 
 ## Coverage
 
@@ -298,19 +295,11 @@ Do not assume that a thread identifier identifies an async operation.
 
 ## Performance
 
-For Swift apps, measure launch time, UI responsiveness, memory, and energy use. Keep blocking work off the main actor.
-
-- Measure cold launch, document opening, scrolling, export latency, memory, and energy on supported devices.
-- Use Instruments and Xcode diagnostics to investigate the measured bottleneck rather than guessing from source size.
-- Keep UI changes on the main actor and expensive processing off the UI path.
-- Cancel obsolete work when a user changes documents or scenes. Bound decoded-image and temporary-buffer memory.
-- Release observers, timers, and security-scoped access at their owning lifecycle boundary.
-- Compare simulator results with physical-device results when graphics, memory pressure, thermal limits, or signing can change behavior.
+See [APPS.md](./APPS.md#existing-apple-performance-guidance).
 
 ## Secret handling
 
-For native macOS/iOS clients, use [Keychain services](https://developer.apple.com/documentation/security/keychain-services) for credentials and tokens the client legitimately owns.
-Do not store those values in `UserDefaults`, ordinary files, source code, or logs.
+See [APPS.md](./APPS.md#existing-apple-credential-storage).
 
 ## Design patterns
 

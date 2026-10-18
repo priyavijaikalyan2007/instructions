@@ -15,7 +15,7 @@ Captured: 14 October 2026. Status: historical review snapshot.
 
 On 15 October 2026, the owner requested in-place edits and deferred all file reorganization.
 The destination column below records the superseded proposal. It does not authorize file moves.
-The [current plan](./instructions-plan.md#current-plan-surgical-edits-in-place) defines the active scope.
+The [current plan](./instructions-plan.md#current-plan-target-guide-extraction) defines the active scope.
 
 This inventory compares top-level Markdown files, including their working-copy changes.
 Hashes identify file bytes and show the first 16 hexadecimal digits of SHA-256.
@@ -322,3 +322,39 @@ The coverage command block splits into three examples for .NET, JavaScript, and 
 All commands and code tokens remain unchanged. Outer Markdown indentation and trailing whitespace are normalized.
 Original file encodings and copyright headers remain intact.
 The earlier source-repository inventory remains historical evidence rather than a prerequisite for reading the public language guides.
+
+## Target extraction snapshot on 18 October 2026
+
+Baseline: `0a5a8681c0be7334d0ebd1cd9ba4db7e11a502d4`, synchronized main after the language extraction merged through PR #1.
+Work branch: `docs/target-guides`. Source material comes from this baseline, not new private-repository imports.
+This phase creates five target files and expands the existing backend, frontend, and SDK entry points.
+
+| Source at baseline | Destination or treatment |
+| --- | --- |
+| AGENTS.md stack, layouts, local commands, endpoints, component workflow, and library references | Backend, frontend, SaaS, apps, tools, websites, or static assets according to the existing instruction's target |
+| FRONTEND.md super-app, combined source layout, and cross-layer mapping | SAAS.md |
+| FRONTEND.md API-hosting example | BACKEND.md |
+| FRONTEND.md static stack, theme resources, and bundle guidance | STATIC_ASSETS.md |
+| ADDITIONAL_INSTRUCTIONS.md API security, database migration, host dependency, and EF query rules | BACKEND.md |
+| ADDITIONAL_INSTRUCTIONS.md browser components, styling, state, UI errors, and browser tests | FRONTEND.md |
+| ADDITIONAL_INSTRUCTIONS.md data contracts, naming, persistence/UI flow, test identities, access integration, and settings | SAAS.md |
+| ADDITIONAL_INSTRUCTIONS.md CDN integration and stylesheet build check | STATIC_ASSETS.md |
+| DOCUMENTATION.md monolith packaging example | SAAS.md |
+| SWIFT.md native performance, credential storage, and application testing prose | APPS.md, with language code examples retained in SWIFT.md |
+| UI_UX_CONSISTENCY.md native platform paragraph | APPS.md |
+| CSHARP.md ASP.NET Core performance section | BACKEND.md, with other language examples retained in CSHARP.md |
+| JAVASCRIPT.md browser testing section | FRONTEND.md, with language test examples retained in JAVASCRIPT.md |
+| PERFORMANCE.md API/server/data-fetching rules and endpoint checks | BACKEND.md |
+| PERFORMANCE.md browser budgets, rendering, UI thread, and browser checks | FRONTEND.md |
+| PERFORMANCE.md asset cache, loading, minification, and preload rules | STATIC_ASSETS.md |
+| PERFORMANCE.md combined web context and cross-layer autocomplete pattern | SAAS.md |
+| LOGGING.md CLI stream rule | TOOLS.md |
+| SDKs.md placeholder | Index to existing API/OpenAPI contracts and language conventions |
+| API_GUIDELINES.md, SQL.md, ACCESS_CONTROL.md, and other task authorities | Remain canonical topic or language files, selected through target references |
+
+The extraction ledger records 89 moves, including three secondary splits between target files.
+Every original instruction line is accounted for. Routing descriptions and the empty SDK placeholder are the limited replacement cases.
+All 171 code blocks across edited documents retain their content and multiplicity.
+The frontend baseline needs one missing closing fence to parse correctly. The output closes that boundary without changing the code.
+Headers and source encodings remain intact. Each new file receives its own GUID and the existing SPDX authors and MIT license.
+Shared style, test-first rules, and coverage thresholds remain unchanged.

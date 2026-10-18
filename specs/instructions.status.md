@@ -11,45 +11,44 @@ Created: 2026
 
 # Instruction repository status
 
-Updated: 17 October 2026.
+Updated: 18 October 2026.
 
-## Current phase: language guides
+## Current phase: target guides
 
-Implementation and document checks are complete on `docs/language-guides` for review.
-On 17 October 2026, the owner authorized pushing this branch for website review.
-Review the [language-guide comparison](https://github.com/priyavijaikalyan2007/instructions/compare/main...docs/language-guides).
-The earlier in-place updates remain merged into `main` at `7278ab3`.
-The owner authorized this limited language split after reviewing that earlier phase.
-Broader product/task folder reorganization remains deferred.
+Implementation and local document checks are complete on `docs/target-guides` for review.
+The owner authorized a new branch, push, and PR. Main remains at `0a5a868`.
+Review the [target-guide comparison](https://github.com/priyavijaikalyan2007/instructions/compare/main...docs/target-guides).
 
-The new root-level guides cover C#, Swift, Go, Rust, Java, Python, JavaScript, TypeScript, HTML, CSS, SCSS, SQL, and shell scripts.
-AGENTS.md selects guides from changed source and affected boundaries rather than loading every language.
-TypeScript also reads JavaScript. SCSS also reads CSS.
-Shared topic guides retain common policies and point to the selected language's details and examples.
-LANGUAGE.md continues to govern natural-language writing.
+AGENTS.md selects target guides for the changed work, then selects the actual languages.
+Backend, frontend, SaaS, native apps, CLI tools, static websites, static assets, and SDK references have separate entry points.
+A repository can combine several targets. Static sites and tools do not inherit a SaaS backend by default.
+Existing instruction text is relocated. New prose provides scope and routing, not new engineering policy.
 
-The [current plan](./instructions-plan.md#current-plan-language-guide-extraction) defines the authorized scope.
-The [review](./instructions-review.md#language-guide-extraction-on-17-october-2026) explains the extraction.
-The [inventory](./instructions-source-inventory.md#language-extraction-snapshot-on-17-october-2026) records its baseline and source topics.
+The [current plan](./instructions-plan.md#current-plan-target-guide-extraction) defines this phase.
+The [review](./instructions-review.md#target-guide-extraction-on-18-october-2026) explains scope and limits.
+The [inventory](./instructions-source-inventory.md#target-extraction-snapshot-on-18-october-2026) records sources and destinations.
 
 ## Verification
 
-All existing code blocks remain intact after normalization of outer Markdown indentation and trailing whitespace.
-The coverage command block is split into three language-specific examples without changing its commands.
-All 184 GoF examples remain in their matching language guides.
-Existing topic paths, section anchors, source encodings, copyright headers, and append-only history remain intact.
-Shared formatting rules, test-first guidance, and coverage thresholds remain unchanged.
-Language dependencies and Markdown links pass checks.
-The seven main shared topic guides shrink from 9,662 to 2,426 lines, a 74.9 percent reduction.
+The extraction accounts for 89 moves and preserves all 171 code blocks across the edited documents.
+Checks cover content conservation, Markdown links, old anchors, encodings, headers, target/language routes, and append-only history.
+Shared style, test-first rules, and coverage thresholds remain unchanged.
+One existing missing Markdown fence is closed without changing its JavaScript example.
+Temporary validation artifacts remain under `/tmp/target-guide-extraction/`.
+This documentation-only change has no application build or runtime test run.
 
-The earlier phase verified 115 pattern compiler/import checks, 25 behavior checks, and 15 other example checks.
-Published unit-test and HMAC examples also passed in that phase.
-This extraction preserves their code and does not claim a new application build or runtime test run.
-Temporary extraction and validation scripts remain under /tmp.
+The existing native material covers Apple platforms. SDKs.md was a placeholder and now indexes existing contracts and conventions.
+No Android, ChromeOS, SDK generator, Kubernetes, Workers, or DNS procedures were added.
+Existing conflicting recommendations remain unchanged for a separate review.
+
+## Current phase: language guides
+
+The language phase is complete and merged through PR #1 at `0a5a868`.
+It created 13 root-level language guides and preserved all 184 GoF examples.
+TypeScript also reads JavaScript. SCSS also reads CSS. LANGUAGE.md remains the natural-language writing guide.
 
 ## Previous phase
 
-The owner authorized a direct merge and push on 16 October 2026 after PR creation was blocked during review.
-Both local and remote branches reached `7278ab3` for that completed phase.
-The public project descriptions and CDN/air-gap delivery corrections are included in that baseline.
-All application source repositories remain unchanged by this phase.
+The in-place instruction updates remain merged at `7278ab3`.
+The owner authorized that direct merge and push on 16 October 2026.
+Application source repositories remain unchanged by the instruction extraction phases.

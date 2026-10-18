@@ -13,11 +13,13 @@ Created: 2026
 
 Review date: 14 October 2026. Updated scope: 15 October 2026.
 Completion: accepted in-place updates merged into `main` on 16 October 2026.
-Language phase: root-level guide extraction authorized and completed on 17 October 2026.
+Language phase: merged through PR #1 at `0a5a868`.
+Target phase: authorized and prepared for review on 18 October 2026.
 
 The first phase used surgical edits to existing files. The owner then authorized a limited language-guide split on 17 October 2026.
-The findings below remain review evidence. Broader product/task folder moves and policy changes remain deferred.
-Use the [current plan](./instructions-plan.md#current-plan-language-guide-extraction) for the authorized scope.
+The findings below remain historical review evidence. Root-level target extraction is now authorized.
+Broader folder moves and policy changes remain deferred.
+Use the [current plan](./instructions-plan.md#current-plan-target-guide-extraction) for the authorized scope.
 
 The repository needs a shared foundation plus guides selected by language, product, and task.
 Its current entry point describes one enterprise SaaS application, so agents inherit assumptions that do not fit other projects.
@@ -237,3 +239,40 @@ One coverage example is split into three language-specific blocks without changi
 Checks also cover Markdown links and anchors, language dependencies, source encodings, copyright headers, and append-only history.
 The earlier compiler and behavior results remain evidence for the unchanged snippets. No application build is claimed for this extraction.
 The implementation remains on `docs/language-guides` for review. No broader folder reorganization is included.
+
+## Target guide extraction on 18 October 2026
+
+The owner requested segregation of existing instructions and explicitly prohibited new engineering instructions.
+AGENTS.md now selects work targets before languages. One repository can combine several targets.
+The change adds scope descriptions and indexes, moves existing text, and retains the established topic authorities.
+It does not create new architecture, platform, deployment, testing, or style rules.
+
+| Target | Existing material grouped or referenced |
+| --- | --- |
+| Backend | API/resource naming, entities, SQL, persistence, migrations, runtime, containers, local commands, and backend checks |
+| Frontend | Browser UI, login, components, state, styling, accessibility, browser testing, and rendering performance |
+| SaaS | Backend/frontend composition, combined layout, super-app example, data contracts, naming, and local test identities |
+| Apps | Existing Apple stack, layouts, lifecycle, credentials, tests, and performance |
+| Tools | Existing Go/Rust/Python CLI stack and layouts, local commands, stdout, and stderr |
+| Websites | Static sites without an application backend, plus applicable browser and delivery references |
+| Static assets | Source/output mapping, bundles, stylesheet build checks, CDN/air-gap delivery, caching, and static hosting example |
+| SDKs | Existing API/OpenAPI contracts and language references, replacing the empty placeholder |
+
+Target selection follows changed work rather than a repository-wide label or primary language.
+A web application can combine C#/Java backend and TypeScript/HTML frontend guidance.
+A Python backend and a Go CLI follow different target routes despite both being non-browser code.
+Static hosting does not imply an application backend. Native apps and their websites select separate targets.
+Packaging and serving remain separate concerns. Existing combined deployment examples remain examples of that configured model.
+
+The source SDK guide had no generator procedures. Native platform instructions covered only Apple platforms.
+The extraction adds no Android, ChromeOS, SDK generation, Kubernetes, Workers, or DNS procedures.
+The existing static hosting example names Cloudflare Pages via Wrangler. That wording is preserved.
+Existing library recommendations and policy conflicts remain unchanged for a separate review.
+
+Validation preserves all 171 code blocks across the edited documents after outer-indentation and trailing-whitespace normalization.
+Original instruction lines have a destination. Replaced text is limited to routing metadata and the SDK placeholder.
+Checks retain existing section anchors, source encodings, copyright headers, append-only history, and shared engineering policies.
+Target routes cover mixed repositories, component libraries, backend-only work, tools, native apps, and static websites.
+One pre-existing missing fence after the frontend Share button example is closed without changing the JavaScript.
+There is no application build or runtime test claim for this documentation-only change.
+Temporary extraction and validation artifacts remain under `/tmp/target-guide-extraction/`.

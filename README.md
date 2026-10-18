@@ -19,8 +19,31 @@ Instead of using a monolithic, single instruction file, the AGENTS.md file refer
 
 These instructions cover Swift apps for macOS and iOS, Go and Rust tools, Java and .NET 10.0+ applications, and TypeScript/JavaScript/HTML projects.
 Existing Python, SQL, CSS, and SCSS guidance also applies where those languages are used.
-Some sections describe a .NET SaaS example. Apply those sections only when they match the consuming repository.
+Some sections describe a .NET SaaS example. Apply those sections only when they match the changed target and project model.
 Keep project-specific architecture, toolchain versions, and commands consistent with that repository's README and build configuration.
+
+## Selective target reading
+
+Start at [AGENTS.md](./AGENTS.md#select-target-guides). Select targets for the changed work, then select its languages.
+Targets describe the work. Languages describe the source. A repository can combine several targets and languages.
+The target guides contain existing instructions and links to existing topic guides.
+
+| Target | Guide | Existing material grouped here |
+| --- | --- | --- |
+| Backend | [BACKEND.md](./BACKEND.md) | APIs, SQL/database references, entities, runtime, containers, and local service development |
+| Frontend | [FRONTEND.md](./FRONTEND.md) | Browser pages, dynamic UI, login, components, and browser tests |
+| SaaS or web application | [SAAS.md](./SAAS.md) | Backend/frontend composition, cross-layer contracts, and combined application examples |
+| Tools | [TOOLS.md](./TOOLS.md) | CLI tools and plugins, module layouts, local commands, stdout, and stderr |
+| Native apps | [APPS.md](./APPS.md) | Existing Apple platform, lifecycle, layout, performance, testing, and credential guidance |
+| Static websites | [WEBSITES.md](./WEBSITES.md) | Websites without an application backend and relevant browser references |
+| Static assets | [STATIC_ASSETS.md](./STATIC_ASSETS.md) | Compilation, bundles, component-library distribution, CDN delivery, and static hosting |
+| SDKs | [SDKs.md](./SDKs.md) | Index to existing OpenAPI contracts and language conventions |
+
+A web application can combine C#/Java backend guidance and TypeScript/HTML frontend guidance.
+A change to one side selects that side. A flow across both sides selects both.
+The existing combined deployment examples remain available when packaging and serving share one application.
+A component library combines frontend and static assets. A native app can share a repository with a separate static website.
+The native material covers Apple platforms. This extraction adds no Android, ChromeOS, SDK generator, Kubernetes, or DNS procedures.
 
 ## Selective language reading
 

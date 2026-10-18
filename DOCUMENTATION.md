@@ -88,22 +88,7 @@ Verify the published output and its links, not only the source file's existence.
 
 ## Hosting and Deployment Architecture
 
-For the .NET monolith example, documentation is hosted with the application and follows the packaging rules below.
-Native apps, tools, static websites, and other services use their repository's documented delivery pipeline.
-
-1.  **Repository Structure:**
-    *   All external-facing documentation source files must reside in `/docs/external/`.
-
-2.  **URL Structure:**
-    *   **Production:** `prod.<appdomain>.io/docs/` (Application: `prod.<appdomain>.io`)
-    *   **Staging (Development):** `dev.<appdomain>.io/docs/` (Application: `dev.<appdomain>.io`)
-
-3.  **Build & Packaging:**
-    *   The documentation is part of the single monolith Docker container.
-    *   Build scripts must copy/process contents from `/docs/external/` to the `wwwroot/docs/` directory within the final build image.
-    *   The web server must be configured to serve static content from `wwwroot/docs/` when the `/docs/` path is requested.
-
----
+See [SAAS.md](./SAAS.md#existing-monolith-documentation-packaging).
 
 ## Visual Identity and Styling
 

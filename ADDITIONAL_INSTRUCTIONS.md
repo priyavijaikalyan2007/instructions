@@ -11,7 +11,7 @@ Created: 2026
 
 # Additional Instructions for Coding Agents
 
-These instructions supplement the primary guidelines in `AGENTS.md`, `CODING_STYLE.md`, and `FRONTEND.md`. They capture reusable lessons for apps, tools, websites, and web applications. Bootstrap-specific rules apply to projects that use that library.
+These instructions supplement `AGENTS.md`, `CODING_STYLE.md`, and the selected target guides. They capture reusable lessons for apps, tools, websites, and web applications. Bootstrap-specific rules apply to projects that use that library.
 
 ---
 
@@ -34,60 +34,42 @@ These instructions supplement the primary guidelines in `AGENTS.md`, `CODING_STY
 
 - Edit source files rather than generated or copied build output. Confirm the source/output mapping before changing an unfamiliar file.
 - Verify dependency APIs against the version actually shipped. Check the host runtime before adding a replacement for an existing service.
-- For Java extensions, match host APIs and avoid bundling host-provided classes. Use the build's declared dependency scope.
+- See [BACKEND.md](./BACKEND.md#existing-host-dependency-verification).
 - Stage only files that belong to the task. Preserve unrelated working-tree changes and useful failure evidence.
 - Record accepted quality deviations with a reason, owner, resolution plan, and review trigger in the project's existing tracking record.
 - Treat measured counts as dated evidence. Record the file set, counting rule, command, and known exclusions.
 
 ### Bootstrap Discipline
 
-- **"Override, don't overwrite."**
-- **Variables First:** When changing the appearance of any Bootstrap element, modify `_variables.scss` before writing custom CSS. If Bootstrap provides a variable for the property, use it.
-- **No Hardcoded Values:** Never hardcode hex colours (e.g., `#FF0000`), pixel sizes, or font stacks in component SCSS or HTML. Use the semantic names defined in `_variables.scss` (e.g., `$danger`, `$font-size-sm`, `$spacer`).
-- **Unit Consistency:** Do not mix `px`, `rem`, `em`, and `%` arbitrarily. Follow the spacing scale in `_variables.scss`. Use `rem` for sizing, `px` only for borders and fine details (1px borders, box shadows).
-- **Explicit Dependencies:** If a component requires Bootstrap JavaScript (e.g., `bootstrap.Modal`), document this in the component's README and in `COMPONENTS.md`.
+See [FRONTEND.md](./FRONTEND.md#existing-bootstrap-discipline).
 
 ### Component Self-Containment
 
-- **"Components are guests, not owners."**
-- **No Global Side Effects:** A component's SCSS must not modify global Bootstrap styles, override utility classes, or change the behaviour of elements outside its own scope.
-- **Namespace Classes:** Prefix all custom classes with the component name (e.g., `.errordialog-header`, `.combobox-dropdown`). Do not use generic class names like `.header` or `.dropdown-list` that could collide with Bootstrap or the host application.
+See [FRONTEND.md](./FRONTEND.md#existing-component-boundaries).
 
 ### C# Linting
 
-* StyleCop and compiler warnings are constantly emitted that says do not use String.Equals instead suggesting StringComparison. However, this is NOT correct advice for Dotnet Entity Framework (EF) and LINQ queries. When you need to make case insensitive comparisons, you will have to use String.Equals with appropriate case conversion first done on arguments. 
+- See [BACKEND.md](./BACKEND.md#existing-entity-framework-query-convention).
 * Please place `using` statements inside the namespace.
 
 ### Data Contract Mandate (The "Rosetta Stone" Rule)
 
-- **"Explicitly define the data contract between layers."**
--  **Casing Check:** When writing API endpoints or Client wrappers, you **must** explicitly verify JSON property names.
-  - *C# Backend:* Use `[JsonPropertyName("camelCaseName")]` on DTOs to ensure frontend compatibility.
-  - *JS Client:* If the backend expects `snake_case`, use a `toBackendFormat()` mapper. **Never assume automapping works.**
-- **Payload Verification:** Before marking a task done, verify: "Does the frontend payload structure (nested objects, field names) match the backend DTO *exactly*?"
+See [SAAS.md](./SAAS.md#existing-data-contract-verification).
 
 ### The "Hollow Function" Prohibition
 
-- **"UI updates are secondary to Persistence."**
-- **Persistence First:** When implementing a CRUD action (Delete, Save, Update), write the API call **first**. Do not write the optimistic UI update until the API call is scaffolded.
-- **Verify the Loop:** For every `delete()` or `save()` function:
-  - Does it call `api.doAction()`?
-  - Does `api.doAction()` make a `fetch()`?
-  - Does the backend endpoint actually *use* the received data? (Check for "ignored parameters").
+See [SAAS.md](./SAAS.md#existing-persistence-and-ui-integration).
 
 ### Complexity & State Management
 
 - **"Assume nesting, assume async, assume latency."**
 - **Await Everything:** All data modification functions must be `async` and properly `await`ed before rendering.
 - **Recursive awareness:** If a data model is hierarchical (trees, checklists, folders), update logic **must** be recursive or use flattened ID lookups. Simple index-based access (`list[i]`) is forbidden for nested data.
-- **Explicit Dimensions:** For canvas/visualization libraries (Cytoscape, maxGraph), **never** rely on CSS flexbox/grid alone. Always enforce or check for explicit pixel dimensions (`getBoundingClientRect()`) before initialization.
+- See [FRONTEND.md](./FRONTEND.md#existing-canvas-sizing).
 
 ### Security Defaults
 
-- **"Secure by Design, not by Patch."**
-- **No PII in URLs:** Never pass email, names, or IDs in Query Parameters. Use Session/Claims or POST bodies.
-- **Auth Decorators:** No API endpoint is created without an `[Authorize]` or `[RequirePermission]` attribute unless explicitly public (like login).
-- **Explicit Ignores:** In EF Core, use Fluent API `modelBuilder.Entity<T>().Ignore(x => x.Prop)` for all computed properties. Do not rely on `[NotMapped]`.
+See [BACKEND.md](./BACKEND.md#existing-api-security-defaults).
 
 ### Root Cause Refactoring (No Ad-Hoc Patches)
 
@@ -98,11 +80,7 @@ These instructions supplement the primary guidelines in `AGENTS.md`, `CODING_STY
 
 ### Data & Naming Consistency
 
-- **"Uniformity is a feature."**
-- **Global Standards:** If you encounter a camelCase vs. snake_case mismatch between backend/frontend or components:
-  - **Do NOT** apply local patches or field renaming in a single component.
-  - **Action:** Enforce a system-wide serialization standard (e.g., Global JSON settings in Program.cs). Ensure all APIs conform to this standard.
-- **Rule:** A codebase should look like it was written by one person. Mismatched casing styles across files are unacceptable.
+See [SAAS.md](./SAAS.md#existing-cross-layer-naming).
 
 ### Direct Type Compatibility (No Unnecessary Adapters)
 
@@ -129,7 +107,7 @@ These instructions supplement the primary guidelines in `AGENTS.md`, `CODING_STY
   - If `Day.js` is installed, **do not** install `Moment.js`.
   - If `Newtonsoft.Json` is used, **do not** introduce `System.Text.Json` unless part of a documented migration.
 - **Triviality Check:** Do not add libraries for trivial one-line functions (e.g., `is-odd`, `left-pad`). Write the helper function yourself.
-- **No UI Frameworks:** Do not install React, Vue, Angular, jQuery, or any UI framework. This is explicitly prohibited by the project's architecture.
+- See [FRONTEND.md](./FRONTEND.md#existing-browser-dependency-restriction).
 
 ### Async Consistency
 
@@ -138,50 +116,41 @@ These instructions supplement the primary guidelines in `AGENTS.md`, `CODING_STY
 
 ### Visual & Styling Rigor
 
-- **"Single Source of Truth."**
-- **Framework Purity:** If the project uses Tailwind CSS, **do not** write inline `style={{ ... }}` or create separate `.css` files.
-- **Unit Consistency:** Do not mix `px`, `rem`, `em`, and `%` arbitrarily. Inspect `tailwind.config.js` or `variables.css` and use the defined spacing/color scales.
-- **Color Variables:** Never hardcode hex codes (e.g., `#FF0000`). Use the semantic names defined in the theme (e.g., `text-error`, `bg-primary`).
+See [FRONTEND.md](./FRONTEND.md#existing-styling-consistency).
 
 ### Error Handling Standardization
 
 - **"Fail consistently."**
 - **Unified Strategy:** Do not mix "Return Null on Failure" with "Throw Exception on Failure". Inspect the `Services` folder to determine the project's standard contract.
-- **UI Propagation:** Ensure errors propagate to the UI consistently. If the app uses a global Toast notification system for API errors, do not implement a local `alert()` or console-only error log.
+- See [FRONTEND.md](./FRONTEND.md#existing-ui-error-propagation).
 
 ### Configuration & Magic Constants
 
 - **"No Magic Numbers."**
 - **Extraction:** Any number (e.g., `3000` ms timeout) or string (e.g., "Admin" role) that appears more than once—or has semantic meaning—must be a named constant.
-- **Environment Isolation:** **Never** hardcode URLs (e.g., `http://localhost:5000`) inside code. Use `appsettings.json` (backend) or `import.meta.env` (frontend).
+- See [SAAS.md](./SAAS.md#existing-application-url-configuration).
 
 ### Code Hygiene & "Zombie" Code
 
 - **"Delete, don't disable."**
 - **No Commented-Out Code:** Do not leave blocks of commented-out code (C#, SCSS, TypeScript, Javascript or HTML) "just in case". Rely on Git history.
 - **Import Cleanup:** Unused imports and variables are (C# usings, SCSS imports, TypeScript imports, and variables are technical debt. Remove them immediately before considering a task complete. Remove them before considering a task complete.
-- **No Dead CSS:** If a refactor removes a component or class, delete the corresponding styles. Do not leave orphaned selectors.
+- See [FRONTEND.md](./FRONTEND.md#existing-stylesheet-cleanup).
 
 
 ## Testing
 
 ### SCSS Build Verification
 
-You must verify that `npm run build` completes without errors after every change to SCSS files. A broken build is never acceptable.
+See [STATIC_ASSETS.md](./STATIC_ASSETS.md#existing-stylesheet-build-checks).
 
 ### Component Testing
 
-When building TypeScript components, add unit tests using Jest or Vitest that verify:
-- The component initialises correctly with valid inputs.
-- The component handles missing or invalid inputs gracefully (logs a warning/error, does not throw).
-- The component produces the expected DOM structure.
+See [FRONTEND.md](./FRONTEND.md#existing-component-tests).
 
 ### Visual Verification
 
-After any theme or component change, open `demo/index.html` in a browser and visually verify that:
-- No existing components are broken.
-- New components render as specified.
-- Colours, spacing, and typography are consistent with the theme.
+See [FRONTEND.md](./FRONTEND.md#existing-component-visual-checks).
 
 ### Unit Tests
 You must always add unit tests for all code changes. This is non-negotiable.
@@ -194,17 +163,12 @@ You must always add unit tests for all code changes. This is non-negotiable.
   - In other words, test both what *should* work and what *should not* be possible or work.
 
 ### Playwright Tests
-You must add Playwright end-to-end tests for all user-facing changes.
+
+See [FRONTEND.md](./FRONTEND.md#existing-browser-workflow-tests).
 
 ### Test Users
-- Use test users in the format `userNNN@test.<appdomain>.io` (e.g., `user001@test.domain.io`, `user042@test.domain.io`).
-- `test.<appdomain>.io` is a non-existent domain reserved exclusively for testing.
-- The test login endpoint must only be enabled in the local **testing** environment.
-- Logins from `@test.<appdomain>.io` must only be accepted in the local **testing** environment.
-- Logins from `@test.<appdomain>.io` must be **rejected** in development and production environments.
-- Test login endpoints must be **disabled and non-functional** in development and production environments.
 
----
+See [SAAS.md](./SAAS.md#existing-local-test-identities).
 
 ## Clarification
 
@@ -234,87 +198,40 @@ You must always commit all changes to `git` with a concise description of change
 
 ## Access Control
 
-### RBAC & FGAC Compliance
-A full Role-Based Access Control (RBAC) and Fine-Grained Access Control (FGAC) system has been implemented. Refer to:
-- `specs/access_control.raw.md`
-- `specs/access_control.prd.md`
-- `ACCESS_CONTROL.md`
+See [SAAS.md](./SAAS.md#existing-access-control-integration).
 
-For every new application, resource type, or feature, you must:
-- Identify what access control changes are needed
-- Implement proper permission checks
-- Update access control specifications if new resource types or permissions are introduced
+### RBAC & FGAC Compliance
+
+See [SAAS.md](./SAAS.md#existing-access-control-integration).
 
 ## Database Migrations
 
+See [BACKEND.md](./BACKEND.md#existing-database-migrations).
+
 ### Plain SQL Over ORM Migration Tools
-Always prefer writing plain SQL scripts for database migrations instead of using ORM migration tools like `dotnet ef migrations`. This approach:
-- Provides better control and visibility over what changes are being made
-- Avoids version mismatches and tooling issues
-- Is more portable and easier to review
-- Works reliably regardless of ORM tool versions
+
+See [BACKEND.md](./BACKEND.md#existing-database-migrations).
 
 ### Migration Guidelines
-- Place SQL migration scripts in `/sql/migrations/` with naming format: `YYYYMMDD_description.sql`
-- Use `CREATE TABLE IF NOT EXISTS` and `CREATE INDEX IF NOT EXISTS` for idempotency
-- Include proper foreign key constraints with `ON DELETE CASCADE` or `ON DELETE SET NULL` as appropriate
-- Add timestamps (`created_at`, `updated_at`) to all tables
-- After running the SQL, record the migration in EF Core's history table:
-  ```sql
-  INSERT INTO "__EFMigrationsHistory" ("MigrationId", "ProductVersion")
-  VALUES ('YYYYMMDD_MigrationName', '10.0.2')
-  ON CONFLICT ("MigrationId") DO NOTHING;
-  ```
-- Update the model snapshot (`KnobbyDbContextModelSnapshot.cs`) manually to keep EF Core in sync
+
+See [BACKEND.md](./BACKEND.md#existing-database-migrations).
 
 ### Running Migrations
-Use `psql` directly to run migrations:
-```bash
-PGPASSWORD=<password> psql -h <host> -p <port> -U <user> -d <database> -f <migration_file.sql>
-```
+
+See [BACKEND.md](./BACKEND.md#existing-database-migrations).
 
 ### CDN Component Integration
 
-**Fallback Code Prohibition:**
-Do not substitute a component that reports fabricated data or success when initialization fails.
-Follow the degraded-behavior rules in `PRAGMATIC_PROGRAMMER.md`. Report the failure and preserve the user's state.
-When a shared component is defective, fix its source or report the defect through the project's workflow.
-
-**Peer Dependency Loading:**
-CDN components may wrap third-party libraries (e.g., MarkdownEditor wraps Vditor, Diagrams wraps
-maxGraph). When adding a CDN component to an HTML page:
-1. Check what peer dependencies the component requires (look for `window.X` checks or "library not
-   found" error messages in the component source).
-2. Load the peer dependency's CSS in `<head>` **before** the component's CSS.
-3. Load the peer dependency's JS via `<script>` **before** the component's JS.
-4. If you are unsure whether a peer dependency is needed, fetch the component JS and search for
-   `window.` global checks or console error messages about missing libraries.
-
-**API Signature Verification:**
-Before calling a CDN component factory function, verify the actual function signature by reading the
-component source. Do NOT guess parameter order or option names from memory. Common mistakes:
-- Passing a single options object when the factory takes `(id: string, options)`.
-- Using option names that don't exist (e.g., `theme`, `showToolbar` instead of `contained`,
-  `showInlineToolbar`).
-- Using invalid enum values (e.g., `mode: 'split'` instead of `mode: 'sidebyside'`).
-
-**Toolbar State Management:**
-When using the CDN Toolbar component, ALL button state changes must go through `toolbar.setToolState()`.
-Never use direct DOM manipulation (`classList.toggle('active', ...)`) on toolbar buttons — this causes
-the component's internal state to diverge from the visual state.
+See [STATIC_ASSETS.md](./STATIC_ASSETS.md#existing-cdn-component-integration).
 
 ### UI State Management
 
-Every component should provide a mechanism to export and import its current UI state. 
-That is, what node is selected, whether nodes are expanded or collapsed, whether a sidebar is 
-expanded or collapsed, which ribbon tools are selected and more. This enables consuming applications to
-integrate UI state preservation and reload into their user experience.
+See [FRONTEND.md](./FRONTEND.md#existing-component-state).
 
 ## Settings
 
+See [SAAS.md](./SAAS.md#existing-workspace-settings-integration).
+
 ### Feature Settings Management
-Every new feature, capability, application, or change may introduce settings that control behavior. You must:
-- Identify any new settings required by the change
-- Update workspace and global settings dialogs to include new settings
-- Choose sensible defaults for all new settings
-- Ensure global-to-workspace settings inheritance remains intact
+
+See [SAAS.md](./SAAS.md#existing-workspace-settings-integration).

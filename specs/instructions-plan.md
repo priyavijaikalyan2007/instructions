@@ -7,13 +7,44 @@ File GUID: 9363fbba-e59d-4a14-aa8c-3f9cf8c33d52
 Created: 2026
 -->
 
-<!-- AGENT: Active language extraction plan, completed in-place updates, and superseded broader reorganization. -->
+<!-- AGENT: Active target extraction plan, completed language and in-place phases, and superseded broader reorganization. -->
 
 # Instruction migration plan
 
-Status: language guide extraction complete on docs/language-guides as of 17 October 2026.
+Status: target guide extraction and local document checks complete on docs/target-guides as of 18 October 2026.
+The language guide phase merged through PR #1 at `0a5a868`.
 The earlier in-place updates merged into main on 16 October 2026.
 The original reorganization proposal was superseded on 15 October 2026.
+
+## Current plan: target guide extraction
+
+The owner authorized target segregation on 18 October 2026 and explicitly prohibited new engineering instructions.
+Move existing target-specific material and add routing descriptions and references only.
+Select targets by changed work and combine targets within one repository when needed.
+Keep language selection independent from target selection.
+
+1. Expand `BACKEND.md` and `FRONTEND.md` using existing material and topic references.
+2. Create `SAAS.md`, `APPS.md`, `TOOLS.md`, `WEBSITES.md`, and `STATIC_ASSETS.md` as target-specific homes.
+3. Replace the `SDKs.md` placeholder with an index to existing API/OpenAPI and language guidance.
+4. Extract target material from `AGENTS.md`, `FRONTEND.md`, `PERFORMANCE.md`, `DOCUMENTATION.md`, and `ADDITIONAL_INSTRUCTIONS.md`.
+5. Extract existing native-app, browser-testing, and backend-performance material from `SWIFT.md`, `JAVASCRIPT.md`, and `CSHARP.md`.
+6. Move the existing CLI logging rule from `LOGGING.md` and native UI scope from `UI_UX_CONSISTENCY.md`.
+7. Add target selection to `AGENTS.md` and describe target/language composition in `README.md`.
+8. Preserve instruction text, examples, shared policies, source encodings, headers, and existing topic anchors.
+9. Verify provenance for moved material, code preservation, links, anchors, and target/language routing.
+10. Update the existing plan, review, inventory, status, changelog, conversation, and history.
+11. Commit and push `docs/target-guides`, then open a PR against `main` for review.
+
+The SDK file contains no existing generator procedures. Native platform instructions cover Apple platforms.
+This extraction does not add SDK generation, Kubernetes, Android, ChromeOS, Workers, or DNS configuration procedures.
+No pattern required - this is documentation segregation with no runtime code or interface changes.
+
+Implementation and local checks are complete on `docs/target-guides`.
+The extraction records 89 moved blocks, including three secondary target splits.
+All 171 code blocks across the edited documents remain intact after the existing normalization rules.
+One missing frontend fence is repaired without changing its JavaScript.
+Publish this branch and open a PR for owner review. Do not merge it.
+
 
 ## Current plan: language guide extraction
 

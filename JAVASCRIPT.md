@@ -55,21 +55,7 @@ Place file headers before implementation code. Preserve directives and documenta
 
 ## Testing
 
-The following framework examples apply to browser frontend tests. Retain the project's configured runner for server-side JavaScript.
-
-**Unit Tests:**
-- Use Jest or Vitest as the test runner
-- Test React components with React Testing Library
-- Test hooks with @testing-library/react-hooks
-- Mock API calls with MSW (Mock Service Worker)
-
-**Integration Tests:**
-- Test component interactions
-- Test API client functions against mock servers
-
-**E2E Tests:**
-- Use Playwright for browser automation
-- Test critical user flows end-to-end
+See [FRONTEND.md](./FRONTEND.md#existing-browser-testing).
 
 ## Test examples
 

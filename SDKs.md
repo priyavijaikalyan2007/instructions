@@ -11,4 +11,20 @@ Created: 2026
 
 # SDK Development Guidelines
 
-*This document is a placeholder. SDK development guidelines will be added here.*
+## Target scope
+
+SDK work, including multi-language clients generated from an OpenAPI endpoint. This index links existing API-contract and language material.
+Existing guidance is limited to those linked contracts and conventions.
+
+## Existing topic references
+
+| Work in scope | Existing guidance |
+| --- | --- |
+| OpenAPI documentation contract | [API_GUIDELINES.md](./API_GUIDELINES.md#8-documentation) |
+| Resource names, request/response fields, errors, and versioning | [API_GUIDELINES.md](./API_GUIDELINES.md) |
+| Consumer API and artifact contracts | [DOCUMENTATION.md](./DOCUMENTATION.md#verified-facts-and-published-contracts) |
+| TypeScript conventions | [TYPESCRIPT.md](./TYPESCRIPT.md) |
+| Java conventions | [JAVA.md](./JAVA.md) |
+| C# conventions | [CSHARP.md](./CSHARP.md) |
+| Go conventions | [GO.md](./GO.md) |
+| Python conventions | [PYTHON.md](./PYTHON.md) |

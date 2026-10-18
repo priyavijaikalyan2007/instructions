@@ -11,6 +11,12 @@ Created: 2026
 
 # Changelog
 
+## 18 October 2026
+
+- Changed AGENTS.md to select target guides separately from language guides and support several targets within one repository.
+- Grouped existing instructions under backend, frontend, SaaS, native apps, CLI tools, static websites, static assets, and SDK references.
+- Preserved existing engineering rules, code examples, topic anchors, and shared policies. Closed a missing frontend Markdown fence.
+
 ## 17 October 2026
 
 - Added 13 root-level language guides and task-based language selection in AGENTS.md.

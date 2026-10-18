@@ -13,6 +13,31 @@ Created: 2026
 
 First, read `README.md` to understand the situation, background and problem statement we are addressing and the solution we are building. Then continue from here.
 
+## Select target guides
+
+Select targets for the work that the task changes, then select the languages used in that work.
+A repository can combine several targets. Its primary language or hosting platform does not select every target.
+The target guides group existing instructions and link to existing topic guides.
+Read the sections that apply to the changed behavior and the configured project model.
+
+| Work in the task | Target guides | Language examples |
+| --- | --- | --- |
+| Backend services, APIs, databases, entities, relationships, data models, containers, and service development | [BACKEND.md](./BACKEND.md) | C#, Java, SQL, or the service's actual language |
+| Browser pages, dynamic pages, login, and web application UI | [FRONTEND.md](./FRONTEND.md) | TypeScript, JavaScript, HTML, CSS, SCSS |
+| SaaS or web application flows across backend and frontend | [SAAS.md](./SAAS.md), [BACKEND.md](./BACKEND.md), and [FRONTEND.md](./FRONTEND.md) | The backend and frontend languages involved |
+| CLI tools, CLI plugins, and plugins for CLI tools | [TOOLS.md](./TOOLS.md) | Python, Go, Rust, or the tool's actual language |
+| Native iOS, Android, iPadOS, ChromeOS, or macOS applications | [APPS.md](./APPS.md) | Swift for the existing Apple examples, or the target's actual language |
+| Static websites without an application backend | [WEBSITES.md](./WEBSITES.md) and [STATIC_ASSETS.md](./STATIC_ASSETS.md) | HTML, CSS, SCSS, JavaScript, TypeScript |
+| Static assets, bundles, compilation, hosting, CDN delivery, or component-library distribution | [STATIC_ASSETS.md](./STATIC_ASSETS.md) | The affected source and build languages |
+| SDKs and clients generated from an OpenAPI endpoint | [SDKs.md](./SDKs.md) | TypeScript, Java, C#, Go, Python, or the generated language |
+
+For a reusable browser component library, combine frontend and static asset guidance.
+For a web application, packaging and serving may be combined or separate. The SaaS guide retains the existing combined examples.
+Static hosting, including Cloudflare hosting, does not by itself select backend application guidance.
+A native app and its public website select separate target guides within the same repository.
+A Python backend selects backend and Python guidance. A Go CLI selects tool and Go guidance.
+Existing native platform instructions cover Apple platforms. The SDK guide indexes existing API and language material.
+
 ## Select language guides
 
 Select guides from the source files and boundaries that the task changes.
@@ -36,7 +61,7 @@ Code examples in this instruction repository do not select a language for the co
 | Shell scripts, Bash, and BATS tests | [SHELL.md](./SHELL.md) |
 
 Read every language involved in the changed behavior, including embedded SQL, markup, or styles.
-For example, a C# API change may need only CSHARP.md. A Swift model change may need only SWIFT.md.
+Among language guides, a C# API change may need only CSHARP.md. A Swift model change may need only SWIFT.md.
 A TypeScript component with HTML and SCSS changes needs the JavaScript, TypeScript, HTML, CSS, and SCSS guides.
 Follow language links only when they match the selected languages. Read each selected section once per task.
 
@@ -51,21 +76,11 @@ Product, framework, and component reference files remain selected by the task un
 
 # Structure
 
-Choose the project model from the consuming repository's README, source, manifests, and build scripts.
-A repository may contain several models, such as native apps plus their public website.
-The choices below guide work within existing projects. They do not authorize moving files or changing architecture.
+The target selection above replaces a single repository-wide project label.
+Use the consuming repository's README, source, manifests, and build scripts to select its configured model.
+The extracted stack and layout examples below remain starting points for that model.
+They do not authorize moving files or changing architecture.
 
-| Project model | Typical architecture | Main responsibilities |
-| --- | --- | --- |
-| Enterprise SaaS application | .NET or Java backend, browser frontend, persistent storage, and background workers. | Tenant-aware APIs, frontend routes and pages, authorization, data ownership, and operations. |
-| Enterprise identity service | Java extensions hosted by an identity server, browser themes, and a configured runtime or container. | Sign-in flows, identity federation, tokens, extension compatibility, and identity-service operations. |
-| Native Apple applications | Swift targets for macOS, iOS, and iPadOS, with shared logic and platform-specific views and adapters. | Native lifecycle, local persistence, permissions, accessibility, platform layouts, signing, and releases. |
-| Reusable component library | TypeScript components, CSS/SCSS, licensed assets, build tools, and generated distribution bundles. | Public contracts, reusable controls, state capture and restoration, cleanup, demos, documentation, and consumer compatibility. |
-| Local tools | Go, Rust, or Python executables or packages, with thin command entry points and testable processing code. | Arguments, local files, cancellation, diagnostics, exit status, and release binaries or packages. |
-| Website | Static or server-rendered HTML and CSS, with optional TypeScript modules and backend services. | Content, navigation, assets, forms, accessibility, and static or server delivery. |
-
-These models are starting points. Select versions, commands, APIs, and paths from the consuming repository's configuration.
-Use the stack and layout guidance below without depending on another repository's files.
 Prefer Allman braces throughout. Keep four-space indentation, no tabs, one type per file, and lines at most 120 characters.
 Follow the syntax limits documented in `CODING_STYLE.md` rather than emitting invalid code.
 Before writing code, read `CODING_STYLE.md`, `COMMENTING.md`, and `MARKERS.md` for shared construction rules.
@@ -77,55 +92,27 @@ For testing and logging work, read the shared topic guide and the matching secti
 
 ### Enterprise SaaS application
 
-- Use the project's configured backend, such as ASP.NET Core 10.0+ or Java. Match its runtime and deployment mode.
-- Serve frontend routes and APIs through the application, including pages when needed.
-- Truly static browser assets may come from a content delivery network (CDN).
-- For air-gapped environments, package required assets locally and serve them without external network dependencies.
-- Use TypeScript for non-trivial browser scripting, with HTML, CSS/SCSS, and the declared component library.
-- Keep the configured Vite source/output mapping. Do not edit compiled JavaScript as a substitute for its TypeScript source.
-- Use the configured PostgreSQL and data-access versions. Keep executable SQL migration scripts in the project's migration directory.
-- Read deployment configuration for containers, Cloud Run, background roles, and resource limits. Do not assume a fixed image size.
+See [SAAS.md](./SAAS.md), [BACKEND.md](./BACKEND.md), [FRONTEND.md](./FRONTEND.md), and [STATIC_ASSETS.md](./STATIC_ASSETS.md).
 
 ### Enterprise identity service or Java web application
 
-- Use Java and the configured JDK for identity-server extensions. Keycloak projects may include providers, browser themes, and a container deployment.
-- Match extension APIs to the host runtime and distinguish host-provided dependencies from bundled dependencies.
-- Use the Maven or Gradle wrapper and the repository's configured toolchain.
-- A general Java web application uses its declared web framework. Keycloak is an identity-service choice, not a universal Java backend.
-- Use TypeScript for non-trivial browser logic. Preserve the host's template, security-header, and asset-delivery contracts.
+See [BACKEND.md](./BACKEND.md#identity-service-example).
 
 ### Native macOS, iOS, and iPadOS applications
 
-- Use Swift and the project's SwiftUI, AppKit, or UIKit targets. Share platform-independent logic without duplicating it across targets.
-- Read the Xcode project and build scripts for deployment targets, SDKs, architectures, schemes, signing, and capabilities.
-- Use native persistence and state restoration. A local app does not require a server, database, login, or analytics by default.
-- Test platform permissions, document access, app lifecycle, accessibility, and platform-specific layouts where affected.
-- Treat building, signing, archiving, uploading, submitting for review, and releasing as separate operations.
-- Follow the repository's release scripts. Keep private signing material and service credentials out of source and app bundles.
+See [APPS.md](./APPS.md#existing-apple-platform-stack).
 
 ### Reusable component library
 
-- Use the library's declared stack, such as vanilla TypeScript, HTML, CSS/SCSS, Bootstrap, and Node.js build tools.
-- Keep source components separate from generated bundles, generated documentation, and distribution output.
-- Document each component's factory, options, events, public types, state capture/restore, dependencies, and cleanup contract.
-- Use unit, browser, accessibility, visual, and consumer-artifact checks as appropriate.
-- The consuming application owns authentication, persistence, and the host logging pipeline.
+See [FRONTEND.md](./FRONTEND.md#component-library-contracts) and [STATIC_ASSETS.md](./STATIC_ASSETS.md#component-library-build).
 
 ### Local Go, Rust, and Python tools
 
-- Go uses its configured `go.mod` toolchain and standard module layout. Rust uses Cargo and the declared Rust edition/toolchain.
-- Python uses the project's interpreter, `pyproject.toml`, environment, and dependency lock policy.
-- Keep argument parsing and process setup separate from testable processing logic.
-- Keep machine-readable output on stdout and diagnostics on stderr. Document exit status, cancellation, and partial-output behavior.
-- Bound memory, concurrency, and file operations. Preserve user data when processing fails.
-- Add network services, databases, or native UI dependencies only when the tool's requirements need them.
+See [TOOLS.md](./TOOLS.md#existing-tool-stack).
 
 ### Websites and browser scripting
 
-- A static website may use HTML and CSS with no backend or JavaScript.
-- Use the project's asset and delivery pipeline. Apply API guidance only when the website actually calls or serves APIs.
-- Use TypeScript for non-trivial browser scripting. Move inline JavaScript beyond ten lines into a TypeScript module.
-- Apply browser component rules to browser UIs. Native apps use platform controls and their declared design conventions.
+See [WEBSITES.md](./WEBSITES.md#existing-website-and-browser-guidance).
 
 ## Folder & File Structure
 
@@ -135,84 +122,23 @@ Keep one type per source file, including short structs. See `CODING_STYLE.md` fo
 
 ### Enterprise SaaS application
 
-```text
-api/                   .NET backend, domain services, HTTP boundaries, and persistence
-frontend/              Browser HTML, CSS, and source assets
-typescript/            TypeScript source compiled into the browser output
-unittests/             Backend unit tests
-integrationtests/      Real service and database integration tests
-playwrighttests/       Browser workflows and accessibility checks
-sql/migrations/        Ordered, executable database migrations
-specs/                 Product requirements, designs, and progress
-playbooks/             Operator and development procedures
-docs/                  User and integrator documentation
-```
+See [SAAS.md](./SAAS.md#existing-combined-layout).
 
 ### Enterprise identity service or Java backend
 
-```text
-src/providers/         Java host extensions, with their own Maven/Gradle source and test roots
-src/themes/            Host-rendered templates, styles, and browser assets
-src/main/java/         Application Java code when this is a standard Java backend
-src/main/resources/    Application configuration and packaged resources
-src/test/java/         Unit and integration tests under the configured runner
-sql/                   Application-owned database scripts, when applicable
-Dockerfile             Container build, when the deployment uses containers
-target/ or build/      Generated output, never the source to edit
-```
-
-The identity extension roots and standard Java roots are alternatives, not duplicate homes for the same code.
+See [BACKEND.md](./BACKEND.md#existing-java-and-identity-layout).
 
 ### Native Apple applications
 
-For a repository with several native applications, use `src/<app-name>/` when a new layout is needed.
-Give each application its own build, tests, and documentation.
-
-```text
-src/<app-name>/
-    Shared/            Swift logic and resources shared between platform targets
-    <AppName>/         macOS application entry point, views, and platform adapters
-    <AppName>Mobile/   iOS/iPadOS entry point, views, and platform adapters
-    <AppName>Tests/    Unit and integration tests
-    <AppName>.xcodeproj/  Targets, schemes, build settings, and project membership
-    Testing/           Manual regression plans and nonprivate sample data
-    AppStore/          Product metadata, review notes, and media plans
-    scripts/           App-specific build, archive, signing, and upload procedures
-    build/             Generated artifacts, excluded from source control
-src/web/               Public website, when this repository also owns one
-```
-
-For a Swift package, use `Sources/<Target>/` and `Tests/<Target>Tests/` with `Package.swift` instead of inventing an Xcode layout.
-Adding a source file also requires checking target membership and resource packaging.
+See [APPS.md](./APPS.md#existing-native-application-layout).
 
 ### Reusable component library
 
-```text
-components/<name>/     Component TypeScript, styles, tests, and usage documentation
-scss/                  Theme variables, shared styles, and component imports
-assets/                Source icons, fonts, and other licensed assets
-demo/                  Discoverable component examples and integration scenarios
-docs/                  Consumer contracts, API references, and integration guides
-scripts/               Build, bundle, validation, and publication tools
-tests/                 Browser, distribution, and cross-component tests
-dist/                  Generated bundles, assets, demos, and documentation
-```
-
-Keep source and generated documents distinguishable. Register new demos and guides in the library's discovery and publication pipeline.
+See [STATIC_ASSETS.md](./STATIC_ASSETS.md#existing-component-library-layout).
 
 ### Local tools
 
-| Purpose | Go | Rust | Python |
-| --- | --- | --- | --- |
-| Manifest | `go.mod`, `go.sum` | `Cargo.toml`, configured `Cargo.lock` policy | `pyproject.toml`, project lockfile |
-| Entry point | `cmd/<tool>/main.go` | `src/main.rs` | `src/<package>/__main__.py` |
-| Processing code | `internal/<package>/` | `src/<module>/`, exposed through `src/lib.rs` | `src/<package>/` |
-| Public reusable API | Dedicated package only when needed | Deliberate library exports in `src/lib.rs` | Deliberate package exports |
-| Tests | Beside code as `*_test.go` | Module tests and `tests/` integration tests | `tests/` or the established colocated convention |
-| Build output | Ignored `bin/` or `build/` | Ignored `target/` | Ignored `build/`, `dist/`, and environment directories |
-
-Keep Go type files in the appropriate existing package. Register Rust type files in their parent module and set visibility deliberately.
-Do not create a package or crate for every type merely to satisfy the file rule.
+See [TOOLS.md](./TOOLS.md#existing-tool-layouts).
 
 ## Operating Style
 
@@ -312,26 +238,9 @@ consistent, thoughtful and complete end to end experience.
   The Golden Loop (baseline -> refactor -> verify) applies to all refactorings. Establish a test baseline 
   before changing any code.
 - When creating backend code, consult BACKEND.md.
-- When selecting libaries for backend functionality, always consult BACKEND_LIBRARY_SELECTION.md for guidelines 
-  and, for .NET projects, DOTNETFX_SELECTION.md for pre-canned recommendations.
-- When selecting libraries for frontend functionality, always consult FRONTEND_LIBRARY_SELECTION.md for guidelines 
-  and FRONTEND_SELECTION.md for pre-canned recommendations.
-- Before building new browser UI components, always consult the file
-  `https://theme.priyavijai-kalyan2007.workers.dev/docs/COMPONENT_INDEX.md` to see 
-  if a reusable component exists. If a resuable component exists, then consult 
-  `https://theme.priyavijai-kalyan2007.workers.dev/docs/COMPONENT_REFERENCE.md` 
-  to look up the component and related documentation. 
-  If no resuable component exists, then check 
-  `https://theme.priyavijai-kalyan2007.workers.dev/docs/MASTER_COMPONENT_INDEX.md` to see if a 
-  component yet to be built will fit your needs. If so, then request that the component be built instead. 
-  If you have the permissions to do so, you may file a GitHub issue to the repository 
-  `https://github.com/priyavijaikalyan2007/b2btheme`
-  Finally, if no existing component fits the need and none of the components in the master list suffice, 
-  produce a specification for the resuable UI components and then wait for the user to confirm that the 
-  components are available for use before proceeding. This ensures that UI code uses cleanly built resuable 
-  components with standardized repeatable patterns and not AI slop. 
-  You may also file an issue to the repository `https://github.com/priyavijaikalyan2007/b2btheme` asking for 
-  the new component. Include the specification in the issue.
+- For backend library selection, see [BACKEND.md](./BACKEND.md#backend-library-selection).
+- For frontend library selection, see [FRONTEND.md](./FRONTEND.md#frontend-library-selection).
+- For browser component reuse, see [FRONTEND.md](./FRONTEND.md#existing-component-reuse-workflow).
 - Always consult RESTABLE_RESOURCES.md for how to setup resource URLs to be restable and usable by humans.
 - Always consult LITERATE_ERRORS.md for how to construct error messages to be usable and meaningful to users
   and operators.
@@ -353,44 +262,33 @@ consistent, thoughtful and complete end to end experience.
 
 ## Local Development
 
-For native apps, use the app-specific build modes and Xcode schemes documented by the repository.
-For component libraries, use the declared package scripts. Go, Rust, and Python tools use their documented module/package commands.
 A build or test command does not authorize deployment, signing-key export, app-store submission, or release.
 
-Use the following commands when the consuming repository provides these scripts.
-Otherwise, use its documented build and test commands for the configured toolchain.
+Use the selected target guide for the existing development and delivery examples.
 
 ### Clean
-```bash
-./clean.sh
-```
+
+See [BACKEND.md](./BACKEND.md#existing-local-script-example) for the existing script example.
 
 ### Build
-```bash
-./build.sh
-```
+
+See [BACKEND.md](./BACKEND.md#existing-local-script-example) for the existing script example.
 
 ### Test
-```bash
-./test.sh
-```
+
+See [BACKEND.md](./BACKEND.md#existing-local-script-example) for the existing script example.
 
 ### Run
-```bash
-./run.sh
-```
+
+See [BACKEND.md](./BACKEND.md#existing-local-script-example) for the existing script example.
 
 ### Deploy
-```bash
-./redeploy.sh
-```
+
+See [BACKEND.md](./BACKEND.md#existing-local-script-example) for the existing script example.
 
 ## Local Endpoints
 
-Read the consuming repository's README, launch configuration, and scripts for ports, health checks, and local dependencies.
-The SaaS, identity service, component demo, and website may each use different endpoints.
-Native apps and local tools need no listening port unless their design explicitly includes a service.
-Use configured local credentials. Never copy example credentials into a deployed environment.
+See [BACKEND.md](./BACKEND.md#local-endpoints-and-dependencies).
 
 # Agent Knowledge Base (CRITICAL)
 

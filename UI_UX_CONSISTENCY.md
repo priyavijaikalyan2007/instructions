@@ -14,8 +14,7 @@ Created: 2026
 This document defines the strict consistency standards that all coding agents MUST adhere to when building or modifying sub-applications within the super-app ecosystem. Consistency is not optional; it is fundamental to user efficiency, muscle memory, and the "enterprise-grade" feel of the platform.
 
 The browser shell, CSS, and Bootstrap examples below apply to web UIs.
-For native macOS/iOS apps, use the project's SwiftUI, AppKit, or UIKit conventions and platform-appropriate controls and keyboard shortcuts.
-Use native state restoration and persistence rather than browser storage APIs.
+See [APPS.md](./APPS.md#existing-apple-ui-conventions).
 
 ## 1. Component Usage & Styling
 
