@@ -14,7 +14,7 @@ Created: 2026
 Review date: 14 October 2026. Updated scope: 15 October 2026.
 Completion: accepted in-place updates merged into `main` on 16 October 2026.
 Language phase: merged through PR #1 at `0a5a868`.
-Target phase: authorized and prepared for review on 18 October 2026.
+Target phase: pushed and published through [PR #2](https://github.com/priyavijaikalyan2007/instructions/pull/2) on 18 October 2026.
 
 The first phase used surgical edits to existing files. The owner then authorized a limited language-guide split on 17 October 2026.
 The findings below remain historical review evidence. Root-level target extraction is now authorized.

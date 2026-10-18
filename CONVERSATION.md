@@ -202,3 +202,10 @@ Checks cover links, anchors, headers, target/language composition, and unchanged
 Closed one pre-existing missing Markdown fence after the Share button example without changing its JavaScript.
 This documentation-only change has no application build or runtime test run.
 The owner authorized committing, pushing the new branch, and opening a PR for review. Main remains unchanged.
+
+### Publication
+
+Committed the extraction as `c8c3b32` and pushed `docs/target-guides`.
+Opened [PR #2](https://github.com/priyavijaikalyan2007/instructions/pull/2) against `main` through the owner's existing browser session.
+The CLI account `knobbyadmin` lacked permission to create the PR. No repository or authentication settings were changed.
+The PR is open and unmerged for owner review.

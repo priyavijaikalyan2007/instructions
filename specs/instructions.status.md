@@ -15,9 +15,10 @@ Updated: 18 October 2026.
 
 ## Current phase: target guides
 
-Implementation and local document checks are complete on `docs/target-guides` for review.
+Implementation and local document checks are complete on `docs/target-guides`.
+The branch is pushed and [PR #2](https://github.com/priyavijaikalyan2007/instructions/pull/2) is open for owner review.
 The owner authorized a new branch, push, and PR. Main remains at `0a5a868`.
-Review the [target-guide comparison](https://github.com/priyavijaikalyan2007/instructions/compare/main...docs/target-guides).
+Main remains unchanged while the PR awaits review.
 
 AGENTS.md selects target guides for the changed work, then selects the actual languages.
 Backend, frontend, SaaS, native apps, CLI tools, static websites, static assets, and SDK references have separate entry points.

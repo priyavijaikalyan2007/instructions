@@ -11,7 +11,7 @@ Created: 2026
 
 # Instruction migration plan
 
-Status: target guide extraction and local document checks complete on docs/target-guides as of 18 October 2026.
+Status: target guide extraction complete and published for review through PR #2 as of 18 October 2026.
 The language guide phase merged through PR #1 at `0a5a868`.
 The earlier in-place updates merged into main on 16 October 2026.
 The original reorganization proposal was superseded on 15 October 2026.
@@ -43,7 +43,8 @@ Implementation and local checks are complete on `docs/target-guides`.
 The extraction records 89 moved blocks, including three secondary target splits.
 All 171 code blocks across the edited documents remain intact after the existing normalization rules.
 One missing frontend fence is repaired without changing its JavaScript.
-Publish this branch and open a PR for owner review. Do not merge it.
+The branch is pushed. [PR #2](https://github.com/priyavijaikalyan2007/instructions/pull/2) is open for owner review.
+The PR remains unmerged.
 
 
 ## Current plan: language guide extraction
