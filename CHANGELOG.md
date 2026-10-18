@@ -13,6 +13,10 @@ Created: 2026
 
 ## 18 October 2026
 
+- Added shared repository, persistence, UI/UX, and selectable component-profile guides from existing lessons and the supplied UI experience source.
+- Removed the retired catch-all and old UI/UX guides, folded their lessons into canonical subjects, and updated incoming references.
+- Trimmed PERFORMANCE.md and redirect-only sections while preserving code examples and shared engineering policies.
+
 - Removed a private-project EF snapshot update mandate from the shared backend guidance after PR review.
 
 - Changed AGENTS.md to select target guides separately from language guides and support several targets within one repository.

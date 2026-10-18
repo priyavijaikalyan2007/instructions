@@ -189,10 +189,6 @@ Use mocks to isolate the unit under test from its dependencies. Mock external se
 - Pure functions without side effects
 - In integration tests, the components you are integrating
 
-### Mocking Best Practices
-
-See [C#](./CSHARP.md#mocking-best-practices).
-
 ### Prefer Fakes Over Mocks for Complex Interactions
 
 When testing complex interactions, consider using in-memory fakes instead of mocks. Fakes provide more realistic behavior and catch more bugs.
@@ -232,10 +228,6 @@ Tests should include strategic logging to aid debugging when tests fail. Refer t
 - Intermediate states during complex operations
 - The actual result before assertions
 - Cleanup operations
-
-### How to Log
-
-See [C#](./CSHARP.md#how-to-log).
 
 ## Code Coverage
 
@@ -309,34 +301,6 @@ Diagnosis Steps:
 
 Our applications use multiple technologies. Testing strategies must account for cross-stack interactions.
 
-### TypeScript and JavaScript (Frontend)
-
-See [JavaScript](./JAVASCRIPT.md#testing).
-
-### C# and .NET Core (Backend)
-
-See [C#](./CSHARP.md#testing).
-
-### Python (Operational Scripts)
-
-See [Python](./PYTHON.md#testing).
-
-### Swift (macOS and iOS)
-
-See [Swift](./SWIFT.md#testing).
-
-### Go
-
-See [Go](./GO.md#testing).
-
-### Rust
-
-See [Rust](./RUST.md#testing).
-
-### Java
-
-See [Java](./JAVA.md#testing).
-
 ### Cross-Stack Testing
 
 When a feature spans multiple stacks, ensure tests exist at each layer:
@@ -395,10 +359,6 @@ Test that configuration files are valid and complete:
 
 See [C#](./CSHARP.md#configuration-files).
 
-### Shell Scripts
-
-See [Shell](./SHELL.md#testing).
-
 ## Asynchronous Testing
 
 ### Testing Async Code
@@ -406,10 +366,6 @@ See [Shell](./SHELL.md#testing).
 Async operations require special consideration to avoid race conditions and ensure deterministic tests.
 
 See [C#](./CSHARP.md#testing-async-code).
-
-### Testing Event-Driven Systems
-
-See [C#](./CSHARP.md#testing-event-driven-systems).
 
 ### Handling Timeouts
 
@@ -489,25 +445,11 @@ Preserve test artifacts for debugging failed CI runs:
 - For operations with SLA requirements
 - For database queries that may be called frequently
 
-### Simple Performance Assertions
-
-See [C#](./CSHARP.md#simple-performance-assertions).
-
 ### Benchmark Tests
 
 Use BenchmarkDotNet for detailed performance analysis:
 
 See [C#](./CSHARP.md#benchmark-tests).
-
-## Security Testing
-
-### Input Validation Tests
-
-See [C#](./CSHARP.md#input-validation-tests).
-
-### Authentication and Authorization Tests
-
-See [C#](./CSHARP.md#authentication-and-authorization-tests).
 
 ## Accessibility Testing
 
@@ -533,22 +475,14 @@ Before considering a feature complete, verify:
 - [ ] Cross-stack changes have tests at each layer
 - [ ] Non-code assets (SQL, configs, scripts) are tested where applicable
 
-## Authorization Service Testing
+## Tests for code changes
 
-See [C#](./CSHARP.md#authorization-service-testing).
+You must always add unit tests for all code changes. This is non-negotiable.
 
-### Common Authorization Methods to Mock
+## Regression and feature checks
 
-See [C#](./CSHARP.md#authorization-service-testing).
-
-### Example: Mocking Access Level Checks
-
-See [C#](./CSHARP.md#authorization-service-testing).
-
-### Keeping Mocks in Sync with Implementation
-
-See [C#](./CSHARP.md#authorization-service-testing).
-
-### Testing Access Level Responses
-
-See [C#](./CSHARP.md#authorization-service-testing).
+- **Bug Fixes**: When fixing bugs, add regression tests to prevent the bug from recurring.
+- **New Features**: When adding features, functionality, or capabilities, add unit tests that verify:
+  - All expected functionality works correctly (happy paths)
+  - Invalid inputs, edge cases, and failure conditions are handled properly (unhappy paths)
+  - In other words, test both what *should* work and what *should not* be possible or work.

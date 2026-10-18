@@ -25,7 +25,7 @@ Use only the grammar exceptions stated in this guide.
 If an example shows several top-level types, put each type in its own file in production.
 Examples may omit surrounding project types or test fixtures. Use the repository's configured dependencies and contracts.
 
-Read by task: [References](#references), [Naming](#naming), [File organization](#file-organization), [Language constructs](#language-constructs), [Comments](#comments), [Navigation markers](#navigation-markers), [Folding](#folding), [Testing](#testing), [Coverage](#coverage), [Logging](#logging), [Log identity helper](#log-identity-helper), [Logging examples](#logging-examples), [Performance](#performance), [Secret handling](#secret-handling), [Design patterns](#design-patterns).
+Read by task: [References](#references), [Naming](#naming), [File organization](#file-organization), [Language constructs](#language-constructs), [Comments](#comments), [Navigation markers](#navigation-markers), [Folding](#folding), [Testing](#testing), [Coverage](#coverage), [Logging](#logging), [Log identity helper](#log-identity-helper), [Logging examples](#logging-examples), [Performance](./APPS.md#apple-performance-guidance), [Secret handling](./APPS.md#apple-credential-storage), [Design patterns](#design-patterns).
 
 ## References
 
@@ -172,7 +172,7 @@ Swift uses `// MARK: - Section name` for Xcode navigation.
 ## Testing
 
 Use the project's Swift Testing or XCTest setup for unit and integration tests.
-See [APPS.md](./APPS.md#existing-apple-application-testing).
+See [APPS.md](./APPS.md#apple-application-testing).
 Run `swift test` for Swift packages and the documented Xcode scheme and destination for application tests.
 
 ```swift
@@ -292,14 +292,6 @@ struct OrderDiagnostics
 The application creates the logger with its configured subsystem and category.
 Attach task, scene, or document identifiers when they help diagnose concurrency and lifecycle behavior.
 Do not assume that a thread identifier identifies an async operation.
-
-## Performance
-
-See [APPS.md](./APPS.md#existing-apple-performance-guidance).
-
-## Secret handling
-
-See [APPS.md](./APPS.md#existing-apple-credential-storage).
 
 ## Design patterns
 

@@ -16,10 +16,12 @@ Created: 2026
 SDK work, including multi-language clients generated from an OpenAPI endpoint. This index links existing API-contract and language material.
 Existing guidance is limited to those linked contracts and conventions.
 
-## Existing topic references
+## Topic references
 
 | Work in scope | Existing guidance |
 | --- | --- |
+| Shared repository work and artifact verification | [REPO.md](./REPO.md) |
+| Internal module type compatibility | [CODE_COMPLETE.md](./CODE_COMPLETE.md#direct-type-compatibility) |
 | OpenAPI documentation contract | [API_GUIDELINES.md](./API_GUIDELINES.md#8-documentation) |
 | Resource names, request/response fields, errors, and versioning | [API_GUIDELINES.md](./API_GUIDELINES.md) |
 | Consumer API and artifact contracts | [DOCUMENTATION.md](./DOCUMENTATION.md#verified-facts-and-published-contracts) |

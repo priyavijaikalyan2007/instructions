@@ -293,3 +293,53 @@ The supplied UI source contains reusable experience rules and enterprise compone
 Its HelpTooltip, HelpDrawer, expression editor, directory intelligence, and browser accessibility details need explicit scope.
 Existing universal progress-modal guidance and the source's background-progress behavior overlap and need reconciliation.
 The source is read for this review and remains unchanged. It has not yet been imported into the public repository.
+
+## Approved consolidation on 18 October 2026
+
+The owner approved the follow-up and requested the same redirect cleanup in PERFORMANCE.md.
+This phase replaces compatibility sections with direct references and folds lessons into the guide that owns the subject.
+The earlier anchor-preservation decision is superseded for the retired sections. Incoming links are updated instead.
+
+| Concern | Canonical home |
+| --- | --- |
+| Shared commands, endpoints, source verification, clarification, and session records | REPO.md |
+| Transactions, integrity, migrations, outbox, projections, and data-context ownership | PERSISTENCE.md |
+| SQL syntax, naming, examples, and PostgreSQL tuning | SQL.md |
+| General interaction, validation, help, state, progress, save safety, and recovery | UI_UX.md |
+| Selected data-type, editor, widget, and workflow contracts | UI_UX_COMPONENTS.md |
+| Detailed enterprise browser shortcut registry and focus scopes | KEYBOARD.md |
+| Browser themes, markup, storage adapters, and browser examples | FRONTEND.md |
+| Enterprise shell layout and console behavior | SAAS.md |
+| Native controls, signing, and platform behavior | APPS.md |
+| General construction, dependency, type, and refactoring lessons | CODE_COMPLETE.md and PRAGMATIC_PROGRAMMER.md |
+| Style, tests, and errors | CODING_STYLE.md, TESTING.md, and LITERATE_ERRORS.md |
+
+ADDITIONAL_INSTRUCTIONS.md, UX_UI_GUIDELINES.md, and UI_UX_CONSISTENCY.md are retired after extraction.
+The change removes 92 redirect-only sections from affected guides and removes redundant extraction indexes.
+PERFORMANCE.md retains shared measurement principles and one compact selection table, shrinking from 198 to 44 lines.
+Target and language selection remain independent. REPO.md is shared across targets. Persistence and UI/UX are selected by the changed concern.
+
+The owner-supplied UI source contributes all 26 sections and ten examples.
+General behavior enters UI_UX.md. Detailed fields, components, editors, and workflows remain separately selectable.
+Catalog names describe browser implementation roles, rather than asserting that every consuming project implements those components.
+ARIA, CSS units, browser key bindings, and Bootstrap rules do not become native platform requirements.
+The source file remains unchanged. Public guides have no dependency on that private source path.
+
+The consolidation resolves these overlaps:
+
+- Progress modals apply to blocking work. Background work follows the supplied non-blocking progress behavior.
+- Optimistic feedback remains distinguishable from confirmed persistence and preserves recoverable state on failure.
+- Enterprise console diagnostics accompany actionable field or operation feedback.
+- Browser component shortcuts own their focused context. Shell shortcuts apply outside those interactions. Native apps retain platform conventions.
+- The incomplete left-sidebar key binding is identified as project-defined. No key is invented.
+- Internal module type compatibility remains distinct from explicit API serialization contracts.
+- The duplicated Promise-style lesson has one home in JAVASCRIPT.md.
+- PostgreSQL/EF Core manual migration commands, paths, and history inserts remain a configured workflow example, not universal persistence requirements.
+
+Validation preserves all 551 parsed code blocks across the baseline and imported source, including content and multiplicity.
+Instruction-line checks account for the source material and declared scope adaptations.
+Link checks include incoming references from unchanged guides. Headers, encodings, new GUIDs, and append-only history pass checks.
+The AGENTS.md operating workflow, existing test-first sections, coverage thresholds, and shared formatting requirements remain unchanged.
+The untouched ERROR_DIALOG_COMPONENT.md has a pre-existing malformed fence and is verified byte-for-byte instead of parsed.
+This change modifies documentation only. It does not claim an application build or runtime test run.
+Temporary extraction and validation artifacts remain under `/tmp/target-guide-consolidation/`.

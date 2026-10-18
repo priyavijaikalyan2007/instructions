@@ -66,10 +66,6 @@ Once tests pass, the code is safe to improve. This is NOT optional for any chang
 
 ---
 
-## Example Scenario: JavaScript to TypeScript
-
-See [TypeScript](./TYPESCRIPT.md#migration-from-javascript).
-
 ## Checklist for Agents
 
 - [ ] **Pre-Flight**: Are there passing tests for the legacy or existing code? Is coverage =90% for the affected area?

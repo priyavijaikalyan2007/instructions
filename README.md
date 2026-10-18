@@ -19,6 +19,10 @@ Instead of using a monolithic, single instruction file, the AGENTS.md file refer
 
 These instructions cover Swift apps for macOS and iOS, Go and Rust tools, Java and .NET 10.0+ applications, and TypeScript/JavaScript/HTML projects.
 Existing Python, SQL, CSS, and SCSS guidance also applies where those languages are used.
+Read [REPO.md](./REPO.md) for shared repository operations.
+Select [PERSISTENCE.md](./PERSISTENCE.md) for stored data and [UI_UX.md](./UI_UX.md) for user-facing behavior.
+Load only relevant [component profiles](./UI_UX_COMPONENTS.md#select-component-profiles) and [keyboard details](./KEYBOARD.md).
+
 Some sections describe a .NET SaaS example. Apply those sections only when they match the changed target and project model.
 Keep project-specific architecture, toolchain versions, and commands consistent with that repository's README and build configuration.
 
@@ -30,7 +34,7 @@ The target guides contain existing instructions and links to existing topic guid
 
 | Target | Guide | Existing material grouped here |
 | --- | --- | --- |
-| Backend | [BACKEND.md](./BACKEND.md) | APIs, SQL/database references, entities, runtime, containers, and local service development |
+| Backend | [BACKEND.md](./BACKEND.md) | APIs, runtime, containers, and backend service boundaries |
 | Frontend | [FRONTEND.md](./FRONTEND.md) | Browser pages, dynamic UI, login, components, and browser tests |
 | SaaS or web application | [SAAS.md](./SAAS.md) | Backend/frontend composition, cross-layer contracts, and combined application examples |
 | Tools | [TOOLS.md](./TOOLS.md) | CLI tools and plugins, module layouts, local commands, stdout, and stderr |
@@ -70,13 +74,14 @@ Read applicable topic sections together with the selected language guide. Follow
 
 For example, a Swift-only model change does not require C#, Java, or Rust instructions.
 The file [LANGUAGE.md](./LANGUAGE.md) continues to define natural-language writing style.
-Existing topic paths and section anchors remain available as entry points to the extracted material.
+Shared guides hold common rules. Target and language guides select details for the changed work.
 
 These instructrions are live. They are updated as and when new behaviors are encountered and need guidance. 
 
 The instructions in this repository are *horizontal* in nature. That is, they are about how to write reasonably good code in a clean, structured manner. These instructions should be combined with other instructions for architecture, code structure, do's and don'ts to get output that works.
 
-These instructions are battle tested in my private side projects. I have found that the coding agents that I use do produce reasonably clean, well structured code. However, as I continue to work with them, I continued to encounter odd choices that I keep adding. Such one-off fixes go into ADDITIONAL_INSTRUCTIONS.md.
+These instructions are battle tested in my private side projects. I have found that the coding agents that I use do produce reasonably clean, well structured code. Lessons from specific problems are folded into the guide that owns the subject.
+Shared workflow belongs in REPO.md, storage in PERSISTENCE.md, and interaction behavior in UI_UX.md.
 
 ## Agent Knowledge Base
 
@@ -118,4 +123,3 @@ For complex queries (e.g., "Find all components related to Auth modified in the 
 ## Disclaimer
 
 This project is a personal endeavor of the individual contributors and is provided on an "as-is" basis. It is not sponsored, authorized, endorsed, maintained, indemnified by, or in any way officially affiliated with any past, present, or future employer of the contributors — including but not limited to Google IT Services India Pvt Ltd, Alphabet Inc., Microsoft R&D India Ltd, and Microsoft Corporation, or any of their subsidiaries or affiliates. All trademarks and registered trademarks are the property of their respective owners. Use of employer names is solely for identification purposes and does not imply any association or endorsement.
-

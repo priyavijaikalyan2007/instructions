@@ -18,9 +18,8 @@ Use [FRONTEND_LOGGING.md](./FRONTEND_LOGGING.md) for the component logging mecha
 
 Read the logging integration section in the selected language guide.
 
-See [TOOLS.md](./TOOLS.md#existing-cli-output-and-diagnostics).
+See [TOOLS.md](./TOOLS.md#cli-output-and-diagnostics).
 Do not add a new logging dependency when the existing API meets the requirement.
-
 
 In high scale web services, logging is crucial to understand what happened when an issue occurs. 
 Metrics are important to understand where something is happening and how the service is behaving.
@@ -93,7 +92,6 @@ The result is `user-hmac-v1:` plus a lowercase hexadecimal HMAC-SHA-256 digest.
 The surrounding log metadata carries the non-secret key version and environment.
 
 Implementation examples are in the selected language guide under **Log identity helper**.
-
 
 For a non-secret test key containing bytes 0 through 31, tenant `tenant-a`, and username `alice`, every helper returns:
 
@@ -453,34 +451,6 @@ The examples show API usage and context propagation. Production logger setup rem
 Use the correlation-safe helper for sensitive identifiers instead of logging their raw values.
 
 ---
-
-### Go (slog + context)
-
-See [Go](./GO.md#logging-examples).
-
-### Java (SLF4J + Logback + MDC)
-
-See [Java](./JAVA.md#logging-examples).
-
-### C# (.NET + Serilog + AsyncLocal)
-
-See [C#](./CSHARP.md#logging-examples).
-
-### Python (logging + contextvars)
-
-See [Python](./PYTHON.md#logging-examples).
-
-### TypeScript / Node.js (Winston + AsyncLocalStorage)
-
-See [TypeScript](./TYPESCRIPT.md#logging-examples).
-
-### Swift (OSLog + explicit operation context)
-
-See [Swift](./SWIFT.md#logging-examples).
-
-### Rust (tracing + operation spans)
-
-See [Rust](./RUST.md#logging-examples).
 
 ## 13. Enforcement Checklist for Agents
 

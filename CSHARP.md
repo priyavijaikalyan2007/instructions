@@ -25,7 +25,7 @@ Use only the grammar exceptions stated in this guide.
 If an example shows several top-level types, put each type in its own file in production.
 Examples may omit surrounding project types or test fixtures. Use the repository's configured dependencies and contracts.
 
-Read by task: [References](#references), [Style examples](#style-examples), [Naming](#naming), [File organization](#file-organization), [Language constructs](#language-constructs), [Comments](#comments), [Comment examples](#comment-examples), [Navigation markers](#navigation-markers), [Folding](#folding), [Marker examples](#marker-examples), [Testing](#testing), [Test naming](#test-naming), [Test examples](#test-examples), [Authorization service testing](#authorization-service-testing), [Coverage](#coverage), [Logging](#logging), [Logging examples](#logging-examples), [Performance](#performance), [Performance examples](#performance-examples), [Secret handling](#secret-handling), [Design patterns](#design-patterns).
+Read by task: [References](#references), [Style examples](#style-examples), [Naming](#naming), [File organization](#file-organization), [Language constructs](#language-constructs), [Comments](#comments), [Comment examples](#comment-examples), [Navigation markers](#navigation-markers), [Folding](#folding), [Marker examples](#marker-examples), [Testing](#testing), [Test naming](#test-naming), [Test examples](#test-examples), [Authorization service testing](#authorization-service-testing), [Coverage](#coverage), [Logging](#logging), [Logging examples](#logging-examples), [Performance](./BACKEND.md#aspnet-core-performance-guidance), [Performance examples](#performance-examples), [Secret handling](#secret-handling), [Design patterns](#design-patterns).
 
 ## References
 
@@ -1425,26 +1425,6 @@ public class PaymentService
 
 ---
 
-## Performance
-
-See [BACKEND.md](./BACKEND.md#existing-aspnet-core-performance-guidance).
-
-### 3.1 Async/Await
-
-See [BACKEND.md](./BACKEND.md#existing-aspnet-core-performance-guidance).
-
-### 3.2 JSON Serialization
-
-See [BACKEND.md](./BACKEND.md#existing-aspnet-core-performance-guidance).
-
-### 3.3 Memory & Garbage Collection (GC)
-
-See [BACKEND.md](./BACKEND.md#existing-aspnet-core-performance-guidance).
-
-### 3.4 Caching (Server-Side)
-
-See [BACKEND.md](./BACKEND.md#existing-aspnet-core-performance-guidance).
-
 ## Performance examples
 
 ### 5.1 Payloads
@@ -2125,3 +2105,7 @@ public sealed class NodeA : INode
     }
 }
 ```
+
+## Namespace imports
+
+* Please place `using` statements inside the namespace.

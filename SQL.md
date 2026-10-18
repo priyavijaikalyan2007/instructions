@@ -27,6 +27,8 @@ Examples may omit surrounding project types or test fixtures. Use the repository
 
 Read by task: [Construction](#construction), [Comments](#comments), [Testing](#testing), [Performance](#performance).
 
+Use [PERSISTENCE.md](./PERSISTENCE.md) for shared transaction, migration, and stored-data integrity rules.
+
 ## Construction
 
 Use the configured database engine and migration convention. Do not apply PostgreSQL-specific advice to another database engine.

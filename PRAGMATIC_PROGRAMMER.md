@@ -133,3 +133,10 @@ Test both the failure signal and the prevention of destructive writes.
 - [ ] Is the logic clear and un-clever?
 - [ ] Are there tests that attempt to break the new functionality?
 - [ ] Did I refactor smells before submitting?
+
+## Correct causes at their source
+
+- **"Fix it right, don't just make it work."**
+- **Consolidate, Don't Duplicate:** If you find duplicate or parallel implementations (e.g., a JS registry and a TS registry), do not patch the one that "works" and force the system to use both.
+  - **Action:** Merge the logic into the strictly better implementation (e.g., TypeScript) and delete the legacy/duplicate file.
+- **Deep Fixes:** Do not write "glue code" to handle bugs in upstream logic. Fix the upstream logic.

@@ -15,30 +15,17 @@ Created: 2026
 
 Source assets, compiled browser bundles, component-library output, static hosting, and CDN delivery.
 
-## Existing topic references
+## Topic references
 
 | Work in scope | Existing guidance |
 | --- | --- |
+| Shared repository commands | [REPO.md](./REPO.md) |
 | HTML markup | [HTML.md](./HTML.md) |
 | CSS rules | [CSS.md](./CSS.md) |
 | SCSS compilation and stylesheet rules | [SCSS.md](./SCSS.md) |
 | Browser scripting languages | [AGENTS.md](./AGENTS.md#select-language-guides) |
 | Existing published artifact tests | [TEST_PLAN.md](./TEST_PLAN.md) |
 | Publication and consumer contracts | [DOCUMENTATION.md](./DOCUMENTATION.md#verified-facts-and-published-contracts) |
-
-## Extracted instruction sections
-
-- [CDN and air-gap delivery](#cdn-and-air-gap-delivery)
-- [Source and compiled output](#source-and-compiled-output)
-- [Component-library build](#component-library-build)
-- [Existing component-library layout](#existing-component-library-layout)
-- [Existing static build and hosting example](#existing-static-build-and-hosting-example)
-- [Existing theme resources](#existing-theme-resources)
-- [Existing browser bundling guidance](#existing-browser-bundling-guidance)
-- [Existing CDN component integration](#existing-cdn-component-integration)
-- [Existing asset caching](#existing-asset-caching)
-- [Existing stylesheet build checks](#existing-stylesheet-build-checks)
-- [Existing asset loading and production output](#existing-asset-loading-and-production-output)
 
 ## CDN and air-gap delivery
 
@@ -58,7 +45,7 @@ Source assets, compiled browser bundles, component-library output, static hostin
 
 For component libraries, use the declared package scripts.
 
-## Existing component-library layout
+## component-library layout
 
 ```text
 components/<name>/     Component TypeScript, styles, tests, and usage documentation
@@ -73,7 +60,7 @@ dist/                  Generated bundles, assets, demos, and documentation
 
 Keep source and generated documents distinguishable. Register new demos and guides in the library's discovery and publication pipeline.
 
-## Existing static build and hosting example
+## static build and hosting example
 
 This repository uses a deliberately simple stack:
 
@@ -93,12 +80,12 @@ This repository uses a deliberately simple stack:
 
 ---
 
-## Existing theme resources
+## theme resources
 
 - CSS Theme: https://theme.priyavijai-kalyan2007.workers.dev/css/custom.css
 - Bootstrap JS: theme.priyavijai-kalyan2007.workers.dev/js/bootstrap.bundle.min.js
 
-## Existing browser bundling guidance
+## browser bundling guidance
 
 - Minimize library and framework overhead
 - Use code splitting
@@ -106,7 +93,7 @@ This repository uses a deliberately simple stack:
 - Optimize asset delivery
 - Use modern bundling tools (Webpack, Vite)
 
-## Existing CDN component integration
+## CDN component integration
 
 **Fallback Code Prohibition:**
 Do not substitute a component that reports fabricated data or success when initialization fails.
@@ -136,15 +123,15 @@ When using the CDN Toolbar component, ALL button state changes must go through `
 Never use direct DOM manipulation (`classList.toggle('active', ...)`) on toolbar buttons — this causes
 the component's internal state to diverge from the visual state.
 
-## Existing asset caching
+## asset caching
 
 *   **Asset Caching**: Static assets (images, fonts, JS, CSS) must be served with long-term `Cache-Control` headers (e.g., `public, max-age=31536000, immutable`).
 
-## Existing stylesheet build checks
+## stylesheet build checks
 
 You must verify that `npm run build` completes without errors after every change to SCSS files. A broken build is never acceptable.
 
-## Existing asset loading and production output
+## asset loading and production output
 
 *   **ES6 Modules**: Use native ES6 modules. Avoid heavy bundlers where vanilla modules suffice.
 *   **Code Splitting**: Lazy load non-critical modules using dynamic imports (`import()`).

@@ -13,34 +13,31 @@ Created: 2026
 
 Updated: 18 October 2026.
 
-## Current phase: target guides
+## Current phase: subject consolidation
 
-Implementation and local document checks are complete on `docs/target-guides`.
-The branch is pushed and [PR #2](https://github.com/priyavijaikalyan2007/instructions/pull/2) is open for owner review.
-The owner authorized a new branch, push, and PR. Main remains at `0a5a868`.
-Main remains unchanged while the PR awaits review.
+The approved follow-up is implemented and locally verified on `docs/target-guides` for [PR #2](https://github.com/priyavijaikalyan2007/instructions/pull/2).
+Main remains unchanged while the owner reviews the PR.
 
-AGENTS.md selects target guides for the changed work, then selects the actual languages.
-Backend, frontend, SaaS, native apps, CLI tools, static websites, static assets, and SDK references have separate entry points.
-A repository can combine several targets. Static sites and tools do not inherit a SaaS backend by default.
-Existing instruction text is relocated. New prose provides scope and routing, not new engineering policy.
+AGENTS.md selects shared repository work, target, shared concern, and language independently.
+REPO.md holds common commands and session workflow. PERSISTENCE.md holds storage integrity and configured database examples.
+UI_UX.md combines general interaction guidance. UI_UX_COMPONENTS.md keeps detailed profiles separately selectable.
+KEYBOARD.md remains the browser shortcut registry, scoped by focus and platform.
+The old catch-all and two old UI/UX guides are retired. Their lessons and links have canonical homes.
+PERFORMANCE.md shrinks from 198 to 44 lines. The consolidation removes 92 redirect-only sections across affected guides.
 
-The [current plan](./instructions-plan.md#current-plan-target-guide-extraction) defines this phase.
-The [review](./instructions-review.md#target-guide-extraction-on-18-october-2026) explains scope and limits.
-The [inventory](./instructions-source-inventory.md#target-extraction-snapshot-on-18-october-2026) records sources and destinations.
+The [approved plan](./instructions-plan.md#approved-follow-up-consolidate-subject-guides) defines the scope.
+The [review](./instructions-review.md#approved-consolidation-on-18-october-2026) records scope and overlap resolutions.
+The [inventory](./instructions-source-inventory.md#approved-subject-consolidation-snapshot) records source provenance.
 
 ## Verification
 
-The extraction accounts for 89 moves and preserves all 171 code blocks across the edited documents.
-Checks cover content conservation, Markdown links, old anchors, encodings, headers, target/language routes, and append-only history.
-Shared style, test-first rules, and coverage thresholds remain unchanged.
-One existing missing Markdown fence is closed without changing its JavaScript example.
-Temporary validation artifacts remain under `/tmp/target-guide-extraction/`.
+All 551 parsed code blocks are preserved, including ten examples from the supplied UI source.
+All 26 source sections are imported. Instruction-line checks account for moved and adapted material.
+Local links, incoming references, source encodings, copyright headers, new GUIDs, and append-only history pass checks.
+Shared style, the operating workflow, test-first rules, and coverage thresholds remain unchanged.
+The supplied UI source remains unchanged. Public instructions do not require that private file.
 This documentation-only change has no application build or runtime test run.
-
-The existing native material covers Apple platforms. SDKs.md was a placeholder and now indexes existing contracts and conventions.
-No Android, ChromeOS, SDK generator, Kubernetes, Workers, or DNS procedures were added.
-Existing conflicting recommendations remain unchanged for a separate review.
+Temporary validation artifacts remain under `/tmp/target-guide-consolidation/`.
 
 ## Current phase: language guides
 
@@ -56,6 +53,5 @@ Application source repositories remain unchanged by the instruction extraction p
 
 ## PR review follow-up
 
-Removed the project-specific EF snapshot mandate from BACKEND.md after owner review.
-The review also proposes fewer redirects, PERSISTENCE.md, REPO.md, and a shared UI/UX entry point with focused references.
-The larger consolidation remains a proposal for discussion. The supplied UI source remains unchanged and unimported.
+The owner approved the proposed cleanup and requested removal of empty performance sections.
+That approved follow-up is implemented above. The earlier project-specific EF snapshot mandate remains removed.

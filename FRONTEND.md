@@ -17,23 +17,25 @@ Browser pages, dynamic UI, login flows, and reusable browser components.
 API, authentication, synchronization, and permission sections apply to browser work that uses those features.
 SaaS composition and asset compilation/delivery examples are linked separately.
 
-## Existing topic references
+## Topic references
 
 | Work in scope | Existing guidance |
 | --- | --- |
+| Shared repository commands | [REPO.md](./REPO.md) |
+| Common interaction and save safety | [UI_UX.md](./UI_UX.md) |
+| Selected component behavior profiles | [UI_UX_COMPONENTS.md](./UI_UX_COMPONENTS.md) |
+| Browser keyboard registry | [KEYBOARD.md](./KEYBOARD.md) |
+| Persistence integrity across adapters | [PERSISTENCE.md](./PERSISTENCE.md) |
 | Browser TypeScript source | [TYPESCRIPT.md](./TYPESCRIPT.md) |
 | Shared JavaScript source rules | [JAVASCRIPT.md](./JAVASCRIPT.md) |
 | Page and template markup | [HTML.md](./HTML.md) |
 | Browser stylesheets | [CSS.md](./CSS.md) |
 | SCSS and Sass source | [SCSS.md](./SCSS.md) |
 | Shared browser logging | [FRONTEND_LOGGING.md](./FRONTEND_LOGGING.md) |
-| Shared UI and usability guidance | [UX_UI_GUIDELINES.md](./UX_UI_GUIDELINES.md) |
-| State, save, navigation, and lifecycle behavior | [UI_UX_CONSISTENCY.md](./UI_UX_CONSISTENCY.md) |
 | Reusable browser components | [COMPONENTS.md](./COMPONENTS.md) |
 | Component discovery | [MASTER_COMPONENT_LIST.md](./MASTER_COMPONENT_LIST.md) |
 | Static assets, bundling, and published output | [STATIC_ASSETS.md](./STATIC_ASSETS.md) |
 | Web application composition | [SAAS.md](./SAAS.md) |
-
 
 # 1. General Principles
 
@@ -43,7 +45,7 @@ SaaS composition and asset compilation/delivery examples are linked separately.
 - Prioritize native HTML capabilities over complex JavaScript solutions.
 - Ensure cross-browser compatibility (latest Chrome, Firefox, Safari, Edge).
 - Maintain semantic HTML structure in all component templates and demo pages.
-See [SAAS.md](./SAAS.md#existing-frontend-source-layout).
+See [SAAS.md](./SAAS.md#frontend-source-layout).
 
 ## 1.2. Performance Considerations
 
@@ -92,7 +94,7 @@ See [SAAS.md](./SAAS.md#existing-frontend-source-layout).
 - Use immutable data structures where possible.
 - Minimize global variables.
 - Implement defensive programming techniques.
-See [SAAS.md](./SAAS.md#existing-cross-layer-data-mapping).
+See [SAAS.md](./SAAS.md#cross-layer-data-mapping).
 
 ## 1.7. Error Handling
 
@@ -114,7 +116,7 @@ See [SAAS.md](./SAAS.md#existing-cross-layer-data-mapping).
 
 Whether we are building an application or a component library or a theme library, security matters.
 
-See [FRONTEND.md](./FRONTEND.md#existing-web-application-authentication).
+See [FRONTEND.md](#web-application-authentication).
 - Use HTTPS for all communications.
 - Sanitise any user-provided content before injecting it into the DOM in component TypeScript.
   Use `textContent` instead of `innerHTML` where possible. Sanitize user input in all components.
@@ -214,19 +216,7 @@ function processUserOrder(userId, orderDetails) {
   - Encryption keys
 - Sanitize and mask sensitive data before logging
 
-## 1.12. Application Structure
-
-See [SAAS.md](./SAAS.md#existing-super-app-shell).
-
-## 2. Technology Stack
-
-See [STATIC_ASSETS.md](./STATIC_ASSETS.md#existing-static-build-and-hosting-example).
-
 # 3. UI Framework and Styling
-
-## 2.1. Core Resources
-
-See [STATIC_ASSETS.md](./STATIC_ASSETS.md#existing-theme-resources).
 
 ## 2.2. Styling Principles
 
@@ -362,10 +352,6 @@ See [STATIC_ASSETS.md](./STATIC_ASSETS.md#existing-theme-resources).
 - Cross-browser compatibility
 - Consistent coding standards
 
-## 4.4. Performance Considerations
-
-See [STATIC_ASSETS.md](./STATIC_ASSETS.md#existing-browser-bundling-guidance).
-
 ## 4.5. Security Guidelines
 
 - Sanitize user inputs
@@ -409,12 +395,6 @@ See [STATIC_ASSETS.md](./STATIC_ASSETS.md#existing-browser-bundling-guidance).
      * Periodic sync for non-critical changes
    - Provide placeholder functions for future API implementations
 
-## 5.2. Initial Development Setup
-
-### 5.2.1. Backend API Hosting
-
-See [BACKEND.md](./BACKEND.md#existing-api-organization).
-
 ## 5.3. Frontend Function Pattern
 
 ```javascript
@@ -447,7 +427,6 @@ async function apiFunction(parameters) {
 - Ensure responsive design
 - Optimize performance
 - Maintain clean, readable code
-
 
 # 7. Data Centric Thinking
 
@@ -518,22 +497,6 @@ async function apiFunction(parameters) {
 - Implement strict type checking
 - Use JSON.parse() with reviver functions
 - Validate data schemas before processing
-
-# 8. Sub-Application Structure
-
-See [SAAS.md](./SAAS.md#existing-sub-application-structure).
-
-## 8.1. Super-App Model
-
-See [SAAS.md](./SAAS.md#existing-sub-application-structure).
-
-## 8.2. UI Layout
-
-See [SAAS.md](./SAAS.md#existing-sub-application-structure).
-
-## 8.3. UI Behaviors
-
-See [SAAS.md](./SAAS.md#existing-sub-application-structure).
 
 # 9. Access Control UI Patterns
 
@@ -792,31 +755,6 @@ if (!app || !app.useBackend) {
 if (!window.api || !window.api.isAuthenticated()) { ... }
 ```
 
-## Extracted instruction sections
-
-- [Browser scripting](#browser-scripting)
-- [Component-library contracts](#component-library-contracts)
-- [Existing component-reuse workflow](#existing-component-reuse-workflow)
-- [Frontend library selection](#frontend-library-selection)
-- [Existing web application authentication](#existing-web-application-authentication)
-- [Existing component state](#existing-component-state)
-- [Existing browser testing](#existing-browser-testing)
-- [Existing browser performance guidance](#existing-browser-performance-guidance)
-- [Existing browser performance budgets](#existing-browser-performance-budgets)
-- [Existing browser UI thread guidance](#existing-browser-ui-thread-guidance)
-- [Existing browser performance checks](#existing-browser-performance-checks)
-- [Existing Bootstrap discipline](#existing-bootstrap-discipline)
-- [Existing component boundaries](#existing-component-boundaries)
-- [Existing styling consistency](#existing-styling-consistency)
-- [Existing component tests](#existing-component-tests)
-- [Existing component visual checks](#existing-component-visual-checks)
-- [Existing browser workflow tests](#existing-browser-workflow-tests)
-- [Existing canvas sizing](#existing-canvas-sizing)
-- [Existing browser dependency restriction](#existing-browser-dependency-restriction)
-- [Existing UI error propagation](#existing-ui-error-propagation)
-- [Existing stylesheet cleanup](#existing-stylesheet-cleanup)
-- [Existing progressive data rendering](#existing-progressive-data-rendering)
-
 ## Browser scripting
 
 - Use TypeScript for non-trivial browser scripting, with HTML, CSS/SCSS, and the declared component library.
@@ -829,7 +767,7 @@ if (!window.api || !window.api.isAuthenticated()) { ... }
 
 - The consuming application owns authentication, persistence, and the host logging pipeline.
 
-## Existing component-reuse workflow
+## component-reuse workflow
 
 - Before building new browser UI components, always consult the file
   `https://theme.priyavijai-kalyan2007.workers.dev/docs/COMPONENT_INDEX.md` to see
@@ -853,18 +791,18 @@ if (!window.api || !window.api.isAuthenticated()) { ... }
 - When selecting libraries for frontend functionality, always consult FRONTEND_LIBRARY_SELECTION.md for guidelines
   and FRONTEND_SELECTION.md for pre-canned recommendations.
 
-## Existing web application authentication
+## web application authentication
 
 - Implement secure authentication mechanisms.
 
-## Existing component state
+## component state
 
 Every component should provide a mechanism to export and import its current UI state.
 That is, what node is selected, whether nodes are expanded or collapsed, whether a sidebar is
 expanded or collapsed, which ribbon tools are selected and more. This enables consuming applications to
 integrate UI state preservation and reload into their user experience.
 
-## Existing browser testing
+## browser testing
 
 The following framework examples apply to browser frontend tests. Retain the project's configured runner for server-side JavaScript.
 
@@ -882,11 +820,7 @@ The following framework examples apply to browser frontend tests. Retain the pro
 - Use Playwright for browser automation
 - Test critical user flows end-to-end
 
-## Existing browser performance guidance
-
-### 2.1 Loading & Bundle Size
-
-See [STATIC_ASSETS.md](./STATIC_ASSETS.md#existing-asset-loading-and-production-output).
+## browser performance guidance
 
 ### 2.2 Rendering & DOM
 *   **Minimize Reflows**: Avoid "layout thrashing." Read layout properties (e.g., `offsetHeight`) first, then write style changes. Do not interleave them.
@@ -898,7 +832,7 @@ See [STATIC_ASSETS.md](./STATIC_ASSETS.md#existing-asset-loading-and-production-
 ### 2.3 Local Storage & Caching strategy
 *   **Aggressive Caching**: Use `localStorage` or `IndexedDB` to cache user data (e.g., session lists, diagrams).
     *   *Pattern*: "Stale-While-Revalidate". Show cached data immediately, then fetch updates in the background.
-See [STATIC_ASSETS.md](./STATIC_ASSETS.md#existing-asset-caching).
+See [STATIC_ASSETS.md](./STATIC_ASSETS.md#asset-caching).
 
 ### 2.4 Memory Management
 *   **Event Listeners**: Always remove event listeners when components/elements are destroyed to prevent memory leaks.
@@ -913,14 +847,14 @@ See [STATIC_ASSETS.md](./STATIC_ASSETS.md#existing-asset-caching).
 
 ---
 
-## Existing browser performance budgets
+## browser performance budgets
 
 *   **Budget**:
     *   **First Contentful Paint (FCP)**: < 1.0s
     *   **Time to Interactive (TTI)**: < 1.5s
     *   **Interaction to Next Paint (INP)**: < 200ms
 
-## Existing browser UI thread guidance
+## browser UI thread guidance
 
 *   The UI thread must never be blocked.
 *   Offload heavy computation to Web Workers or the backend.
@@ -928,11 +862,11 @@ See [STATIC_ASSETS.md](./STATIC_ASSETS.md#existing-asset-caching).
 
 ---
 
-## Existing browser performance checks
+## browser performance checks
 
 *   **Lighthouse**: Run Chrome Lighthouse audits on frontend pages regularly.
 
-## Existing Bootstrap discipline
+## Bootstrap discipline
 
 - **"Override, don't overwrite."**
 - **Variables First:** When changing the appearance of any Bootstrap element, modify `_variables.scss` before writing custom CSS. If Bootstrap provides a variable for the property, use it.
@@ -940,54 +874,150 @@ See [STATIC_ASSETS.md](./STATIC_ASSETS.md#existing-asset-caching).
 - **Unit Consistency:** Do not mix `px`, `rem`, `em`, and `%` arbitrarily. Follow the spacing scale in `_variables.scss`. Use `rem` for sizing, `px` only for borders and fine details (1px borders, box shadows).
 - **Explicit Dependencies:** If a component requires Bootstrap JavaScript (e.g., `bootstrap.Modal`), document this in the component's README and in `COMPONENTS.md`.
 
-## Existing component boundaries
+## component boundaries
 
 - **"Components are guests, not owners."**
 - **No Global Side Effects:** A component's SCSS must not modify global Bootstrap styles, override utility classes, or change the behaviour of elements outside its own scope.
 - **Namespace Classes:** Prefix all custom classes with the component name (e.g., `.errordialog-header`, `.combobox-dropdown`). Do not use generic class names like `.header` or `.dropdown-list` that could collide with Bootstrap or the host application.
 
-## Existing styling consistency
+## styling consistency
 
 - **"Single Source of Truth."**
 - **Framework Purity:** If the project uses Tailwind CSS, **do not** write inline `style={{ ... }}` or create separate `.css` files.
 - **Unit Consistency:** Do not mix `px`, `rem`, `em`, and `%` arbitrarily. Inspect `tailwind.config.js` or `variables.css` and use the defined spacing/color scales.
 - **Color Variables:** Never hardcode hex codes (e.g., `#FF0000`). Use the semantic names defined in the theme (e.g., `text-error`, `bg-primary`).
 
-## Existing component tests
+## component tests
 
 When building TypeScript components, add unit tests using Jest or Vitest that verify:
 - The component initialises correctly with valid inputs.
 - The component handles missing or invalid inputs gracefully (logs a warning/error, does not throw).
 - The component produces the expected DOM structure.
 
-## Existing component visual checks
+## component visual checks
 
 After any theme or component change, open `demo/index.html` in a browser and visually verify that:
 - No existing components are broken.
 - New components render as specified.
 - Colours, spacing, and typography are consistent with the theme.
 
-## Existing browser workflow tests
+## browser workflow tests
 
 You must add Playwright end-to-end tests for all user-facing changes.
 
-## Existing canvas sizing
+## canvas sizing
 
 - **Explicit Dimensions:** For canvas/visualization libraries (Cytoscape, maxGraph), **never** rely on CSS flexbox/grid alone. Always enforce or check for explicit pixel dimensions (`getBoundingClientRect()`) before initialization.
 
-## Existing browser dependency restriction
+## browser dependency restriction
 
 - **No UI Frameworks:** Do not install React, Vue, Angular, jQuery, or any UI framework. This is explicitly prohibited by the project's architecture.
 
-## Existing UI error propagation
+## UI error propagation
 
 - **UI Propagation:** Ensure errors propagate to the UI consistently. If the app uses a global Toast notification system for API errors, do not implement a local `alert()` or console-only error log.
 
-## Existing stylesheet cleanup
+## stylesheet cleanup
 
 - **No Dead CSS:** If a refactor removes a component or class, delete the corresponding styles. Do not leave orphaned selectors.
 
-## Existing progressive data rendering
+## progressive data rendering
 
 *   **Purpose:** Split a large object's retrieval into "Shallow" (immediate UI rendering) and "Deep" (lazy-loading expensive details like history or attachments).
 *   **Implementation:** Render metadata first; lazy-load details via HTMX or `IntersectionObserver`.
+
+## Visible data first
+
+4.  **Default to Partial Hydration**: Only load what is immediately visible. Use "View More" or tabs for deep data.
+
+## Browser familiarity and placement examples
+
+Users shouldn't have to relearn how to use a computer when they use our software.
+*   **Standard Shortcuts:** `Ctrl+C` must copy. `Ctrl+Z` must undo. `Esc` must close modals or cancel actions.
+*   **Standard Locations:** The "Close" button goes in the top-right. The "Save" button goes at the bottom-right of a form (or top-right of a sticky header).
+*   **Fitts's Law:** Make important targets (like "Save" or "Delete") large and easy to click. Place related controls close to each other.
+
+## Browser visual examples
+
+### 3.1. Color & Contrast
+*   **Semantic Colors:**
+    *   <span style="color:blue">**Primary (Blue/Brand)**</span>: Main actions (Save, Submit, Create).
+    *   <span style="color:green">**Success (Green)**</span>: Confirmation messages, successful states.
+    *   <span style="color:red">**Danger (Red)**</span>: Destructive actions (Delete, Remove).
+    *   <span style="color:orange">**Warning (Yellow/Orange)**</span>: Non-blocking issues, alerts.
+    *   <span style="color:gray">**Neutral (Gray)**</span>: Secondary actions (Cancel), borders, dividers.
+*   **Accessibility:** Ensure a contrast ratio of at least 4.5:1 for text against its background.
+
+### 3.2. Typography
+*   **Hierarchy:** Use font size and weight to establish order.
+    *   `h1`: Page titles.
+    *   `h2`: Section headers.
+    *   `h3`: Card/Panel headers.
+    *   `body`: Standard readable text (14px-16px).
+    *   `small`: Metadata, help text.
+*   **Readability:** Keep line lengths between 45-75 characters for comfortable reading.
+
+### 3.3. Spacing & Layout
+*   **White Space:** Use white space to group related elements. Elements close together are perceived as related (Law of Proximity).
+*   **Grid System:** Use the Bootstrap grid (Rows/Cols) to ensure alignment. Everything should align to a conceptual grid.
+*   **Consistency:** Use consistent margins and padding (e.g., always `1rem` or `16px` between cards).
+
+## Browser feedback surfaces
+
+*   **Hover:** Interactive elements must have a hover state to indicate clickability.
+*   **Focus:** Focus rings are mandatory for accessibility. Never remove `outline: none` without replacing it.
+*   **Loading & Progress (Crucial):**
+    *   **Never leave the user guessing.** If an operation takes > 200ms, show an indicator.
+    *   **Initial Load:** Use **Skeleton Screens** (gray placeholders) or a global loading spinner to indicate the app is initializing. Do not show a blank white screen.
+    *   **Background Actions (Auto-save):** Show a non-intrusive status indicator (e.g., "Saving..." -> "All changes saved") in the toolbar or footer.
+    *   **Blocking Operations:** If the user *cannot* interact with the app while processing (e.g., "Importing large file"), use a **Progress Modal** with a visible progress bar or spinner and a descriptive text ("Importing... 45%").
+    *   **Lazy Loading:** When loading parts of the UI (like a heavy tool palette), show a local spinner placeholder where the content will appear.
+*   **Success/Error:** Use toast notifications (top-right or bottom-right) for transient messages. Do not block the screen with "Success!" modals.
+
+## Browser markup accessibility
+
+Accessibility is not just for disabled users; it improves the experience for everyone.
+*   **Alt Text:** All meaningful images must have `alt` text. Decorative images should have `alt=""`.
+*   **Semantic HTML:** Use `<button>` for buttons, `<a>` for links. Don't use `<div>` with an `onclick` handler unless you reimplement all button behaviors (focus, enter key, space key).
+*   **Screen Readers:** Ensure logical tab order.
+
+## Browser theme and component reuse
+
+### 1.1. Standardized Component Library
+*   **Mandate:** Agents MUST NOT create new UI components if a suitable component exists in `MASTER_COMPONENT_LIST.md`.
+*   **Execution:** Before implementing a feature (e.g., a date picker, a progress modal, or a tree view), search the `MASTER_COMPONENT_LIST.md` and use the approved implementation pattern.
+*   **Reasoning:** Prevents "component bloat" and ensures that accessibility, keyboard shortcuts, and core behaviors are uniform across the entire platform.
+
+### 1.2. Global Styling Application
+*   **Mandate:** All components, including modal dialogs and dynamically generated elements, MUST inherit the main application's theme and font settings.
+*   **Execution:** Use the global CSS theme defined in [STATIC_ASSETS.md](./STATIC_ASSETS.md#theme-resources). Do not use hardcoded colors or font-family declarations in component-specific styles.
+*   **Modals:** Ensure Bootstrap modals use the standard theme classes. Buttons in modals must match the sizing and styling of buttons in the main application toolbar.
+
+## Browser layout state
+
+### 3.1. Persistence Mandate
+*   **Mandate:** UI configuration state MUST be preserved across sessions and sub-app switches using `localStorage`.
+*   **Execution:** Automatically save and restore the following states:
+    *   Sidebar collapse/expand state and width.
+    *   Log Console height and collapse state.
+    *   Grid settings (size, snap-to-grid toggle).
+    *   Last active tab in multi-tabbed panels.
+    *   Selected view mode (e.g., List vs. Grid).
+
+### 3.2. Implementation Pattern
+```typescript
+// Example state preservation pattern
+const APP_STATE_KEY = 'subapp_name_ui_state';
+
+function saveUIState(state: Record<string, any>) {
+    const currentState = JSON.parse(localStorage.getItem(APP_STATE_KEY) || '{}');
+    localStorage.setItem(APP_STATE_KEY, JSON.stringify({ ...currentState, ...state }));
+}
+
+function restoreUIState() {
+    const state = JSON.parse(localStorage.getItem(APP_STATE_KEY) || '{}');
+    // Apply state to components
+    if (state.gridSize) setGridSize(state.gridSize);
+    if (state.sidebarCollapsed) toggleSidebar(true);
+}
+```

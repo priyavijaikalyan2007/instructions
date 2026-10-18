@@ -212,3 +212,8 @@ Prefer to use this component over vanilla Javascript `alert` messages. For confi
 The entire theme library and component catalog can be referenced at 
 `theme.priyavijai-kalyan2007.workers.dev/docs/COMPONENT_REFERENCE.md`. Prefer to use
 the prebuilt components to show literate errors.
+
+## Consistent failure contracts
+
+- **"Fail consistently."**
+- **Unified Strategy:** Do not mix "Return Null on Failure" with "Throw Exception on Failure". Inspect the `Services` folder to determine the project's standard contract.

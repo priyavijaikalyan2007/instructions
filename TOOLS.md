@@ -15,10 +15,12 @@ Created: 2026
 
 Command-line tools and CLI plugins. Existing material covers the tool stack, module layouts, local commands, output, and diagnostics.
 
-## Existing topic references
+## Topic references
 
 | Work in scope | Existing guidance |
 | --- | --- |
+| Shared repository setup, commands, and source verification | [REPO.md](./REPO.md) |
+| Persistent local data and files | [PERSISTENCE.md](./PERSISTENCE.md) |
 | Language selection for the actual tool source | [AGENTS.md](./AGENTS.md#select-language-guides) |
 | Go conventions | [GO.md](./GO.md) |
 | Python conventions | [PYTHON.md](./PYTHON.md) |
@@ -26,14 +28,7 @@ Command-line tools and CLI plugins. Existing material covers the tool stack, mod
 | Shell scripts and BATS | [SHELL.md](./SHELL.md) |
 | Credential-provider boundary | [SECRET_HANDLING.md](./SECRET_HANDLING.md#native-clients-and-tools) |
 
-## Extracted instruction sections
-
-- [Existing tool stack](#existing-tool-stack)
-- [Existing tool layouts](#existing-tool-layouts)
-- [Local development](#local-development)
-- [Existing CLI output and diagnostics](#existing-cli-output-and-diagnostics)
-
-## Existing tool stack
+## tool stack
 
 - Go uses its configured `go.mod` toolchain and standard module layout. Rust uses Cargo and the declared Rust edition/toolchain.
 - Python uses the project's interpreter, `pyproject.toml`, environment, and dependency lock policy.
@@ -42,7 +37,7 @@ Command-line tools and CLI plugins. Existing material covers the tool stack, mod
 - Bound memory, concurrency, and file operations. Preserve user data when processing fails.
 - Add network services, databases, or native UI dependencies only when the tool's requirements need them.
 
-## Existing tool layouts
+## tool layouts
 
 | Purpose | Go | Rust | Python |
 | --- | --- | --- | --- |
@@ -60,6 +55,6 @@ Do not create a package or crate for every type merely to satisfy the file rule.
 
 Go, Rust, and Python tools use their documented module/package commands.
 
-## Existing CLI output and diagnostics
+## CLI output and diagnostics
 
 For command-line tools, keep machine-readable results on stdout and diagnostics on stderr unless the command contract states otherwise.

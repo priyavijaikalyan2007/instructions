@@ -15,10 +15,12 @@ Created: 2026
 
 Server, container, and Kubernetes-hosted service work: APIs, databases, entities, data models, and service operations.
 
-## Existing topic references
+## Topic references
 
 | Work in scope | Existing guidance |
 | --- | --- |
+| Shared setup, build/test/run commands, and endpoints | [REPO.md](./REPO.md) |
+| Transactions, migrations, and stored-data integrity | [PERSISTENCE.md](./PERSISTENCE.md) |
 | C# service source | [CSHARP.md](./CSHARP.md) |
 | Java service or extension source | [JAVA.md](./JAVA.md) |
 | API resources, relationships, naming, HTTP methods, and serialization | [API_GUIDELINES.md](./API_GUIDELINES.md) |
@@ -28,57 +30,23 @@ Server, container, and Kubernetes-hosted service work: APIs, databases, entities
 | Resource ownership and authorization | [ACCESS_CONTROL.md](./ACCESS_CONTROL.md) |
 | Resource deletion across persistence and APIs | [DELETION.md](./DELETION.md) |
 | Server-owned secrets and encryption | [SECRET_HANDLING.md](./SECRET_HANDLING.md) |
-| Local development for the combined application example | [SAAS.md](./SAAS.md#existing-combined-layout) |
+| Local development for the combined application example | [SAAS.md](./SAAS.md#combined-layout) |
 
 # Backend Development Guidelines
 
 Keep business logic in services or domain functions, separate from HTTP handlers and framework extension entry points.
 Apply the same separation in .NET, Java, Go, and Rust using their normal language constructs.
 
-## Related writes and persistence
-
-Commit related writes in one database transaction when they must succeed or fail together.
-Do not swallow a secondary write failure and report success while leaving required records inconsistent.
-For writes across databases or external services, define delivery, retry, idempotency, and reconciliation requirements before choosing a mechanism.
-Use the project's migration convention and verify that a new environment receives its required schema baseline before incremental migrations.
-Test database-specific constraints and transactions against the actual database engine rather than an in-memory substitute.
-
 ## Runtime and resource boundaries
 
-Match service and connection lifetimes to the request or operation. Do not share a non-thread-safe context between concurrent operations.
 Propagate cancellation and release owned resources on success and failure.
 For host extensions, verify APIs and dependency ownership against the runtime version actually shipped.
 Reproduce deployment failures using the exact artifact and production launch path when available.
 Do not assume that a development entry point exercises the packaged production artifact.
 
-## Extracted instruction sections
-
-- [Configured backend](#configured-backend)
-- [Database configuration](#database-configuration)
-- [Runtime and deployment](#runtime-and-deployment)
-- [Identity-service example](#identity-service-example)
-- [Existing Java and identity layout](#existing-java-and-identity-layout)
-- [Existing local script example](#existing-local-script-example)
-- [Local endpoints and dependencies](#local-endpoints-and-dependencies)
-- [Backend library selection](#backend-library-selection)
-- [Existing API organization](#existing-api-organization)
-- [Existing database migrations](#existing-database-migrations)
-- [Existing ASP.NET Core performance guidance](#existing-aspnet-core-performance-guidance)
-- [Existing API performance guidance](#existing-api-performance-guidance)
-- [Existing data-fetching optimization patterns](#existing-data-fetching-optimization-patterns)
-- [Existing API latency budget](#existing-api-latency-budget)
-- [Existing endpoint performance checks](#existing-endpoint-performance-checks)
-- [Existing API security defaults](#existing-api-security-defaults)
-- [Existing host dependency verification](#existing-host-dependency-verification)
-- [Existing Entity Framework query convention](#existing-entity-framework-query-convention)
-
 ## Configured backend
 
 - Use the project's configured backend, such as ASP.NET Core 10.0+ or Java. Match its runtime and deployment mode.
-
-## Database configuration
-
-- Use the configured PostgreSQL and data-access versions. Keep executable SQL migration scripts in the project's migration directory.
 
 ## Runtime and deployment
 
@@ -92,7 +60,7 @@ Do not assume that a development entry point exercises the packaged production a
 - A general Java web application uses its declared web framework. Keycloak is an identity-service choice, not a universal Java backend.
 - Use TypeScript for non-trivial browser logic. Preserve the host's template, security-header, and asset-delivery contracts.
 
-## Existing Java and identity layout
+## Java and identity layout
 
 ```text
 src/providers/         Java host extensions, with their own Maven/Gradle source and test roots
@@ -107,82 +75,18 @@ target/ or build/      Generated output, never the source to edit
 
 The identity extension roots and standard Java roots are alternatives, not duplicate homes for the same code.
 
-## Existing local script example
-
-Use the following commands when the consuming repository provides these scripts.
-Otherwise, use its documented build and test commands for the configured toolchain.
-
-### Clean
-```bash
-./clean.sh
-```
-
-### Build
-```bash
-./build.sh
-```
-
-### Test
-```bash
-./test.sh
-```
-
-### Run
-```bash
-./run.sh
-```
-
-### Deploy
-```bash
-./redeploy.sh
-```
-
-## Local endpoints and dependencies
-
-Read the consuming repository's README, launch configuration, and scripts for ports, health checks, and local dependencies.
-The SaaS, identity service, component demo, and website may each use different endpoints.
-Native apps and local tools need no listening port unless their design explicitly includes a service.
-Use configured local credentials. Never copy example credentials into a deployed environment.
-
 ## Backend library selection
 
 - When selecting libaries for backend functionality, always consult BACKEND_LIBRARY_SELECTION.md for guidelines
   and, for .NET projects, DOTNETFX_SELECTION.md for pre-canned recommendations.
 
-## Existing API organization
+## API organization
 
 - Plan for modular API organization
   * Separate API files for different application components
   * Maintain clean, organized API structure
 
-## Existing database migrations
-
-### Plain SQL Over ORM Migration Tools
-Always prefer writing plain SQL scripts for database migrations instead of using ORM migration tools like `dotnet ef migrations`. This approach:
-- Provides better control and visibility over what changes are being made
-- Avoids version mismatches and tooling issues
-- Is more portable and easier to review
-- Works reliably regardless of ORM tool versions
-
-### Migration Guidelines
-- Place SQL migration scripts in `/sql/migrations/` with naming format: `YYYYMMDD_description.sql`
-- Use `CREATE TABLE IF NOT EXISTS` and `CREATE INDEX IF NOT EXISTS` for idempotency
-- Include proper foreign key constraints with `ON DELETE CASCADE` or `ON DELETE SET NULL` as appropriate
-- Add timestamps (`created_at`, `updated_at`) to all tables
-- After running the SQL, record the migration in EF Core's history table:
-  ```sql
-  INSERT INTO "__EFMigrationsHistory" ("MigrationId", "ProductVersion")
-  VALUES ('YYYYMMDD_MigrationName', '10.0.2')
-  ON CONFLICT ("MigrationId") DO NOTHING;
-  ```
-
-### Running Migrations
-Use `psql` directly to run migrations:
-```bash
-PGPASSWORD=<password> psql -h <host> -p <port> -U <user> -d <database> -f <migration_file.sql>
-```
-
-## Existing ASP.NET Core performance guidance
+## ASP.NET Core performance guidance
 
 ### 3.1 Async/Await
 *   **Async All the Way**: Every I/O operation (Database, File, Network) **must** be `async`.
@@ -210,7 +114,7 @@ PGPASSWORD=<password> psql -h <host> -p <port> -U <user> -d <database> -f <migra
 
 ---
 
-## Existing API performance guidance
+## API performance guidance
 
 ### 5.1 Payloads
 *   **Null Suppression**: Configure the JSON serializer to ignore null values.
@@ -222,7 +126,7 @@ PGPASSWORD=<password> psql -h <host> -p <port> -U <user> -d <database> -f <migra
 *   **Parallelism**: If an API needs data from three independent services/tables, fetch them in parallel using `Task.WhenAll`, not sequentially.
     See [C#](./CSHARP.md#52-latency-reduction).
 
-## Existing data-fetching optimization patterns
+## data-fetching optimization patterns
 
 The following patterns **must** be prioritized by coding agents over naive "fetch all" or "sequential" implementations.
 
@@ -235,37 +139,32 @@ The following patterns **must** be prioritized by coding agents over naive "fetc
 *   **Purpose:** Solve the "N+1 Problem" by batching multiple independent requests into a single call.
 *   **Implementation:** Use **GreenDonut** or similar for .NET batching logic.
 
-### 7.5 Pattern: Transactional Outbox (Async Side-Effects)
-*   **Purpose:** Prevent blocking user requests during external side-effects (emails, search index updates).
-*   **Implementation:** Save the event to an `outbox` table in the same DB transaction; process via background worker.
-
-### 7.6 Pattern: Materialized Projections
-*   **Purpose:** Pre-calculate complex joins into a flat, read-optimized table.
-*   **Implementation:** Use Postgres `MATERIALIZED VIEW` with unique indexes and concurrent refreshes.
-
----
-
-## Existing API latency budget
+## API latency budget
 
 *   **API Response Time**: < 100ms (p95)
 
-## Existing endpoint performance checks
+## endpoint performance checks
 
 *   **Load Testing**: Use k6 or JMeter to stress test endpoints.
 
 *   **Profiling**: Use `dotnet-counters` and `dotnet-trace` to identify bottlenecks in the backend.
 
-## Existing API security defaults
+## API security defaults
 
 - **"Secure by Design, not by Patch."**
 - **No PII in URLs:** Never pass email, names, or IDs in Query Parameters. Use Session/Claims or POST bodies.
 - **Auth Decorators:** No API endpoint is created without an `[Authorize]` or `[RequirePermission]` attribute unless explicitly public (like login).
-- **Explicit Ignores:** In EF Core, use Fluent API `modelBuilder.Entity<T>().Ignore(x => x.Prop)` for all computed properties. Do not rely on `[NotMapped]`.
 
-## Existing host dependency verification
+## host dependency verification
 
 - For Java extensions, match host APIs and avoid bundling host-provided classes. Use the build's declared dependency scope.
 
-## Existing Entity Framework query convention
+## Bounded API data access
 
-* StyleCop and compiler warnings are constantly emitted that says do not use String.Equals instead suggesting StringComparison. However, this is NOT correct advice for Dotnet Entity Framework (EF) and LINQ queries. When you need to make case insensitive comparisons, you will have to use String.Equals with appropriate case conversion first done on arguments.
+1.  **Stop the "Fetch All" Habit**: Never use `SELECT *` or `FindAsync(id)` if the UI only needs a subset of columns.
+2.  **Cap Everything**: Every list or search API **must** have a hard `LIMIT` or `Take()`.
+3.  **Parallelize I/O**: Use `Task.WhenAll` for independent fetches from different sources.
+
+---
+
+**Remember**: Fast software feels professional. Slow software feels broken.

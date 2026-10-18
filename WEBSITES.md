@@ -15,10 +15,12 @@ Created: 2026
 
 Static websites without an application backend. Browser source and static delivery guidance are selected separately.
 
-## Existing topic references
+## Topic references
 
 | Work in scope | Existing guidance |
 | --- | --- |
+| Shared repository commands | [REPO.md](./REPO.md) |
+| Applicable UI/UX behavior | [UI_UX.md](./UI_UX.md) |
 | Shared browser standards | [FRONTEND.md](./FRONTEND.md#11-standards-compliance) |
 | Browser accessibility and usability | [FRONTEND.md](./FRONTEND.md#13-accessibility-and-usability) |
 | Browser compatibility | [FRONTEND.md](./FRONTEND.md#18-browser-compatibility) |
@@ -26,11 +28,7 @@ Static websites without an application backend. Browser source and static delive
 | Static assets and hosting | [STATIC_ASSETS.md](./STATIC_ASSETS.md) |
 | Existing documentation publication checks | [DOCUMENTATION.md](./DOCUMENTATION.md#verified-facts-and-published-contracts) |
 
-## Extracted instruction sections
-
-- [Existing website and browser guidance](#existing-website-and-browser-guidance)
-
-## Existing website and browser guidance
+## website and browser guidance
 
 - A static website may use HTML and CSS with no backend or JavaScript.
 - Use the project's asset and delivery pipeline. Apply API guidance only when the website actually calls or serves APIs.

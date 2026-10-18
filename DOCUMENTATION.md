@@ -86,10 +86,6 @@ Verify the published output and its links, not only the source file's existence.
 
 ---
 
-## Hosting and Deployment Architecture
-
-See [SAAS.md](./SAAS.md#existing-monolith-documentation-packaging).
-
 ## Visual Identity and Styling
 
 To maintain a cohesive user experience, the documentation website must be indistinguishable from the main application in terms of visual design.

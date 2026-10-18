@@ -13,6 +13,8 @@ Created: 2026
 
 First, read `README.md` to understand the situation, background and problem statement we are addressing and the solution we are building. Then continue from here.
 
+Read [REPO.md](./REPO.md) for shared repository setup, commands, source verification, and session records.
+
 ## Select target guides
 
 Select targets for the work that the task changes, then select the languages used in that work.
@@ -37,6 +39,15 @@ Static hosting, including Cloudflare hosting, does not by itself select backend 
 A native app and its public website select separate target guides within the same repository.
 A Python backend selects backend and Python guidance. A Go CLI selects tool and Go guidance.
 Existing native platform instructions cover Apple platforms. The SDK guide indexes existing API and language material.
+
+## Select shared concerns
+
+| Changed concern | Read |
+| --- | --- |
+| Stored data, files, transactions, schema changes, or persistence tests | [PERSISTENCE.md](./PERSISTENCE.md), plus [SQL.md](./SQL.md) when SQL changes |
+| User-facing behavior, validation, focus, state, or recovery | [UI_UX.md](./UI_UX.md) |
+| A particular field, component, editor, or workflow | Only the matching [UI_UX_COMPONENTS.md](./UI_UX_COMPONENTS.md#select-component-profiles) profiles |
+| Browser keyboard bindings or shortcut tables | [KEYBOARD.md](./KEYBOARD.md) |
 
 ## Select language guides
 
@@ -78,7 +89,7 @@ Product, framework, and component reference files remain selected by the task un
 
 The target selection above replaces a single repository-wide project label.
 Use the consuming repository's README, source, manifests, and build scripts to select its configured model.
-The extracted stack and layout examples below remain starting points for that model.
+The selected target guide's stack and layout examples remain starting points for that model.
 They do not authorize moving files or changing architecture.
 
 Prefer Allman braces throughout. Keep four-space indentation, no tabs, one type per file, and lines at most 120 characters.
@@ -87,58 +98,6 @@ Before writing code, read `CODING_STYLE.md`, `COMMENTING.md`, and `MARKERS.md` f
 For testing and logging work, read the shared topic guide and the matching sections in the selected language guides.
 
 # Instructions
-
-## Stack
-
-### Enterprise SaaS application
-
-See [SAAS.md](./SAAS.md), [BACKEND.md](./BACKEND.md), [FRONTEND.md](./FRONTEND.md), and [STATIC_ASSETS.md](./STATIC_ASSETS.md).
-
-### Enterprise identity service or Java web application
-
-See [BACKEND.md](./BACKEND.md#identity-service-example).
-
-### Native macOS, iOS, and iPadOS applications
-
-See [APPS.md](./APPS.md#existing-apple-platform-stack).
-
-### Reusable component library
-
-See [FRONTEND.md](./FRONTEND.md#component-library-contracts) and [STATIC_ASSETS.md](./STATIC_ASSETS.md#component-library-build).
-
-### Local Go, Rust, and Python tools
-
-See [TOOLS.md](./TOOLS.md#existing-tool-stack).
-
-### Websites and browser scripting
-
-See [WEBSITES.md](./WEBSITES.md#existing-website-and-browser-guidance).
-
-## Folder & File Structure
-
-Preserve the consuming repository's established layout. Use the following examples when a new project needs a layout.
-Keep specifications in `specs/`, operator guides in `playbooks/`, and user/integrator documentation in `docs/` where those conventions apply.
-Keep one type per source file, including short structs. See `CODING_STYLE.md` for nested-type and extension exceptions.
-
-### Enterprise SaaS application
-
-See [SAAS.md](./SAAS.md#existing-combined-layout).
-
-### Enterprise identity service or Java backend
-
-See [BACKEND.md](./BACKEND.md#existing-java-and-identity-layout).
-
-### Native Apple applications
-
-See [APPS.md](./APPS.md#existing-native-application-layout).
-
-### Reusable component library
-
-See [STATIC_ASSETS.md](./STATIC_ASSETS.md#existing-component-library-layout).
-
-### Local tools
-
-See [TOOLS.md](./TOOLS.md#existing-tool-layouts).
 
 ## Operating Style
 
@@ -229,8 +188,7 @@ consistent, thoughtful and complete end to end experience.
 - Always consult SECURITY_GUIDELINES.md so that you are aware of how to mitigate security concerns and do not introduce inadvertent security issues.
 - Always consult FRONTEND.md when frontend code changes are involved.
 - Always consult DELETION.md when adding new types of resources that users will use.
-- Always consult UX_UI_GUIDELINES.md when thinking about any new capability or feature.
-- Always consult UI_UX_CONSISTENCY.md when thinking about and implementing UIs. 
+- For UI/UX work, read [UI_UX.md](./UI_UX.md) and only the relevant component or keyboard references.
 - Always consult API_GUIDELINES.md when implementing new APIs.
 - Always consult PERFORMANCE.md when implementing backends, frontends or APIs. It is important to keep performance in mind upfront.
 - **(CRITICAL)** Always consult TESTING.md when writing tests. Tests are written BEFORE implementation code (TDD "Red" phase). Having maintainable and comprehensive tests is the foundation of code quality. Without tests, refactoring is unsafe.
@@ -240,7 +198,7 @@ consistent, thoughtful and complete end to end experience.
 - When creating backend code, consult BACKEND.md.
 - For backend library selection, see [BACKEND.md](./BACKEND.md#backend-library-selection).
 - For frontend library selection, see [FRONTEND.md](./FRONTEND.md#frontend-library-selection).
-- For browser component reuse, see [FRONTEND.md](./FRONTEND.md#existing-component-reuse-workflow).
+- For browser component reuse, see [FRONTEND.md](./FRONTEND.md#component-reuse-workflow).
 - Always consult RESTABLE_RESOURCES.md for how to setup resource URLs to be restable and usable by humans.
 - Always consult LITERATE_ERRORS.md for how to construct error messages to be usable and meaningful to users
   and operators.
@@ -255,40 +213,10 @@ consistent, thoughtful and complete end to end experience.
   - Adding permission checks to controllers
   - Integrating Share buttons in frontend
   - Writing authorization tests
-- Always consult ADDITIONAL_INSTRUCTIONS.md which contain some refinements. 
+- For storage changes, read [PERSISTENCE.md](./PERSISTENCE.md).
 - Always make sure that all generated code includes copyright information following the instructions in 
   COPYRIGHT_HEADER.md
 - Generate a concise summary of changes for each set of changes and commit the Git code. Don't push yet.
-
-## Local Development
-
-A build or test command does not authorize deployment, signing-key export, app-store submission, or release.
-
-Use the selected target guide for the existing development and delivery examples.
-
-### Clean
-
-See [BACKEND.md](./BACKEND.md#existing-local-script-example) for the existing script example.
-
-### Build
-
-See [BACKEND.md](./BACKEND.md#existing-local-script-example) for the existing script example.
-
-### Test
-
-See [BACKEND.md](./BACKEND.md#existing-local-script-example) for the existing script example.
-
-### Run
-
-See [BACKEND.md](./BACKEND.md#existing-local-script-example) for the existing script example.
-
-### Deploy
-
-See [BACKEND.md](./BACKEND.md#existing-local-script-example) for the existing script example.
-
-## Local Endpoints
-
-See [BACKEND.md](./BACKEND.md#local-endpoints-and-dependencies).
 
 # Agent Knowledge Base (CRITICAL)
 

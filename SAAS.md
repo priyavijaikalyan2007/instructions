@@ -15,40 +15,24 @@ Created: 2026
 
 A composition of backend and frontend targets. The existing combined-application and super-app examples are grouped below.
 
-## Existing topic references
+## Topic references
 
 | Work in scope | Existing guidance |
 | --- | --- |
+| Shared repository work | [REPO.md](./REPO.md) |
+| Stored data across application layers | [PERSISTENCE.md](./PERSISTENCE.md) |
+| Shared UI/UX behavior | [UI_UX.md](./UI_UX.md) |
 | Backend target | [BACKEND.md](./BACKEND.md) |
 | Frontend target | [FRONTEND.md](./FRONTEND.md) |
 | Static assets and delivery | [STATIC_ASSETS.md](./STATIC_ASSETS.md) |
 | Access control and sharing across the application | [ACCESS_CONTROL.md](./ACCESS_CONTROL.md) |
 | Resource deletion across backend and UI | [DELETION.md](./DELETION.md) |
 
-## Extracted instruction sections
-
-- [Application routes and pages](#application-routes-and-pages)
-- [Existing combined layout](#existing-combined-layout)
-- [Existing frontend source layout](#existing-frontend-source-layout)
-- [Existing cross-layer data mapping](#existing-cross-layer-data-mapping)
-- [Existing super-app shell](#existing-super-app-shell)
-- [Existing sub-application structure](#existing-sub-application-structure)
-- [Existing monolith documentation packaging](#existing-monolith-documentation-packaging)
-- [Existing data-contract verification](#existing-data-contract-verification)
-- [Existing persistence and UI integration](#existing-persistence-and-ui-integration)
-- [Existing cross-layer naming](#existing-cross-layer-naming)
-- [Existing local test identities](#existing-local-test-identities)
-- [Existing application URL configuration](#existing-application-url-configuration)
-- [Existing web performance context](#existing-web-performance-context)
-- [Existing cross-layer autocomplete optimization](#existing-cross-layer-autocomplete-optimization)
-- [Existing access-control integration](#existing-access-control-integration)
-- [Existing workspace settings integration](#existing-workspace-settings-integration)
-
 ## Application routes and pages
 
 - Serve frontend routes and APIs through the application, including pages when needed.
 
-## Existing combined layout
+## combined layout
 
 ```text
 api/                   .NET backend, domain services, HTTP boundaries, and persistence
@@ -63,21 +47,21 @@ playbooks/             Operator and development procedures
 docs/                  User and integrator documentation
 ```
 
-## Existing frontend source layout
+## frontend source layout
 
 - Use TypeScript files in the ./typescript/ folder instead of inline Javascript.
   - App specific TypeScript can be kept as separate modules.
 - Use CSS files in the frontend/ folder instead of inline CSS.
   - App specific CSS can be kept as separate files.
 
-## Existing cross-layer data mapping
+## cross-layer data mapping
 
 - Map frontend types to backend types to database objects consistently preferably through
   some sort of consistent mapping layer. This prevents typos, translation problems etc.
 - Prevent cluttering regular business logic with data transfer objects and more.
 - Prevent bugs now and in the future due to mismatch between the field names or types or validation expectations.
 
-## Existing super-app shell
+## super-app shell
 
 - Implement a super-app model.
 - In the super-app model, there is a **platform menu-bar** at the top for the user, application dropdown,
@@ -90,7 +74,7 @@ docs/                  User and integrator documentation
 
 ---
 
-## Existing sub-application structure
+## sub-application structure
 
 ### 8.1. Super-App Model
 
@@ -116,7 +100,7 @@ The main `index.html` file implements a "super-app". Every link in the top nav b
 * Do not use the vanilla Javascript alert or error dialogs which are browser blocking. Instead, prefer the Bootstrap modal dialog instead.
 * All applications are responsive in general so that users can use any device they want.
 
-## Existing monolith documentation packaging
+## monolith documentation packaging
 
 For the .NET monolith example, documentation is hosted with the application and follows the packaging rules below.
 Native apps, tools, static websites, and other services use their repository's documented delivery pipeline.
@@ -135,7 +119,7 @@ Native apps, tools, static websites, and other services use their repository's d
 
 ---
 
-## Existing data-contract verification
+## data-contract verification
 
 - **"Explicitly define the data contract between layers."**
 -  **Casing Check:** When writing API endpoints or Client wrappers, you **must** explicitly verify JSON property names.
@@ -143,7 +127,7 @@ Native apps, tools, static websites, and other services use their repository's d
   - *JS Client:* If the backend expects `snake_case`, use a `toBackendFormat()` mapper. **Never assume automapping works.**
 - **Payload Verification:** Before marking a task done, verify: "Does the frontend payload structure (nested objects, field names) match the backend DTO *exactly*?"
 
-## Existing persistence and UI integration
+## persistence and UI integration
 
 - **"UI updates are secondary to Persistence."**
 - **Persistence First:** When implementing a CRUD action (Delete, Save, Update), write the API call **first**. Do not write the optimistic UI update until the API call is scaffolded.
@@ -152,7 +136,7 @@ Native apps, tools, static websites, and other services use their repository's d
   - Does `api.doAction()` make a `fetch()`?
   - Does the backend endpoint actually *use* the received data? (Check for "ignored parameters").
 
-## Existing cross-layer naming
+## cross-layer naming
 
 - **"Uniformity is a feature."**
 - **Global Standards:** If you encounter a camelCase vs. snake_case mismatch between backend/frontend or components:
@@ -160,7 +144,7 @@ Native apps, tools, static websites, and other services use their repository's d
   - **Action:** Enforce a system-wide serialization standard (e.g., Global JSON settings in Program.cs). Ensure all APIs conform to this standard.
 - **Rule:** A codebase should look like it was written by one person. Mismatched casing styles across files are unacceptable.
 
-## Existing local test identities
+## local test identities
 
 - Use test users in the format `userNNN@test.<appdomain>.io` (e.g., `user001@test.domain.io`, `user042@test.domain.io`).
 - `test.<appdomain>.io` is a non-existent domain reserved exclusively for testing.
@@ -171,11 +155,11 @@ Native apps, tools, static websites, and other services use their repository's d
 
 ---
 
-## Existing application URL configuration
+## application URL configuration
 
 - **Environment Isolation:** **Never** hardcode URLs (e.g., `http://localhost:5000`) inside code. Use `appsettings.json` (backend) or `import.meta.env` (frontend).
 
-## Existing web performance context
+## web performance context
 
 This document outlines the performance standards and best practices for our high-performance web application.
 
@@ -186,14 +170,14 @@ This document outlines the performance standards and best practices for our high
 *   **Backend**: ASP.NET Core 10.0 (API + Static Serving).
 *   **Database**: PostgreSQL 17.6 (Supabase).
 
-## Existing cross-layer autocomplete optimization
+## cross-layer autocomplete optimization
 
 *   **Purpose:** Provide sub-100ms search results across millions of records.
 *   **Implementation:**
     *   **Frontend**: Debouncing (300ms) and mandatory result capping (e.g., `limit=10`).
     *   **Backend**: Use `text_pattern_ops` in Postgres for efficient prefix indexing.
 
-## Existing access-control integration
+## access-control integration
 
 ### RBAC & FGAC Compliance
 A full Role-Based Access Control (RBAC) and Fine-Grained Access Control (FGAC) system has been implemented. Refer to:
@@ -206,7 +190,7 @@ For every new application, resource type, or feature, you must:
 - Implement proper permission checks
 - Update access control specifications if new resource types or permissions are introduced
 
-## Existing workspace settings integration
+## workspace settings integration
 
 ### Feature Settings Management
 Every new feature, capability, application, or change may introduce settings that control behavior. You must:
@@ -214,3 +198,49 @@ Every new feature, capability, application, or change may introduce settings tha
 - Update workspace and global settings dialogs to include new settings
 - Choose sensible defaults for all new settings
 - Ensure global-to-workspace settings inheritance remains intact
+
+## Enterprise shell consistency
+
+### 2.1. Standardized Panel Placement
+To optimize for muscle memory, key functional areas must always appear in the same relative positions across all sub-apps:
+*   **Resource Explorer / Navigation:** Always on the **LEFT** side.
+*   **Details / Property Inspector / Settings:** Always on the **RIGHT** side.
+*   **Log Console / Output:** Always at the **BOTTOM**.
+*   **Main Workspace / Canvas:** Always in the **CENTER**.
+
+### 2.2. Toolbar & Menu Consistency
+Toolbars and Menu Bars MUST follow a predictable order for core operations.
+
+#### 2.2.1. "File" Operations (Management)
+Common management actions should be grouped at the **START** (left) of the toolbar or under a "File" menu item:
+1.  **New** (Ctrl+N)
+2.  **Save** (Ctrl+S)
+3.  **Delete** (Delete)
+4.  **Import**
+5.  **Export**
+
+#### 2.2.2. "Edit" Operations (Manipulation)
+Common editing actions should be grouped together, typically after File operations or under an "Edit" menu item:
+1.  **Undo** (Ctrl+Z)
+2.  **Redo** (Ctrl+Y)
+3.  **Cut** (Ctrl+X)
+4.  **Copy** (Ctrl+C)
+5.  **Paste** (Ctrl+V)
+
+#### 2.2.3. View/Context Operations
+Application-specific view controls (Zoom, Pan, Fit, Grid Snapping) should follow Edit operations.
+
+### 2.3. Keyboard Shortcut Visibility
+*   **Mandate:** Every menu item or toolbar button that supports a keyboard shortcut MUST display that shortcut next to the label or in its tooltip.
+*   **Execution:** For menu items, use a right-aligned span for the shortcut (e.g., `Save <span class="shortcut">Ctrl+S</span>`). For toolbar buttons, include it in the `title` attribute or tooltip (e.g., `Save (Ctrl+S)`).
+
+## Enterprise shell feedback
+
+### 4.1. Action Feedback
+*   Every button click must result in an immediate visual state change (active/pressed state).
+*   For blocking operations in this browser shell, use the standardized `Progress Modal` from `MASTER_COMPONENT_LIST.md`.
+*   For work that can continue in the background, use the non-blocking progress behavior in [UI_UX.md](./UI_UX.md#progress-and-long-running-operations).
+
+### 4.2. Error Handling
+*   Write technical diagnostics to the shell **Log Console**. Show actionable failure guidance at the affected field or operation, as specified in [UI_UX.md](./UI_UX.md#validation-and-error-behavior).
+*   Critical failures that require immediate user acknowledgement should use standard Bootstrap Modals, never browser `alert()` or `confirm()`.

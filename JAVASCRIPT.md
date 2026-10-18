@@ -25,7 +25,7 @@ Use only the grammar exceptions stated in this guide.
 If an example shows several top-level types, put each type in its own file in production.
 Examples may omit surrounding project types or test fixtures. Use the repository's configured dependencies and contracts.
 
-Read by task: [Naming](#naming), [File organization](#file-organization), [Comments](#comments), [Navigation markers](#navigation-markers), [Testing](#testing), [Test examples](#test-examples), [Coverage](#coverage), [Logging](#logging), [Performance examples](#performance-examples), [Design patterns](#design-patterns).
+Read by task: [Naming](#naming), [File organization](#file-organization), [Comments](#comments), [Navigation markers](#navigation-markers), [Testing](./FRONTEND.md#browser-testing), [Test examples](#test-examples), [Coverage](#coverage), [Logging](#logging), [Performance examples](#performance-examples), [Design patterns](#design-patterns).
 
 ## Naming
 
@@ -52,10 +52,6 @@ Use ordinary comments for navigation markers rather than publishing them as API 
 
 Use `//` or `/* ... */` comments with the standard fields in [MARKERS.md](./MARKERS.md).
 Place file headers before implementation code. Preserve directives and documentation attachment.
-
-## Testing
-
-See [FRONTEND.md](./FRONTEND.md#existing-browser-testing).
 
 ## Test examples
 
@@ -628,3 +624,8 @@ class NodeA
     }
 }
 ```
+
+## Consistent async style
+
+- **"One style, everywhere."**
+- If the codebase uses `async/await`, use it exclusively. Do not mix `Promise.then()` chains with `async/await` in the same component.

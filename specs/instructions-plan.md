@@ -11,7 +11,7 @@ Created: 2026
 
 # Instruction migration plan
 
-Status: target guide extraction complete and published for review through PR #2 as of 18 October 2026.
+Status: approved subject consolidation implemented and locally verified on PR #2 as of 18 October 2026.
 The language guide phase merged through PR #1 at `0a5a868`.
 The earlier in-place updates merged into main on 16 October 2026.
 The original reorganization proposal was superseded on 15 October 2026.
@@ -47,29 +47,36 @@ The branch is pushed. [PR #2](https://github.com/priyavijaikalyan2007/instructio
 The PR remains unmerged.
 
 
-## Proposed follow-up from PR review
+## Approved follow-up: consolidate subject guides
 
-The owner requested discussion of the guide boundaries and supplied `~/Work/uiexperience.md` as a new source.
-The source contains 2,349 lines of enterprise UI behavior, semantic controls, component contracts, and review checks.
-The following changes are recommendations for discussion, not completed extraction work.
-The removed project-specific snapshot mandate is the only immediate instruction correction in this follow-up.
+The owner approved this follow-up and requested removal of empty PERFORMANCE.md sections.
+Implement on `docs/target-guides` and update PR #2. Do not merge.
+Existing repository text and the supplied UI experience source are the instruction sources.
+New text defines scope, navigation, and the resolution of overlaps. It does not add unrelated policy.
 
-1. Remove empty redirect sections from ADDITIONAL_INSTRUCTIONS.md and update this repository's incoming links directly.
-2. Move remaining lessons into their subject authorities or matching target guides, then retire the catch-all if nothing remains.
-3. Create PERSISTENCE.md for existing storage, transaction, integrity, migration, and persistence-test guidance across targets.
-4. Keep SQL syntax, naming, comments, and engine-specific SQL examples in SQL.md, referenced where needed.
-5. Create REPO.md for existing shared setup, build/test/run commands, artifacts, and repository workflow lessons.
-6. Keep backend container details, native signing, and static bundle delivery in their respective target guides.
-7. Combine shared UI/UX design, consistency, state, validation, and recovery guidance under UI_UX.md.
-8. Keep detailed component requirements from the supplied source separately selectable through UI_UX_COMPONENTS.md.
-9. Keep KEYBOARD.md as the detailed registry linked from UI_UX.md, with platform and component scope made explicit.
-10. Keep super-app shell layouts in SAAS.md, browser implementation in FRONTEND.md, and native platform guidance in APPS.md.
-11. Compare overlapping source requirements and identify conflicts before selecting or replacing behavior.
-12. Update AGENTS.md, affected references, examples, and review records, then verify links and content preservation with documented exclusions.
+1. Create REPO.md, PERSISTENCE.md, UI_UX.md, and UI_UX_COMPONENTS.md.
+2. Fold ADDITIONAL_INSTRUCTIONS.md into REPO.md, CODE_COMPLETE.md, PRAGMATIC_PROGRAMMER.md, CODING_STYLE.md, TESTING.md, LITERATE_ERRORS.md, CSHARP.md, JAVASCRIPT.md, and UI_UX.md.
+3. Move shared commands and endpoints from BACKEND.md into REPO.md. Move storage rules and examples into PERSISTENCE.md.
+4. Combine UX_UI_GUIDELINES.md and UI_UX_CONSISTENCY.md with applicable supplied UI behavior. Retire the old files and ADDITIONAL_INSTRUCTIONS.md.
+5. Scope enterprise shell rules in SAAS.md and browser implementation rules in FRONTEND.md. Retain KEYBOARD.md as a focused reference.
+6. Import the supplied UI common behavior into UI_UX.md and selectable component details into UI_UX_COMPONENTS.md.
+7. Trim PERFORMANCE.md to shared principles and a compact topic index. Remove empty target-extraction sections and update their incoming links.
+8. Update AGENTS.md, README.md, BACKEND.md, FRONTEND.md, APPS.md, TOOLS.md, WEBSITES.md, STATIC_ASSETS.md, SDKs.md, DOCUMENTATION.md, SWIFT.md, SQL.md, and affected references.
+9. Resolve overlapping progress, optimistic-save, keyboard, help, and platform rules through the supplied UI behavior and existing target scope.
+10. Verify instruction provenance, code-block preservation, Markdown links, guide selection, encodings, headers, and unchanged testing/style requirements.
+11. Update the existing plan, review, inventory, status, conversation, changelog, and append-only history. Commit and push to PR #2.
 
-General lessons belong in existing construction, testing, security, or error guides when they apply across targets.
-A lesson about one component, runtime, or private project must retain that scope or be excluded from the shared requirements.
-No new engineering policies are proposed beyond material already in the repository or the owner-supplied UI source.
+No pattern required - this is documentation consolidation without runtime code or public interface changes.
+The validation baseline is `a760183`. The private UI source remains unchanged.
+
+Implementation is complete. REPO.md, PERSISTENCE.md, UI_UX.md, and UI_UX_COMPONENTS.md now hold their respective concerns.
+ADDITIONAL_INSTRUCTIONS.md and the two old UI/UX guides are retired. Their lessons and incoming links have canonical destinations.
+PERFORMANCE.md shrinks from 198 to 44 lines. Shared topic and target guides no longer keep empty redirect sections.
+Validation preserves 551 code blocks, including all ten examples from the supplied UI source.
+All 26 source sections and their non-heading instruction lines are accounted for, with recorded scope and overlap resolutions.
+Shared style, the AGENTS.md operating workflow, test-first guidance, and coverage thresholds remain intact.
+Commit and push this follow-up to the existing PR. The owner will review and merge.
+
 
 ## Current plan: language guide extraction
 

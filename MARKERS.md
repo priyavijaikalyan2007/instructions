@@ -31,14 +31,6 @@ Every significant source file (C#, Swift, Go, Rust, Java, TypeScript, SCSS, HTML
 containing classes, services, controllers, components, utilities and more must start with a **Structured Header Block**. 
 This allows agents to read the first 20 lines of a file and immediately understand its context.
 
-### TypeScript Format
-
-See [TypeScript](./TYPESCRIPT.md#navigation-markers).
-
-### C# Format
-
-See [C#](./CSHARP.md#navigation-markers).
-
 ### Swift, Go, Rust, and Java Format
 
 Use the header syntax and directive-placement rules in the selected language guide.
@@ -50,38 +42,6 @@ Do not insert markers between a documentation comment or annotation and its decl
 Use ASCII field names when a parser or file format does not support the marker symbols.
 Preserve the directive positions and blank lines required by the selected language.
 Keep required copyright information in the existing file header.
-
-### Python Format
-
-See [Python](./PYTHON.md#navigation-markers).
-
-### Swift Format
-
-See [Swift](./SWIFT.md#navigation-markers).
-
-### Go Format
-
-See [Go](./GO.md#navigation-markers).
-
-### Rust Format
-
-See [Rust](./RUST.md#navigation-markers).
-
-### Java Format
-
-See [Java](./JAVA.md#navigation-markers).
-
-### SCSS Format
-
-See [SCSS](./SCSS.md#navigation-markers).
-
-### HTML Format
-
-See [HTML](./HTML.md#navigation-markers).
-
-### CSS Format
-
-See [CSS](./CSS.md#navigation-markers).
 
 ## 2. In-Code Semantic Tags
 

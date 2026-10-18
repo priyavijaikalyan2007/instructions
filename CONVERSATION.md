@@ -232,3 +232,33 @@ Removed the project-specific manual snapshot mandate from BACKEND.md.
 The existing instruction to follow the consuming repository's migration convention remains.
 The private UI source remains unchanged and is not yet imported.
 This correction changes no code example or shared style, TDD, or coverage policy.
+
+## 18 October 2026: implement the approved consolidation
+
+### User request
+
+> Agreed. Similarly, I see that several of the sections in PERFORMANCE.md now just point to another file. Perhaps time to trim those sections out? Go ahead with this next update.
+
+### Outcome
+
+Implemented the approved follow-up on the existing `docs/target-guides` branch for PR #2.
+Created REPO.md, PERSISTENCE.md, UI_UX.md, and UI_UX_COMPONENTS.md.
+Folded the remaining catch-all lessons into their subject authorities and retired ADDITIONAL_INSTRUCTIONS.md.
+Combined the old UI/UX guides with the supplied experience source and retired both old files.
+Browser implementation remains in FRONTEND.md, enterprise shell rules in SAAS.md, and native platform rules in APPS.md.
+KEYBOARD.md remains a detailed browser registry with explicit platform and focus scopes.
+
+Imported all 26 sections and ten examples from the supplied UI source. The private source remains unchanged.
+Scoped browser catalog names as implementation roles and kept detailed component contracts separately selectable.
+Resolved blocking/background progress, optimistic feedback/save confirmation, console/user feedback, and keyboard-context overlaps.
+Kept the PostgreSQL/EF Core manual migration material as a configured workflow example.
+The previously removed private-project snapshot mandate remains absent.
+
+Moved shared commands and endpoints from BACKEND.md to REPO.md and storage rules to PERSISTENCE.md.
+Removed 92 redirect-only sections and redundant extraction indexes. Rewrote incoming references to their canonical destinations.
+PERFORMANCE.md shrinks from 198 to 44 lines and retains common measurement principles plus a compact index.
+All 551 parsed baseline/source code blocks retain their content and multiplicity.
+Instruction coverage, links, source encodings, headers, GUIDs, and append-only history pass checks.
+Shared style, the operating workflow, test-first sections, and coverage thresholds remain unchanged.
+No application build or runtime test run applies to this documentation-only change.
+The update will be committed and pushed to the existing PR for owner review. Main remains unchanged.

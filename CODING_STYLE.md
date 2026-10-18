@@ -111,42 +111,6 @@ Do not rename a wire field, database column, or public API merely to match an in
 
 Detailed naming tables and examples are in the selected language guide.
 
-### C# Naming
-
-See [C#](./CSHARP.md#naming).
-
-### TypeScript / JavaScript
-
-See [JavaScript](./JAVASCRIPT.md#naming), [TypeScript](./TYPESCRIPT.md#naming).
-
-### SCSS / CSS
-
-See [CSS](./CSS.md#naming), [SCSS](./SCSS.md#naming).
-
-### HTML Naming
-
-See [HTML](./HTML.md#naming).
-
-### Python Naming
-
-See [Python](./PYTHON.md#naming).
-
-### Swift Naming
-
-See [Swift](./SWIFT.md#naming).
-
-### Go Naming
-
-See [Go](./GO.md#naming).
-
-### Rust Naming
-
-See [Rust](./RUST.md#naming).
-
-### Java Naming
-
-See [Java](./JAVA.md#naming).
-
 ### Variable Naming Guidelines
 
 - Use short names for counters and indexes: `i`, `j`, `k`, `n`
@@ -154,22 +118,6 @@ See [Java](./JAVA.md#naming).
 - Name variables in the domain of the application
 
 See [C#](./CSHARP.md#variable-naming-guidelines).
-
-## SCSS-Specific Rules
-
-See [SCSS](./SCSS.md#scss-construction).
-
-### Variable Overrides
-
-See [SCSS](./SCSS.md#scss-construction).
-
-### Nesting Depth
-
-See [SCSS](./SCSS.md#scss-construction).
-
-### Avoid `!important`
-
-See [SCSS](./SCSS.md#scss-construction).
 
 ## File Organization
 
@@ -235,14 +183,6 @@ See [C#](./CSHARP.md#constraints-and-invariants).
 
 See [TypeScript](./TYPESCRIPT.md#constraints-and-invariants).
 
-### Exception Handling Patterns
-
-See [C#](./CSHARP.md#exception-handling-patterns).
-
-See [Python](./PYTHON.md#exception-handling-patterns).
-
----
-
 ## Explicit Code Style
 
 Avoid clever tricks. Write code that clearly expresses intent.
@@ -256,36 +196,6 @@ See [C#](./CSHARP.md#explicit-code-style).
 See [TypeScript](./TYPESCRIPT.md#explicit-code-style).
 
 ---
-
-## Language-Specific Patterns
-
-### Python-Specific
-
-See [Python](./PYTHON.md#language-constructs).
-
-### TypeScript-Specific
-
-See [TypeScript](./TYPESCRIPT.md#language-constructs).
-
-### Swift-Specific
-
-See [Swift](./SWIFT.md#language-constructs).
-
-### Go-Specific
-
-See [Go](./GO.md#language-constructs).
-
-### Rust-Specific
-
-See [Rust](./RUST.md#language-constructs).
-
-### Java-Specific
-
-See [Java](./JAVA.md#language-constructs).
-
-### C#-Specific
-
-See [C#](./CSHARP.md#language-constructs).
 
 ## Summary Checklist
 
@@ -302,3 +212,14 @@ See [C#](./CSHARP.md#language-constructs).
 - [ ] Assertions for invariants
 - [ ] Domain-appropriate naming
 - [ ] Explicit code over clever tricks
+
+## Named constants
+
+- **"No Magic Numbers."**
+- **Extraction:** Any number (e.g., `3000` ms timeout) or string (e.g., "Admin" role) that appears more than once—or has semantic meaning—must be a named constant.
+
+## Code hygiene
+
+- **"Delete, don't disable."**
+- **No Commented-Out Code:** Do not leave blocks of commented-out code (C#, SCSS, TypeScript, Javascript or HTML) "just in case". Rely on Git history.
+- **Import Cleanup:** Unused imports and variables are (C# usings, SCSS imports, TypeScript imports, and variables are technical debt. Remove them immediately before considering a task complete. Remove them before considering a task complete.

@@ -368,3 +368,29 @@ The proposed destinations are shared UI_UX.md behavior and separately selectable
 The private-project snapshot mandate mentioning `KnobbyDbContextModelSnapshot.cs` is deliberately removed from BACKEND.md.
 Its manual update requirement is not promoted into generic persistence guidance.
 All existing code blocks remain unchanged by this correction.
+
+## Approved subject consolidation snapshot
+
+Baseline: `a76018353e158e015dc78ef32afef00e83445b73` on `docs/target-guides`.
+The owner approved the follow-up after reviewing PR #2.
+
+| Source | Destination or treatment |
+| --- | --- |
+| Remaining ADDITIONAL_INSTRUCTIONS.md lessons | REPO.md and existing construction, style, testing, language, error, and UI/UX authorities |
+| BACKEND.md shared scripts and local endpoints | REPO.md |
+| BACKEND.md stored-data integrity, migrations, EF rules, outbox, and projections | PERSISTENCE.md |
+| UX_UI_GUIDELINES.md and UI_UX_CONSISTENCY.md | Common UI_UX.md behavior, browser implementation in FRONTEND.md, enterprise shell behavior in SAAS.md, and KEYBOARD.md |
+| Owner-supplied UI experience source | All 26 sections imported into UI_UX.md and UI_UX_COMPONENTS.md, with explicit applicability and role mappings |
+| Redirect-only sections and extraction-era headings | Removed after incoming references are rewritten to canonical destinations |
+| PERFORMANCE.md | Shared principles plus one selection table, reduced from 198 to 44 lines |
+
+The three old catch-all/UI guides are retired. The remaining lessons are not retained as compatibility pages.
+The source UI file has 2,349 lines and ten fenced examples. It remains byte-identical to the captured source.
+Captured source SHA-256: `81a8d845a450f6a482cf5305525f18e6a572b97c277dde2c03f4372a00bb0999`.
+The public guides contain the imported instructions and do not require access to the source path.
+
+The ledger records 108 section moves, source imports, and declared adaptations.
+All 551 parsed baseline and source code blocks retain their content and multiplicity.
+Non-heading instruction lines are accounted for. Replaced text covers navigation, duplicate wording, role scoping, and reviewed behavior overlaps.
+Existing copyright blocks and encodings remain intact. New guides and KEYBOARD.md carry the existing authors and MIT license.
+Shared style, test-first rules, and coverage thresholds remain unchanged.
