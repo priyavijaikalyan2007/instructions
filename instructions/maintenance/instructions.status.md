@@ -27,7 +27,8 @@ It previews changes, validates SDK links and paths, and preserves handwritten pr
 All 35 integration tests pass. The current repo passes --check and --dry-run reports No changes.
 Validation and limits are recorded in [profile-selector-validation.md](profile-selector-validation.md).
 Original code blocks remain intact. The ten new blocks are six reading trees and four CLI/JSON examples.
-The branch will be pushed for owner review without merging.
+[PR #3](https://github.com/priyavijaikalyan2007/instructions/pull/3) is open for owner review.
+The implementation commits are b5b1dbf, 9c8a49c, and 9c20e8d. Main remains unchanged after synchronization.
 
 ## Completed phase: subject consolidation
 

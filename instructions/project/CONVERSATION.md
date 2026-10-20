@@ -445,3 +445,9 @@ The ten added code blocks contain README trees and selector usage examples. No n
 Removed inherited trailing whitespace from the relocated master and changed prose lines, without altering workflow rules.
 Documented usage and filesystem/runtime limits in instructions/REPO.md and the selector validation report.
 Prepare one review PR with separate directory, reading-map, and selector commits. The owner will merge.
+
+Published the implementation in three commits: b5b1dbf for relocation, 9c8a49c for reading trees, and 9c20e8d for the selector.
+Opened PR #3, "docs: organize instruction files and add profile configurator", from docs/instructions-directory into main.
+The PR is open and unmerged. The owner will review and merge.
+The GitHub CLI currently has read-only permissions, so the PR was created through the existing owner browser session.
+Only main and the new review branch remain locally and remotely. The working tree is clean after publication records.
