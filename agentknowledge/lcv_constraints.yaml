@@ -10,7 +10,7 @@ Created: 2026
 # Linguistic Constraint Verification (LCV) Ruleset — Example
 # This file defines quasi-natural language constraints for code verification.
 # Customize the namespaces, methods, and rules to match your project structure.
-# See LCV_DESIGN.md for the full specification.
+# See instructions/LCV_DESIGN.md for the full specification.
 
 constraints:
   - id: "LCV-001"

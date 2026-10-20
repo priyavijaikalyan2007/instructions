@@ -1,0 +1,140 @@
+<!--
+SPDX-FileCopyrightText: 2026 Priya Vijai Kalyan <priyavijai.kalyan2007@proton.me>
+SPDX-FileCopyrightText: 2026 Outcrop Inc
+SPDX-License-Identifier: MIT
+Repository: instructions
+File GUID: 9a3b3546-8a9c-4f10-93b2-9c472094bc04
+Created: 2026
+-->
+
+<!-- AGENT: Readme file describing this repository. -->
+
+This is the shared instruction library overview. The four root agent entry files route to guides under instructions/.
+Project configuration and local refinements live under instructions/project/ and remain project-owned during generic instruction updates.
+Instruction-maintenance plans, audits, and examples live under instructions/maintenance/.
+The consuming repository's specs/ directory is reserved for its actual product and repository specifications.
+
+This repository contains instructions for coding agents, primarily Claude and Gemini. Each agent is asked to perform a different role.
+
+The CLAUDE.md and GEMINI.md file reference AGENTS.md and then specify the role that the agent should play. AGENTS.md sets the main the context and the agent specific instructions set the roles.
+
+Instead of using a monolithic, single instruction file, the AGENTS.md file references multiple individual files for specific instructions. It also tells the agent how to clean, build, test and run the code. 
+
+These instructions cover Swift apps for macOS and iOS, Go and Rust tools, Java and .NET 10.0+ applications, and TypeScript/JavaScript/HTML projects.
+Existing Python, SQL, CSS, and SCSS guidance also applies where those languages are used.
+Read [REPO.md](REPO.md) for shared repository operations.
+Select [PERSISTENCE.md](PERSISTENCE.md) for stored data and [UI_UX.md](UI_UX.md) for user-facing behavior.
+Load only relevant [component profiles](UI_UX_COMPONENTS.md#select-component-profiles) and [keyboard details](KEYBOARD.md).
+
+Some sections describe a .NET SaaS example. Apply those sections only when they match the changed target and project model.
+Keep project-specific architecture, toolchain versions, and commands consistent with that repository's README and build configuration.
+
+## Project configuration
+
+[AGENTS.md](AGENTS.md#load-project-configuration) reads the active instructions/project/PROJECT_PROFILE.md before selecting guides.
+The profile identifies project facts and local refinements, then selects enabled components and their source languages.
+instructions/project/PROJECT.md contains facts only. instructions/project/ADDITIONAL.md contains project-specific instructions and emerging lessons.
+
+Use the [profile template](PROJECT_PROFILE_TEMPLATE.md), [facts template](PROJECT_TEMPLATE.md), and [refinement template](ADDITIONAL_TEMPLATE.md).
+Follow [manual setup](REPO.md#manual-setup) for a new project or edit an existing profile in place.
+This repository's active profile describes the instruction library itself. Application examples do not enable application components here.
+Generic instruction updates preserve project-owned profiles, facts, and refinements.
+
+## Selective target reading
+
+Start at [AGENTS.md](AGENTS.md#select-target-guides). Select targets for the changed work, then select its languages.
+Targets describe the work. Languages describe the source. A repository can combine several targets and languages.
+The target guides contain existing instructions and links to existing topic guides.
+
+| Target | Guide | Existing material grouped here |
+| --- | --- | --- |
+| Backend | [BACKEND.md](BACKEND.md) | APIs, runtime, containers, and backend service boundaries |
+| Frontend | [FRONTEND.md](FRONTEND.md) | Browser pages, dynamic UI, login, components, and browser tests |
+| SaaS or web application | [SAAS.md](SAAS.md) | Backend, browser, generated SDK, and optional native composition, with cross-layer contracts |
+| Tools | [TOOLS.md](TOOLS.md) | CLI tools and plugins, module layouts, local commands, stdout, and stderr |
+| Native apps | [APPS.md](APPS.md) | Existing Apple platform, lifecycle, layout, performance, testing, and credential guidance |
+| Static websites | [WEBSITES.md](WEBSITES.md) | Websites without an application backend and relevant browser references |
+| Static assets | [STATIC_ASSETS.md](STATIC_ASSETS.md) | Compilation, bundles, component-library distribution, CDN delivery, and static hosting |
+| SDKs | [SDKs.md](SDKs.md) | Index to existing OpenAPI contracts and language conventions |
+
+A web application can combine C#/Java backend guidance and TypeScript/HTML frontend guidance.
+A change to one side selects that side. A flow across both sides selects both.
+The existing combined deployment examples remain available when packaging and serving share one application.
+A component library combines frontend and static assets. A native app can share a repository with a separate static website.
+The native material covers Apple platforms. This extraction adds no Android, ChromeOS, SDK generator, Kubernetes, or DNS procedures.
+
+## Selective language reading
+
+Start at [AGENTS.md](AGENTS.md#select-language-guides) and select guides for the files and boundaries the task changes.
+Language guides live under instructions/. Each guide contains conventions and task examples for its language.
+Common rules remain in the existing topic files, including style, comments, markers, testing, logging, performance, and patterns.
+Read applicable topic sections together with the selected language guide. Follow other language links only when the task needs them.
+
+| Language | Guide |
+| --- | --- |
+| C# | [CSHARP.md](CSHARP.md) |
+| Swift | [SWIFT.md](SWIFT.md) |
+| Go | [GO.md](GO.md) |
+| Rust | [RUST.md](RUST.md) |
+| Java | [JAVA.md](JAVA.md) |
+| Python | [PYTHON.md](PYTHON.md) |
+| JavaScript | [JAVASCRIPT.md](JAVASCRIPT.md) |
+| TypeScript | [TYPESCRIPT.md](TYPESCRIPT.md), plus shared JavaScript rules |
+| HTML | [HTML.md](HTML.md) |
+| CSS | [CSS.md](CSS.md) |
+| SCSS | [SCSS.md](SCSS.md), plus shared CSS rules |
+| SQL | [SQL.md](SQL.md) |
+| Shell | [SHELL.md](SHELL.md) |
+
+For example, a Swift-only model change does not require C#, Java, or Rust instructions.
+The file [LANGUAGE.md](LANGUAGE.md) continues to define natural-language writing style.
+Shared guides hold common rules. Target and language guides select details for the changed work.
+
+These instructrions are live. They are updated as and when new behaviors are encountered and need guidance. 
+
+The instructions in this repository are *horizontal* in nature. That is, they are about how to write reasonably good code in a clean, structured manner. These instructions should be combined with other instructions for architecture, code structure, do's and don'ts to get output that works.
+
+These instructions are battle tested in my private side projects. I have found that the coding agents that I use do produce reasonably clean, well structured code. Lessons from specific problems are folded into the guide that owns the subject.
+Shared workflow belongs in instructions/REPO.md, storage in instructions/PERSISTENCE.md, and interaction behavior in instructions/UI_UX.md.
+
+
+## Agent Knowledge Base
+
+The `agentknowledge/` directory contains a machine-readable knowledge graph that agents use to orient themselves. See [KNOWLEDGE_ARCHITECTURE.md](KNOWLEDGE_ARCHITECTURE.md) for the full specification.
+
+### Bootstrapping
+
+On first use, the directory is empty (or contains only example files like `lcv_constraints.yaml`). Agents are expected to populate these files as they work:
+
+| File | Purpose | Format |
+|------|---------|--------|
+| `concepts.yaml` | Maps business terms to anchor code locations | YAML list of `{name, definition, anchor_file, related}` |
+| `entities.yaml` | Maps data models to code files and database tables | YAML list of `{name, table, file, description, related}` |
+| `decisions.yaml` | Architectural Decision Records (ADRs) | YAML list of `{id, title, date, status, context, files}` |
+| `history.jsonl` | Append-only log of agent tasks and changes | One JSON object per line: `{date, task, files, summary}` |
+| `user_profile.yaml` | Per-user agent preferences (gitignored if personal) | YAML key-value pairs |
+
+### Agent Workflow
+
+1. **Session Start** — Read all files in `agentknowledge/` to orient. Use `concepts.yaml` to locate code instead of blind searching. Check `decisions.yaml` before proposing alternative approaches.
+2. **During Work** — Consult the knowledge base before asking "Where is X?"
+3. **Session End** — Update files if your work changed the codebase meaningfully:
+   - Created a new service/controller/module → add to `concepts.yaml`
+   - Created or modified a data model → add to `entities.yaml`
+   - Made an architectural decision → add to `decisions.yaml`
+   - Completed any significant task → append to `history.jsonl`
+
+### Rules
+
+- **Never delete** existing entries — only add or update.
+- **Never rewrite** `history.jsonl` — it is append-only.
+- Keep concept names in PascalCase and stable; other files may reference them.
+- If a decision is superseded, set its `status` to `Superseded` and reference the replacement ADR id.
+
+### Optional: Runtime SQLite
+
+For complex queries (e.g., "Find all components related to Auth modified in the last week"), agents can load the YAML/JSONL files into an ephemeral in-memory SQLite database, query with SQL, and act on the results. This gives SQL power for analysis with Git-mergeable text for storage.
+
+## Disclaimer
+
+This project is a personal endeavor of the individual contributors and is provided on an "as-is" basis. It is not sponsored, authorized, endorsed, maintained, indemnified by, or in any way officially affiliated with any past, present, or future employer of the contributors — including but not limited to Google IT Services India Pvt Ltd, Alphabet Inc., Microsoft R&D India Ltd, and Microsoft Corporation, or any of their subsidiaries or affiliates. All trademarks and registered trademarks are the property of their respective owners. Use of employer names is solely for identification purposes and does not imply any association or endorsement.
