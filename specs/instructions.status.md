@@ -66,7 +66,8 @@ Proposed corrections are recorded for review. This pass changes no engineering p
 
 ## Current phase: manual project profiles and scoped SaaS clients
 
-The manual profile and templates are implemented on docs/target-guides for PR #2.
+The manual profile and templates are implemented and pushed as b6bcd89 on docs/target-guides for PR #2.
+The PR title and description now reflect the implemented profile and validation scope.
 AGENTS.md reads PROJECT_PROFILE.md, the configured facts-only PROJECT.md, and the configured local ADDITIONAL.md.
 Enabled component paths and changed behavior select targets, languages, platforms, and shared concerns.
 Native SaaS clients are optional and normally use generated SDKs. Swift is indexed in SDKs.md.

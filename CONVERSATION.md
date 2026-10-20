@@ -387,3 +387,7 @@ Broader document checks preserve all 559 counted code blocks, existing encodings
 No new Markdown link defects were introduced. Existing external component-path defects are recorded separately.
 The interview script remains deferred. No application runtime build or test is claimed.
 Update PR #2 for owner review, without merging or changing main.
+
+Published the implementation as b6bcd89 on docs/target-guides.
+Updated PR #2 title to "docs: organize guides and add selectable project profiles" and rewrote its description around the implemented scope.
+The PR links the validation report and Java SaaS fixture. It remains open and unmerged.
