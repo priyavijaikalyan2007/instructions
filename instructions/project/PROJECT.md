@@ -19,7 +19,7 @@ Created: 2026
 | Product | Generic coding-agent instructions and repository analysis tools |
 | Source | instructions/, the four root agent entries, scripts/, .github/, and agentknowledge/ |
 | Current review branch | fix/profile-interview-guidance |
-| Active review | Product-category interview correction, PR pending |
+| Active review | PR #4 in priyavijaikalyan2007/instructions |
 | Merged review | PR #1, PR #2, and PR #3 in priyavijaikalyan2007/instructions |
 | Application runtime | none |
 | Generic build.sh or test.sh | absent |

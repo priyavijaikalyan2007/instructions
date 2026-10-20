@@ -495,3 +495,7 @@ All 44 tests pass after the new and revised interaction tests were observed fail
 The actual repository interview was exercised by retaining every default. It reports No changes.
 Repo checks, Bash syntax, Python 3.10 grammar, line lengths, indentation, function sizes, and diff whitespace checks pass.
 Updated setup instructions and validation records. Publish a focused follow-up PR for owner review without merging.
+
+Published implementation ffefb5a on fix/profile-interview-guidance.
+Opened PR #4, "fix: guide profile interviews with explained product categories", against main.
+The PR is open and unmerged for owner review. Main remains at the synchronized PR #3 merge.

@@ -22,7 +22,8 @@ The revised interview starts with six requested product categories and explains 
 It selects underlying guides automatically, shows the target repository, and explains each requested project fact.
 Existing profile names remain local identifiers. Defaults retain their formatting and current choices when accepted.
 All 44 selector tests pass, including each category, combined categories, clear prompts, and SaaS-to-standalone switching.
-The correction will be pushed in a new review PR without merging.
+[PR #4](https://github.com/priyavijaikalyan2007/instructions/pull/4) is open for owner review.
+The implementation is ffefb5a on fix/profile-interview-guidance. The PR remains unmerged.
 
 ## Completed phase: directory cleanup, reading trees, and profile selector
 
