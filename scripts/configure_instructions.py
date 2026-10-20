@@ -24,6 +24,8 @@ import sys
 import tempfile
 import uuid
 
+from profile_interview import run_interview
+
 
 LIBRARY_ROOT = Path(__file__).resolve().parents[1]
 PROFILE_PATH = "instructions/project/PROJECT_PROFILE.md"
@@ -160,14 +162,29 @@ def formatted_value(key: str, value) -> str:
     return value.strip()
 
 
+def same_field_value(key: str, current: dict, value, rendered: str) -> bool:
+    """Retain handwritten formatting when a JSON update or accepted default has the same meaning."""
+    if key == "enabled":
+        return current["enabled"] == value
+    existing = current.get(key, "")
+    if key in LIST_FIELDS:
+        return split_values(existing) == split_values(rendered)
+    if key == "saas_client":
+        return existing.lower() == rendered
+    return existing.strip("`") == rendered
+
+
 def update_component(block: str, changes: dict) -> str:
     """Change only selected field lines, preserving all surrounding component notes."""
     unknown = set(changes) - set(FIELDS) - {"enabled"}
     if unknown:
         raise ValueError(f"Unknown component fields: {', '.join(sorted(unknown))}")
     newline = "\r\n" if "\r\n" in block else "\n"
+    current = component_values(block)
     for key, value in changes.items():
         rendered = formatted_value(key, value)
+        if same_field_value(key, current, value, rendered):
+            continue
         if key == "enabled":
             pattern = r"^- \[[ xX]\] Enabled\r?$"
             replacement = f"- [{'x' if value else ' '}] Enabled"
@@ -222,39 +239,6 @@ def ask_boolean(prompt: str, default: bool) -> bool:
         if answer in {"yes", "y", "no", "n"}:
             return answer in {"yes", "y"}
         print("Enter yes or no.")
-
-
-def interview_component(identifier: str, values: dict) -> dict:
-    """Collect actual component facts without assuming a language from the platform."""
-    enabled = ask_boolean(f"Enable {identifier}?", values["enabled"])
-    result = {"enabled": enabled}
-    if not enabled:
-        return result
-    print("Use comma-separated values for paths, targets, languages, and platforms. Use none when inapplicable.")
-    print(f"Targets: {', '.join(TARGET_GUIDES)}")
-    for key, label in FIELDS.items():
-        if key == "saas_client":
-            result[key] = ask_boolean(f"{identifier} / {label}?", values[key].lower() == "yes")
-        else:
-            value = ask(f"{identifier} / {label}", values.get(key, "") or "none")
-            result[key] = split_values(value) if key in LIST_FIELDS else value
-    return result
-
-
-def interview(text: str) -> dict:
-    """Interview existing components and allow additional stable identifiers."""
-    answers = {"saas_product": ask_boolean("Is this a SaaS product?", checked_saas(text)), "components": {}}
-    for identifier, (start, end) in component_blocks(text).items():
-        answers["components"][identifier] = interview_component(identifier, component_values(text[start:end]))
-    while True:
-        identifier = input("Add component identifier, or press Enter to continue: ").strip()
-        if not identifier:
-            return answers
-        if not IDENTIFIER.fullmatch(identifier) or identifier in answers["components"]:
-            raise ValueError("Use a new lowercase component identifier with optional digits and hyphens.")
-        defaults = dict.fromkeys(FIELDS, "none")
-        defaults["enabled"] = True
-        answers["components"][identifier] = interview_component(identifier, defaults)
 
 
 def project_paths(text: str) -> dict[str, str]:
@@ -452,6 +436,7 @@ def arguments() -> argparse.Namespace:
 def load_profile(root: Path, args: argparse.Namespace) -> str:
     """Read or initialize the profile, then collect only the requested input mode."""
     profile = read_optional(root, PROFILE_PATH)
+    is_new = profile is None
     if profile is None:
         if args.check:
             raise ValueError(f"Missing profile: {PROFILE_PATH}")
@@ -460,7 +445,10 @@ def load_profile(root: Path, args: argparse.Namespace) -> str:
         answers = json.loads(args.answers.read_text())
         profile = apply_answers(profile, answers)
     elif not args.check and not args.dry_run:
-        profile = apply_answers(profile, interview(profile))
+        components = {key: component_values(profile[start:end])
+                      for key, (start, end) in component_blocks(profile).items()}
+        answers = run_interview(root, LIBRARY_ROOT, components, checked_saas(profile), is_new)
+        profile = apply_answers(profile, answers)
     return profile
 
 

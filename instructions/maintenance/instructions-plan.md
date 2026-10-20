@@ -513,3 +513,53 @@ Initialization and modification share the existing Markdown profile.
 The interview, JSON updates, preview, explicit apply, and read-only check are available.
 Preservation and rejection cases pass, including legacy-encoded facts and aliased project-file paths.
 Shared workflow wording remains unchanged apart from relocated paths and trailing whitespace.
+
+## Follow-up: explain the profile interview
+
+PR #3 merged at 4312353. Base this correction on synchronized main in fix/profile-interview-guidance.
+The owner found component identifiers, target codes, and source-path prompts opaque.
+The owner also asked how SaaS differs from backend and frontend.
+
+Files: scripts/configure_instructions.py, scripts/tests/test_configure_instructions.py,
+instructions/REPO.md, instructions/maintenance/instructions-plan.md,
+instructions/maintenance/instructions.status.md, instructions/maintenance/profile-selector-validation.md,
+instructions/project/PROJECT.md, instructions/project/CHANGELOG.md,
+instructions/project/CONVERSATION.md, and agentknowledge/history.jsonl.
+
+No pattern required - simple functions suffice. Keep terminal presentation separate from profile parsing and writes.
+Retain the JSON and Markdown contracts. Add human-readable interview context and numeric target selection.
+SaaS remains a product-level composition choice. Preserve older explicit saas target values for compatibility.
+Do not add SaaS to the component-choice menu or change enabled components automatically.
+
+1. Write failing CLI tests for repository context, component descriptions, field help, numeric targets, and retained defaults.
+2. Explain SaaS and show the selected repository/profile before asking project questions.
+3. Explain each component using its configured targets and covered paths, including custom identifiers.
+4. Explain every editable field and provide examples at its prompt.
+5. Show numbered target descriptions without offering SaaS as a peer component type.
+6. Preserve existing Markdown field lines when the user accepts equivalent defaults.
+7. Run the full selector suite and read-only repo checks, document the interaction, commit, push, and open a follow-up PR.
+
+### Revised interview design after the product-category clarification
+
+The owner's six product categories replace the proposed low-level target menu above.
+Add scripts/profile_interview.py for product selection and terminal explanations.
+Keep Markdown/JSON parsing and filesystem writes in configure_instructions.py.
+The UI receives parsed components and returns the existing answer-document shape.
+No new profile schema or application architecture policy is required.
+
+Offer: SaaS webapp, SaaS with native clients, backend-only microservice, standalone native app,
+static website, and CLI tools. Allow compatible combinations for a monolithic repository.
+Select backend, frontend, static-assets, apps, websites, tools, and SDK guidance behind those choices.
+SaaS composition remains a product flag, not a separate component question.
+Explain custom component names as local profile labels. Ask only for the selected parts' actual project facts.
+Preserve custom content, existing defaults, and the JSON/manual routes.
+The earlier prompt-text tests will be updated to match this revised interaction, then observed failing before implementation.
+
+### Product-category outcome
+
+Implemented the revised six-category interview in scripts/profile_interview.py.
+Added agentknowledge/concepts.yaml for the new shared interview module and its core editor relationship.
+The editor receives the existing answer-document shape. No Markdown or JSON schema migration is required.
+All 44 tests pass, including category composition, default preservation, and standalone transition from native SaaS.
+The actual library interview reports No changes after every current value is retained.
+The setup guide and validation report describe category choices, automatic target selection, advanced configuration, and write boundaries.

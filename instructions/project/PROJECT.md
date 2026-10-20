@@ -18,9 +18,9 @@ Created: 2026
 | Repository | instructions |
 | Product | Generic coding-agent instructions and repository analysis tools |
 | Source | instructions/, the four root agent entries, scripts/, .github/, and agentknowledge/ |
-| Current review branch | docs/instructions-directory |
-| Active review | PR #3 in priyavijaikalyan2007/instructions |
-| Merged review | PR #1 and PR #2 in priyavijaikalyan2007/instructions |
+| Interview correction branch | fix/profile-interview-guidance |
+| Interview correction review | PR #4 in priyavijaikalyan2007/instructions |
+| Earlier merged reviews | PR #1, PR #2, and PR #3 in priyavijaikalyan2007/instructions |
 | Application runtime | none |
 | Generic build.sh or test.sh | absent |
 

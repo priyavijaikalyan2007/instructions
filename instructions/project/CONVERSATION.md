@@ -451,3 +451,65 @@ Opened PR #3, "docs: organize instruction files and add profile configurator", f
 The PR is open and unmerged. The owner will review and merge.
 The GitHub CLI currently has read-only permissions, so the PR was created through the existing owner browser session.
 Only main and the new review branch remain locally and remotely. The working tree is clean after publication records.
+
+## 20 October 2026: script questions and product-category interview correction
+
+### User requests and questions
+
+> ok. does the interview script have a "dry run" mode so I can test it out without any changes?
+
+> Got it. Also, what is this "instructions/maintenance/examples/" -- Seems to contain only one java-saas example?
+
+> ok. when running the script, I see: "Is this a SaaS product? [no]: no
+> Enable instruction-library? [yes]: " -- You should explain each option. I am not sure what I should answer for the second question? What does it even mean?
+
+> Another one: "Targets: backend, frontend, saas, tools, apps, websites, static-assets, sdks, documentation
+> instruction-library / Source paths [`*.md`, `instructions/`, `.github/`, `agentknowledge/`]: " -- Very opaque.
+
+> what's the difference between "backend, frontend, saas" -- is there a SaaS without a backend or frontend?
+
+> I would expect the options to be more like this: "1. SaaS (only webapp; includes backend, frontend and static assets), 2. SaaS with Native Clients (webapp including backend, frontend and static assets + native apps on selected targets OS-es), 3. Microservice (SaaS with no frontend or static assets; only backend which includes APIs, databases and OpenSpec/Swagger endpoint), 4. Native App, 5. Static Website, 6. CLI tools". That's roughly the set of possible categoris I think.
+
+### Outcome
+
+Explained that --dry-run previews the current or JSON-supplied profile without running the interview or writing files.
+The full interview remains safe to try by declining the final apply prompt.
+Explained that maintenance/examples/java-saas contains one fictional reading-test profile, not application source or active configuration.
+No extra example files were added during that explanation.
+
+PR #3 merged at 4312353. Synchronized main and created fix/profile-interview-guidance for this correction.
+Replaced raw component enable questions and target codes with the six requested product categories.
+The selector derives underlying guide scopes, shows the target repository, and explains each selected part and requested fact.
+Compatible categories combine in one monolithic repository. Overlapping SaaS categories prompt for a corrected selection.
+Existing profiles can retain their enabled scopes and SaaS relationships by accepting the current product selection.
+Explained instruction-library as this repository's documentation scope and repository-tools as its local CLI scope.
+Source prompts describe repository-relative files, folders, and patterns with examples.
+Language, operating-system, and packaging prompts explain the expected values and retained defaults.
+The native SaaS preset connects its clients to a single selected generated SDK when unambiguous.
+Switching to standalone native clears its prior SaaS SDK link.
+The Markdown and JSON contracts, dry-run behavior, validation, and write boundaries remain compatible.
+Manual or JSON edits support advanced custom components and specialized SDK relationships.
+Accepted equivalent defaults now retain the original field formatting rather than rewriting inline-code path values.
+Separated interview presentation into scripts/profile_interview.py and registered its knowledge concepts.
+All 44 tests pass after the new and revised interaction tests were observed failing before implementation.
+The actual repository interview was exercised by retaining every default. It reports No changes.
+Repo checks, Bash syntax, Python 3.10 grammar, line lengths, indentation, function sizes, and diff whitespace checks pass.
+Updated setup instructions and validation records. Publish a focused follow-up PR for owner review without merging.
+
+Published implementation ffefb5a on fix/profile-interview-guidance.
+Opened PR #4, "fix: guide profile interviews with explained product categories", against main.
+The PR is open and unmerged for owner review. Main remains at the synchronized PR #3 merge.
+
+## 20 October 2026: approve the interview correction merge
+
+### User request
+
+> ok. I think we need some refactoring of the instructions. For now let's merge this PR and then we will continue.
+
+### Scope and verification
+
+The owner authorized merging PR #4 and continuing instruction refactoring in a later request.
+PR #4 is mergeable without conflicts. No GitHub check runs or review blockers are reported.
+Its implementation passed all 44 local tests before publication. This merge request changes no application or script behavior.
+Record the approval in the PR, merge it, synchronize local main, and remove fully merged review branches.
+Do not start further instruction refactoring during this request.
