@@ -293,6 +293,14 @@ The application creates the logger with its configured subsystem and category.
 Attach task, scene, or document identifiers when they help diagnose concurrency and lifecycle behavior.
 Do not assume that a thread identifier identifies an async operation.
 
+## Performance
+
+See [APPS.md](./APPS.md#apple-performance-guidance).
+
+## Secret handling
+
+See [APPS.md](./APPS.md#apple-credential-storage).
+
 ## Design patterns
 
 ### 1) Abstract Factory

@@ -11,6 +11,11 @@ Created: 2026
 
 # Changelog
 
+## 20 October 2026
+
+- Restored language and target callouts in shared guides, with links to current canonical instruction sections.
+- Added a fresh-context audit of native Apple instruction selection, coverage, and remaining scope conflicts.
+
 ## 18 October 2026
 
 - Added shared repository, persistence, UI/UX, and selectable component-profile guides from existing lessons and the supplied UI experience source.

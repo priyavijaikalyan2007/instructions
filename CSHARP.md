@@ -1429,6 +1429,26 @@ public class PaymentService
 
 ---
 
+## Performance
+
+See [BACKEND.md](./BACKEND.md#aspnet-core-performance-guidance).
+
+### 3.1 Async/Await
+
+See [BACKEND.md](./BACKEND.md#aspnet-core-performance-guidance).
+
+### 3.2 JSON Serialization
+
+See [BACKEND.md](./BACKEND.md#aspnet-core-performance-guidance).
+
+### 3.3 Memory & Garbage Collection (GC)
+
+See [BACKEND.md](./BACKEND.md#aspnet-core-performance-guidance).
+
+### 3.4 Caching (Server-Side)
+
+See [BACKEND.md](./BACKEND.md#aspnet-core-performance-guidance).
+
 ## Performance examples
 
 ### 5.1 Payloads

@@ -269,3 +269,32 @@ The PR remains open and unmerged. Main remains unchanged.
 The full committed-diff check identified trailing spaces carried over from the UI source.
 Removed those spaces and preserved the field-label example as separate blockquote paragraphs.
 Rechecked the full branch diff, instruction provenance, and all 551 code blocks.
+
+## 20 October 2026: retain document callouts and audit native routing
+
+### User requests
+
+> ok. let me review the PR.
+
+> actually, now that I think about it, the callout to the different other docs e.g. such as in CODING_STYLE.md for language specific callouts makes sense. Retain them, don't remove.
+
+> Also let's do a consistency pass next: When you load up the instructions from AGENTS.md for native Apple apps -- what are the things that come into scope including the files to reference. Use a sub-agent with fresh context to validate this so we can see whether the agent is getting everything. Validate that.
+
+### Callout correction
+
+Restored all 92 removed redirect-only sections across 11 retained guides, plus the PERFORMANCE.md topic callouts.
+The callouts link to current canonical sections. Consolidated instructions remain in their subject guides.
+The retired catch-all and old UI/UX documents remain retired.
+Outbox and projection references now point directly to PERSISTENCE.md.
+All 551 code blocks and instruction provenance checks pass.
+A fresh-context sub-agent is auditing the native Apple reading path independently.
+
+### Native Apple audit outcome
+
+The fresh-context sub-agent reached APPS.md and SWIFT.md, including native UI, tests, performance, credentials, and release boundaries.
+Recorded startup, shared, conditional, and task-specific reading in specs/native-apple-instruction-audit.md.
+Found residual web-platform mandates in deletion, authorization, logging, URLs, testing, and documentation.
+Found an absent GOF_REFACTOR.md reference and ambiguous backend model selection.
+Recorded existing test-first and permission-policy conflicts separately.
+The audit proposes scoped corrections without changing those engineering policies.
+Commit and push the callout restoration and audit to existing PR #2. Main remains unchanged.

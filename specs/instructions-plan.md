@@ -11,7 +11,7 @@ Created: 2026
 
 # Instruction migration plan
 
-Status: approved subject consolidation implemented and locally verified on PR #2 as of 18 October 2026.
+Status: consolidation and restored document callouts are verified for PR #2 as of 20 October 2026.
 The language guide phase merged through PR #1 at `0a5a868`.
 The earlier in-place updates merged into main on 16 October 2026.
 The original reorganization proposal was superseded on 15 October 2026.
@@ -353,3 +353,10 @@ The following defaults are recommendations, not implemented policy changes:
 
 The owner can approve the defaults together or change individual rows.
 Implementation waits for this review because the request explicitly asks to review the plan first.
+
+## Review update: retain callouts and validate Apple routing
+
+The owner reversed the callout removal on 20 October 2026.
+Restore language and target callouts while keeping consolidated instructions in their canonical homes.
+The [fresh-context native audit](./native-apple-instruction-audit.md) records the requested consistency validation.
+Its policy corrections remain proposals. The earlier callout-removal plan is superseded.

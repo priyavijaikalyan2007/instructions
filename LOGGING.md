@@ -452,6 +452,34 @@ Use the correlation-safe helper for sensitive identifiers instead of logging the
 
 ---
 
+### Go (slog + context)
+
+See [Go](./GO.md#logging-examples).
+
+### Java (SLF4J + Logback + MDC)
+
+See [Java](./JAVA.md#logging-examples).
+
+### C# (.NET + Serilog + AsyncLocal)
+
+See [C#](./CSHARP.md#logging-examples).
+
+### Python (logging + contextvars)
+
+See [Python](./PYTHON.md#logging-examples).
+
+### TypeScript / Node.js (Winston + AsyncLocalStorage)
+
+See [TypeScript](./TYPESCRIPT.md#logging-examples).
+
+### Swift (OSLog + explicit operation context)
+
+See [Swift](./SWIFT.md#logging-examples).
+
+### Rust (tracing + operation spans)
+
+See [Rust](./RUST.md#logging-examples).
+
 ## 13. Enforcement Checklist for Agents
 
 Before delivering code, the agent **must verify**:

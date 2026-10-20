@@ -114,6 +114,12 @@ Comment when:
 
 ## 3. How to Comment
 
+### 3.1 What, Why — Not How
+
+See [C#](./CSHARP.md#31-what-why--not-how).
+
+See [TypeScript](./TYPESCRIPT.md#31-what-why--not-how).
+
 ### 3.2 Standard Annotations
 
 Use consistent annotations to mark code states and intentions:
@@ -155,6 +161,48 @@ See [C#](./CSHARP.md#34-section-headers).
 See [TypeScript](./TYPESCRIPT.md#34-section-headers).
 
 ---
+
+## 4. Language-Specific Conventions
+
+### 4.1 C# / .NET
+
+See [C#](./CSHARP.md#comments).
+
+### 4.2 TypeScript / JavaScript
+
+See [TypeScript](./TYPESCRIPT.md#comments).
+
+### 4.3 Python
+
+See [Python](./PYTHON.md#comments).
+
+### 4.4 SQL
+
+See [SQL](./SQL.md#comments).
+
+### 4.5 SCSS
+
+See [SCSS](./SCSS.md#comments).
+
+### 4.6 HTML
+
+See [HTML](./HTML.md#comments).
+
+### 4.7 Swift
+
+See [Swift](./SWIFT.md#comments).
+
+### 4.8 Go
+
+See [Go](./GO.md#comments).
+
+### 4.9 Rust
+
+See [Rust](./RUST.md#comments).
+
+### 4.10 Java
+
+See [Java](./JAVA.md#comments).
 
 ## 5. Maintaining Comments
 

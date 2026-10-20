@@ -58,6 +58,10 @@ Use ordinary comments for navigation markers rather than publishing them as API 
 Use `//` or `/* ... */` comments with the standard fields in [MARKERS.md](./MARKERS.md).
 Place file headers before implementation code. Preserve directives and documentation attachment.
 
+## Testing
+
+See [FRONTEND.md](./FRONTEND.md#browser-testing).
+
 ## Test examples
 
 ### Test Parallelization

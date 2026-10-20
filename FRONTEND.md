@@ -216,7 +216,19 @@ function processUserOrder(userId, orderDetails) {
   - Encryption keys
 - Sanitize and mask sensitive data before logging
 
+## 1.12. Application Structure
+
+See [SAAS.md](./SAAS.md#super-app-shell).
+
+## 2. Technology Stack
+
+See [STATIC_ASSETS.md](./STATIC_ASSETS.md#static-build-and-hosting-example).
+
 # 3. UI Framework and Styling
+
+## 2.1. Core Resources
+
+See [STATIC_ASSETS.md](./STATIC_ASSETS.md#theme-resources).
 
 ## 2.2. Styling Principles
 
@@ -352,6 +364,10 @@ function processUserOrder(userId, orderDetails) {
 - Cross-browser compatibility
 - Consistent coding standards
 
+## 4.4. Performance Considerations
+
+See [STATIC_ASSETS.md](./STATIC_ASSETS.md#browser-bundling-guidance).
+
 ## 4.5. Security Guidelines
 
 - Sanitize user inputs
@@ -394,6 +410,12 @@ function processUserOrder(userId, orderDetails) {
      * Immediate background sync for critical updates
      * Periodic sync for non-critical changes
    - Provide placeholder functions for future API implementations
+
+## 5.2. Initial Development Setup
+
+### 5.2.1. Backend API Hosting
+
+See [BACKEND.md](./BACKEND.md#api-organization).
 
 ## 5.3. Frontend Function Pattern
 
@@ -497,6 +519,22 @@ async function apiFunction(parameters) {
 - Implement strict type checking
 - Use JSON.parse() with reviver functions
 - Validate data schemas before processing
+
+# 8. Sub-Application Structure
+
+See [SAAS.md](./SAAS.md#sub-application-structure).
+
+## 8.1. Super-App Model
+
+See [SAAS.md](./SAAS.md#sub-application-structure).
+
+## 8.2. UI Layout
+
+See [SAAS.md](./SAAS.md#sub-application-structure).
+
+## 8.3. UI Behaviors
+
+See [SAAS.md](./SAAS.md#sub-application-structure).
 
 # 9. Access Control UI Patterns
 
@@ -821,6 +859,10 @@ The following framework examples apply to browser frontend tests. Retain the pro
 - Test critical user flows end-to-end
 
 ## browser performance guidance
+
+### 2.1 Loading & Bundle Size
+
+See [STATIC_ASSETS.md](./STATIC_ASSETS.md#asset-loading-and-production-output).
 
 ### 2.2 Rendering & DOM
 *   **Minimize Reflows**: Avoid "layout thrashing." Read layout properties (e.g., `offsetHeight`) first, then write style changes. Do not interleave them.

@@ -11,7 +11,7 @@ Created: 2026
 
 # Instruction repository status
 
-Updated: 18 October 2026.
+Updated: 20 October 2026.
 
 ## Current phase: subject consolidation
 
@@ -23,7 +23,8 @@ REPO.md holds common commands and session workflow. PERSISTENCE.md holds storage
 UI_UX.md combines general interaction guidance. UI_UX_COMPONENTS.md keeps detailed profiles separately selectable.
 KEYBOARD.md remains the browser shortcut registry, scoped by focus and platform.
 The old catch-all and two old UI/UX guides are retired. Their lessons and links have canonical homes.
-PERFORMANCE.md shrinks from 198 to 44 lines. The consolidation removes 92 redirect-only sections across affected guides.
+The owner reversed the callout cleanup on 20 October. Language and target callouts are restored, including PERFORMANCE.md topic sections.
+Consolidated instructions remain in their canonical guides.
 
 The [approved plan](./instructions-plan.md#approved-follow-up-consolidate-subject-guides) defines the scope.
 The [review](./instructions-review.md#approved-consolidation-on-18-october-2026) records scope and overlap resolutions.
@@ -55,3 +56,10 @@ Application source repositories remain unchanged by the instruction extraction p
 
 The owner approved the proposed cleanup and requested removal of empty performance sections.
 That approved follow-up is implemented above. The earlier project-specific EF snapshot mandate remains removed.
+
+## Native Apple validation
+
+A fresh-context sub-agent audited the path from AGENTS.md after callout restoration.
+The [audit](./native-apple-instruction-audit.md) lists startup, shared, native, and conditional reading for three task types.
+The native route works, but shared web-platform mandates, a missing planning reference, and workflow conflicts remain.
+Proposed corrections are recorded for review. This pass changes no engineering policy.
