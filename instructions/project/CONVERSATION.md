@@ -499,3 +499,17 @@ Updated setup instructions and validation records. Publish a focused follow-up P
 Published implementation ffefb5a on fix/profile-interview-guidance.
 Opened PR #4, "fix: guide profile interviews with explained product categories", against main.
 The PR is open and unmerged for owner review. Main remains at the synchronized PR #3 merge.
+
+## 20 October 2026: approve the interview correction merge
+
+### User request
+
+> ok. I think we need some refactoring of the instructions. For now let's merge this PR and then we will continue.
+
+### Scope and verification
+
+The owner authorized merging PR #4 and continuing instruction refactoring in a later request.
+PR #4 is mergeable without conflicts. No GitHub check runs or review blockers are reported.
+Its implementation passed all 44 local tests before publication. This merge request changes no application or script behavior.
+Record the approval in the PR, merge it, synchronize local main, and remove fully merged review branches.
+Do not start further instruction refactoring during this request.

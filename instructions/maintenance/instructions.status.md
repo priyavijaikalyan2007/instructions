@@ -13,7 +13,7 @@ Created: 2026
 
 Updated: 20 October 2026.
 
-## Current phase: product-category interview guidance
+## Current phase: interview correction complete, merge approved
 
 PR #3 merged at 4312353. Local main is synchronized with that merge.
 The active correction branch is fix/profile-interview-guidance.
@@ -23,7 +23,7 @@ It selects underlying guides automatically, shows the target repository, and exp
 Existing profile names remain local identifiers. Defaults retain their formatting and current choices when accepted.
 All 44 selector tests pass, including each category, combined categories, clear prompts, and SaaS-to-standalone switching.
 [PR #4](https://github.com/priyavijaikalyan2007/instructions/pull/4) is open for owner review.
-The implementation is ffefb5a on fix/profile-interview-guidance. The PR remains unmerged.
+The implementation is ffefb5a on fix/profile-interview-guidance. The owner authorized its merge on 20 October 2026.
 
 ## Completed phase: directory cleanup, reading trees, and profile selector
 
