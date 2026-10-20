@@ -411,3 +411,16 @@ Root AGENTS.md now routes to the full shared workflow in instructions/AGENTS.md.
 GitHub landing and policy documents remain discoverable under .github/. LICENSE and NOTICE remain legal metadata.
 Updated active paths and links while preserving every original code block, source encoding, moved GUID, and historical conversation input.
 Reserved specs/ for actual product and repository specifications.
+
+## 20 October 2026: reading trees and selector request
+
+### User request
+
+> once you are done, it would be nice to sort have a tree view of the relevant files. Something like how the "tree" commnad would produce. For each set of things: "native standalone app", "native app for saas", "saas with frontend", "static website", "cli tool". This should be recorded in README.md for this repo - so that as the author, I can walk through each set of files and validate myself whether the instructions make sense or need updates. After that let's work on the profile selector/modifier script.
+
+### Outcome
+
+Added a shared baseline and five scenario trees to instructions/README.md, linked from the GitHub landing README.
+Trees distinguish direct and conditional reading, actual language choices, generated SDK boundaries, and optional native SaaS clients.
+The author can compare each tree against the active profile and manually inspect its relevant guides.
+The next step is a preview-first initializer/modifier for the same Markdown profile, without changing generic engineering policies.

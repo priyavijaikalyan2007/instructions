@@ -98,6 +98,179 @@ These instructions are battle tested in my private side projects. I have found t
 Shared workflow belongs in instructions/REPO.md, storage in instructions/PERSISTENCE.md, and interaction behavior in instructions/UI_UX.md.
 
 
+## Scenario reading trees
+
+Use the common baseline with the tree for the work in scope.
+Paths are relative to the consuming repository root. Bracketed conditions select a file only when that condition applies.
+These trees show reading scope, not a required application directory layout.
+Read relevant sections and examples, rather than every section in each linked guide.
+An agent starts with its own entry file and AGENTS.md. It does not need every agent-specific entry file.
+
+### Common baseline
+
+```text
+.
+├── AGENTS.md
+├── CLAUDE.md / CODEX.md / GEMINI.md       [the active agent's entry]
+└── instructions/
+    ├── project/
+    │   ├── PROJECT_PROFILE.md            Enabled components and source paths
+    │   ├── PROJECT.md                    Project facts
+    │   ├── ADDITIONAL.md                 Local instructions and emerging lessons
+    │   └── CONVERSATION.md               Prior context and session records
+    ├── AGENTS.md                         Shared workflow and guide selection
+    ├── REPO.md                           Setup, commands, and scope selection
+    ├── LANGUAGE.md
+    ├── CODING_STYLE.md
+    ├── COMMENTING.md
+    ├── MARKERS.md
+    ├── TESTING.md
+    ├── LOGGING.md
+    ├── SECURITY_GUIDELINES.md
+    ├── PERFORMANCE.md                    Relevant workload sections
+    ├── LITERATE_ERRORS.md
+    ├── COPYRIGHT_HEADER.md
+    ├── CODE_COMPLETE.md
+    ├── CODE_COMPLETE.checklist.md
+    ├── PRAGMATIC_PROGRAMMER.md
+    ├── PRAGMATIC_PROGRAMMER.checklist.md
+    ├── GOF_PATTERNS.md                    [applicable design work]
+    ├── MIGRATIONS.md                      [refactoring or migration]
+    └── DOCUMENTATION.md                   [documentation or public contracts]
+```
+
+Read existing project knowledge records and relevant product specifications when the task needs them.
+Actual product specifications remain in specs/. Instruction-maintenance records remain in instructions/maintenance/.
+For documentation-only work, use the documented narrower reading path in AGENTS.md.
+
+### Native standalone app
+
+```text
+instructions/
+├── APPS.md
+├── SWIFT.md                              [Swift Apple targets]
+├── UI_UX.md                              [user-facing behavior]
+├── UI_UX_COMPONENTS.md                   [only matching control profiles]
+├── PERSISTENCE.md                        [stored files, data, or state]
+├── SQL.md                                [actual SQL changes]
+├── SECRET_HANDLING.md                    [credentials or tokens]
+└── SHELL.md                              [changed shell scripts]
+```
+
+Use native controls, state restoration, accessibility, and test tools.
+A standalone app does not select SaaS, backend, generated SDK, browser, or server authentication guidance by default.
+Select the actual source language for other platforms. Missing platform-specific coverage remains an explicit gap.
+
+### Native app for SaaS
+
+```text
+instructions/
+├── APPS.md
+├── SWIFT.md                              [Swift Apple targets]
+├── SAAS.md                               Surface composition and client boundary
+├── SDKs.md                               Generated SDK integration
+├── API_GUIDELINES.md                     API contract used by the client
+├── UI_UX.md
+├── UI_UX_COMPONENTS.md                   [only matching control profiles]
+├── SECRET_HANDLING.md                    Sessions and native credential storage
+├── PERSISTENCE.md                        [local saved data or synchronization]
+├── ACCESS_CONTROL.md                    [application authorization changes]
+├── RESTABLE_RESOURCES.md                 [resource URLs or deep links]
+└── SHELL.md                              [changed shell scripts]
+```
+
+The generated SDK is the normal client boundary. Native dialogs use the platform equivalent of literate error content.
+A native-only task does not select server implementation merely because the server shares this repository.
+A shared contract change adds affected backend and browser components from their trees.
+Knobby authorization and browser-shell examples apply only when selected in the profile.
+
+### SaaS with frontend
+
+```text
+instructions/
+├── SAAS.md
+├── BACKEND.md
+├── JAVA.md                               [Java backend]
+├── CSHARP.md                             [C# backend]
+├── API_GUIDELINES.md
+├── FRONTEND.md
+├── TYPESCRIPT.md                         [TypeScript source]
+├── JAVASCRIPT.md                         Shared browser language rules
+├── HTML.md
+├── CSS.md
+├── SCSS.md                               [SCSS source]
+├── STATIC_ASSETS.md                      Bundles and delivery
+├── UI_UX.md
+├── UI_UX_COMPONENTS.md                   [only matching control profiles]
+├── KEYBOARD.md                           [browser keyboard behavior]
+├── FRONTEND_LOGGING.md                   [configured browser logging]
+├── SDKs.md                               [generated client integration]
+├── PERSISTENCE.md                        [stored data and transactions]
+├── SQL.md                                [SQL source or schema]
+├── SECRET_HANDLING.md                    [server secrets or client tokens]
+├── ACCESS_CONTROL.md                    [application authorization changes]
+├── DELETION.md                           [resource deletion or retention]
+├── RESTABLE_RESOURCES.md                 [resource URLs]
+├── BACKEND_LIBRARY_SELECTION.md          [backend dependency selection]
+├── FRONTEND_LIBRARY_SELECTION.md         [browser dependency selection]
+├── FRONTEND_SELECTION.md                 [configured vanilla/Bootstrap stack]
+└── ERROR_DIALOG_COMPONENT.md             [browser commands without an error surface]
+```
+
+Select the backend's actual language. Java does not select .NET implementation rules or DOTNETFX_SELECTION.md.
+Use actual manifests, Dockerfile, and build scripts for container packaging facts. A container does not select a hosting provider.
+Add the native SaaS tree only when an enabled native component is affected.
+Add the static website tree only when the task changes that separate surface.
+
+### Static website
+
+```text
+instructions/
+├── WEBSITES.md
+├── STATIC_ASSETS.md
+├── FRONTEND.md                           Applicable browser standards and accessibility
+├── HTML.md
+├── CSS.md
+├── SCSS.md                               [SCSS source]
+├── JAVASCRIPT.md                         [browser scripts]
+├── TYPESCRIPT.md                         [TypeScript source]
+├── UI_UX.md                              [navigation and user-facing behavior]
+├── UI_UX_COMPONENTS.md                   [interactive controls]
+├── KEYBOARD.md                           [browser keyboard interactions]
+└── FRONTEND_LOGGING.md                   [configured browser component logging]
+```
+
+A static website does not select backend, database, SaaS, or native-app implementation by default.
+Read API guidance only when the website actually integrates an API.
+Use the configured static delivery pipeline rather than assuming the example theme-library hosting model.
+
+### CLI tool
+
+```text
+instructions/
+├── TOOLS.md
+├── PYTHON.md                             [Python source]
+├── GO.md                                 [Go source]
+├── RUST.md                               [Rust source]
+├── SHELL.md                              [shell entry points or scripts]
+├── PERSISTENCE.md                        [stored files, state, or data]
+├── SQL.md                                [actual SQL source]
+├── SECRET_HANDLING.md                    [credentials or secret providers]
+├── SDKs.md                               [generated service-client integration]
+└── API_GUIDELINES.md                     [service contracts changed or consumed]
+```
+
+Select the actual tool language. Other languages remain possible when the tool uses them.
+Browser and native UI guides do not enter scope for ordinary CLI processing.
+Use TOOLS.md for stdout, stderr, exit status, cancellation, and local data protection.
+
+### Author review
+
+Check the active profile choices before tracing a tree.
+For each changed behavior, follow the applicable leaves and their linked sections.
+Check that conditional examples match the project's actual language, platform, and configured architecture.
+Record project-local lessons in instructions/project/ADDITIONAL.md and propose reusable refinements for the owning shared guide.
+
 ## Agent Knowledge Base
 
 The `agentknowledge/` directory contains a machine-readable knowledge graph that agents use to orient themselves. See [KNOWLEDGE_ARCHITECTURE.md](KNOWLEDGE_ARCHITECTURE.md) for the full specification.

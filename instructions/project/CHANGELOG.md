@@ -13,6 +13,8 @@ Created: 2026
 
 ## 20 October 2026
 
+- Added README reading trees for standalone native apps, native SaaS clients, web SaaS, static websites, and CLI tools.
+
 - Changed instruction layout to instructions/, with project-owned context and maintenance records in separate subdirectories.
 - Removed three fully merged local and remote branches after confirming PRs #1 and #2 were merged.
 
