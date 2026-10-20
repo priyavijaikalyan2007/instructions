@@ -7,6 +7,8 @@ File GUID: 56e48bb8-298b-4f63-9543-dba7be79c7a4
 Created: 2026
 -->
 
+<!-- AGENT: Shared construction guidance and integrated implementation lessons. -->
+
 # Code Complete Instructions for Agents
 
 This document outlines the core software construction principles and practices from *Code Complete* by Steve McConnell. All coding agents MUST adhere to these guidelines to ensure the production of high-quality, professional-grade software.
@@ -122,3 +124,35 @@ This document outlines the core software construction principles and practices f
 - [ ] Is the code self-documenting?
 - [ ] Are all new routines covered by unit tests?
 - [ ] Did I follow the "one thing per routine" principle?
+
+## Direct type compatibility
+
+This lesson concerns internal modules that share the same domain types.
+API serialization boundaries retain their explicit contracts and mappings from [API_GUIDELINES.md](./API_GUIDELINES.md).
+
+- **"Align the source, don't bridge the gap."**
+- **Eliminate Converters:** If Module A produces data that Module B cannot consume directly:
+  - **Do NOT** write a converter/mapper function between them if you own both modules.
+  - **Action:** Refactor Module A or Module B so that their data types are identical.
+- **Performance:** Unnecessary conversion layers waste CPU cycles and introduce points of failure.
+
+## Architectural consistency
+
+- **"Do not invent new patterns."**
+- **Pattern Mimicry:** Before writing a new Controller, Service, or Component, examine three existing ones.
+  - If existing Controllers use a Service layer, **do not** write a Controller that queries EF Core directly.
+  - If existing Frontend components use `React Query`, **do not** write a component that uses `fetch` in `useEffect`.
+  - If the backend uses the Repository pattern, **do not** introduce the Unit of Work pattern or direct `DbContext` usage in a single isolated area.
+
+## Dependency discipline
+
+- **"Use what is already there."**
+- **Duplicate Check:** Before adding a package, check the project manifests and lockfiles for an existing dependency that meets the need.
+  Include `Package.swift`, `go.mod`, `Cargo.toml`, Maven/Gradle files, `package.json`, and `.csproj` files where applicable. Adding a dependency requires justification.
+  - If `Day.js` is installed, **do not** install `Moment.js`.
+  - If `Newtonsoft.Json` is used, **do not** introduce `System.Text.Json` unless part of a documented migration.
+- **Triviality Check:** Do not add libraries for trivial one-line functions (e.g., `is-odd`, `left-pad`). Write the helper function yourself.
+
+## Hierarchical data
+
+- **Recursive awareness:** If a data model is hierarchical (trees, checklists, folders), update logic **must** be recursive or use flattened ID lookups. Simple index-based access (`list[i]`) is forbidden for nested data.

@@ -7,13 +7,77 @@ File GUID: 9363fbba-e59d-4a14-aa8c-3f9cf8c33d52
 Created: 2026
 -->
 
-<!-- AGENT: Active language extraction plan, completed in-place updates, and superseded broader reorganization. -->
+<!-- AGENT: Active target extraction plan, completed language and in-place phases, and superseded broader reorganization. -->
 
 # Instruction migration plan
 
-Status: language guide extraction complete on docs/language-guides as of 17 October 2026.
+Status: consolidation and restored document callouts are verified for PR #2 as of 20 October 2026.
+The language guide phase merged through PR #1 at `0a5a868`.
 The earlier in-place updates merged into main on 16 October 2026.
 The original reorganization proposal was superseded on 15 October 2026.
+
+## Current plan: target guide extraction
+
+The owner authorized target segregation on 18 October 2026 and explicitly prohibited new engineering instructions.
+Move existing target-specific material and add routing descriptions and references only.
+Select targets by changed work and combine targets within one repository when needed.
+Keep language selection independent from target selection.
+
+1. Expand `BACKEND.md` and `FRONTEND.md` using existing material and topic references.
+2. Create `SAAS.md`, `APPS.md`, `TOOLS.md`, `WEBSITES.md`, and `STATIC_ASSETS.md` as target-specific homes.
+3. Replace the `SDKs.md` placeholder with an index to existing API/OpenAPI and language guidance.
+4. Extract target material from `AGENTS.md`, `FRONTEND.md`, `PERFORMANCE.md`, `DOCUMENTATION.md`, and `ADDITIONAL_INSTRUCTIONS.md`.
+5. Extract existing native-app, browser-testing, and backend-performance material from `SWIFT.md`, `JAVASCRIPT.md`, and `CSHARP.md`.
+6. Move the existing CLI logging rule from `LOGGING.md` and native UI scope from `UI_UX_CONSISTENCY.md`.
+7. Add target selection to `AGENTS.md` and describe target/language composition in `README.md`.
+8. Preserve instruction text, examples, shared policies, source encodings, headers, and existing topic anchors.
+9. Verify provenance for moved material, code preservation, links, anchors, and target/language routing.
+10. Update the existing plan, review, inventory, status, changelog, conversation, and history.
+11. Commit and push `docs/target-guides`, then open a PR against `main` for review.
+
+The SDK file contains no existing generator procedures. Native platform instructions cover Apple platforms.
+This extraction does not add SDK generation, Kubernetes, Android, ChromeOS, Workers, or DNS configuration procedures.
+No pattern required - this is documentation segregation with no runtime code or interface changes.
+
+Implementation and local checks are complete on `docs/target-guides`.
+The extraction records 89 moved blocks, including three secondary target splits.
+All 171 code blocks across the edited documents remain intact after the existing normalization rules.
+One missing frontend fence is repaired without changing its JavaScript.
+The branch is pushed. [PR #2](https://github.com/priyavijaikalyan2007/instructions/pull/2) is open for owner review.
+The PR remains unmerged.
+
+
+## Approved follow-up: consolidate subject guides
+
+The owner approved this follow-up and requested removal of empty PERFORMANCE.md sections.
+Implement on `docs/target-guides` and update PR #2. Do not merge.
+Existing repository text and the supplied UI experience source are the instruction sources.
+New text defines scope, navigation, and the resolution of overlaps. It does not add unrelated policy.
+
+1. Create REPO.md, PERSISTENCE.md, UI_UX.md, and UI_UX_COMPONENTS.md.
+2. Fold ADDITIONAL_INSTRUCTIONS.md into REPO.md, CODE_COMPLETE.md, PRAGMATIC_PROGRAMMER.md, CODING_STYLE.md, TESTING.md, LITERATE_ERRORS.md, CSHARP.md, JAVASCRIPT.md, and UI_UX.md.
+3. Move shared commands and endpoints from BACKEND.md into REPO.md. Move storage rules and examples into PERSISTENCE.md.
+4. Combine UX_UI_GUIDELINES.md and UI_UX_CONSISTENCY.md with applicable supplied UI behavior. Retire the old files and ADDITIONAL_INSTRUCTIONS.md.
+5. Scope enterprise shell rules in SAAS.md and browser implementation rules in FRONTEND.md. Retain KEYBOARD.md as a focused reference.
+6. Import the supplied UI common behavior into UI_UX.md and selectable component details into UI_UX_COMPONENTS.md.
+7. Trim PERFORMANCE.md to shared principles and a compact topic index. Remove empty target-extraction sections and update their incoming links.
+8. Update AGENTS.md, README.md, BACKEND.md, FRONTEND.md, APPS.md, TOOLS.md, WEBSITES.md, STATIC_ASSETS.md, SDKs.md, DOCUMENTATION.md, SWIFT.md, SQL.md, and affected references.
+9. Resolve overlapping progress, optimistic-save, keyboard, help, and platform rules through the supplied UI behavior and existing target scope.
+10. Verify instruction provenance, code-block preservation, Markdown links, guide selection, encodings, headers, and unchanged testing/style requirements.
+11. Update the existing plan, review, inventory, status, conversation, changelog, and append-only history. Commit and push to PR #2.
+
+No pattern required - this is documentation consolidation without runtime code or public interface changes.
+The validation baseline is `a760183`. The private UI source remains unchanged.
+
+Implementation is complete. REPO.md, PERSISTENCE.md, UI_UX.md, and UI_UX_COMPONENTS.md now hold their respective concerns.
+ADDITIONAL_INSTRUCTIONS.md and the two old UI/UX guides are retired. Their lessons and incoming links have canonical destinations.
+PERFORMANCE.md shrinks from 198 to 44 lines. Shared topic and target guides no longer keep empty redirect sections.
+Validation preserves 551 code blocks, including all ten examples from the supplied UI source.
+All 26 source sections and their non-heading instruction lines are accounted for, with recorded scope and overlap resolutions.
+Shared style, the AGENTS.md operating workflow, test-first guidance, and coverage thresholds remain intact.
+Published the consolidation in commit `6b14b43` to PR #2.
+The PR title and description now reflect the final structure and validation. The owner will review and merge.
+
 
 ## Current plan: language guide extraction
 
@@ -289,3 +353,98 @@ The following defaults are recommendations, not implemented policy changes:
 
 The owner can approve the defaults together or change individual rows.
 Implementation waits for this review because the request explicitly asks to review the plan first.
+
+## Review update: retain callouts and validate Apple routing
+
+The owner reversed the callout removal on 20 October 2026.
+Restore language and target callouts while keeping consolidated instructions in their canonical homes.
+The [fresh-context native audit](./native-apple-instruction-audit.md) records the requested consistency validation.
+Its policy corrections remain proposals. The earlier callout-removal plan is superseded.
+
+## Proposal: project profiles and native SaaS clients
+
+Status: manual profile, templates, and routing corrections implemented on 20 October 2026. The interview script remains deferred.
+This revision replaces the earlier proposal for service relationships across repositories.
+
+Treat every consuming repository as one monolith with selectable components.
+Possible components include frontend, static assets, backend, persistence, documentation, website, generated SDKs, and native clients.
+Native clients are optional. A SaaS can have no native client, one native platform, or several native platforms.
+No cross-repository discovery, ownership model, or coordination is in scope.
+Select component paths, platforms, languages, and capabilities within that repository.
+Task scope determines which selected components and guides the agent actually reads.
+
+Separate reusable instructions, project configuration, project facts, and local refinements:
+
+| File | Responsibility |
+| --- | --- |
+| AGENTS.md and shared guides | Generic entry point, engineering rules, scope selection, and links to the configured project files. |
+| PROJECT_PROFILE.md | Component choices, source paths, platforms, languages, capabilities, and explicit context/refinement file references. |
+| PROJECT.md | Strictly project-specific information, such as business context, architecture facts, directory structure, configured commands, and environment names. No behavioral instructions. |
+| ADDITIONAL.md | Project-specific instructions, nuances, and emerging engineering lessons that are not yet reflected in the shared guides. |
+
+Use one canonical local refinement file, ADDITIONAL.md, rather than maintaining both possible filenames.
+The profile explicitly identifies PROJECT.md and ADDITIONAL.md. AGENTS.md explicitly requires reading the configured refinement file.
+Project facts may link existing specifications and source manifests without duplicating them.
+Command values are configuration facts. Rules about how agents execute commands belong in generic guides or ADDITIONAL.md.
+Generic instruction updates must preserve the profile, facts, and local refinement files.
+
+Most native SaaS clients consume SDKs generated from the API specification and Swagger tooling.
+That generated SDK is the normal API integration boundary. Do not assume an additional handwritten client abstraction is needed.
+Keep generator configuration and output paths in project configuration or project facts.
+Select SDK guidance and affected languages when the task changes generation, contracts, or generated-client integration.
+Native app guidance still covers app-side session behavior, secure credential storage, and user-facing failures where applicable.
+Do not assume offline editing, background synchronization, tenants, or a native client at all.
+SAAS.md should describe the optional combination of browser, backend, database, SDK, and native surfaces.
+APPS.md should identify the native SaaS client choice without imposing browser implementation rules.
+
+Recommend a manually editable profile first, with an interview script later as another editor of the same profile.
+Keep configuration choices in one place. A small AGENTS.md bootstrap section references the configured files.
+Avoid independent checkbox, generated-reference, and script-configuration copies of the same choices.
+The script should preserve handwritten context and refinements, show its proposed diff, and produce no changes for repeated identical answers.
+It initializes or modifies instruction configuration without changing application code or deployment state.
+
+ADDITIONAL.md also preserves lessons found during implementation.
+For a reusable lesson, propose a generalized update to the authoritative shared guide.
+Remove private product details from that proposed generic rule while retaining the applicable constraint and reasoning.
+After the shared rule is adopted, remove or shorten a redundant local instruction while preserving any remaining project nuance.
+Local lessons do not silently modify or distribute the shared instruction source.
+
+Proposed implementation order:
+
+1. Agree on component selections and the division between profile, facts, and refinements.
+2. Prototype manual configuration and templates for a standalone Apple app, a SaaS without native clients, and a SaaS with native clients.
+3. Apply the audited scope corrections and separate project-specific facts and instructions from generic rules.
+4. Validate representative tasks using agents with fresh context, including disabled components and missing platform-guide coverage.
+5. Add the interview script against the same profile after manual selection works.
+
+Coverage gaps remain explicit. Selecting Android or ChromeOS does not imply that detailed platform guidance already exists.
+No pattern required for this proposal. Script interfaces and implementation details remain for a later approved design.
+
+## Implementation: error surfaces and selectable project scope
+
+Authorized on 20 October 2026 after the Java SaaS routing review.
+Implement the manual profile now. The interview script remains a later step, as previously proposed.
+
+1. Clarify operation dialogs versus inline form errors in ERROR_DIALOG_COMPONENT.md, UI_UX.md, UI_UX_COMPONENTS.md, LITERATE_ERRORS.md, FRONTEND.md, and SAAS.md.
+2. Add PROJECT_PROFILE_TEMPLATE.md, PROJECT_TEMPLATE.md, and ADDITIONAL_TEMPLATE.md. Add the instruction repository's own PROJECT_PROFILE.md, PROJECT.md, and ADDITIONAL.md.
+3. Add profile reading and scope selection to AGENTS.md and REPO.md. Document setup in README.md.
+4. Update SAAS.md, APPS.md, and SDKs.md for optional native SaaS clients and generated Swift SDK integration.
+5. Scope framework-specific rules in API_GUIDELINES.md, BACKEND.md, BACKEND_LIBRARY_SELECTION.md, FRONTEND_LIBRARY_SELECTION.md, FRONTEND_SELECTION.md, SECURITY_GUIDELINES.md, LOGGING.md, TESTING.md, PERSISTENCE.md, STATIC_ASSETS.md, DOCUMENTATION.md, ACCESS_CONTROL.md, DELETION.md, and RESTABLE_RESOURCES.md.
+6. Preserve language callouts, existing examples, copyright headers, and source encodings. Retain shared engineering policies outside the requested applicability corrections.
+7. Add a reviewable Java SaaS profile example and rerun the reading-path and error-surface cases. Update the prior audit with its correction status.
+8. Update CHANGELOG.md, CONVERSATION.md, specs/instructions.status.md, and append-only history. Commit and push to PR #2.
+
+Profile contract: explicit project/refinement paths, project choices, and enabled components with source paths, targets, languages, platforms, SDK links, and deployment facts.
+PROJECT.md contains facts only. ADDITIONAL.md contains local instructions and emerging lessons. Generic guides retain reusable rules.
+No runtime API changes are involved. No design pattern is required for document routing and configuration templates.
+Validation uses document integrity checks and task reading cases rather than application runtime tests.
+
+### Implementation outcome
+
+Implemented the manual profile and three project-owned file roles, with templates and an active profile for this instruction repository.
+Added a fictional Java SaaS fixture and [validation report](./project-profile-validation.md).
+Clarified operation dialogs versus visible form errors and native platform presentation.
+Connected optional native SaaS clients to their generated SDKs, including Swift.
+Scoped .NET, Knobby, shell, and browser catalog implementations without removing navigation callouts or code examples.
+The fresh-context reviewer passes all ten routing/error cases after the identified refinements.
+The interview script and older TDD/permission-policy conflicts remain outside this implementation.

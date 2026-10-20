@@ -11,6 +11,28 @@ Created: 2026
 
 # Changelog
 
+## 20 October 2026
+
+- Added manual project profiles and templates separating scope choices, project facts, and local instruction refinements.
+- Connected optional native SaaS clients and generated Swift SDKs, with framework-specific implementation scopes.
+- Clarified literate dialogs for failed commands and inline or persistent form errors.
+- Validated ten fresh-context routing and error-presentation cases without changing existing code examples.
+
+- Restored language and target callouts in shared guides, with links to current canonical instruction sections.
+- Added a fresh-context audit of native Apple instruction selection, coverage, and remaining scope conflicts.
+
+## 18 October 2026
+
+- Added shared repository, persistence, UI/UX, and selectable component-profile guides from existing lessons and the supplied UI experience source.
+- Removed the retired catch-all and old UI/UX guides, folded their lessons into canonical subjects, and updated incoming references.
+- Trimmed PERFORMANCE.md and redirect-only sections while preserving code examples and shared engineering policies.
+
+- Removed a private-project EF snapshot update mandate from the shared backend guidance after PR review.
+
+- Changed AGENTS.md to select target guides separately from language guides and support several targets within one repository.
+- Grouped existing instructions under backend, frontend, SaaS, native apps, CLI tools, static websites, static assets, and SDK references.
+- Preserved existing engineering rules, code examples, topic anchors, and shared policies. Closed a missing frontend Markdown fence.
+
 ## 17 October 2026
 
 - Added 13 root-level language guides and task-based language selection in AGENTS.md.

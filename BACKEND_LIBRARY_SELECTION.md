@@ -13,6 +13,10 @@ Created: 2026
 
 This document outlines the mandatory criteria and preferred categories for selecting third-party libraries for the backend services. All engineering agents and team members must adhere to these guidelines when introducing new dependencies to the project.
 
+The selection criteria apply to the configured backend language.
+.NET library names and Span<T> examples below apply only to .NET components.
+For Java, use the configured JVM framework and logging, concurrency, and dependency facilities from JAVA.md.
+
 ## 1. Selection Guidelines
 
 When evaluating a library for inclusion in the codebase, assess it against the following prioritized criteria:
@@ -38,7 +42,7 @@ When evaluating a library for inclusion in the codebase, assess it against the f
 
 ### 1.5 Cloud-Native Suitability
 *   **Requirement:** Suitable for use in high-performance, stateless backend cloud services.
-*   **Patterns:** Must support dependency injection, asynchronous programming (async/await), and be thread-safe.
+*   **Patterns:** Support dependency injection, the configured language's concurrency facilities, and thread-safe use.
 
 ### 1.6 Documentation
 *   **Requirement:** Extensive, clear, and up-to-date documentation.

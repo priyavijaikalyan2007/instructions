@@ -19,8 +19,46 @@ Instead of using a monolithic, single instruction file, the AGENTS.md file refer
 
 These instructions cover Swift apps for macOS and iOS, Go and Rust tools, Java and .NET 10.0+ applications, and TypeScript/JavaScript/HTML projects.
 Existing Python, SQL, CSS, and SCSS guidance also applies where those languages are used.
-Some sections describe a .NET SaaS example. Apply those sections only when they match the consuming repository.
+Read [REPO.md](./REPO.md) for shared repository operations.
+Select [PERSISTENCE.md](./PERSISTENCE.md) for stored data and [UI_UX.md](./UI_UX.md) for user-facing behavior.
+Load only relevant [component profiles](./UI_UX_COMPONENTS.md#select-component-profiles) and [keyboard details](./KEYBOARD.md).
+
+Some sections describe a .NET SaaS example. Apply those sections only when they match the changed target and project model.
 Keep project-specific architecture, toolchain versions, and commands consistent with that repository's README and build configuration.
+
+## Project configuration
+
+[AGENTS.md](./AGENTS.md#load-project-configuration) reads the active PROJECT_PROFILE.md before selecting guides.
+The profile identifies project facts and local refinements, then selects enabled components and their source languages.
+PROJECT.md contains facts only. ADDITIONAL.md contains project-specific instructions and emerging lessons.
+
+Use the [profile template](./PROJECT_PROFILE_TEMPLATE.md), [facts template](./PROJECT_TEMPLATE.md), and [refinement template](./ADDITIONAL_TEMPLATE.md).
+Follow [manual setup](./REPO.md#manual-setup) for a new project or edit an existing profile in place.
+This repository's active profile describes the instruction library itself. Application examples do not enable application components here.
+Generic instruction updates preserve project-owned profiles, facts, and refinements.
+
+## Selective target reading
+
+Start at [AGENTS.md](./AGENTS.md#select-target-guides). Select targets for the changed work, then select its languages.
+Targets describe the work. Languages describe the source. A repository can combine several targets and languages.
+The target guides contain existing instructions and links to existing topic guides.
+
+| Target | Guide | Existing material grouped here |
+| --- | --- | --- |
+| Backend | [BACKEND.md](./BACKEND.md) | APIs, runtime, containers, and backend service boundaries |
+| Frontend | [FRONTEND.md](./FRONTEND.md) | Browser pages, dynamic UI, login, components, and browser tests |
+| SaaS or web application | [SAAS.md](./SAAS.md) | Backend, browser, generated SDK, and optional native composition, with cross-layer contracts |
+| Tools | [TOOLS.md](./TOOLS.md) | CLI tools and plugins, module layouts, local commands, stdout, and stderr |
+| Native apps | [APPS.md](./APPS.md) | Existing Apple platform, lifecycle, layout, performance, testing, and credential guidance |
+| Static websites | [WEBSITES.md](./WEBSITES.md) | Websites without an application backend and relevant browser references |
+| Static assets | [STATIC_ASSETS.md](./STATIC_ASSETS.md) | Compilation, bundles, component-library distribution, CDN delivery, and static hosting |
+| SDKs | [SDKs.md](./SDKs.md) | Index to existing OpenAPI contracts and language conventions |
+
+A web application can combine C#/Java backend guidance and TypeScript/HTML frontend guidance.
+A change to one side selects that side. A flow across both sides selects both.
+The existing combined deployment examples remain available when packaging and serving share one application.
+A component library combines frontend and static assets. A native app can share a repository with a separate static website.
+The native material covers Apple platforms. This extraction adds no Android, ChromeOS, SDK generator, Kubernetes, or DNS procedures.
 
 ## Selective language reading
 
@@ -47,13 +85,14 @@ Read applicable topic sections together with the selected language guide. Follow
 
 For example, a Swift-only model change does not require C#, Java, or Rust instructions.
 The file [LANGUAGE.md](./LANGUAGE.md) continues to define natural-language writing style.
-Existing topic paths and section anchors remain available as entry points to the extracted material.
+Shared guides hold common rules. Target and language guides select details for the changed work.
 
 These instructrions are live. They are updated as and when new behaviors are encountered and need guidance. 
 
 The instructions in this repository are *horizontal* in nature. That is, they are about how to write reasonably good code in a clean, structured manner. These instructions should be combined with other instructions for architecture, code structure, do's and don'ts to get output that works.
 
-These instructions are battle tested in my private side projects. I have found that the coding agents that I use do produce reasonably clean, well structured code. However, as I continue to work with them, I continued to encounter odd choices that I keep adding. Such one-off fixes go into ADDITIONAL_INSTRUCTIONS.md.
+These instructions are battle tested in my private side projects. I have found that the coding agents that I use do produce reasonably clean, well structured code. Lessons from specific problems are folded into the guide that owns the subject.
+Shared workflow belongs in REPO.md, storage in PERSISTENCE.md, and interaction behavior in UI_UX.md.
 
 ## Agent Knowledge Base
 
@@ -95,4 +134,3 @@ For complex queries (e.g., "Find all components related to Auth modified in the 
 ## Disclaimer
 
 This project is a personal endeavor of the individual contributors and is provided on an "as-is" basis. It is not sponsored, authorized, endorsed, maintained, indemnified by, or in any way officially affiliated with any past, present, or future employer of the contributors — including but not limited to Google IT Services India Pvt Ltd, Alphabet Inc., Microsoft R&D India Ltd, and Microsoft Corporation, or any of their subsidiaries or affiliates. All trademarks and registered trademarks are the property of their respective owners. Use of employer names is solely for identification purposes and does not imply any association or endorsement.
-

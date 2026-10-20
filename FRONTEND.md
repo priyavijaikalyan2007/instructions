@@ -9,6 +9,37 @@ Created: 2026
 
 <!-- AGENT: Frontend development guidelines and architecture for the TypeScript/HTMX stack. -->
 
+# Frontend and browser UI
+
+## Target scope
+
+Browser pages, dynamic UI, login flows, and reusable browser components.
+API, authentication, synchronization, and permission sections apply to browser work that uses those features.
+SaaS composition and asset compilation/delivery examples are linked separately.
+Use the frontend framework and design system recorded in PROJECT.md.
+Bootstrap, HTMX, the enterprise shell, and the supplied theme catalog are scoped implementation profiles, not consequences of having a browser frontend.
+Read their sections only when that component uses the named stack or the corresponding project choice is checked.
+
+## Topic references
+
+| Work in scope | Existing guidance |
+| --- | --- |
+| Shared repository commands | [REPO.md](./REPO.md) |
+| Common interaction and save safety | [UI_UX.md](./UI_UX.md) |
+| Selected component behavior profiles | [UI_UX_COMPONENTS.md](./UI_UX_COMPONENTS.md) |
+| Browser keyboard registry | [KEYBOARD.md](./KEYBOARD.md) |
+| Persistence integrity across adapters | [PERSISTENCE.md](./PERSISTENCE.md) |
+| Browser TypeScript source | [TYPESCRIPT.md](./TYPESCRIPT.md) |
+| Shared JavaScript source rules | [JAVASCRIPT.md](./JAVASCRIPT.md) |
+| Page and template markup | [HTML.md](./HTML.md) |
+| Browser stylesheets | [CSS.md](./CSS.md) |
+| SCSS and Sass source | [SCSS.md](./SCSS.md) |
+| Shared browser logging | [FRONTEND_LOGGING.md](./FRONTEND_LOGGING.md) |
+| Reusable browser components | [COMPONENTS.md](./COMPONENTS.md) |
+| Component discovery | [MASTER_COMPONENT_LIST.md](./MASTER_COMPONENT_LIST.md) |
+| Static assets, bundling, and published output | [STATIC_ASSETS.md](./STATIC_ASSETS.md) |
+| Web application composition | [SAAS.md](./SAAS.md) |
+
 # 1. General Principles
 
 ## 1.1. Standards Compliance
@@ -17,10 +48,7 @@ Created: 2026
 - Prioritize native HTML capabilities over complex JavaScript solutions.
 - Ensure cross-browser compatibility (latest Chrome, Firefox, Safari, Edge).
 - Maintain semantic HTML structure in all component templates and demo pages.
-- Use TypeScript files in the ./typescript/ folder instead of inline Javascript.
-  - App specific TypeScript can be kept as separate modules.
-- Use CSS files in the frontend/ folder instead of inline CSS.
-  - App specific CSS can be kept as separate files.
+See [SAAS.md](./SAAS.md#frontend-source-layout).
 
 ## 1.2. Performance Considerations
 
@@ -53,14 +81,16 @@ Created: 2026
 
 ## 1.5. Recommended Technologies
 
+This is the vanilla TypeScript/Bootstrap implementation profile. Apply it only when that frontend stack is configured.
+
 - Use Bootstrap 5 as the primary UI and component framework.
-- Use TypeScript with a simple compile step to convert into Javascript. Fallback to vanilla Javascript. 
-  Do not use overcomplicated technologies like React. For smaller, simpler, projects you can consider using 
+- Use TypeScript with a simple compile step to convert into Javascript. Fallback to vanilla Javascript.
+  Do not use overcomplicated technologies like React. For smaller, simpler, projects you can consider using
   vanilla Javascript.
 - Use CSS Grid / Flexbox for layouts.
 - Target modern, standards compliant web browsers ignoring older web browsers like Internet Explorer.
 - Use the Fetch API for AJAX API calls.
-- Use Service Workers for long running sync-style operations. 
+- Use Service Workers for long running sync-style operations.
 - Use web components for reusable elements.
 
 ## 1.6. Code Generation Best Practices
@@ -69,10 +99,7 @@ Created: 2026
 - Use immutable data structures where possible.
 - Minimize global variables.
 - Implement defensive programming techniques.
-- Map frontend types to backend types to database objects consistently preferably through 
-  some sort of consistent mapping layer. This prevents typos, translation problems etc. 
-- Prevent cluttering regular business logic with data transfer objects and more.
-- Prevent bugs now and in the future due to mismatch between the field names or types or validation expectations.
+See [SAAS.md](./SAAS.md#cross-layer-data-mapping).
 
 ## 1.7. Error Handling
 
@@ -94,9 +121,9 @@ Created: 2026
 
 Whether we are building an application or a component library or a theme library, security matters.
 
-- Implement secure authentication mechanisms.
+See [FRONTEND.md](#web-application-authentication).
 - Use HTTPS for all communications.
-- Sanitise any user-provided content before injecting it into the DOM in component TypeScript. 
+- Sanitise any user-provided content before injecting it into the DOM in component TypeScript.
   Use `textContent` instead of `innerHTML` where possible. Sanitize user input in all components.
 - Prevent XSS and CSRF vulnerabilities in all components.
 - Do not include inline event handlers (`onclick="..."`) in component HTML templates.
@@ -111,23 +138,23 @@ Support the latest versions of:
 - Safari
 - Edge
 
-Do not support Internet Explorer. Use modern CSS features (Grid, Flexbox, custom properties) freely. 
+Do not support Internet Explorer. Use modern CSS features (Grid, Flexbox, custom properties) freely.
 The PostCSS autoprefixer handles vendor prefixes for supported browsers.
 
 ## 1.11. Commenting & Logging
 
-You must follow the same logging and commenting model as the backend for the frontend. 
+You must follow the same logging and commenting model as the backend for the frontend.
 See COMMENTING.md and LOGGING.md. Again, in the frontend, make sure to log:
 
 1. Method/Function Entry/Exit
-   
+
    - Log function name
    - Log input parameters (scrubbed of sensitive data)
    - Log return values or error conditions
    - Include timing information when relevant
 
 2. External Service Interactions
-   
+
    - Log remote request details
    - Log response status
    - Log request/response sizes
@@ -135,17 +162,17 @@ See COMMENTING.md and LOGGING.md. Again, in the frontend, make sure to log:
    - Omit sensitive payload details
 
 3. Error and Exception Handling
-   
+
    - Log full error stack traces
    - Capture error context and triggering conditions
    - Include relevant application state information
 
 4. State Changes
-   
+
    - Log significant state transitions
    - Record user actions leading to state changes
    - Capture system events and configuration modifications
-   
+
 ### 1.11.1. Logging Best Practices
 
 - Use structured logging.
@@ -165,9 +192,9 @@ function processUserOrder(userId, orderDetails) {
 
   try {
     // Order processing logic
-    logger.debug('Order processing steps', { 
-      stage: 'validation', 
-      isValid: true 
+    logger.debug('Order processing steps', {
+      stage: 'validation',
+      isValid: true
     });
   } catch (error) {
     logger.error('Order processing failed', {
@@ -196,45 +223,21 @@ function processUserOrder(userId, orderDetails) {
 
 ## 1.12. Application Structure
 
-- Implement a super-app model.
-- In the super-app model, there is a **platform menu-bar** at the top for the user, application dropdown, 
-  links to documentation, help, support etc. 
-- Individual sub-applications then render below this platform menu bar. The sub-application can have its 
-  own application menu bar that is specific to that application.
-- The bottom has a log console where application log messages are written. These are more relevant to the user 
-  such as *reading data, saving data* etc. 
-- All sub-applications should have a consistent UI / UX.
-
----
+See [SAAS.md](./SAAS.md#super-app-shell).
 
 ## 2. Technology Stack
 
-This repository uses a deliberately simple stack:
-
-| Layer | Technology | Notes |
-|-------|-----------|-------|
-| Styling | SCSS (Sass) compiled to CSS | Bootstrap 5 variable overrides + custom component styles |
-| Logic | TypeScript compiled to JavaScript | For interactive components only |
-| Structure | HTML5 | Component templates and demo pages |
-| Build | npm scripts, Sass CLI, PostCSS | No bundler (Webpack/Vite) unless components require it |
-| Deployment | Cloudflare Pages via Wrangler | Static asset hosting |
-
-**Do not introduce:**
-- Use modern JavaScript (ES6+)
-- JavaScript frameworks (React, Vue, Angular, Svelte)
-- CSS-in-JS solutions (styled-components, Emotion)
-- Complex bundlers unless a component genuinely requires module resolution
-
----
+See [STATIC_ASSETS.md](./STATIC_ASSETS.md#static-build-and-hosting-example).
 
 # 3. UI Framework and Styling
 
 ## 2.1. Core Resources
 
-- CSS Theme: https://theme.priyavijai-kalyan2007.workers.dev/css/custom.css
-- Bootstrap JS: theme.priyavijai-kalyan2007.workers.dev/js/bootstrap.bundle.min.js
+See [STATIC_ASSETS.md](./STATIC_ASSETS.md#theme-resources).
 
 ## 2.2. Styling Principles
+
+Bootstrap and the theme catalog below apply only to that configured design system. Other frontends use their declared tokens and catalog.
 
 1. Prefer vanilla Bootstrap styles.
 2. Write custom CSS/JS/Typescript only when absolutely necessary.
@@ -293,7 +296,7 @@ This repository uses a deliberately simple stack:
   - Strong community support
   - Performance optimization
   - Regular security updates
-  
+
 ## 4.2. Recommended Libraries by Function
 
 ### 4.2.1. Mapping
@@ -370,11 +373,7 @@ This repository uses a deliberately simple stack:
 
 ## 4.4. Performance Considerations
 
-- Minimize library and framework overhead
-- Use code splitting
-- Implement lazy loading
-- Optimize asset delivery
-- Use modern bundling tools (Webpack, Vite)
+See [STATIC_ASSETS.md](./STATIC_ASSETS.md#browser-bundling-guidance).
 
 ## 4.5. Security Guidelines
 
@@ -399,7 +398,7 @@ This repository uses a deliberately simple stack:
 ### 5.1.1. API and Data Management
 
 1. Backend API Integration
-   
+
    - Create individual JavaScript functions for each significant backend API
    - APIs should cover core actions:
      * Data loading
@@ -411,22 +410,20 @@ This repository uses a deliberately simple stack:
      * AI/ML provider interactions
 
 2. Local Storage and Synchronization
-   
+
    - Use browser's localStorage as primary local cache
    - Implement background synchronization mechanisms using ServiceWorkers.
    - Sync edits to server:
      * Immediate background sync for critical updates
      * Periodic sync for non-critical changes
    - Provide placeholder functions for future API implementations
-   
+
 ## 5.2. Initial Development Setup
 
 ### 5.2.1. Backend API Hosting
 
-- Plan for modular API organization
-  * Separate API files for different application components
-  * Maintain clean, organized API structure
-  
+See [BACKEND.md](./BACKEND.md#api-organization).
+
 ## 5.3. Frontend Function Pattern
 
 ```javascript
@@ -459,7 +456,6 @@ async function apiFunction(parameters) {
 - Ensure responsive design
 - Optimize performance
 - Maintain clean, readable code
-
 
 # 7. Data Centric Thinking
 
@@ -533,31 +529,24 @@ async function apiFunction(parameters) {
 
 # 8. Sub-Application Structure
 
+See [SAAS.md](./SAAS.md#sub-application-structure).
+
 ## 8.1. Super-App Model
 
-The main `index.html` file implements a "super-app". Every link in the top nav bar is a "sub-app" that loads the appropriate `.html` file in the main view panel below the top nav bar. The only "pages" in the application are "terms and conditions", "notices" and "report bug". This structure allows the entire SaaS to be modular.
+See [SAAS.md](./SAAS.md#sub-application-structure).
 
 ## 8.2. UI Layout
 
-- All sub-applications have a toolbar at the top that contains common commands relevant to the application. For example, copy-paste, undo-redo, settings, pan, fit, zoom etc. 
-
-- All sub-applications have a Log Console at the bottom to which UI generated logs are written. This is useful for users to understand what is going and can enable the company to support user with any issues. Logs are fairly detailed to enable this.
-
-- The Log Console can be collapsed or expanded at will.
-
-- Any applications that involve diagramming or layout of any kind should always support "panning", "fitting", "zooming", "showing a grid", "snapping to a grid", "multi-item selection" and keyboard navigation for "deleting elements", "pasting onto the canvas" and "copying from the canvas".
-
-- Applications that need sidebars on the right or left side should support collapse and expand of such sidebars whenever possible unless instructed otherwise. Sidebars should optionally be resizable. 
-
-- Resizing, expanding or collapsing of the Log Console or the Left or Right sidebars should shrink or expand the canvas for such applications.
+See [SAAS.md](./SAAS.md#sub-application-structure).
 
 ## 8.3. UI Behaviors
 
-* Never show modal dialogs for common errors. Always, write errors to the log console. In some specific instances, modal dialogs may be shown for some specific erroneous problems, but in general it is best to indicate failures with UI hints and cues next to the relevant elements directly.
-* Do not use the vanilla Javascript alert or error dialogs which are browser blocking. Instead, prefer the Bootstrap modal dialog instead. 
-* All applications are responsive in general so that users can use any device they want.
+See [SAAS.md](./SAAS.md#sub-application-structure).
 
 # 9. Access Control UI Patterns
+
+The permission services, field names, and sharing APIs below implement the selected Knobby authorization example.
+Other clients reflect their own server contract. Native platform permissions and share sheets use APPS.md.
 
 ## 9.1. Access Level Indicator
 
@@ -741,6 +730,7 @@ function shareResource() {
         resourceName: currentResource.name || 'Untitled',
     });
 }
+```
 
 ## 9.5. Disabling Canvas Interactions for Viewers
 
@@ -811,4 +801,295 @@ if (!app || !app.useBackend) {
 
 // INCORRECT - window.api may not exist in all apps
 if (!window.api || !window.api.isAuthenticated()) { ... }
-``` 
+```
+
+## Browser scripting
+
+- Use TypeScript for non-trivial browser scripting, with HTML, CSS/SCSS, and the declared component library.
+
+## Component-library contracts
+
+- Document each component's factory, options, events, public types, state capture/restore, dependencies, and cleanup contract.
+
+- Use unit, browser, accessibility, visual, and consumer-artifact checks as appropriate.
+
+- The consuming application owns authentication, persistence, and the host logging pipeline.
+
+## component-reuse workflow
+
+Use the component catalog recorded in PROJECT.md before implementing a replacement.
+The URL workflow below applies only when the supplied theme catalog is selected for the component.
+
+- Before building new browser UI components, always consult the file
+  `https://theme.priyavijai-kalyan2007.workers.dev/docs/COMPONENT_INDEX.md` to see
+  if a reusable component exists. If a resuable component exists, then consult
+  `https://theme.priyavijai-kalyan2007.workers.dev/docs/COMPONENT_REFERENCE.md`
+  to look up the component and related documentation.
+  If no resuable component exists, then check
+  `https://theme.priyavijai-kalyan2007.workers.dev/docs/MASTER_COMPONENT_INDEX.md` to see if a
+  component yet to be built will fit your needs. If so, then request that the component be built instead.
+  If you have the permissions to do so, you may file a GitHub issue to the repository
+  `https://github.com/priyavijaikalyan2007/b2btheme`
+  Finally, if no existing component fits the need and none of the components in the master list suffice,
+  produce a specification for the resuable UI components and then wait for the user to confirm that the
+  components are available for use before proceeding. This ensures that UI code uses cleanly built resuable
+  components with standardized repeatable patterns and not AI slop.
+  You may also file an issue to the repository `https://github.com/priyavijaikalyan2007/b2btheme` asking for
+  the new component. Include the specification in the issue.
+
+## Frontend library selection
+
+- When selecting libraries for frontend functionality, always consult FRONTEND_LIBRARY_SELECTION.md for guidelines
+  and FRONTEND_SELECTION.md for pre-canned recommendations.
+
+## web application authentication
+
+- Implement secure authentication mechanisms.
+
+## component state
+
+Every component should provide a mechanism to export and import its current UI state.
+That is, what node is selected, whether nodes are expanded or collapsed, whether a sidebar is
+expanded or collapsed, which ribbon tools are selected and more. This enables consuming applications to
+integrate UI state preservation and reload into their user experience.
+
+## browser testing
+
+The following framework examples apply to browser frontend tests. Retain the project's configured runner for server-side JavaScript.
+
+**Unit Tests:**
+- Use Jest or Vitest as the test runner
+- Test React components with React Testing Library
+- Test hooks with @testing-library/react-hooks
+- Mock API calls with MSW (Mock Service Worker)
+
+**Integration Tests:**
+- Test component interactions
+- Test API client functions against mock servers
+
+**E2E Tests:**
+- Use Playwright for browser automation
+- Test critical user flows end-to-end
+
+## browser performance guidance
+
+### 2.1 Loading & Bundle Size
+
+See [STATIC_ASSETS.md](./STATIC_ASSETS.md#asset-loading-and-production-output).
+
+### 2.2 Rendering & DOM
+*   **Minimize Reflows**: Avoid "layout thrashing." Read layout properties (e.g., `offsetHeight`) first, then write style changes. Do not interleave them.
+*   **Batch DOM Updates**: Use `DocumentFragment` to append multiple elements at once.
+*   **Virtualization**: For lists with > 100 items, use "virtual scrolling" (rendering only visible items).
+*   **CSS Selectors**: Avoid complex, deep selectors. Use simple class selectors (BEM-style preferred).
+*   **Animations**: Use CSS `transform` and `opacity` for animations. These run on the compositor thread. Avoid animating `top`, `left`, `width`, or `height`.
+
+### 2.3 Local Storage & Caching strategy
+*   **Aggressive Caching**: Use `localStorage` or `IndexedDB` to cache user data (e.g., session lists, diagrams).
+    *   *Pattern*: "Stale-While-Revalidate". Show cached data immediately, then fetch updates in the background.
+See [STATIC_ASSETS.md](./STATIC_ASSETS.md#asset-caching).
+
+### 2.4 Memory Management
+*   **Event Listeners**: Always remove event listeners when components/elements are destroyed to prevent memory leaks.
+*   **Large Objects**: Avoid keeping large datasets in global scope.
+*   **WeakMap/WeakSet**: Use `WeakMap` for associating data with DOM elements to ensure garbage collection works.
+
+### 2.5 Service Workers & Background Tasks
+*   **Local-First Architecture**: For data-heavy apps (like "Thinker"), writes should go to `localStorage` or `IndexedDB` immediately.
+    *   **Background Sync**: Use a Service Worker to sync local changes to the server in the background. This keeps the UI responsive even during network latency or outages.
+*   **Offloading Work**: Move heavy computations (e.g., parsing large datasets, complex geometry calculations, loading heavy tool palettes) to a **Web Worker** or **Service Worker**.
+    *   *Rule*: If a task takes > 50ms, it should not be on the main thread.
+
+---
+
+## browser performance budgets
+
+*   **Budget**:
+    *   **First Contentful Paint (FCP)**: < 1.0s
+    *   **Time to Interactive (TTI)**: < 1.5s
+    *   **Interaction to Next Paint (INP)**: < 200ms
+
+## browser UI thread guidance
+
+*   The UI thread must never be blocked.
+*   Offload heavy computation to Web Workers or the backend.
+*   Yield to the main thread frequently during long tasks.
+
+---
+
+## browser performance checks
+
+*   **Lighthouse**: Run Chrome Lighthouse audits on frontend pages regularly.
+
+## Bootstrap discipline
+
+Apply these rules only to components built with the configured Bootstrap theme.
+
+- **"Override, don't overwrite."**
+- **Variables First:** When changing the appearance of any Bootstrap element, modify `_variables.scss` before writing custom CSS. If Bootstrap provides a variable for the property, use it.
+- **No Hardcoded Values:** Never hardcode hex colours (e.g., `#FF0000`), pixel sizes, or font stacks in component SCSS or HTML. Use the semantic names defined in `_variables.scss` (e.g., `$danger`, `$font-size-sm`, `$spacer`).
+- **Unit Consistency:** Do not mix `px`, `rem`, `em`, and `%` arbitrarily. Follow the spacing scale in `_variables.scss`. Use `rem` for sizing, `px` only for borders and fine details (1px borders, box shadows).
+- **Explicit Dependencies:** If a component requires Bootstrap JavaScript (e.g., `bootstrap.Modal`), document this in the component's README and in `COMPONENTS.md`.
+
+## component boundaries
+
+- **"Components are guests, not owners."**
+- **No Global Side Effects:** A component's SCSS must not modify global Bootstrap styles, override utility classes, or change the behaviour of elements outside its own scope.
+- **Namespace Classes:** Prefix all custom classes with the component name (e.g., `.errordialog-header`, `.combobox-dropdown`). Do not use generic class names like `.header` or `.dropdown-list` that could collide with Bootstrap or the host application.
+
+## styling consistency
+
+- **"Single Source of Truth."**
+- **Framework Purity:** If the project uses Tailwind CSS, **do not** write inline `style={{ ... }}` or create separate `.css` files.
+- **Unit Consistency:** Do not mix `px`, `rem`, `em`, and `%` arbitrarily. Inspect `tailwind.config.js` or `variables.css` and use the defined spacing/color scales.
+- **Color Variables:** Never hardcode hex codes (e.g., `#FF0000`). Use the semantic names defined in the theme (e.g., `text-error`, `bg-primary`).
+
+## component tests
+
+When building TypeScript components, add unit tests using Jest or Vitest that verify:
+- The component initialises correctly with valid inputs.
+- The component handles missing or invalid inputs gracefully (logs a warning/error, does not throw).
+- The component produces the expected DOM structure.
+
+## component visual checks
+
+Use the configured demo or integration surface for the affected component.
+The demo/index.html path below belongs to the selected theme component-library example.
+
+After any theme or component change, open `demo/index.html` in a browser and visually verify that:
+- No existing components are broken.
+- New components render as specified.
+- Colours, spacing, and typography are consistent with the theme.
+
+## browser workflow tests
+
+You must add Playwright end-to-end tests for all user-facing changes.
+
+## canvas sizing
+
+- **Explicit Dimensions:** For canvas/visualization libraries (Cytoscape, maxGraph), **never** rely on CSS flexbox/grid alone. Always enforce or check for explicit pixel dimensions (`getBoundingClientRect()`) before initialization.
+
+## browser dependency restriction
+
+This restriction applies to the configured vanilla component-library profile. Other components retain their declared framework.
+
+- **No UI Frameworks:** Do not install React, Vue, Angular, jQuery, or any UI framework. This is explicitly prohibited by the project's architecture.
+
+## UI error propagation
+
+- **UI Propagation:** Follow [error placement](./UI_UX.md#error-placement). Visible forms show inline errors or a persistent summary.
+- Use the configured literate error dialog for failed commands without a suitable visible error surface, such as Save on a canvas.
+- Keep transient notifications consistent with the host. Do not replace an actionable failure with a console-only log or native browser alert.
+
+## stylesheet cleanup
+
+- **No Dead CSS:** If a refactor removes a component or class, delete the corresponding styles. Do not leave orphaned selectors.
+
+## progressive data rendering
+
+*   **Purpose:** Split a large object's retrieval into "Shallow" (immediate UI rendering) and "Deep" (lazy-loading expensive details like history or attachments).
+*   **Implementation:** Render metadata first; lazy-load details via HTMX or `IntersectionObserver`.
+
+## Visible data first
+
+4.  **Default to Partial Hydration**: Only load what is immediately visible. Use "View More" or tabs for deep data.
+
+## Browser familiarity and placement examples
+
+Users shouldn't have to relearn how to use a computer when they use our software.
+*   **Standard Shortcuts:** `Ctrl+C` must copy. `Ctrl+Z` must undo. `Esc` must close modals or cancel actions.
+*   **Standard Locations:** The "Close" button goes in the top-right. The "Save" button goes at the bottom-right of a form (or top-right of a sticky header).
+*   **Fitts's Law:** Make important targets (like "Save" or "Delete") large and easy to click. Place related controls close to each other.
+
+## Browser visual examples
+
+The Bootstrap grid, font sizes, and color palette below are examples for that configured design system.
+
+### 3.1. Color & Contrast
+*   **Semantic Colors:**
+    *   <span style="color:blue">**Primary (Blue/Brand)**</span>: Main actions (Save, Submit, Create).
+    *   <span style="color:green">**Success (Green)**</span>: Confirmation messages, successful states.
+    *   <span style="color:red">**Danger (Red)**</span>: Destructive actions (Delete, Remove).
+    *   <span style="color:orange">**Warning (Yellow/Orange)**</span>: Non-blocking issues, alerts.
+    *   <span style="color:gray">**Neutral (Gray)**</span>: Secondary actions (Cancel), borders, dividers.
+*   **Accessibility:** Ensure a contrast ratio of at least 4.5:1 for text against its background.
+
+### 3.2. Typography
+*   **Hierarchy:** Use font size and weight to establish order.
+    *   `h1`: Page titles.
+    *   `h2`: Section headers.
+    *   `h3`: Card/Panel headers.
+    *   `body`: Standard readable text (14px-16px).
+    *   `small`: Metadata, help text.
+*   **Readability:** Keep line lengths between 45-75 characters for comfortable reading.
+
+### 3.3. Spacing & Layout
+*   **White Space:** Use white space to group related elements. Elements close together are perceived as related (Law of Proximity).
+*   **Grid System:** Use the Bootstrap grid (Rows/Cols) to ensure alignment. Everything should align to a conceptual grid.
+*   **Consistency:** Use consistent margins and padding (e.g., always `1rem` or `16px` between cards).
+
+## Browser feedback surfaces
+
+*   **Hover:** Interactive elements must have a hover state to indicate clickability.
+*   **Focus:** Focus rings are mandatory for accessibility. Never remove `outline: none` without replacing it.
+*   **Loading & Progress (Crucial):**
+    *   **Never leave the user guessing.** If an operation takes > 200ms, show an indicator.
+    *   **Initial Load:** Use **Skeleton Screens** (gray placeholders) or a global loading spinner to indicate the app is initializing. Do not show a blank white screen.
+    *   **Background Actions (Auto-save):** Show a non-intrusive status indicator (e.g., "Saving..." -> "All changes saved") in the toolbar or footer.
+    *   **Blocking Operations:** If the user *cannot* interact with the app while processing (e.g., "Importing large file"), use a **Progress Modal** with a visible progress bar or spinner and a descriptive text ("Importing... 45%").
+    *   **Lazy Loading:** When loading parts of the UI (like a heavy tool palette), show a local spinner placeholder where the content will appear.
+*   **Transient feedback:** Use the configured toast surface for transient messages. Use [error placement](./UI_UX.md#error-placement) for failures. Do not show success modals.
+
+## Browser markup accessibility
+
+Accessibility is not just for disabled users; it improves the experience for everyone.
+*   **Alt Text:** All meaningful images must have `alt` text. Decorative images should have `alt=""`.
+*   **Semantic HTML:** Use `<button>` for buttons, `<a>` for links. Don't use `<div>` with an `onclick` handler unless you reimplement all button behaviors (focus, enter key, space key).
+*   **Screen Readers:** Ensure logical tab order.
+
+## Browser theme and component reuse
+
+The named catalog and theme resource below apply when PROJECT.md selects that catalog.
+Other frontends reuse their own declared components and appearance tokens.
+
+### 1.1. Standardized Component Library
+*   **Mandate:** Agents MUST NOT create new UI components if a suitable component exists in `MASTER_COMPONENT_LIST.md`.
+*   **Execution:** Before implementing a feature (e.g., a date picker, a progress modal, or a tree view), search the `MASTER_COMPONENT_LIST.md` and use the approved implementation pattern.
+*   **Reasoning:** Prevents "component bloat" and ensures that accessibility, keyboard shortcuts, and core behaviors are uniform across the entire platform.
+
+### 1.2. Global Styling Application
+*   **Mandate:** All components, including modal dialogs and dynamically generated elements, MUST inherit the main application's theme and font settings.
+*   **Execution:** Use the global CSS theme defined in [STATIC_ASSETS.md](./STATIC_ASSETS.md#theme-resources). Do not use hardcoded colors or font-family declarations in component-specific styles.
+*   **Modals:** Ensure Bootstrap modals use the standard theme classes. Buttons in modals must match the sizing and styling of buttons in the main application toolbar.
+
+## Browser layout state
+
+The localStorage adapter below belongs to the selected enterprise browser-shell example.
+Other browser components preserve required state through their configured persistence mechanism.
+
+### 3.1. Persistence Mandate
+*   **Mandate:** UI configuration state MUST be preserved across sessions and sub-app switches using `localStorage`.
+*   **Execution:** Automatically save and restore the following states:
+    *   Sidebar collapse/expand state and width.
+    *   Log Console height and collapse state.
+    *   Grid settings (size, snap-to-grid toggle).
+    *   Last active tab in multi-tabbed panels.
+    *   Selected view mode (e.g., List vs. Grid).
+
+### 3.2. Implementation Pattern
+```typescript
+// Example state preservation pattern
+const APP_STATE_KEY = 'subapp_name_ui_state';
+
+function saveUIState(state: Record<string, any>) {
+    const currentState = JSON.parse(localStorage.getItem(APP_STATE_KEY) || '{}');
+    localStorage.setItem(APP_STATE_KEY, JSON.stringify({ ...currentState, ...state }));
+}
+
+function restoreUIState() {
+    const state = JSON.parse(localStorage.getItem(APP_STATE_KEY) || '{}');
+    // Apply state to components
+    if (state.gridSize) setGridSize(state.gridSize);
+    if (state.sidebarCollapsed) toggleSidebar(true);
+}
+```

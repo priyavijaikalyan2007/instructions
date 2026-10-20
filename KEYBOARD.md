@@ -1,13 +1,28 @@
 <!--
+SPDX-FileCopyrightText: 2026 Priya Vijai Kalyan <priyavijai.kalyan2007@proton.me>
+SPDX-FileCopyrightText: 2026 Outcrop Inc
+SPDX-License-Identifier: MIT
+Repository: instructions
+File GUID: 56456a00-a2a8-4121-b62b-e5d6c0defb45
+Created: 2026
+-->
+
+<!-- AGENT: Detailed browser shortcuts, focus scope, and component key bindings. -->
+
+<!--
   ⚓ CONCEPT: KeyboardShortcutRegistry
-  📜 PURPOSE: Defines the canonical set of keyboard combinations for the Enterprise SaaS platform to ensure consistency across all sub-apps (Diagramming, ToDo, Project Mgmt, etc.).
-  🔗 RELATES: [[UX_UI_GUIDELINES]], [[AccessibilityFocus]], [[MASTER_COMPONENT_LIST]]
+  📜 PURPOSE: Defines the canonical set of keyboard combinations for the enterprise browser profile to ensure consistency across all sub-apps (Diagramming, ToDo, Project Mgmt, etc.).
+  🔗 RELATES: [[UI_UX]], [[AccessibilityFocus]], [[MASTER_COMPONENT_LIST]]
   ⚡ FLOW: [User Input] -> [Component Event Listener] -> [Keyboard Registry Mapping]
 -->
 
-# Keyboard Shortcut Registry
+# Keyboard shortcut registry
 
-This document defines the mandatory keyboard shortcuts for all components and applications within the Enterprise SaaS ecosystem. Consistency is the primary goal: a key combination must perform the identical action regardless of the specific tool in focus.
+Read the common keyboard and focus behavior in [UI_UX.md](./UI_UX.md#common-experience-baseline).
+These tables describe the enterprise browser shell and named browser component profiles.
+Native applications follow platform conventions in [APPS.md](./APPS.md#apple-ui-conventions).
+Component bindings apply while that component owns focus. Shell bindings apply outside those component interactions.
+This keeps editor actions, such as Bold or Insert Link, distinct from shell panel or palette actions.
 
 ## 1. Global Standard Shortcuts (OS Parity)
 
@@ -34,7 +49,7 @@ Shortcuts for interacting with the `DockLayout`, `Sidebar`, and `TabbedPanel`.
 | Shortcut | Action | Component |
 | :--- | :--- | :--- |
 | `Ctrl + K` | **Command Palette** (Search actions/entities) | [[CommandPalette]] |
-| `Ctrl + ` | **Toggle Left Sidebar** (Expand/Collapse) | [[Sidebar]] |
+| Project-defined binding | **Toggle Left Sidebar** (Expand/Collapse) | [[Sidebar]] |
 | `Ctrl + J` | **Toggle Bottom Panel** (Log/Terminal) | [[TabbedPanel]] |
 | `Ctrl + B` | **Toggle Right Sidebar** (Properties) | [[Sidebar]] |
 | `Ctrl + 1-9` | **Switch Tab** by index (1 to 9) | [[TabbedPanel]] |
@@ -156,3 +171,18 @@ of its TypeScript source file. Common action names across components:
 2. **Contextual Hijacking:** A shortcut should only be "hijacked" if the component has focus. For example, `Arrow Keys` move the selection in a Grid, but scroll the page if no focus is set.
 3. **KeyTip System:** When the `Alt` key is pressed, components should optionally display [[KeyTips]] (small badges) over toolbar items to guide keyboard-only discovery.
 4. **WCAG Compliance:** Ensure all shortcuts have high-contrast visual focus states [[AccessibilityFocus]].
+
+## Shortcut discovery and common editing
+
+Power users rely on keyboards. All apps must support:
+*   **Global:**
+    *   `?` : Show keyboard shortcuts help.
+    *   `Esc`: Close modal / Cancel selection.
+*   **Editing:**
+    *   `Ctrl/Cmd + S`: Save.
+    *   `Ctrl/Cmd + Z`: Undo.
+    *   `Ctrl/Cmd + Shift + Z` (or `Y`): Redo.
+*   **Selection:**
+    *   `Ctrl/Cmd + A`: Select All.
+    *   `Delete` / `Backspace`: Delete selected item(s).
+    *   `Arrow Keys`: Nudge/Move selected items (in diagramming apps).

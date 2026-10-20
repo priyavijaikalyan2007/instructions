@@ -10,7 +10,11 @@ Created: 2026
 <!-- AGENT: Access control and sharing implementation patterns for the Knobby platform. -->
 # Access Control & Sharing Guidelines
 
-This document provides instructions for implementing access control and sharing features in the Knobby platform. All new applications and features must follow these patterns.
+This document contains the Knobby authorization implementation example.
+Apply its services, tuple model, tenant middleware, and session cookies only when that project choice is checked in PROJECT_PROFILE.md.
+Other applications use their configured authorization model and the shared [security rules](./SECURITY_GUIDELINES.md#ownership-and-authorization).
+Native OS permission prompts and platform share sheets follow APPS.md. They do not select this server architecture.
+Within the selected Knobby example, new applications and features must follow the patterns below.
 
 ## Architecture Overview
 

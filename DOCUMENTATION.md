@@ -88,22 +88,9 @@ Verify the published output and its links, not only the source file's existence.
 
 ## Hosting and Deployment Architecture
 
-For the .NET monolith example, documentation is hosted with the application and follows the packaging rules below.
-Native apps, tools, static websites, and other services use their repository's documented delivery pipeline.
+Use the project's declared documentation delivery. The linked .NET monolith packaging is a configured example, not a Java or native requirement.
 
-1.  **Repository Structure:**
-    *   All external-facing documentation source files must reside in `/docs/external/`.
-
-2.  **URL Structure:**
-    *   **Production:** `prod.<appdomain>.io/docs/` (Application: `prod.<appdomain>.io`)
-    *   **Staging (Development):** `dev.<appdomain>.io/docs/` (Application: `dev.<appdomain>.io`)
-
-3.  **Build & Packaging:**
-    *   The documentation is part of the single monolith Docker container.
-    *   Build scripts must copy/process contents from `/docs/external/` to the `wwwroot/docs/` directory within the final build image.
-    *   The web server must be configured to serve static content from `wwwroot/docs/` when the `/docs/` path is requested.
-
----
+See [SAAS.md](./SAAS.md#monolith-documentation-packaging).
 
 ## Visual Identity and Styling
 
@@ -111,7 +98,7 @@ To maintain a cohesive user experience, the documentation website must be indist
 
 1.  **Unified Styling:** Use the same CSS frameworks, design tokens, colour palettes, and typography as the main application.
 2.  **Shared Components:** Where possible, reuse UI components (e.g., headers, footers, navigation bars) from the application to ensure consistency.
-3.  **No Stylistic Divergence:** Avoid using default documentation templates (e.g., standard Swagger UI or Docusaurus themes) if they do not match the application's unique aesthetic. All documentation interfaces must be customised to align with the Knobby brand.
+3.  **No Stylistic Divergence:** Avoid using default documentation templates (e.g., standard Swagger UI or Docusaurus themes) if they do not match the application's unique aesthetic. Customize documentation interfaces to the consuming project's declared design system.
 
 ---
 

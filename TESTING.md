@@ -74,11 +74,12 @@ Integration tests verify that multiple components work together correctly. They 
 
 ### End-to-End Tests
 
-End-to-end tests validate complete user journeys through the application using browser automation tools like Playwright or Selenium.
+End-to-end tests validate complete user journeys using the tools for the affected surface.
+Browser journeys use tools such as Playwright or Selenium. Native Apple journeys use XCTest UI tests from APPS.md and SWIFT.md.
 
 **Requirements:**
 - Required for critical user workflows
-- Use Playwright as the preferred tool for new projects
+- For new browser projects, prefer Playwright. Native Apple targets use the configured XCTest UI test setup.
 - Run by developers and in CI pipelines before deployment
 - Include visual regression testing for UI-critical paths
 
@@ -311,7 +312,7 @@ Our applications use multiple technologies. Testing strategies must account for 
 
 ### TypeScript and JavaScript (Frontend)
 
-See [JavaScript](./JAVASCRIPT.md#testing).
+See [JavaScript](./FRONTEND.md#browser-testing).
 
 ### C# and .NET Core (Backend)
 
@@ -495,7 +496,9 @@ See [C#](./CSHARP.md#simple-performance-assertions).
 
 ### Benchmark Tests
 
-Use BenchmarkDotNet for detailed performance analysis:
+Use the benchmark or profiler tools in the selected language guide.
+Java uses the configured benchmark harness and Java Flight Recorder. Native Apple apps use Instruments and Xcode diagnostics.
+For .NET, use BenchmarkDotNet for detailed performance analysis:
 
 See [C#](./CSHARP.md#benchmark-tests).
 
@@ -552,3 +555,15 @@ See [C#](./CSHARP.md#authorization-service-testing).
 ### Testing Access Level Responses
 
 See [C#](./CSHARP.md#authorization-service-testing).
+
+## Tests for code changes
+
+You must always add unit tests for all code changes. This is non-negotiable.
+
+## Regression and feature checks
+
+- **Bug Fixes**: When fixing bugs, add regression tests to prevent the bug from recurring.
+- **New Features**: When adding features, functionality, or capabilities, add unit tests that verify:
+  - All expected functionality works correctly (happy paths)
+  - Invalid inputs, edge cases, and failure conditions are handled properly (unhappy paths)
+  - In other words, test both what *should* work and what *should not* be possible or work.

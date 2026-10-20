@@ -13,11 +13,13 @@ Created: 2026
 
 Review date: 14 October 2026. Updated scope: 15 October 2026.
 Completion: accepted in-place updates merged into `main` on 16 October 2026.
-Language phase: root-level guide extraction authorized and completed on 17 October 2026.
+Language phase: merged through PR #1 at `0a5a868`.
+Target phase: pushed and published through [PR #2](https://github.com/priyavijaikalyan2007/instructions/pull/2) on 18 October 2026.
 
 The first phase used surgical edits to existing files. The owner then authorized a limited language-guide split on 17 October 2026.
-The findings below remain review evidence. Broader product/task folder moves and policy changes remain deferred.
-Use the [current plan](./instructions-plan.md#current-plan-language-guide-extraction) for the authorized scope.
+The findings below remain historical review evidence. Root-level target extraction is now authorized.
+Broader folder moves and policy changes remain deferred.
+Use the [current plan](./instructions-plan.md#current-plan-target-guide-extraction) for the authorized scope.
 
 The repository needs a shared foundation plus guides selected by language, product, and task.
 Its current entry point describes one enterprise SaaS application, so agents inherit assumptions that do not fit other projects.
@@ -237,3 +239,107 @@ One coverage example is split into three language-specific blocks without changi
 Checks also cover Markdown links and anchors, language dependencies, source encodings, copyright headers, and append-only history.
 The earlier compiler and behavior results remain evidence for the unchanged snippets. No application build is claimed for this extraction.
 The implementation remains on `docs/language-guides` for review. No broader folder reorganization is included.
+
+## Target guide extraction on 18 October 2026
+
+The owner requested segregation of existing instructions and explicitly prohibited new engineering instructions.
+AGENTS.md now selects work targets before languages. One repository can combine several targets.
+The change adds scope descriptions and indexes, moves existing text, and retains the established topic authorities.
+It does not create new architecture, platform, deployment, testing, or style rules.
+
+| Target | Existing material grouped or referenced |
+| --- | --- |
+| Backend | API/resource naming, entities, SQL, persistence, migrations, runtime, containers, local commands, and backend checks |
+| Frontend | Browser UI, login, components, state, styling, accessibility, browser testing, and rendering performance |
+| SaaS | Backend/frontend composition, combined layout, super-app example, data contracts, naming, and local test identities |
+| Apps | Existing Apple stack, layouts, lifecycle, credentials, tests, and performance |
+| Tools | Existing Go/Rust/Python CLI stack and layouts, local commands, stdout, and stderr |
+| Websites | Static sites without an application backend, plus applicable browser and delivery references |
+| Static assets | Source/output mapping, bundles, stylesheet build checks, CDN/air-gap delivery, caching, and static hosting example |
+| SDKs | Existing API/OpenAPI contracts and language references, replacing the empty placeholder |
+
+Target selection follows changed work rather than a repository-wide label or primary language.
+A web application can combine C#/Java backend and TypeScript/HTML frontend guidance.
+A Python backend and a Go CLI follow different target routes despite both being non-browser code.
+Static hosting does not imply an application backend. Native apps and their websites select separate targets.
+Packaging and serving remain separate concerns. Existing combined deployment examples remain examples of that configured model.
+
+The source SDK guide had no generator procedures. Native platform instructions covered only Apple platforms.
+The extraction adds no Android, ChromeOS, SDK generation, Kubernetes, Workers, or DNS procedures.
+The existing static hosting example names Cloudflare Pages via Wrangler. That wording is preserved.
+Existing library recommendations and policy conflicts remain unchanged for a separate review.
+
+Validation preserves all 171 code blocks across the edited documents after outer-indentation and trailing-whitespace normalization.
+Original instruction lines have a destination. Replaced text is limited to routing metadata and the SDK placeholder.
+Checks retain existing section anchors, source encodings, copyright headers, append-only history, and shared engineering policies.
+Target routes cover mixed repositories, component libraries, backend-only work, tools, native apps, and static websites.
+One pre-existing missing fence after the frontend Share button example is closed without changing the JavaScript.
+There is no application build or runtime test claim for this documentation-only change.
+Temporary extraction and validation artifacts remain under `/tmp/target-guide-extraction/`.
+
+## Follow-up review on 18 October 2026
+
+The redirect-only sections preserve old anchors but add reading overhead within an open reorganization PR.
+The owner questioned that tradeoff and requested discussion of persistence, repository operations, and a unified UI/UX entry point.
+The proposed next extraction is recorded in the plan. It remains a proposal.
+
+Removed the instruction to manually update `KnobbyDbContextModelSnapshot.cs` from BACKEND.md.
+Both the filename and the mandatory manual-update procedure belong to a particular project's migration workflow.
+The existing shared requirement to follow the consuming repository's migration convention remains.
+This is an intentional exclusion from the prior text-preservation baseline. No code example changed.
+The adjacent PostgreSQL and EF history-table example also requires an explicit project-model scope during the proposed persistence extraction.
+
+The supplied UI source contains reusable experience rules and enterprise component contracts.
+Its HelpTooltip, HelpDrawer, expression editor, directory intelligence, and browser accessibility details need explicit scope.
+Existing universal progress-modal guidance and the source's background-progress behavior overlap and need reconciliation.
+The source is read for this review and remains unchanged. It has not yet been imported into the public repository.
+
+## Approved consolidation on 18 October 2026
+
+The owner approved the follow-up and requested the same redirect cleanup in PERFORMANCE.md.
+This phase replaces compatibility sections with direct references and folds lessons into the guide that owns the subject.
+The earlier anchor-preservation decision is superseded for the retired sections. Incoming links are updated instead.
+
+| Concern | Canonical home |
+| --- | --- |
+| Shared commands, endpoints, source verification, clarification, and session records | REPO.md |
+| Transactions, integrity, migrations, outbox, projections, and data-context ownership | PERSISTENCE.md |
+| SQL syntax, naming, examples, and PostgreSQL tuning | SQL.md |
+| General interaction, validation, help, state, progress, save safety, and recovery | UI_UX.md |
+| Selected data-type, editor, widget, and workflow contracts | UI_UX_COMPONENTS.md |
+| Detailed enterprise browser shortcut registry and focus scopes | KEYBOARD.md |
+| Browser themes, markup, storage adapters, and browser examples | FRONTEND.md |
+| Enterprise shell layout and console behavior | SAAS.md |
+| Native controls, signing, and platform behavior | APPS.md |
+| General construction, dependency, type, and refactoring lessons | CODE_COMPLETE.md and PRAGMATIC_PROGRAMMER.md |
+| Style, tests, and errors | CODING_STYLE.md, TESTING.md, and LITERATE_ERRORS.md |
+
+ADDITIONAL_INSTRUCTIONS.md, UX_UI_GUIDELINES.md, and UI_UX_CONSISTENCY.md are retired after extraction.
+The change removes 92 redirect-only sections from affected guides and removes redundant extraction indexes.
+PERFORMANCE.md retains shared measurement principles and one compact selection table, shrinking from 198 to 44 lines.
+Target and language selection remain independent. REPO.md is shared across targets. Persistence and UI/UX are selected by the changed concern.
+
+The owner-supplied UI source contributes all 26 sections and ten examples.
+General behavior enters UI_UX.md. Detailed fields, components, editors, and workflows remain separately selectable.
+Catalog names describe browser implementation roles, rather than asserting that every consuming project implements those components.
+ARIA, CSS units, browser key bindings, and Bootstrap rules do not become native platform requirements.
+The source file remains unchanged. Public guides have no dependency on that private source path.
+
+The consolidation resolves these overlaps:
+
+- Progress modals apply to blocking work. Background work follows the supplied non-blocking progress behavior.
+- Optimistic feedback remains distinguishable from confirmed persistence and preserves recoverable state on failure.
+- Enterprise console diagnostics accompany actionable field or operation feedback.
+- Browser component shortcuts own their focused context. Shell shortcuts apply outside those interactions. Native apps retain platform conventions.
+- The incomplete left-sidebar key binding is identified as project-defined. No key is invented.
+- Internal module type compatibility remains distinct from explicit API serialization contracts.
+- The duplicated Promise-style lesson has one home in JAVASCRIPT.md.
+- PostgreSQL/EF Core manual migration commands, paths, and history inserts remain a configured workflow example, not universal persistence requirements.
+
+Validation preserves all 551 parsed code blocks across the baseline and imported source, including content and multiplicity.
+Instruction-line checks account for the source material and declared scope adaptations.
+Link checks include incoming references from unchanged guides. Headers, encodings, new GUIDs, and append-only history pass checks.
+The AGENTS.md operating workflow, existing test-first sections, coverage thresholds, and shared formatting requirements remain unchanged.
+The untouched ERROR_DIALOG_COMPONENT.md has a pre-existing malformed fence and is verified byte-for-byte instead of parsed.
+This change modifies documentation only. It does not claim an application build or runtime test run.
+Temporary extraction and validation artifacts remain under `/tmp/target-guide-consolidation/`.

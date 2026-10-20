@@ -302,3 +302,14 @@ See [C#](./CSHARP.md#language-constructs).
 - [ ] Assertions for invariants
 - [ ] Domain-appropriate naming
 - [ ] Explicit code over clever tricks
+
+## Named constants
+
+- **"No Magic Numbers."**
+- **Extraction:** Any number (e.g., `3000` ms timeout) or string (e.g., "Admin" role) that appears more than once—or has semantic meaning—must be a named constant.
+
+## Code hygiene
+
+- **"Delete, don't disable."**
+- **No Commented-Out Code:** Do not leave blocks of commented-out code (C#, SCSS, TypeScript, Javascript or HTML) "just in case". Rely on Git history.
+- **Import Cleanup:** Unused imports and variables are (C# usings, SCSS imports, TypeScript imports, and variables are technical debt. Remove them immediately before considering a task complete. Remove them before considering a task complete.

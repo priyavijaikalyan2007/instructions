@@ -90,7 +90,8 @@ For actions that don't fit CRUD (e.g., "Undelete", "Checkout", "Publish"):
 *   **Lowercase**: Always.
 
 ### 4.2. JSON Fields & Query Parameters
-*   **camelCase**: The backend (C#) uses `PascalCase` for properties, but the serialized JSON **must** be `camelCase`. This is configured globally in `Program.cs`.
+*   **camelCase**: Serialized JSON fields must use `camelCase`, regardless of the implementation language.
+    *   Configure the selected framework's serializer. In C#, PascalCase properties use the global configuration in Program.cs.
     *   ✅ `firstName`, `createdAt`
     *   ❌ `FirstName`, `created_at`
 

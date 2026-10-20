@@ -25,7 +25,7 @@ Use only the grammar exceptions stated in this guide.
 If an example shows several top-level types, put each type in its own file in production.
 Examples may omit surrounding project types or test fixtures. Use the repository's configured dependencies and contracts.
 
-Read by task: [References](#references), [Style examples](#style-examples), [Naming](#naming), [File organization](#file-organization), [Language constructs](#language-constructs), [Comments](#comments), [Comment examples](#comment-examples), [Navigation markers](#navigation-markers), [Folding](#folding), [Marker examples](#marker-examples), [Testing](#testing), [Test naming](#test-naming), [Test examples](#test-examples), [Authorization service testing](#authorization-service-testing), [Coverage](#coverage), [Logging](#logging), [Logging examples](#logging-examples), [Performance](#performance), [Performance examples](#performance-examples), [Secret handling](#secret-handling), [Design patterns](#design-patterns).
+Read by task: [References](#references), [Style examples](#style-examples), [Naming](#naming), [File organization](#file-organization), [Language constructs](#language-constructs), [Comments](#comments), [Comment examples](#comment-examples), [Navigation markers](#navigation-markers), [Folding](#folding), [Marker examples](#marker-examples), [Testing](#testing), [Test naming](#test-naming), [Test examples](#test-examples), [Authorization service testing](#authorization-service-testing), [Coverage](#coverage), [Logging](#logging), [Logging examples](#logging-examples), [Performance](./BACKEND.md#aspnet-core-performance-guidance), [Performance examples](#performance-examples), [Secret handling](#secret-handling), [Design patterns](#design-patterns).
 
 ## References
 
@@ -462,6 +462,10 @@ public class OrderProcessor : IOrderProcessor
 ## File organization
 
 `Order.cs`, `IOrderStore.cs`, and `OrderStatus.cs`.
+
+### Namespace imports
+
+* Please place `using` statements inside the namespace.
 
 ## Language constructs
 
@@ -1427,31 +1431,23 @@ public class PaymentService
 
 ## Performance
 
+See [BACKEND.md](./BACKEND.md#aspnet-core-performance-guidance).
+
 ### 3.1 Async/Await
-*   **Async All the Way**: Every I/O operation (Database, File, Network) **must** be `async`.
-*   **Avoid `.Result` / `.Wait()`**: These cause thread pool starvation. Always use `await`.
-*   **`ConfigureAwait(false)`**: Not strictly necessary in ASP.NET Core (no SynchronizationContext), but good practice in library code.
+
+See [BACKEND.md](./BACKEND.md#aspnet-core-performance-guidance).
 
 ### 3.2 JSON Serialization
-*   **System.Text.Json**: Use the built-in `System.Text.Json`. It is significantly faster and allocates less memory than `Newtonsoft.Json`.
-*   **Source Generators**: Use JSON source generators for AOT compatibility and maximum serialization performance.
-    ```csharp
-    [JsonSerializable(typeof(MyDto))]
-    internal partial class MyJsonContext : JsonSerializerContext { }
-    ```
+
+See [BACKEND.md](./BACKEND.md#aspnet-core-performance-guidance).
 
 ### 3.3 Memory & Garbage Collection (GC)
-*   **Structs vs Classes**: Use `readonly struct` for small, immutable data carriers to reduce heap allocations.
-*   **Span<T> / Memory<T>**: Use `Span<T>` for string/array slicing to avoid creating new substrings/arrays.
-*   **StringBuilder**: Use `StringBuilder` (or `ZString`) for complex string concatenation.
-*   **Pooling**: Use `ArrayPool<T>` for large temporary buffers.
+
+See [BACKEND.md](./BACKEND.md#aspnet-core-performance-guidance).
 
 ### 3.4 Caching (Server-Side)
-*   **IMemoryCache**: Use in-process memory cache for small, high-read reference data (e.g., configuration, tenant settings).
-    *   *Expiration*: Always set absolute or sliding expiration.
-*   **Output Caching**: Use `[OutputCache]` for public, static-like API endpoints.
 
----
+See [BACKEND.md](./BACKEND.md#aspnet-core-performance-guidance).
 
 ## Performance examples
 
