@@ -635,7 +635,7 @@ repo-metrics/
 ├── templates/  
 │   └── report.html.j2      \# Jinja2 HTML template (embedded at build time)  
 ├── pyproject.toml  
-├── instructions/README.md  
+├── README.md  
 └── tests/  
     ├── fixtures/            \# sample files per language  
     └── test\_\*.py

@@ -467,3 +467,49 @@ The cleanup uses docs/instructions-directory, based on synchronized main at 9f16
 All files in the captured move map are in scope, plus the four entry files and affected incoming references.
 No runtime interfaces change. No design pattern is required for this file relocation.
 Keep the operating workflow and shared engineering policies unchanged except for their relocated paths.
+
+## Profile selector/modifier implementation
+
+Authorized by the owner's reading-tree request on 20 October 2026.
+The README trees are committed separately from the directory cleanup.
+
+Files to create: scripts/configure-instructions.sh, scripts/configure_instructions.py,
+and scripts/tests/test_configure_instructions.py.
+Files to update: instructions/REPO.md, instructions/README.md, .github/README.md,
+instructions/maintenance/instructions-plan.md, instructions/maintenance/instructions.status.md,
+instructions/project/PROJECT.md, instructions/project/CHANGELOG.md,
+instructions/project/CONVERSATION.md, and agentknowledge/history.jsonl.
+
+No pattern required - simple functions suffice. The script edits Markdown configuration, not application architecture.
+Keep CLI input/output separate from parsing, validation, preview, and filesystem writes.
+No HTTP or service layer is involved.
+
+Public CLI: configure-instructions.sh [--root PATH] [--answers JSON] [--dry-run | --apply | --check].
+With no answer file or read-only flag, interview the user about component selections and actual source facts.
+JSON answers use saas_product and a components object keyed by stable component identifier.
+Component fields are enabled, source_paths, targets, languages, platforms, saas_client, sdk_component, and deployment.
+Omitted fields preserve existing values. An unknown field is an error rather than a silent omission.
+Manual profile edits remain supported. The Markdown profile remains the single source of truth.
+
+1. Write failing end-to-end tests for initialization, modification, preservation, validation, and read-only behavior.
+2. Implement the Python standard-library editor and a Bash forwarding wrapper.
+3. Preview changed configuration and the managed AGENTS block before the user applies the plan.
+4. Copy missing generic guides and root entries, preserving existing guides and project-owned files.
+5. Validate enabled fields, unique identifiers, target names, source paths, project paths, and SDK references before writes.
+6. Report missing language/platform guide coverage without substituting Apple or browser instructions.
+7. Reject paths outside the target repository, symlink destinations, and malformed managed blocks.
+8. Verify repeatability, custom components, handwritten content, disabled template values, and invalid-input no-write behavior.
+9. Document setup, modification, JSON input, and check commands. Record actual test outcomes.
+
+Project facts are never inferred from language examples. Missing facts remain explicitly unspecified.
+Initialization does not create application directories or modify application code, Git, deployments, or credentials.
+Generic guide updates remain a separate operation. Existing generic guides are preserved.
+
+### Selector outcome
+
+Implemented the Bash entry, standard-library Python editor, and 35 integration tests.
+Added instructions/maintenance/profile-selector-validation.md to record checks and limits.
+Initialization and modification share the existing Markdown profile.
+The interview, JSON updates, preview, explicit apply, and read-only check are available.
+Preservation and rejection cases pass, including legacy-encoded facts and aliased project-file paths.
+Shared workflow wording remains unchanged apart from relocated paths and trailing whitespace.

@@ -18,7 +18,7 @@ This repository contains instructions for coding agents, primarily Claude and Ge
 
 The CLAUDE.md and GEMINI.md file reference AGENTS.md and then specify the role that the agent should play. AGENTS.md sets the main the context and the agent specific instructions set the roles.
 
-Instead of using a monolithic, single instruction file, the AGENTS.md file references multiple individual files for specific instructions. It also tells the agent how to clean, build, test and run the code. 
+Instead of using a monolithic, single instruction file, the AGENTS.md file references multiple individual files for specific instructions. It also tells the agent how to clean, build, test and run the code.
 
 These instructions cover Swift apps for macOS and iOS, Go and Rust tools, Java and .NET 10.0+ applications, and TypeScript/JavaScript/HTML projects.
 Existing Python, SQL, CSS, and SCSS guidance also applies where those languages are used.
@@ -36,7 +36,9 @@ The profile identifies project facts and local refinements, then selects enabled
 instructions/project/PROJECT.md contains facts only. instructions/project/ADDITIONAL.md contains project-specific instructions and emerging lessons.
 
 Use the [profile template](PROJECT_PROFILE_TEMPLATE.md), [facts template](PROJECT_TEMPLATE.md), and [refinement template](ADDITIONAL_TEMPLATE.md).
-Follow [manual setup](REPO.md#manual-setup) for a new project or edit an existing profile in place.
+Follow [manual setup](REPO.md#manual-setup) or use the [profile selector](REPO.md#profile-selector) to initialize or modify selections.
+Run `./scripts/configure-instructions.sh --root /path/to/project` from this checkout for the interview.
+Use `--check` for read-only validation and `--answers <json-file> --dry-run` to preview repeatable selections.
 This repository's active profile describes the instruction library itself. Application examples do not enable application components here.
 Generic instruction updates preserve project-owned profiles, facts, and refinements.
 
@@ -90,7 +92,7 @@ For example, a Swift-only model change does not require C#, Java, or Rust instru
 The file [LANGUAGE.md](LANGUAGE.md) continues to define natural-language writing style.
 Shared guides hold common rules. Target and language guides select details for the changed work.
 
-These instructrions are live. They are updated as and when new behaviors are encountered and need guidance. 
+These instructrions are live. They are updated as and when new behaviors are encountered and need guidance.
 
 The instructions in this repository are *horizontal* in nature. That is, they are about how to write reasonably good code in a clean, structured manner. These instructions should be combined with other instructions for architecture, code structure, do's and don'ts to get output that works.
 

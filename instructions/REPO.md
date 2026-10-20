@@ -50,7 +50,7 @@ Preserve instructions/project/ when distributing or updating the generic guides.
 
 Unchecked example components may retain template placeholders. They do not select guides or require source paths.
 For an existing setup, edit its profile and local files in place. Preserve handwritten content and local refinements.
-The interview script remains a future editor of this same profile. Manual selection requires no script or external dependency.
+Use the [profile selector](#profile-selector) to interview or update the same profile. Manual selection requires no script or external dependency.
 
 ### Selection contract
 
@@ -157,3 +157,100 @@ You must always update `instructions/project/CONVERSATION.md` with a brief descr
 ## Commit records
 
 You must always commit all changes to `git` with a concise description of changes made after each set of changes. This ensures that work is not lost.
+
+## Profile selector
+
+Run the selector from this instruction-library checkout. Use Python 3.10 or later and Bash.
+The target repository must exist. Its application source directories must already exist before their components are enabled.
+The selector uses the same Markdown profile as manual setup. It does not create a second configuration system.
+
+### Interview and modify
+
+```bash
+./scripts/configure-instructions.sh --root /path/to/project
+```
+
+The interview asks whether the product is SaaS, then asks about each component.
+For an enabled component, supply actual source paths, targets, languages, platforms, SDK links, and deployment facts.
+Use comma-separated values for list fields. Press Enter to retain an existing value.
+Add a component identifier when separate languages or platforms need separate scopes.
+Disable a component through its Enabled choice. Keep identifiers stable when other components reference them.
+The interview preserves the existing scoped-example checkboxes. Edit those manually when the actual project requires an example.
+
+The selector previews profile and root AGENTS changes, lists additions, and asks before applying them.
+Answer no to cancel without writes.
+To inspect the installed selections without an interview, use these commands:
+
+```bash
+./scripts/configure-instructions.sh --root /path/to/project --dry-run
+./scripts/configure-instructions.sh --root /path/to/project --check
+```
+
+The dry run previews missing files and leaves existing selections unchanged.
+The check validates installed configuration, configured project files, enabled source paths, SDK references, routing, and selected target/language guide files.
+A check reports missing files instead of installing them.
+Neither command writes files. A successful check does not validate application builds or every transitive instruction link.
+
+### Repeatable selections
+
+Save explicit selections in a JSON answer file when an interview is unsuitable.
+The answer file is input to the editor. The generated Markdown profile remains the active configuration.
+Use these field names and types:
+
+```json
+{
+    "saas_product": false,
+    "components": {
+        "native-client": {
+            "enabled": true,
+            "source_paths": ["src/MyApp"],
+            "targets": ["apps"],
+            "languages": ["Swift"],
+            "platforms": ["iOS", "iPadOS", "macOS"],
+            "saas_client": false,
+            "sdk_component": "none",
+            "deployment": "native application"
+        }
+    }
+}
+```
+
+Replace the example path with an existing source path.
+To preview and then apply the same answers, use these commands:
+
+```bash
+./scripts/configure-instructions.sh --root /path/to/project --answers /path/to/answers.json --dry-run
+./scripts/configure-instructions.sh --root /path/to/project --answers /path/to/answers.json --apply
+```
+
+Omitted components and fields retain their existing values. Unknown JSON fields are errors.
+New component identifiers need complete values before their Enabled choice can be true.
+For a native SaaS client, select SaaS product and set saas_client to true.
+Normally, sdk_component names an enabled component whose targets include sdks.
+Use none only for an explicit integration choice without a configured SDK component. The selector reports that gap for review.
+An SDK can generate several languages. It remains a separate selectable component even when no native client exists.
+
+The output lists selected target and language guides. Narrow that set to the task and add the applicable shared concerns.
+The selector reports absent language or native-platform coverage. It does not substitute Swift for Android or ChromeOS.
+Use the [README trees](README.md#scenario-reading-trees) to inspect common and conditional reading.
+
+### Preservation and write boundaries
+
+Initialization copies missing shared files from instructions/ and missing root agent entries.
+It excludes the source repository's project/ and maintenance/ directories.
+Missing project-owned files use fresh template GUIDs. Unknown project facts remain explicitly unspecified.
+The selector preserves installed shared guides, custom component notes, project facts, and local refinements.
+The selector updates only the selected Markdown field lines and the marked root AGENTS block.
+Existing text outside that block remains unchanged. Malformed blocks require manual repair before configuration.
+Manual profiles remain editable without the script.
+
+Configured project-file paths resolve from the target repository root. Custom safe paths remain unchanged.
+Project facts and refinements need separate Markdown files and cannot replace shared guides or root entries.
+Paths cannot escape the repository, enter .git, or traverse symlinks.
+Repeated identical selections produce no changes after initialization.
+Application code, source directories, deployments, credentials, Git state, and existing generic guides remain unchanged.
+Each file replacement is atomic. A filesystem failure can interrupt a multi-file apply, so inspect the reported error and retry.
+Generic guide upgrades remain a separate reviewed operation.
+
+The CLI returns 0 for a successful check, preview, apply, no-change result, or cancelled confirmation.
+It returns 2 for invalid input, missing required configuration, or a filesystem error.

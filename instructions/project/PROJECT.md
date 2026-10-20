@@ -33,6 +33,9 @@ Created: 2026
 | Project selections | instructions/project/PROJECT_PROFILE.md |
 | Local refinements | instructions/project/ADDITIONAL.md |
 | Plan and status | instructions/maintenance/instructions-plan.md, instructions/maintenance/instructions.status.md |
+| Profile selector | scripts/configure-instructions.sh, Python 3.10+, Bash, Python standard library |
+| Selector test command | python3 -m unittest discover -s scripts/tests -v |
+| Selector read-only check | ./scripts/configure-instructions.sh --check |
 | Repository-tool documentation | instructions/REPO_TOOLS_README.md |
 | Knowledge records | agentknowledge/history.jsonl and agentknowledge/lcv_constraints.yaml |
 | Source encoding | instructions/FRONTEND.md and instructions/DOCUMENTATION.md use CP1252. Most other guides use UTF-8. |
@@ -41,4 +44,5 @@ Created: 2026
 
 The language snippets are examples for consuming projects. They are not a deployed application in this repository.
 The current change has no Java server, browser application, generated SDK, or native application artifact to build.
+The profile configurator is a local Python CLI with a Bash entry point and isolated filesystem integration tests.
 The Java SaaS profile under instructions/maintenance/examples/ is a fictional instruction-routing fixture.

@@ -15,6 +15,7 @@ The [instruction library](../instructions/README.md) contains shared engineering
 Start with [AGENTS.md](../AGENTS.md). The other root agent entries are CLAUDE.md, GEMINI.md, and CODEX.md.
 The [scenario reading trees](../instructions/README.md#scenario-reading-trees) show the relevant files for native apps, SaaS clients, web SaaS, websites, and CLI tools.
 [Project configuration](../instructions/REPO.md#project-configuration) selects the guides needed for each task.
+The [profile selector](../instructions/REPO.md#profile-selector) initializes or modifies the same Markdown selections through an interview or JSON input.
 Project-owned files live under instructions/project/. Instruction maintenance records live under instructions/maintenance/.
 The specs/ directory is reserved for actual product and repository specifications.
 

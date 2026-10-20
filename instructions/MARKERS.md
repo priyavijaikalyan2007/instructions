@@ -119,7 +119,7 @@ Use these tags for targeted follow-up by other agents. Align with `instructions/
 
 ### 2.5 Annotation Alignment
 
-The semantic markers above complement the standard annotations defined in `instructions/COMMENTING.md` 
+The semantic markers above complement the standard annotations defined in `instructions/COMMENTING.md`
 (`TODO`, `FIXME`, `SECURITY`, `PERF`, etc.). Use annotations for *status* (what state is this code in?) 
 and semantic markers for *navigation* (where does this code fit in the system?). 
 Both are captured by the repository index (see `instructions/REPO_INDEX.md`).

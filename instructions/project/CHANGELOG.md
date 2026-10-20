@@ -13,6 +13,9 @@ Created: 2026
 
 ## 20 October 2026
 
+- Added a profile interview/editor with preview, JSON updates, read-only checks, SDK validation, and project-content preservation.
+- Added 35 isolated CLI integration tests, including the five reading scenarios.
+
 - Added README reading trees for standalone native apps, native SaaS clients, web SaaS, static websites, and CLI tools.
 
 - Changed instruction layout to instructions/, with project-owned context and maintenance records in separate subdirectories.

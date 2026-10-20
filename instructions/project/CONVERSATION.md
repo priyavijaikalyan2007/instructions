@@ -424,3 +424,24 @@ Added a shared baseline and five scenario trees to instructions/README.md, linke
 Trees distinguish direct and conditional reading, actual language choices, generated SDK boundaries, and optional native SaaS clients.
 The author can compare each tree against the active profile and manually inspect its relevant guides.
 The next step is a preview-first initializer/modifier for the same Markdown profile, without changing generic engineering policies.
+
+## 20 October 2026: profile selector implementation
+
+### Outcome for the preceding selector request
+
+Implemented scripts/configure-instructions.sh and scripts/configure_instructions.py against the existing Markdown profile.
+The interview initializes or modifies enabled components and actual scope facts. JSON answers support repeatable partial edits.
+Preview and check modes are read-only. Applying changes requires an explicit CLI choice or --apply.
+Missing shared guides and root entries are copied from this checkout. Existing generic guides remain unchanged.
+Project facts and refinements are created only when absent, with fresh GUIDs and explicit unspecified facts.
+Handwritten component notes, project-file bytes, and root AGENTS content outside the managed block remain intact.
+Validation rejects malformed metadata, missing source paths, invalid SDK links, unsafe paths, symlinks, and conflicting project files before writes.
+Missing language/platform coverage is reported without substituting unrelated language instructions.
+Added 35 integration tests, including the five scenarios, real interview, repeated updates, cancellation, and preservation/error cases.
+Tests were written and observed failing before their implementations. All tests now pass.
+The repo profile check passes and a dry run reports No changes. Bash syntax and Python 3.10 grammar checks pass.
+Directory integrity checks preserve the original 559 code blocks, source encodings, headers, and append-only history.
+The ten added code blocks contain README trees and selector usage examples. No new Markdown link defects were introduced.
+Removed inherited trailing whitespace from the relocated master and changed prose lines, without altering workflow rules.
+Documented usage and filesystem/runtime limits in instructions/REPO.md and the selector validation report.
+Prepare one review PR with separate directory, reading-map, and selector commits. The owner will merge.

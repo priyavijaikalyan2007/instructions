@@ -13,7 +13,7 @@ Created: 2026
 
 Updated: 20 October 2026.
 
-## Current phase: directory cleanup
+## Current phase: directory cleanup, reading trees, and profile selector
 
 PRs #1 and #2 are merged and closed. Local main is synchronized at 9f16499.
 The three completed review branches are deleted locally and remotely after checking ancestry.
@@ -21,7 +21,13 @@ The active review branch is docs/instructions-directory. The owner will merge th
 Shared instructions now live in instructions/, project-owned context in instructions/project/, and maintenance records in instructions/maintenance/.
 Root AGENTS.md routes to instructions/AGENTS.md. The other root entry files remain CLAUDE.md, CODEX.md, and GEMINI.md.
 All original 559 code blocks, encodings, and headers are preserved. No new Markdown link defects were introduced.
-The owner next requested scenario reading trees and a profile selector/modifier against the existing Markdown schema.
+The five requested reading trees and shared baseline are implemented in instructions/README.md.
+The Bash/Python selector initializes and modifies the same Markdown profile, with interview and JSON inputs.
+It previews changes, validates SDK links and paths, and preserves handwritten project facts, local rules, custom notes, and root text.
+All 35 integration tests pass. The current repo passes --check and --dry-run reports No changes.
+Validation and limits are recorded in [profile-selector-validation.md](profile-selector-validation.md).
+Original code blocks remain intact. The ten new blocks are six reading trees and four CLI/JSON examples.
+The branch will be pushed for owner review without merging.
 
 ## Completed phase: subject consolidation
 
