@@ -363,48 +363,59 @@ Its policy corrections remain proposals. The earlier callout-removal plan is sup
 
 ## Proposal: project profiles and native SaaS clients
 
-Status: proposed for owner review on 20 October 2026. No router, template, or setup script changes are implemented.
+Status: revised for owner review on 20 October 2026. No router, template, or setup script changes are implemented.
+This revision replaces the earlier proposal for service relationships across repositories.
 
-The previous native audit missed applications that act as SaaS clients.
-SAAS.md currently describes backend/frontend composition and must eventually include native client relationships.
-SaaS is a product relationship, not a requirement that each client repository contain backend or browser code.
+Treat every consuming repository as one monolith with selectable components.
+Possible components include frontend, static assets, backend, persistence, documentation, website, generated SDKs, and native clients.
+Native clients are optional. A SaaS can have no native client, one native platform, or several native platforms.
+No cross-repository discovery, ownership model, or coordination is in scope.
+Select component paths, platforms, languages, and capabilities within that repository.
+Task scope determines which selected components and guides the agent actually reads.
 
-Use three separate concerns:
+Separate reusable instructions, project configuration, project facts, and local refinements:
 
-- AGENTS.md and shared guides contain reusable routing and engineering instructions.
-- PROJECT_PROFILE.md records explicit choices for each component, including paths, targets, platforms, languages, and service relationships.
-- PROJECT.md records business context, actual architecture, directory structure, commands, environments, release procedures, and local constraints.
+| File | Responsibility |
+| --- | --- |
+| AGENTS.md and shared guides | Generic entry point, engineering rules, scope selection, and links to the configured project files. |
+| PROJECT_PROFILE.md | Component choices, source paths, platforms, languages, capabilities, and explicit context/refinement file references. |
+| PROJECT.md | Strictly project-specific information, such as business context, architecture facts, directory structure, configured commands, and environment names. No behavioral instructions. |
+| ADDITIONAL.md | Project-specific instructions, nuances, and emerging engineering lessons that are not yet reflected in the shared guides. |
 
-PROJECT.md may link existing README, specifications, runbooks, and component-owned guides instead of duplicating them.
-Large repositories may need separate local files per component. Those files describe project facts, not copies of generic instructions.
-Project facts select configured behavior. Local constraints and exceptions must be explicit rather than silently overriding shared policy.
+Use one canonical local refinement file, ADDITIONAL.md, rather than maintaining both possible filenames.
+The profile explicitly identifies PROJECT.md and ADDITIONAL.md. AGENTS.md explicitly requires reading the configured refinement file.
+Project facts may link existing specifications and source manifests without duplicating them.
+Command values are configuration facts. Rules about how agents execute commands belong in generic guides or ADDITIONAL.md.
+Generic instruction updates must preserve the profile, facts, and local refinement files.
+
+Most native SaaS clients consume SDKs generated from the API specification and Swagger tooling.
+That generated SDK is the normal API integration boundary. Do not assume an additional handwritten client abstraction is needed.
+Keep generator configuration and output paths in project configuration or project facts.
+Select SDK guidance and affected languages when the task changes generation, contracts, or generated-client integration.
+Native app guidance still covers app-side session behavior, secure credential storage, and user-facing failures where applicable.
+Do not assume offline editing, background synchronization, tenants, or a native client at all.
+SAAS.md should describe the optional combination of browser, backend, database, SDK, and native surfaces.
+APPS.md should identify the native SaaS client choice without imposing browser implementation rules.
 
 Recommend a manually editable profile first, with an interview script later as another editor of the same profile.
-Keep profile choices out of the generic AGENTS.md body. A small bootstrap region can reference the profile and project context.
-Do not keep independent checkbox, generated-reference, and script-configuration copies of the same choices.
-The script should preserve handwritten context, show its proposed diff, and make repeated identical runs produce no changes.
-It should initialize and modify instruction setup without changing application code or deployment state.
+Keep configuration choices in one place. A small AGENTS.md bootstrap section references the configured files.
+Avoid independent checkbox, generated-reference, and script-configuration copies of the same choices.
+The script should preserve handwritten context and refinements, show its proposed diff, and produce no changes for repeated identical answers.
+It initializes or modifies instruction configuration without changing application code or deployment state.
 
-Represent components separately from products and service relationships.
-For example, a local iOS/Swift component can consume a SaaS API whose C# backend lives elsewhere.
-That client task selects native, Swift, client-contract, authentication, and applicable shared concerns.
-It does not select backend implementation or database migrations merely because the remote service uses C#.
-A repository containing both components selects both when a task changes both sides.
-Language selection remains attached to actual component source, not assumed from an operating system.
-
-The native SaaS client profile should route to existing generic rules where possible.
-Proposed coverage includes sign-in/out and session renewal, native token storage, server-enforced authorization, API/SDK compatibility, and user-facing network/session failures.
-Select account/tenant/workspace transitions, synchronization, offline behavior, and local cache cleanup only where the product supports those capabilities.
-Do not assume every SaaS client needs offline editing, background synchronization, a tenant model, or a browser login implementation.
-Browser shell, SQL, authorization-service, branding, directory, and deployment specifics belong to declared project context or clearly scoped examples.
+ADDITIONAL.md also preserves lessons found during implementation.
+For a reusable lesson, propose a generalized update to the authoritative shared guide.
+Remove private product details from that proposed generic rule while retaining the applicable constraint and reasoning.
+After the shared rule is adopted, remove or shorten a redundant local instruction while preserving any remaining project nuance.
+Local lessons do not silently modify or distribute the shared instruction source.
 
 Proposed implementation order:
 
-1. Agree on the profile fields, component relationships, and ownership of local context.
-2. Prototype manual templates and routing for a standalone Apple app, a native SaaS client, and a mixed SaaS repository.
-3. Apply the audited scope corrections and separate product-specific facts from reusable rules.
-4. Validate representative tasks using agents with fresh context. Include external-service clients and unsupported platform-guide combinations.
-5. Add the interview script against the same profile model after manual selection works.
+1. Agree on component selections and the division between profile, facts, and refinements.
+2. Prototype manual configuration and templates for a standalone Apple app, a SaaS without native clients, and a SaaS with native clients.
+3. Apply the audited scope corrections and separate project-specific facts and instructions from generic rules.
+4. Validate representative tasks using agents with fresh context, including disabled components and missing platform-guide coverage.
+5. Add the interview script against the same profile after manual selection works.
 
-Coverage gaps must remain explicit. Selecting Android or ChromeOS does not imply that detailed platform guidance already exists.
+Coverage gaps remain explicit. Selecting Android or ChromeOS does not imply that detailed platform guidance already exists.
 No pattern required for this proposal. Script interfaces and implementation details remain for a later approved design.

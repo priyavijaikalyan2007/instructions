@@ -66,7 +66,10 @@ Proposed corrections are recorded for review. This pass changes no engineering p
 
 ## Proposed next phase
 
-The owner raised native SaaS clients and project setup templates.
-The [proposal](./instructions-plan.md#proposal-project-profiles-and-native-saas-clients) separates generic rules, component choices, and project context.
-It recommends manual selection first and an interview script that later edits the same profile.
-No routing, template, or script changes are implemented. Proposal records remain local for discussion.
+The [revised proposal](./instructions-plan.md#proposal-project-profiles-and-native-saas-clients) assumes one monolithic repository with optional components.
+Native SaaS clients, their platforms, and generated SDK integration are selectable.
+PROJECT_PROFILE.md holds configuration, PROJECT.md holds project facts only, and ADDITIONAL.md holds local instructions and emerging lessons.
+The profile and AGENTS.md explicitly reference the refinement file. Reusable lessons can be proposed for the generic guides.
+Manual selection comes first. A later interview script edits the same profile while preserving local files.
+No cross-repository coordination is in scope. No routing, template, or script changes are implemented.
+Proposal records remain local for discussion.

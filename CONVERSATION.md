@@ -313,3 +313,18 @@ Keep generic AGENTS.md as the router. A later interview script edits the same pr
 A client of an external C# SaaS selects client contracts and native concerns, not backend implementation rules by default.
 Recorded staged implementation and representative validation cases in specs/instructions-plan.md.
 This is a proposal for review. No generic instructions, templates, or scripts changed. The proposal records remain local.
+
+## 20 October 2026: refine monolith profile and local instruction ownership
+
+### User request
+
+> Most SDKs that the native clients for a SaaS will be auto-generated from OpenSpec/Swagger. That should be sufficient for what the native clients do. At this point, we consider every repo to be a monolith containing the frontend, static, backend, docs, website, sdks and native clients. there is no need to bring into scope "other repos" at this time. I would limit PROJECT.md to refrence strictly project specific information, not instructions. As you said, keeping the instructions generic, selectable based on scope makes them easy to update, distribute and merge. The only thing we have to keep in mind is that sometimes, as work gets done, new patterns emerge that might need to get folded into the original instructions. A separate file named "ADDITIONAL.md" (or ADDITIONAL_INSTRUCTIONS.md) might be the place for that and calleed out explicitly in the project / repo config and agents config would be good. And also, a native SaaS client may never exist; that itself is a choice.
+
+### Revised proposal
+
+Keep all selected components within one monolithic repository. Native SaaS clients are optional.
+Use generated SDKs as the normal native client integration boundary. Cross-repository coordination is outside scope.
+PROJECT.md contains project facts only. PROJECT_PROFILE.md contains scope choices and explicit file references.
+ADDITIONAL.md holds local instructions and emerging patterns, and is explicitly selected through the profile and AGENTS.md.
+Propose reusable lessons for the authoritative generic guides, then remove redundant local copies after adoption.
+Updated the current proposal and status. No generic rules, templates, or setup scripts changed. Records remain local.
