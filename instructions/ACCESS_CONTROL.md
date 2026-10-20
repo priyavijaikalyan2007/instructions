@@ -12,8 +12,8 @@ Created: 2026
 
 This document contains the Knobby authorization implementation example.
 Apply its services, tuple model, tenant middleware, and session cookies only when that project choice is checked in instructions/project/PROJECT_PROFILE.md.
-Other applications use their configured authorization model and the shared [security rules](SECURITY_GUIDELINES.md#ownership-and-authorization).
-Native OS permission prompts and platform share sheets follow instructions/APPS.md. They do not select this server architecture.
+Other applications use their configured authorization model and the shared [security rules](SECURITY_GUIDELINES.md#tenant-isolation).
+Native OS permission prompts and platform share sheets follow instructions/apps/APPS.md. They do not select this server architecture.
 Within the selected Knobby example, new applications and features must follow the patterns below.
 
 ## Architecture Overview

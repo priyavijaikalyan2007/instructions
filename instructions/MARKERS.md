@@ -33,11 +33,11 @@ This allows agents to read the first 20 lines of a file and immediately understa
 
 ### TypeScript Format
 
-See [TypeScript](TYPESCRIPT.md#navigation-markers).
+See [TypeScript](typescript/TYPESCRIPT.md#navigation-markers).
 
 ### C# Format
 
-See [C#](CSHARP.md#navigation-markers).
+See [C#](csharp/CSHARP.md#navigation-markers).
 
 ### Swift, Go, Rust, and Java Format
 
@@ -53,35 +53,35 @@ Keep required copyright information in the existing file header.
 
 ### Python Format
 
-See [Python](PYTHON.md#navigation-markers).
+See [Python](python/PYTHON.md#navigation-markers).
 
 ### Swift Format
 
-See [Swift](SWIFT.md#navigation-markers).
+See [Swift](swift/SWIFT.md#navigation-markers).
 
 ### Go Format
 
-See [Go](GO.md#navigation-markers).
+See [Go](go/GO.md#navigation-markers).
 
 ### Rust Format
 
-See [Rust](RUST.md#navigation-markers).
+See [Rust](rust/RUST.md#navigation-markers).
 
 ### Java Format
 
-See [Java](JAVA.md#navigation-markers).
+See [Java](java/JAVA.md#navigation-markers).
 
 ### SCSS Format
 
-See [SCSS](SCSS.md#navigation-markers).
+See [SCSS](scss/SCSS.md#navigation-markers).
 
 ### HTML Format
 
-See [HTML](HTML.md#navigation-markers).
+See [HTML](html/HTML.md#navigation-markers).
 
 ### CSS Format
 
-See [CSS](CSS.md#navigation-markers).
+See [CSS](css/CSS.md#navigation-markers).
 
 ## 2. In-Code Semantic Tags
 
@@ -135,11 +135,11 @@ We use **Wiki-Style Links** `[[ConceptName]]` in comments to reference shared co
 
 **Example:**
 
-See [TypeScript](TYPESCRIPT.md#3-global-concept-registry).
+See [TypeScript](typescript/TYPESCRIPT.md#3-global-concept-registry).
 
-See [SCSS](SCSS.md#3-global-concept-registry).
+See [SCSS](scss/SCSS.md#3-global-concept-registry).
 
-See [C#](CSHARP.md#3-global-concept-registry).
+See [C#](csharp/CSHARP.md#3-global-concept-registry).
 
 ---
 
@@ -149,15 +149,15 @@ Use clear section headers so agents can scan large files quickly.
 
 **TypeScript:**
 
-See [TypeScript](TYPESCRIPT.md#4-section-markers-long-files).
+See [TypeScript](typescript/TYPESCRIPT.md#4-section-markers-long-files).
 
 **SCSS:**
 
-See [SCSS](SCSS.md#4-section-markers-long-files).
+See [SCSS](scss/SCSS.md#4-section-markers-long-files).
 
 **C#:**
 
-See [C#](CSHARP.md#4-section-markers-long-files).
+See [C#](csharp/CSHARP.md#4-section-markers-long-files).
 
 ---
 

@@ -104,3 +104,13 @@ No new Markdown link defects were introduced. Existing encoding, headers, workfl
 The prior audits remain dated evidence with pointers to this follow-up.
 The older TDD-exception and production-fix permission-policy conflicts remain outside this change.
 No application build or runtime test is claimed for these documentation changes.
+
+
+## 21 October 2026: scoped guide reorganization
+
+PR #4 merged at bc2bafc before this work. Branch: refactor/scoped-guides-security.
+Completed target/language folders, WORKFLOW routing, preserved common rules, generalized README template, and security expansion.
+Validation: 50 selector tests, live profile check and dry run, preserved examples/headers/history, and zero new link defects.
+The .NET security harness accepted 3 valid responses and rejected 13 invalid responses.
+See scoped-guides-security-review.md for the move map, policy changes, preservation evidence, and test limits.
+Changes are committed locally for review. No push or merge is part of this update.

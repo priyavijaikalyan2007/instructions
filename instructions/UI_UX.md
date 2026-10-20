@@ -13,13 +13,13 @@ Created: 2026
 
 Read this guide for user-facing behavior in native apps, browser applications, websites, and interactive components.
 Read only the component profiles needed by the task in [UI_UX_COMPONENTS.md](UI_UX_COMPONENTS.md).
-[KEYBOARD.md](KEYBOARD.md) holds detailed browser shortcut tables and their focus scopes.
-[FRONTEND.md](FRONTEND.md) holds browser implementation. [APPS.md](APPS.md) holds native platform conventions.
-[SAAS.md](SAAS.md) holds the enterprise shell layout. [PERSISTENCE.md](PERSISTENCE.md) holds storage mechanics.
+[KEYBOARD.md](frontend/KEYBOARD.md) holds detailed browser shortcut tables and their focus scopes.
+[FRONTEND.md](frontend/FRONTEND.md) holds browser implementation. [APPS.md](apps/APPS.md) holds native platform conventions.
+[SAAS.md](saas/SAAS.md) holds the enterprise shell layout. [PERSISTENCE.md](PERSISTENCE.md) holds storage mechanics.
 
 The common behavior below applies where the interface has that capability.
 Browser catalog names, ARIA, CSS units, and Bootstrap examples describe browser implementations.
-Native UIs use their declared platform controls and accessibility APIs, as specified in instructions/APPS.md.
+Native UIs use their declared platform controls and accessibility APIs, as specified in instructions/apps/APPS.md.
 Named catalog components describe intended roles. Their availability comes from the consuming project's catalog.
 
 ## Read by task
@@ -474,7 +474,7 @@ Keep inline errors visible until corrected. Preserve user input and pending chan
 Do not report a failed command only in technical logs.
 
 Use [literate error content](LITERATE_ERRORS.md) for either presentation.
-Browser operation dialogs use the configured [error component](ERROR_DIALOG_COMPONENT.md).
+Browser operation dialogs use the configured [error component](frontend/ERROR_DIALOG_COMPONENT.md).
 Native interfaces use their platform equivalent. Bootstrap markup and browser API contracts remain browser-specific.
 
 ### Validation levels

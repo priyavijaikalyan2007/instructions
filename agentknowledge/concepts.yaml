@@ -13,6 +13,6 @@
   related: ["ProfileConfiguration"]
 
 - name: "ProfileConfiguration"
-  definition: "Validates and edits Markdown instruction scope while preserving project-owned content."
+  definition: "Validates Markdown scope, derives root guide links, and installs nested guides while preserving project-owned content."
   anchor_file: "scripts/configure_instructions.py"
   related: ["ProfileInterview"]

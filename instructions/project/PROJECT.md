@@ -18,8 +18,8 @@ Created: 2026
 | Repository | instructions |
 | Product | Generic coding-agent instructions and repository analysis tools |
 | Source | instructions/, the four root agent entries, scripts/, .github/, and agentknowledge/ |
-| Interview correction branch | fix/profile-interview-guidance |
-| Interview correction review | PR #4 in priyavijaikalyan2007/instructions |
+| Current review branch | refactor/scoped-guides-security |
+| Last merged review | PR #4 at bc2bafc in priyavijaikalyan2007/instructions |
 | Earlier merged reviews | PR #1, PR #2, and PR #3 in priyavijaikalyan2007/instructions |
 | Application runtime | none |
 | Generic build.sh or test.sh | absent |
@@ -29,7 +29,7 @@ Created: 2026
 | Subject | Fact |
 | --- | --- |
 | Generic entry point | AGENTS.md |
-| Shared agent workflow | instructions/AGENTS.md |
+| Shared agent workflow | instructions/WORKFLOW.md |
 | Agent entry files | CODEX.md, CLAUDE.md, GEMINI.md |
 | Project selections | instructions/project/PROJECT_PROFILE.md |
 | Local refinements | instructions/project/ADDITIONAL.md |
@@ -39,7 +39,7 @@ Created: 2026
 | Selector read-only check | ./scripts/configure-instructions.sh --check |
 | Repository-tool documentation | instructions/REPO_TOOLS_README.md |
 | Knowledge records | agentknowledge/history.jsonl and agentknowledge/lcv_constraints.yaml |
-| Source encoding | instructions/FRONTEND.md and instructions/DOCUMENTATION.md use CP1252. Most other guides use UTF-8. |
+| Source encoding | instructions/frontend/FRONTEND.md and instructions/DOCUMENTATION.md use CP1252. Most other guides use UTF-8. |
 
 ## Scope facts
 

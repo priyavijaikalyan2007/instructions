@@ -46,49 +46,49 @@ Use the same house style across languages. Language conventions govern names and
 
 Apply syntax-required exceptions from the selected language guide. Keep the remaining house rules unchanged.
 
-See [C#](CSHARP.md#indentation-and-line-length).
+See [C#](csharp/CSHARP.md#indentation-and-line-length).
 
 ### Brace Style
 
 Prefer **Allman style** braces in every brace-based language. Put the opening brace on its own line.
 Apply only the syntax exceptions documented in the selected language guide.
 
-See [C#](CSHARP.md#brace-style).
+See [C#](csharp/CSHARP.md#brace-style).
 
-See [TypeScript](TYPESCRIPT.md#brace-style).
+See [TypeScript](typescript/TYPESCRIPT.md#brace-style).
 
 ### Always Use Braces
 
 Always use braces around control-flow bodies where the language uses braces, even for a single statement.
 Do not replace a multi-step block with a terse conditional expression.
 
-See [C#](CSHARP.md#always-use-braces).
+See [C#](csharp/CSHARP.md#always-use-braces).
 
-See [TypeScript](TYPESCRIPT.md#always-use-braces).
+See [TypeScript](typescript/TYPESCRIPT.md#always-use-braces).
 
 ### Parentheses for Clarity
 
 Use parentheses around expressions even when operator precedence is obvious.
 
-See [C#](CSHARP.md#parentheses-for-clarity).
+See [C#](csharp/CSHARP.md#parentheses-for-clarity).
 
-See [TypeScript](TYPESCRIPT.md#parentheses-for-clarity).
+See [TypeScript](typescript/TYPESCRIPT.md#parentheses-for-clarity).
 
 ### Whitespace for Readability
 
 Use blank lines to separate logical groups of code.
 
-See [C#](CSHARP.md#whitespace-for-readability).
+See [C#](csharp/CSHARP.md#whitespace-for-readability).
 
-See [TypeScript](TYPESCRIPT.md#whitespace-for-readability).
+See [TypeScript](typescript/TYPESCRIPT.md#whitespace-for-readability).
 
 ### Parameter Alignment
 
 Align parameters using newlines and consistent indentation.
 
-See [C#](CSHARP.md#parameter-alignment).
+See [C#](csharp/CSHARP.md#parameter-alignment).
 
-See [TypeScript](TYPESCRIPT.md#parameter-alignment).
+See [TypeScript](typescript/TYPESCRIPT.md#parameter-alignment).
 
 ---
 
@@ -113,39 +113,39 @@ Detailed naming tables and examples are in the selected language guide.
 
 ### C# Naming
 
-See [C#](CSHARP.md#naming).
+See [C#](csharp/CSHARP.md#naming).
 
 ### TypeScript / JavaScript
 
-See [JavaScript](JAVASCRIPT.md#naming), [TypeScript](TYPESCRIPT.md#naming).
+See [JavaScript](javascript/JAVASCRIPT.md#naming), [TypeScript](typescript/TYPESCRIPT.md#naming).
 
 ### SCSS / CSS
 
-See [CSS](CSS.md#naming), [SCSS](SCSS.md#naming).
+See [CSS](css/CSS.md#naming), [SCSS](scss/SCSS.md#naming).
 
 ### HTML Naming
 
-See [HTML](HTML.md#naming).
+See [HTML](html/HTML.md#naming).
 
 ### Python Naming
 
-See [Python](PYTHON.md#naming).
+See [Python](python/PYTHON.md#naming).
 
 ### Swift Naming
 
-See [Swift](SWIFT.md#naming).
+See [Swift](swift/SWIFT.md#naming).
 
 ### Go Naming
 
-See [Go](GO.md#naming).
+See [Go](go/GO.md#naming).
 
 ### Rust Naming
 
-See [Rust](RUST.md#naming).
+See [Rust](rust/RUST.md#naming).
 
 ### Java Naming
 
-See [Java](JAVA.md#naming).
+See [Java](java/JAVA.md#naming).
 
 ### Variable Naming Guidelines
 
@@ -153,23 +153,23 @@ See [Java](JAVA.md#naming).
 - Use descriptive names for everything else
 - Name variables in the domain of the application
 
-See [C#](CSHARP.md#variable-naming-guidelines).
+See [C#](csharp/CSHARP.md#variable-naming-guidelines).
 
 ## SCSS-Specific Rules
 
-See [SCSS](SCSS.md#scss-construction).
+See [SCSS](scss/SCSS.md#scss-construction).
 
 ### Variable Overrides
 
-See [SCSS](SCSS.md#scss-construction).
+See [SCSS](scss/SCSS.md#scss-construction).
 
 ### Nesting Depth
 
-See [SCSS](SCSS.md#scss-construction).
+See [SCSS](scss/SCSS.md#scss-construction).
 
 ### Avoid `!important`
 
-See [SCSS](SCSS.md#scss-construction).
+See [SCSS](scss/SCSS.md#scss-construction).
 
 ## File Organization
 
@@ -184,7 +184,7 @@ Use the filename and module rules in the selected language guide.
 
 Examples may show several labeled files together to explain a relationship. Split them at the file labels in actual code.
 
-See [C#](CSHARP.md#one-type-per-file).
+See [C#](csharp/CSHARP.md#one-type-per-file).
 
 Rationale: Searching for files is faster than searching in files.
 
@@ -201,9 +201,9 @@ If a function exceeds this limit, extract smaller functions with clear responsib
 
 Limit nesting to 3-4 levels. The first statement in a method is level 1. Use early returns to flatten logic.
 
-See [C#](CSHARP.md#nesting-limits).
+See [C#](csharp/CSHARP.md#nesting-limits).
 
-See [TypeScript](TYPESCRIPT.md#nesting-limits).
+See [TypeScript](typescript/TYPESCRIPT.md#nesting-limits).
 
 ---
 
@@ -213,33 +213,33 @@ See [TypeScript](TYPESCRIPT.md#nesting-limits).
 
 Use early returns to handle edge cases and invalid states at the beginning of functions or methods.
 
-See [C#](CSHARP.md#early-returns-guard-clauses).
+See [C#](csharp/CSHARP.md#early-returns-guard-clauses).
 
-See [TypeScript](TYPESCRIPT.md#early-returns-guard-clauses).
+See [TypeScript](typescript/TYPESCRIPT.md#early-returns-guard-clauses).
 
 ### Assertions and Preconditions
 
 Use assertions to validate assumptions and catch programming errors early in development.
 
-See [C#](CSHARP.md#assertions-and-preconditions).
+See [C#](csharp/CSHARP.md#assertions-and-preconditions).
 
-See [TypeScript](TYPESCRIPT.md#assertions-and-preconditions).
+See [TypeScript](typescript/TYPESCRIPT.md#assertions-and-preconditions).
 
-See [Python](PYTHON.md#assertions-and-preconditions).
+See [Python](python/PYTHON.md#assertions-and-preconditions).
 
 ### Constraints and Invariants
 
 Use type constraints and validation to enforce business rules.
 
-See [C#](CSHARP.md#constraints-and-invariants).
+See [C#](csharp/CSHARP.md#constraints-and-invariants).
 
-See [TypeScript](TYPESCRIPT.md#constraints-and-invariants).
+See [TypeScript](typescript/TYPESCRIPT.md#constraints-and-invariants).
 
 ### Exception Handling Patterns
 
-See [C#](CSHARP.md#exception-handling-patterns).
+See [C#](csharp/CSHARP.md#exception-handling-patterns).
 
-See [Python](PYTHON.md#exception-handling-patterns).
+See [Python](python/PYTHON.md#exception-handling-patterns).
 
 ---
 
@@ -247,13 +247,13 @@ See [Python](PYTHON.md#exception-handling-patterns).
 
 Avoid clever tricks. Write code that clearly expresses intent.
 
-See [C#](CSHARP.md#explicit-code-style).
+See [C#](csharp/CSHARP.md#explicit-code-style).
 
 When using advanced techniques (SIMD, specific algorithms), explain them in comments with references.
 
-See [C#](CSHARP.md#explicit-code-style).
+See [C#](csharp/CSHARP.md#explicit-code-style).
 
-See [TypeScript](TYPESCRIPT.md#explicit-code-style).
+See [TypeScript](typescript/TYPESCRIPT.md#explicit-code-style).
 
 ---
 
@@ -261,31 +261,31 @@ See [TypeScript](TYPESCRIPT.md#explicit-code-style).
 
 ### Python-Specific
 
-See [Python](PYTHON.md#language-constructs).
+See [Python](python/PYTHON.md#language-constructs).
 
 ### TypeScript-Specific
 
-See [TypeScript](TYPESCRIPT.md#language-constructs).
+See [TypeScript](typescript/TYPESCRIPT.md#language-constructs).
 
 ### Swift-Specific
 
-See [Swift](SWIFT.md#language-constructs).
+See [Swift](swift/SWIFT.md#language-constructs).
 
 ### Go-Specific
 
-See [Go](GO.md#language-constructs).
+See [Go](go/GO.md#language-constructs).
 
 ### Rust-Specific
 
-See [Rust](RUST.md#language-constructs).
+See [Rust](rust/RUST.md#language-constructs).
 
 ### Java-Specific
 
-See [Java](JAVA.md#language-constructs).
+See [Java](java/JAVA.md#language-constructs).
 
 ### C#-Specific
 
-See [C#](CSHARP.md#language-constructs).
+See [C#](csharp/CSHARP.md#language-constructs).
 
 ## Summary Checklist
 

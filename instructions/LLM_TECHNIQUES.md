@@ -11,6 +11,10 @@ Created: 2026
 
 # AI/ML Prompt Tuning Guide for Coding Agents
 
+For any implementation, read [AIML_SECURITY.md](AIML_SECURITY.md) and [SECURITY_GUIDELINES.md](SECURITY_GUIDELINES.md).
+Select the actual language and runtime controls. Technique selection does not replace authorization, isolation, or output validation.
+
+
 **Goal:** Stop "one-shotting" complex AI tasks. Select the appropriate prompting technique based on the complexity and nature of the request.
 
 ## Decision Matrix: Selecting a Technique

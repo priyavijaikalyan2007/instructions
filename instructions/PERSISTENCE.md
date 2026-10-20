@@ -13,14 +13,14 @@ Created: 2026
 
 Read this guide when work changes stored data, transactions, schema evolution, or persistence behavior.
 Backend services, native applications, and local tools can all persist data.
-SQL source conventions remain in [SQL.md](SQL.md). Browser storage adapters remain in [FRONTEND.md](FRONTEND.md).
+SQL source conventions remain in [SQL.md](sql/SQL.md). Browser storage adapters remain in [FRONTEND.md](frontend/FRONTEND.md).
 User-visible save and recovery behavior belongs to [UI_UX.md](UI_UX.md#save-and-navigation-safety).
 
 | Storage work | Related guidance |
 | --- | --- |
-| SQL syntax, naming, queries, indexes, and engine-specific tuning | [SQL.md](SQL.md) |
-| Native storage and document lifecycle | [APPS.md](APPS.md) |
-| Local files and CLI processing | [TOOLS.md](TOOLS.md) |
+| SQL syntax, naming, queries, indexes, and engine-specific tuning | [SQL.md](sql/SQL.md) |
+| Native storage and document lifecycle | [APPS.md](apps/APPS.md) |
+| Local files and CLI processing | [TOOLS.md](tools/TOOLS.md) |
 | Ownership and authorization | [ACCESS_CONTROL.md](ACCESS_CONTROL.md) |
 | Deletion and retention behavior | [DELETION.md](DELETION.md) |
 | Failure signals and protection against destructive writes | [PRAGMATIC_PROGRAMMER.md](PRAGMATIC_PROGRAMMER.md#degraded-behavior-and-data-integrity) |

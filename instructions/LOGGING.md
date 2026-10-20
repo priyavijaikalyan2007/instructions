@@ -14,13 +14,13 @@ Created: 2026
 ## Language and runtime integration
 
 Use the application's established logging API and configuration. A reusable library must not take control of the host's logging pipeline.
-Use [FRONTEND_LOGGING.md](FRONTEND_LOGGING.md) for the component logging mechanism when that guide applies.
+Use [FRONTEND_LOGGING.md](frontend/FRONTEND_LOGGING.md) for the component logging mechanism when that guide applies.
 
 Read the logging integration section in the selected language guide.
 Service/request metadata and deployment-environment rules apply to server components that have those concepts.
 Native Apple apps use Swift unified logging and local operation context. They do not invent HTTP requests or tenants for local actions.
 
-See [TOOLS.md](TOOLS.md#cli-output-and-diagnostics).
+See [TOOLS.md](tools/TOOLS.md#cli-output-and-diagnostics).
 Do not add a new logging dependency when the existing API meets the requirement.
 
 In high scale web services, logging is crucial to understand what happened when an issue occurs. 
@@ -294,7 +294,7 @@ This metadata **must be injected automatically**, not manually appended in each 
 ## 5. Correlation, Request, Tenant, User IDs
 
 The request/response rules below apply to service requests.
-For native local work, use operation, document, scene, or task context where relevant, as described in instructions/SWIFT.md.
+For native local work, use operation, document, scene, or task context where relevant, as described in instructions/swift/SWIFT.md.
 Carry service correlation information through a generated SDK when the configured service contract provides it.
 
 ### 5.1 Correlation ID
@@ -464,31 +464,31 @@ Use the correlation-safe helper for sensitive identifiers instead of logging the
 
 ### Go (slog + context)
 
-See [Go](GO.md#logging-examples).
+See [Go](go/GO.md#logging-examples).
 
 ### Java (SLF4J + Logback + MDC)
 
-See [Java](JAVA.md#logging-examples).
+See [Java](java/JAVA.md#logging-examples).
 
 ### C# (.NET + Serilog + AsyncLocal)
 
-See [C#](CSHARP.md#logging-examples).
+See [C#](csharp/CSHARP.md#logging-examples).
 
 ### Python (logging + contextvars)
 
-See [Python](PYTHON.md#logging-examples).
+See [Python](python/PYTHON.md#logging-examples).
 
 ### TypeScript / Node.js (Winston + AsyncLocalStorage)
 
-See [TypeScript](TYPESCRIPT.md#logging-examples).
+See [TypeScript](typescript/TYPESCRIPT.md#logging-examples).
 
 ### Swift (OSLog + explicit operation context)
 
-See [Swift](SWIFT.md#logging-examples).
+See [Swift](swift/SWIFT.md#logging-examples).
 
 ### Rust (tracing + operation spans)
 
-See [Rust](RUST.md#logging-examples).
+See [Rust](rust/RUST.md#logging-examples).
 
 ## 13. Enforcement Checklist for Agents
 

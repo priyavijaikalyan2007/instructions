@@ -128,7 +128,7 @@ This document outlines the core software construction principles and practices f
 ## Direct type compatibility
 
 This lesson concerns internal modules that share the same domain types.
-API serialization boundaries retain their explicit contracts and mappings from [API_GUIDELINES.md](API_GUIDELINES.md).
+API serialization boundaries retain their explicit contracts and mappings from [API_GUIDELINES.md](backend/API_GUIDELINES.md).
 
 - **"Align the source, don't bridge the gap."**
 - **Eliminate Converters:** If Module A produces data that Module B cannot consume directly:

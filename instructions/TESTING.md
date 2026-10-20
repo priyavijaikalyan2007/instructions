@@ -75,7 +75,7 @@ Integration tests verify that multiple components work together correctly. They 
 ### End-to-End Tests
 
 End-to-end tests validate complete user journeys using the tools for the affected surface.
-Browser journeys use tools such as Playwright or Selenium. Native Apple journeys use XCTest UI tests from instructions/APPS.md and instructions/SWIFT.md.
+Browser journeys use tools such as Playwright or Selenium. Native Apple journeys use XCTest UI tests from instructions/apps/APPS.md and instructions/swift/SWIFT.md.
 
 **Requirements:**
 - Required for critical user workflows
@@ -117,19 +117,19 @@ Retain machine-readable test results when the runner supports them. Distinguish 
 
 Each test should validate exactly one scenario or behavior. Never combine multiple test cases into a single test method.
 
-See [C#](CSHARP.md#one-test-per-scenario).
+See [C#](csharp/CSHARP.md#one-test-per-scenario).
 
 ### One Test Class Per Feature or Component
 
 Group related tests into a single test class. The class should correspond to the production class or feature being tested.
 
-See [C#](CSHARP.md#test-examples).
+See [C#](csharp/CSHARP.md#test-examples).
 
 ### Arrange-Act-Assert Pattern
 
 Structure every test using the Arrange-Act-Assert pattern. Use blank lines or comments to delineate sections in longer tests.
 
-See [C#](CSHARP.md#arrange-act-assert-pattern).
+See [C#](csharp/CSHARP.md#arrange-act-assert-pattern).
 
 ### Test Naming Conventions
 
@@ -146,7 +146,7 @@ Tests must be completely independent. They should not rely on execution order, s
 - Use unique identifiers for test data to prevent collision
 - Reset shared resources between tests
 
-See [C#](CSHARP.md#test-independence-and-isolation).
+See [C#](csharp/CSHARP.md#test-independence-and-isolation).
 
 ## Test Data Management
 
@@ -154,21 +154,21 @@ See [C#](CSHARP.md#test-independence-and-isolation).
 
 Use factory methods or builder patterns to create test data. This centralizes data creation, reduces duplication, and makes tests more readable.
 
-See [C#](CSHARP.md#test-factories-and-builders).
+See [C#](csharp/CSHARP.md#test-factories-and-builders).
 
-See [TypeScript](TYPESCRIPT.md#test-factories-and-builders).
+See [TypeScript](typescript/TYPESCRIPT.md#test-factories-and-builders).
 
 ### Test Fixtures
 
 For complex setup that is shared across multiple tests, use fixtures. Fixtures should be immutable or should provide fresh copies to each test.
 
-See [C#](CSHARP.md#test-fixtures).
+See [C#](csharp/CSHARP.md#test-fixtures).
 
 ### Avoiding Magic Values
 
 Never use unexplained literal values in tests. Use named constants, factory methods, or well-named variables that communicate intent.
 
-See [C#](CSHARP.md#avoiding-magic-values).
+See [C#](csharp/CSHARP.md#avoiding-magic-values).
 
 ## Mocking and Test Doubles
 
@@ -192,13 +192,13 @@ Use mocks to isolate the unit under test from its dependencies. Mock external se
 
 ### Mocking Best Practices
 
-See [C#](CSHARP.md#mocking-best-practices).
+See [C#](csharp/CSHARP.md#mocking-best-practices).
 
 ### Prefer Fakes Over Mocks for Complex Interactions
 
 When testing complex interactions, consider using in-memory fakes instead of mocks. Fakes provide more realistic behavior and catch more bugs.
 
-See [C#](CSHARP.md#prefer-fakes-over-mocks-for-complex-interactions).
+See [C#](csharp/CSHARP.md#prefer-fakes-over-mocks-for-complex-interactions).
 
 ## Comments and Documentation
 
@@ -208,19 +208,19 @@ Tests should be well-commented. Refer to instructions/COMMENTING.md for comprehe
 
 Test code should be self-explanatory through good naming and structure. Use comments to explain non-obvious decisions, edge cases, or the business context.
 
-See [C#](CSHARP.md#comment-the-why-not-the-what).
+See [C#](csharp/CSHARP.md#comment-the-why-not-the-what).
 
 ### Document Test Scenarios in Class Headers
 
 Add a summary comment to test classes explaining what scenarios are covered.
 
-See [C#](CSHARP.md#document-test-scenarios-in-class-headers).
+See [C#](csharp/CSHARP.md#document-test-scenarios-in-class-headers).
 
 ### Document Non-Obvious Test Data
 
 When test data represents specific scenarios, document what it represents.
 
-See [C#](CSHARP.md#document-non-obvious-test-data).
+See [C#](csharp/CSHARP.md#document-non-obvious-test-data).
 
 ## Logging in Tests
 
@@ -236,7 +236,7 @@ Tests should include strategic logging to aid debugging when tests fail. Refer t
 
 ### How to Log
 
-See [C#](CSHARP.md#how-to-log).
+See [C#](csharp/CSHARP.md#how-to-log).
 
 ## Code Coverage
 
@@ -312,31 +312,31 @@ Our applications use multiple technologies. Testing strategies must account for 
 
 ### TypeScript and JavaScript (Frontend)
 
-See [JavaScript](FRONTEND.md#browser-testing).
+See [JavaScript](frontend/FRONTEND.md#browser-testing).
 
 ### C# and .NET Core (Backend)
 
-See [C#](CSHARP.md#testing).
+See [C#](csharp/CSHARP.md#testing).
 
 ### Python (Operational Scripts)
 
-See [Python](PYTHON.md#testing).
+See [Python](python/PYTHON.md#testing).
 
 ### Swift (macOS and iOS)
 
-See [Swift](SWIFT.md#testing).
+See [Swift](swift/SWIFT.md#testing).
 
 ### Go
 
-See [Go](GO.md#testing).
+See [Go](go/GO.md#testing).
 
 ### Rust
 
-See [Rust](RUST.md#testing).
+See [Rust](rust/RUST.md#testing).
 
 ### Java
 
-See [Java](JAVA.md#testing).
+See [Java](java/JAVA.md#testing).
 
 ### Cross-Stack Testing
 
@@ -369,10 +369,10 @@ Scripts (Python):
 - Verify data integrity after migrations
 - Test rollback scenarios
 
-See [C#](CSHARP.md#sql-and-database-migrations).
+See [C#](csharp/CSHARP.md#sql-and-database-migrations).
 
 **Test stored procedures and functions:**
-See [C#](CSHARP.md#sql-and-database-migrations).
+See [C#](csharp/CSHARP.md#sql-and-database-migrations).
 
 ### Infrastructure as Code (Terraform)
 
@@ -388,17 +388,17 @@ terraform plan -detailed-exitcode
 ```
 
 **Test with Terratest (Go):**
-See [Go](GO.md#infrastructure-as-code-terraform).
+See [Go](go/GO.md#infrastructure-as-code-terraform).
 
 ### Configuration Files
 
 Test that configuration files are valid and complete:
 
-See [C#](CSHARP.md#configuration-files).
+See [C#](csharp/CSHARP.md#configuration-files).
 
 ### Shell Scripts
 
-See [Shell](SHELL.md#testing).
+See [Shell](shell/SHELL.md#testing).
 
 ## Asynchronous Testing
 
@@ -406,17 +406,17 @@ See [Shell](SHELL.md#testing).
 
 Async operations require special consideration to avoid race conditions and ensure deterministic tests.
 
-See [C#](CSHARP.md#testing-async-code).
+See [C#](csharp/CSHARP.md#testing-async-code).
 
 ### Testing Event-Driven Systems
 
-See [C#](CSHARP.md#testing-event-driven-systems).
+See [C#](csharp/CSHARP.md#testing-event-driven-systems).
 
 ### Handling Timeouts
 
 Always include timeouts when waiting for async operations in tests:
 
-See [C#](CSHARP.md#handling-timeouts).
+See [C#](csharp/CSHARP.md#handling-timeouts).
 
 ## Flaky Test Prevention and Handling
 
@@ -431,13 +431,13 @@ See [C#](CSHARP.md#handling-timeouts).
 ### Prevention Strategies
 
 **Inject time dependencies:**
-See [C#](CSHARP.md#prevention-strategies).
+See [C#](csharp/CSHARP.md#prevention-strategies).
 
 **Use deterministic identifiers:**
-See [C#](CSHARP.md#prevention-strategies).
+See [C#](csharp/CSHARP.md#prevention-strategies).
 
 **Isolate external dependencies:**
-See [C#](CSHARP.md#prevention-strategies).
+See [C#](csharp/CSHARP.md#prevention-strategies).
 
 ### Handling Existing Flaky Tests
 
@@ -448,7 +448,7 @@ When you encounter a flaky test:
 3. **Create a ticket:** Track the fix as technical debt
 4. **Fix the root cause:** Do not just retry the test
 
-See [C#](CSHARP.md#handling-existing-flaky-tests).
+See [C#](csharp/CSHARP.md#handling-existing-flaky-tests).
 
 ## CI/CD Integration
 
@@ -456,15 +456,15 @@ See [C#](CSHARP.md#handling-existing-flaky-tests).
 
 Configure CI pipelines to run tests at appropriate stages:
 
-See [C#](CSHARP.md#test-execution-in-pipelines).
+See [C#](csharp/CSHARP.md#test-execution-in-pipelines).
 
 ### Test Parallelization
 
 Enable parallel test execution where safe:
 
-See [C#](CSHARP.md#test-parallelization).
+See [C#](csharp/CSHARP.md#test-parallelization).
 
-See [JavaScript](JAVASCRIPT.md#test-parallelization).
+See [JavaScript](javascript/JAVASCRIPT.md#test-parallelization).
 
 ### Test Artifacts
 
@@ -492,7 +492,7 @@ Preserve test artifacts for debugging failed CI runs:
 
 ### Simple Performance Assertions
 
-See [C#](CSHARP.md#simple-performance-assertions).
+See [C#](csharp/CSHARP.md#simple-performance-assertions).
 
 ### Benchmark Tests
 
@@ -500,23 +500,23 @@ Use the benchmark or profiler tools in the selected language guide.
 Java uses the configured benchmark harness and Java Flight Recorder. Native Apple apps use Instruments and Xcode diagnostics.
 For .NET, use BenchmarkDotNet for detailed performance analysis:
 
-See [C#](CSHARP.md#benchmark-tests).
+See [C#](csharp/CSHARP.md#benchmark-tests).
 
 ## Security Testing
 
 ### Input Validation Tests
 
-See [C#](CSHARP.md#input-validation-tests).
+See [C#](csharp/CSHARP.md#input-validation-tests).
 
 ### Authentication and Authorization Tests
 
-See [C#](CSHARP.md#authentication-and-authorization-tests).
+See [C#](csharp/CSHARP.md#authentication-and-authorization-tests).
 
 ## Accessibility Testing
 
 Include accessibility checks in E2E tests:
 
-See [TypeScript](TYPESCRIPT.md#accessibility-testing).
+See [TypeScript](typescript/TYPESCRIPT.md#accessibility-testing).
 
 ## Summary Checklist
 
@@ -538,23 +538,23 @@ Before considering a feature complete, verify:
 
 ## Authorization Service Testing
 
-See [C#](CSHARP.md#authorization-service-testing).
+See [C#](csharp/CSHARP.md#authorization-service-testing).
 
 ### Common Authorization Methods to Mock
 
-See [C#](CSHARP.md#authorization-service-testing).
+See [C#](csharp/CSHARP.md#authorization-service-testing).
 
 ### Example: Mocking Access Level Checks
 
-See [C#](CSHARP.md#authorization-service-testing).
+See [C#](csharp/CSHARP.md#authorization-service-testing).
 
 ### Keeping Mocks in Sync with Implementation
 
-See [C#](CSHARP.md#authorization-service-testing).
+See [C#](csharp/CSHARP.md#authorization-service-testing).
 
 ### Testing Access Level Responses
 
-See [C#](CSHARP.md#authorization-service-testing).
+See [C#](csharp/CSHARP.md#authorization-service-testing).
 
 ## Tests for code changes
 

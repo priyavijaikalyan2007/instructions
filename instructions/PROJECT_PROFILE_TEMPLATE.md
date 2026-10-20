@@ -26,11 +26,11 @@ Read [REPO.md](REPO.md#project-configuration) for the selection rules and setup 
 ## Project choices
 
 - [ ] SaaS product
-- [ ] Enterprise browser shell example from instructions/SAAS.md
+- [ ] Enterprise browser shell example from instructions/saas/SAAS.md
 - [ ] Knobby authorization example from instructions/ACCESS_CONTROL.md
 - [ ] Knobby deletion example from instructions/DELETION.md
 - [ ] PostgreSQL/EF Core manual SQL example from instructions/PERSISTENCE.md
-- [ ] Theme component-library example from instructions/STATIC_ASSETS.md
+- [ ] Theme component-library example from instructions/static-assets/STATIC_ASSETS.md
 
 ## Components
 
