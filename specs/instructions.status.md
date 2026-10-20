@@ -73,3 +73,10 @@ The profile and AGENTS.md explicitly reference the refinement file. Reusable les
 Manual selection comes first. A later interview script edits the same profile while preserving local files.
 No cross-repository coordination is in scope. No routing, template, or script changes are implemented.
 Proposal records are pushed to docs/target-guides for review in PR #2.
+
+## UI overlap and Java SaaS validation
+
+The [review and routing test](./ui-ux-and-java-saas-audit.md) compares main and PR UI guides and traces the Java/container/frontend/Apple scenario.
+The two old UI/UX guides are deleted in PR #2. Retained behavior, profiles, browser shortcuts, and implementation references still overlap.
+The manual test is a partial pass: major guides are reachable, but native SaaS/SDK links and generic scope need correction.
+No generic instructions changed during this validation. The profile and interview script remain proposals.

@@ -343,3 +343,20 @@ Confirmed that the two proposal commits remained local, then pushed b9eaf24 and 
 The published proposal describes one monolithic repository, selectable components, optional native SaaS clients, generated SDKs, facts-only PROJECT.md, and local instructions in ADDITIONAL.md.
 Templates, generic routing changes, and the interview script remain proposed, not implemented.
 The commit-range whitespace check passed. The PR remains open and unmerged.
+
+## 20 October 2026: review UI overlap and trace Java SaaS instructions
+
+### User request
+
+> ok. I see that you still have UX_UX.md, UI_UX_COMPONENTS.md, UI_UX_CONSISTENCY.md and one more related to UI_UX. I also think there is a UX_UI file somewhere. Are they all different data or are they similar and overlapping. Can you check? Once you are done with that, let's run through a test again: Which files would be read if I was building a "SaaS" in Java, deployed in a container with a frontend along with native clients on Apple operating systems?
+
+### Outcome
+
+Compared tracked main and PR branch files and confirmed PR statuses through GitHub.
+UI_UX_CONSISTENCY.md and UX_UI_GUIDELINES.md are deleted in the PR, not retained alongside the replacement guides.
+UI_UX.md, UI_UX_COMPONENTS.md, and KEYBOARD.md remain with distinct roles and some overlapping subjects. UX_UX.md is absent.
+Found an always-dialog conflict in ERROR_DIALOG_COMPONENT.md and overlapping browser implementation rules.
+Recorded a manual routing test for one containerized Java SaaS monolith with frontend and native Apple clients.
+The route reaches major guides, but native SaaS composition, Swift SDK navigation, and several generic .NET assumptions remain incomplete.
+The profile/configuration system remains proposed. This review changes no generic instructions.
+Recorded the complete reading map and evidence in specs/ui-ux-and-java-saas-audit.md for PR review.
