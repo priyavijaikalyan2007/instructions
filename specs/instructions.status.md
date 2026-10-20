@@ -72,4 +72,4 @@ PROJECT_PROFILE.md holds configuration, PROJECT.md holds project facts only, and
 The profile and AGENTS.md explicitly reference the refinement file. Reusable lessons can be proposed for the generic guides.
 Manual selection comes first. A later interview script edits the same profile while preserving local files.
 No cross-repository coordination is in scope. No routing, template, or script changes are implemented.
-Proposal records remain local for discussion.
+Proposal records are pushed to docs/target-guides for review in PR #2.

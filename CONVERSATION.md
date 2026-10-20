@@ -328,3 +328,18 @@ PROJECT.md contains project facts only. PROJECT_PROFILE.md contains scope choice
 ADDITIONAL.md holds local instructions and emerging patterns, and is explicitly selected through the profile and AGENTS.md.
 Propose reusable lessons for the authoritative generic guides, then remove redundant local copies after adoption.
 Updated the current proposal and status. No generic rules, templates, or setup scripts changed. Records remain local.
+
+## 20 October 2026: publish the revised proposal
+
+### User requests
+
+> great. did you update teh pr?
+
+> push then so I can review.
+
+### Outcome
+
+Confirmed that the two proposal commits remained local, then pushed b9eaf24 and 35a6193 to docs/target-guides for PR #2.
+The published proposal describes one monolithic repository, selectable components, optional native SaaS clients, generated SDKs, facts-only PROJECT.md, and local instructions in ADDITIONAL.md.
+Templates, generic routing changes, and the interview script remain proposed, not implemented.
+The commit-range whitespace check passed. The PR remains open and unmerged.
