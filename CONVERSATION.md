@@ -298,3 +298,18 @@ Found an absent GOF_REFACTOR.md reference and ambiguous backend model selection.
 Recorded existing test-first and permission-policy conflicts separately.
 The audit proposes scoped corrections without changing those engineering policies.
 Commit and push the callout restoration and audit to existing PR #2. Main remains unchanged.
+
+## 20 October 2026: discuss project profiles and native SaaS clients
+
+### User request
+
+> Agreed. One thing you also didn't notice is that some Apps may be for a SaaS; that is, you can think of some SaaS as having a web interface, a web backend, a database, plus a native app that logs in and then has surfaces for some or all of the SaaS. Classic example is apps like Office. We will need guidance for that in the app. The other partis "templatization". Everything project or repo specific (structure, scripts, nuances/additional instructions, business context etc.) should be in separate file(s) with the regular/generic instructions being pulled in based on choices. The choice model could be one of two: a) a checklist that the user marks manually in AGENTS.md. such as: [x] Has native app on iOS [x] has native app on ChromeOS [x] has native android app [x] is app for SaaS [x] SaaS uses C# and so on that would then guide to pull in the right instructions b) a shell script that does an interview and "initializes" or "modifies" the existing setup based on choices the user answers. So AGENTS.md might have a specific section that is modified by the script while leaving hte generic pieces as is. WDYT?
+
+### Proposed response
+
+The audit missed native applications that act as SaaS clients. Recommend component-scoped targets, languages, platforms, and service relationships.
+Recommend one manual PROJECT_PROFILE.md plus project-owned context in PROJECT.md or linked component guides.
+Keep generic AGENTS.md as the router. A later interview script edits the same profile without duplicating configuration.
+A client of an external C# SaaS selects client contracts and native concerns, not backend implementation rules by default.
+Recorded staged implementation and representative validation cases in specs/instructions-plan.md.
+This is a proposal for review. No generic instructions, templates, or scripts changed. The proposal records remain local.

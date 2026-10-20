@@ -360,3 +360,51 @@ The owner reversed the callout removal on 20 October 2026.
 Restore language and target callouts while keeping consolidated instructions in their canonical homes.
 The [fresh-context native audit](./native-apple-instruction-audit.md) records the requested consistency validation.
 Its policy corrections remain proposals. The earlier callout-removal plan is superseded.
+
+## Proposal: project profiles and native SaaS clients
+
+Status: proposed for owner review on 20 October 2026. No router, template, or setup script changes are implemented.
+
+The previous native audit missed applications that act as SaaS clients.
+SAAS.md currently describes backend/frontend composition and must eventually include native client relationships.
+SaaS is a product relationship, not a requirement that each client repository contain backend or browser code.
+
+Use three separate concerns:
+
+- AGENTS.md and shared guides contain reusable routing and engineering instructions.
+- PROJECT_PROFILE.md records explicit choices for each component, including paths, targets, platforms, languages, and service relationships.
+- PROJECT.md records business context, actual architecture, directory structure, commands, environments, release procedures, and local constraints.
+
+PROJECT.md may link existing README, specifications, runbooks, and component-owned guides instead of duplicating them.
+Large repositories may need separate local files per component. Those files describe project facts, not copies of generic instructions.
+Project facts select configured behavior. Local constraints and exceptions must be explicit rather than silently overriding shared policy.
+
+Recommend a manually editable profile first, with an interview script later as another editor of the same profile.
+Keep profile choices out of the generic AGENTS.md body. A small bootstrap region can reference the profile and project context.
+Do not keep independent checkbox, generated-reference, and script-configuration copies of the same choices.
+The script should preserve handwritten context, show its proposed diff, and make repeated identical runs produce no changes.
+It should initialize and modify instruction setup without changing application code or deployment state.
+
+Represent components separately from products and service relationships.
+For example, a local iOS/Swift component can consume a SaaS API whose C# backend lives elsewhere.
+That client task selects native, Swift, client-contract, authentication, and applicable shared concerns.
+It does not select backend implementation or database migrations merely because the remote service uses C#.
+A repository containing both components selects both when a task changes both sides.
+Language selection remains attached to actual component source, not assumed from an operating system.
+
+The native SaaS client profile should route to existing generic rules where possible.
+Proposed coverage includes sign-in/out and session renewal, native token storage, server-enforced authorization, API/SDK compatibility, and user-facing network/session failures.
+Select account/tenant/workspace transitions, synchronization, offline behavior, and local cache cleanup only where the product supports those capabilities.
+Do not assume every SaaS client needs offline editing, background synchronization, a tenant model, or a browser login implementation.
+Browser shell, SQL, authorization-service, branding, directory, and deployment specifics belong to declared project context or clearly scoped examples.
+
+Proposed implementation order:
+
+1. Agree on the profile fields, component relationships, and ownership of local context.
+2. Prototype manual templates and routing for a standalone Apple app, a native SaaS client, and a mixed SaaS repository.
+3. Apply the audited scope corrections and separate product-specific facts from reusable rules.
+4. Validate representative tasks using agents with fresh context. Include external-service clients and unsupported platform-guide combinations.
+5. Add the interview script against the same profile model after manual selection works.
+
+Coverage gaps must remain explicit. Selecting Android or ChromeOS does not imply that detailed platform guidance already exists.
+No pattern required for this proposal. Script interfaces and implementation details remain for a later approved design.
