@@ -196,8 +196,7 @@ class ConfigureInstructionsTests(unittest.TestCase):
         self.assertTrue(result.returncode == 2 and self.snapshot() == {})
 
     def test_cancel_after_interview_writes_nothing(self):
-        # Keep all seven template components disabled, decline additions and application.
-        result = self.run_cli(None, input_text="\n" * 9 + "no\n")
+        result = self.run_cli(None, input_text="4\nsrc\nSwift\nmacOS\nnative application\nno\n")
         self.assertTrue(result.returncode == 0 and "cancel" in result.stdout.lower()
                         and self.snapshot() == {})
 
@@ -232,11 +231,99 @@ class ConfigureInstructionsTests(unittest.TestCase):
         self.assertEqual(result.returncode, 2)
 
     def test_enabling_component_via_interview(self):
-        # SaaS=no, backend/frontend/sdk=no, native=yes, fields, website/docs/tool=no, add=empty, apply=yes.
-        answers = ["no", "no", "no", "no", "yes", "src", "apps", "Swift", "macOS",
-                   "no", "none", "native application", "no", "no", "no", "", "yes"]
+        answers = ["4", "src", "Swift", "macOS", "native application", "yes"]
         result = self.run_cli(None, input_text="\n".join(answers) + "\n")
         self.assertTrue(result.returncode == 0 and "- Languages: Swift" in (self.root / PROFILE).read_text())
+
+    def test_interview_explains_repository_specific_component_names(self):
+        profile = self.root / PROFILE
+        profile.parent.mkdir(parents=True)
+        source = SCRIPT.parents[1] / PROFILE
+        text = source.read_text().replace('`*.md`, `instructions/`, `.github/`, `agentknowledge/`', '`src`')
+        text = text.replace('`scripts/`', '`src`')
+        profile.write_text(text)
+        result = self.run_cli(None, input_text="\n" * 7 + "no\n")
+        expected = [str(self.root), "existing profile", "local names", "instruction-library",
+                    "Documentation", "instruction files", "Covers:"]
+        self.assertTrue(result.returncode == 0 and all(value in result.stdout for value in expected))
+
+    def test_interview_explains_every_enabled_component_field(self):
+        answers = ["4", "src", "Swift", "macOS", "native application", "no"]
+        result = self.run_cli(None, input_text="\n".join(answers) + "\n")
+        expected = ["relative to the selected repository", "selected automatically", "actual source languages",
+                    "operating systems", "standalone", "packaged or delivered", "Press Enter to keep"]
+        self.assertTrue(result.returncode == 0 and all(value in result.stdout for value in expected))
+
+    def test_interview_accepts_numbered_native_app_choice(self):
+        answers = ["4", "src", "Swift", "macOS", "native application", "yes"]
+        result = self.run_cli(None, input_text="\n".join(answers) + "\n")
+        self.assertTrue(result.returncode == 0 and "- Targets: apps" in (self.root / PROFILE).read_text())
+
+    def test_product_menu_matches_six_requested_categories(self):
+        answers = ["4", "src", "Swift", "macOS", "native application", "no"]
+        result = self.run_cli(None, input_text="\n".join(answers) + "\n")
+        expected = ["1. SaaS", "2. SaaS with Native Clients", "3. Microservice", "4. Native App",
+                    "5. Static Website", "6. CLI tools", "SaaS describes the product"]
+        self.assertTrue(result.returncode == 0 and all(value in result.stdout for value in expected))
+
+    def test_accepting_defaults_retains_profile_bytes(self):
+        self.initialize()
+        path = self.root / PROFILE
+        path.write_text(path.read_text().replace("- Source paths: src", "- Source paths: `src`"))
+        before = self.snapshot()
+        result = self.run_cli(None, input_text="\n" * 5)
+        self.assertTrue(result.returncode == 0 and "No changes." in result.stdout and self.snapshot() == before)
+
+    def test_product_categories_select_expected_parts_and_sdk_relationships(self):
+        scenarios = [
+            ("1", ["src", "Java", "container", "src", "TypeScript, HTML, SCSS", "same container"],
+             {"backend", "frontend"}),
+            ("2", ["src", "Java", "container", "src", "TypeScript, HTML", "same container",
+                   "src", "Swift, TypeScript", "iOS, browser", "generated library",
+                   "src", "Swift", "iOS, macOS", "native application"],
+             {"backend", "frontend", "sdk", "native-client"}),
+            ("3", ["src", "Java", "container"], {"backend"}),
+            ("4", ["src", "Swift", "macOS", "native application"], {"native-client"}),
+            ("5", ["src", "HTML, CSS", "static hosting"], {"website"}),
+            ("6", ["src", "Go", "macOS, Linux", "CLI binary"], {"tool"}),
+        ]
+        for category, values, expected in scenarios:
+            with self.subTest(category=category):
+                result = self.run_cli(None, input_text="\n".join([category, *values, "no"]) + "\n")
+                self.assertEqual(result.returncode, 0, result.stderr)
+                headings = {line.split("Component: ")[1].split(" (", 1)[0]
+                            for line in result.stdout.splitlines() if line.startswith("Component: ")}
+                self.assertEqual(headings, expected)
+                if category == "2":
+                    self.assertIn("Uses generated SDK: sdk", result.stdout)
+
+    def test_combines_saas_website_and_cli_without_extra_component_questions(self):
+        answers = ["1, 5, 6", "src", "Java", "container", "src", "TypeScript, HTML", "same container",
+                   "src", "HTML, CSS", "static hosting", "src", "Python", "macOS", "CLI package", "yes"]
+        result = self.run_cli(None, input_text="\n".join(answers) + "\n")
+        self.assertTrue(result.returncode == 0 and "Enable " not in result.stdout
+                        and "Source paths:" in (self.root / PROFILE).read_text())
+
+    def test_switching_native_saas_to_standalone_removes_sdk_relationship(self):
+        answers = self.native_answers()
+        answers["saas_product"] = True
+        answers["components"]["native-client"].update(saas_client=True, sdk_component="sdk")
+        answers["components"]["sdk"] = {
+            "enabled": True, "source_paths": ["src"], "targets": ["sdks"], "languages": ["Swift"],
+            "platforms": ["iOS"], "deployment": "generated library",
+        }
+        self.assertEqual(self.run_cli(answers, "--apply").returncode, 0)
+        result = self.run_cli(None, input_text="4\n\n\n\n\nyes\n")
+        self.assertEqual(result.returncode, 0, result.stderr)
+        profile = (self.root / PROFILE).read_text()
+        native = profile.split("### native-client", 1)[1].split("###", 1)[0]
+        self.assertTrue("- SaaS client: no" in native and "- SDK component: none" in native)
+
+    def test_overlapping_saas_choices_are_explained_before_reprompt(self):
+        answers = ["1, 2", "4", "src", "Swift", "macOS", "native application", "no"]
+        result = self.run_cli(None, input_text="\n".join(answers) + "\n")
+        self.assertTrue(result.returncode == 0 and "categories overlap" in result.stdout
+                        and self.snapshot() == {})
 
     def test_partial_update_preserves_crlf_and_component_notes(self):
         self.initialize()

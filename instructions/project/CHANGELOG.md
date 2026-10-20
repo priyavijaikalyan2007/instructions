@@ -13,6 +13,10 @@ Created: 2026
 
 ## 20 October 2026
 
+- Changed the interview to six explained product categories with automatic target selection and clear project-fact prompts.
+- Fixed accepted defaults so unchanged Markdown formatting is preserved.
+- Added category combinations and SaaS-to-standalone transition checks, bringing the selector suite to 44 tests.
+
 - Added a profile interview/editor with preview, JSON updates, read-only checks, SDK validation, and project-content preservation.
 - Added 35 isolated CLI integration tests, including the five reading scenarios.
 

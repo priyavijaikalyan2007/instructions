@@ -170,12 +170,40 @@ The selector uses the same Markdown profile as manual setup. It does not create 
 ./scripts/configure-instructions.sh --root /path/to/project
 ```
 
-The interview asks whether the product is SaaS, then asks about each component.
-For an enabled component, supply actual source paths, targets, languages, platforms, SDK links, and deployment facts.
-Use comma-separated values for list fields. Press Enter to retain an existing value.
-Add a component identifier when separate languages or platforms need separate scopes.
-Disable a component through its Enabled choice. Keep identifiers stable when other components reference them.
+The interview starts with these product categories:
+
+| Choice | Product category | Parts selected automatically |
+| --- | --- | --- |
+| 1 | SaaS | Backend, browser frontend, and static assets |
+| 2 | SaaS with Native Clients | The webapp, generated SDKs, and native apps for selected operating systems |
+| 3 | Microservice | Backend APIs, data access, and OpenAPI/Swagger contracts, without browser frontend or static assets |
+| 4 | Native App | Standalone native application for selected operating systems |
+| 5 | Static Website | Website and static assets, without an application backend |
+| 6 | CLI tools | Command-line tools and plugins |
+
+Combine compatible choices in one repository. For example, 1, 5, 6 selects a SaaS, public website, and CLI tools.
+Choose only one of 1, 2, and 3 because those categories overlap.
+SaaS describes the product composition. Backend means server-side work. Frontend means the browser UI in this profile.
+The interview selects the underlying guide targets automatically rather than asking for internal target codes.
+These choices configure instruction scope. They do not create application structure or change its architecture.
+
+The opening screen shows the selected repository and whether its profile already exists.
+For an existing profile, press Enter at the product question to retain enabled parts and their current SaaS relationships.
+Choosing new categories can disable previously selected parts in the profile. Their source files and recorded notes remain intact.
+Existing documentation and unrecognized custom scopes remain preserved.
+
+The interview explains each selected part before asking for its source paths, actual languages, relevant operating systems, and packaging facts.
+Paths are relative to the selected repository. Supply existing files, folders, or patterns, separated by commas.
+Each prompt explains its meaning and gives examples. Press Enter to retain a displayed current value.
+Accepting unchanged defaults preserves existing Markdown formatting, including quoted path values.
+Use manual profile edits or JSON answers for separate custom components and specialized SDK relationships.
+The SaaS-with-native-clients choice links clients to a single selected generated SDK component when that link is unambiguous.
+For several SDK components, retain a valid configured link or set the relationship through manual or JSON configuration.
 The interview preserves the existing scoped-example checkboxes. Edit those manually when the actual project requires an example.
+
+Component identifiers are local profile names. They are not additional product categories.
+In this instruction repository, instruction-library means documentation and instruction files. repository-tools means the local CLI scripts.
+To configure an application, point --root at that application repository rather than this instruction-library checkout.
 
 The selector previews profile and root AGENTS changes, lists additions, and asks before applying them.
 Answer no to cancel without writes.

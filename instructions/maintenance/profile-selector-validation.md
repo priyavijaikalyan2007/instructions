@@ -86,3 +86,25 @@ Checks verify selected target/language guide files, not every transitive instruc
 UTF-8 is required for the editable profile and root AGENTS document. Existing project facts and refinements retain their bytes.
 File replacements are atomic individually. A filesystem failure can interrupt a multi-file apply.
 Inspect a failed apply before retrying. The selector does not promise rollback across multiple files.
+
+## Follow-up: product-category interview
+
+PR #3 merged at 4312353 before this correction.
+The owner found component identifiers, source paths, and target choices opaque.
+The revised interview uses the six requested categories: SaaS, SaaS with Native Clients, Microservice,
+Native App, Static Website, and CLI tools.
+SaaS composition and generated SDK relationships are derived from those choices rather than presented as peer implementation targets.
+Compatible categories combine in one repository. Existing profiles can retain their exact enabled scopes and relationships.
+
+All 44 integration tests pass after the revised tests were observed failing before implementation.
+The follow-up checks each category, combined SaaS/website/CLI selection, prompt explanations, local component names,
+unchanged defaults, overlapping-choice recovery, and the native SaaS-to-standalone transition.
+Switching to standalone native clears its prior SaaS SDK relationship, so disabled SDK references do not block the new profile.
+Accepting equivalent defaults preserves existing field bytes, including inline-code formatting.
+The original JSON/manual configuration contracts, dry-run semantics, validation, and write boundaries remain unchanged.
+The six-category interview replaces the earlier component-by-component enable questions.
+Advanced custom component additions and specialized SDK links remain available through manual edits and JSON input.
+
+The current repository passes --check. Its --dry-run reports No changes.
+Bash syntax, Python 3.10 grammar, source style, and diff whitespace checks pass.
+No application source or release operation is part of this correction.

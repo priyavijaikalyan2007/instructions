@@ -1,0 +1,18 @@
+# SPDX-FileCopyrightText: 2026 Priya Vijai Kalyan <priyavijai.kalyan2007@proton.me>
+# SPDX-FileCopyrightText: 2026 Outcrop Inc
+# SPDX-License-Identifier: MIT
+# Repository: instructions
+# File GUID: a009d679-962b-4a43-b562-9a175ef4fd87
+# Created: 2026
+
+# AGENT: Instruction configuration concepts and their implementation anchors.
+
+- name: "ProfileInterview"
+  definition: "Explains product categories and collects project facts for the instruction profile."
+  anchor_file: "scripts/profile_interview.py"
+  related: ["ProfileConfiguration"]
+
+- name: "ProfileConfiguration"
+  definition: "Validates and edits Markdown instruction scope while preserving project-owned content."
+  anchor_file: "scripts/configure_instructions.py"
+  related: ["ProfileInterview"]

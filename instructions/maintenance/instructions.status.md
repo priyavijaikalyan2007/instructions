@@ -13,22 +13,26 @@ Created: 2026
 
 Updated: 20 October 2026.
 
-## Current phase: directory cleanup, reading trees, and profile selector
+## Current phase: product-category interview guidance
 
-PRs #1 and #2 are merged and closed. Local main is synchronized at 9f16499.
-The three completed review branches are deleted locally and remotely after checking ancestry.
-The active review branch is docs/instructions-directory. The owner will merge through a new PR.
-Shared instructions now live in instructions/, project-owned context in instructions/project/, and maintenance records in instructions/maintenance/.
-Root AGENTS.md routes to instructions/AGENTS.md. The other root entry files remain CLAUDE.md, CODEX.md, and GEMINI.md.
-All original 559 code blocks, encodings, and headers are preserved. No new Markdown link defects were introduced.
-The five requested reading trees and shared baseline are implemented in instructions/README.md.
-The Bash/Python selector initializes and modifies the same Markdown profile, with interview and JSON inputs.
-It previews changes, validates SDK links and paths, and preserves handwritten project facts, local rules, custom notes, and root text.
-All 35 integration tests pass. The current repo passes --check and --dry-run reports No changes.
-Validation and limits are recorded in [profile-selector-validation.md](profile-selector-validation.md).
-Original code blocks remain intact. The ten new blocks are six reading trees and four CLI/JSON examples.
-[PR #3](https://github.com/priyavijaikalyan2007/instructions/pull/3) is open for owner review.
-The implementation commits are b5b1dbf, 9c8a49c, and 9c20e8d. Main remains unchanged after synchronization.
+PR #3 merged at 4312353. Local main is synchronized with that merge.
+The active correction branch is fix/profile-interview-guidance.
+The owner found the raw component identifiers, target codes, and source-path prompts opaque.
+The revised interview starts with six requested product categories and explains their included parts.
+It selects underlying guides automatically, shows the target repository, and explains each requested project fact.
+Existing profile names remain local identifiers. Defaults retain their formatting and current choices when accepted.
+All 44 selector tests pass, including each category, combined categories, clear prompts, and SaaS-to-standalone switching.
+The correction will be pushed in a new review PR without merging.
+
+## Completed phase: directory cleanup, reading trees, and profile selector
+
+PRs #1, #2, and #3 are merged and closed.
+Shared instructions live in instructions/, project-owned context in instructions/project/, and maintenance records in instructions/maintenance/.
+Root AGENTS.md routes to instructions/AGENTS.md. The other root entries are CLAUDE.md, CODEX.md, and GEMINI.md.
+The README contains the shared baseline and five scenario reading trees.
+The original selector supports interview and JSON input, previews, read-only checks, and preservation of project-owned content.
+The initial implementation passed 35 tests and retained all 559 original code blocks.
+Validation and follow-up results are in [profile-selector-validation.md](profile-selector-validation.md).
 
 ## Completed phase: subject consolidation
 
