@@ -15,6 +15,10 @@ This document outlines the standard for implementing "Restable URLs" in our plat
 
 **Goal:** Users must be able to bookmark, email, or Slack a link to a specific resource, and clicking that link must open the correct application and load that exact resource in the correct state.
 
+The URL principles apply to resource URL work. The super-app URL hierarchy and iframe messages are a configured browser-shell example.
+Apply sections 1.1, 2, and 4 only when the Enterprise browser shell example is checked in PROJECT_PROFILE.md.
+Native deep links use the app's declared platform routing, with the shared save and fresh-launch behavior in UI_UX.md.
+
 ## 1. The URL Philosophy
 
 URLs are the UI for locating data. They should be:

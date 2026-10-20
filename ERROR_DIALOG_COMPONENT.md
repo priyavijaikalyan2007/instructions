@@ -7,9 +7,16 @@ File GUID: 7b10c81a-44fc-4176-b925-a7366888cd17
 Created: 2026
 -->
 
+<!-- AGENT: Literate operation-error dialogs for browser commands without an inline error surface. -->
+
 # Error Dialog Component (Bootstrap 5)
 
-This document specifies the design and implementation of the standard frontend error dialog component. This component is the **exclusive** mechanism for displaying error messages to users, replacing native browser alerts (`alert()`, `confirm()`) and generic toast notifications for blocking errors.
+This document specifies the browser literate error dialog for failed operations without a suitable visible error surface.
+For example, a Save command on a canvas can fail without a form in which to explain the failure.
+Show that operation's failure, recovery advice, and technical details in this dialog.
+A visible form instead shows field errors inline and operation errors in its error summary or persistent status area.
+The dialog is not the exclusive presentation for all errors. Follow [error placement](./UI_UX.md#error-placement).
+Native applications use the same literate error content in their platform dialog, not this Bootstrap implementation.
 
 ## 1. UI Design Specifications
 
@@ -174,8 +181,8 @@ const showError = (error: LiterateError) => new ErrorDialog().show(error);
 
 ## 4. Usage Rules
 
-1.  **Always Modal:** Do not output errors to `console.log` alone. If the user needs to know, show the dialog.
-2.  **No Alerts:** `alert("Error")` is strictly forbidden.
-3.  **Copy Support:** The technical details section must always support one-click copying to facilitate support tickets.
-
-```
+1.  **Operation failures:** Show the literate dialog for a failed user command without a suitable visible error surface.
+2.  **Visible forms:** Show validation errors inline and submission failures in the form's summary or persistent status area.
+3.  **Recovery:** Preserve user input and pending changes, and explain what failed and what the user can do next.
+4.  **No Alerts:** `alert("Error")` is strictly forbidden.
+5.  **Copy Support:** The technical details section must always support one-click copying to facilitate support tickets.

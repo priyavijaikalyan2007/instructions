@@ -37,6 +37,14 @@ Server, container, and Kubernetes-hosted service work: APIs, databases, entities
 Keep business logic in services or domain functions, separate from HTTP handlers and framework extension entry points.
 Apply the same separation in .NET, Java, Go, and Rust using their normal language constructs.
 
+## Read by backend language
+
+Read shared service boundaries, resource limits, and API behavior for every backend.
+Use [Java](./JAVA.md#performance) for Java runtime, testing, logging, profiling, and packaged execution.
+The ASP.NET Core section and .NET implementation notes apply only to a configured .NET component.
+A container does not select .NET, Keycloak, Cloud Run, or Kubernetes by itself.
+Use the component's actual framework, toolchain, and launch configuration from PROJECT.md and its manifests.
+
 ## Runtime and resource boundaries
 
 Propagate cancellation and release owned resources on success and failure.
@@ -116,17 +124,31 @@ The identity extension roots and standard Java roots are alternatives, not dupli
 
 ## API performance guidance
 
+Minimize response payloads, avoid unnecessary serialization, and run independent I/O concurrently within configured resource limits.
+Use the selected backend framework's serializer and response-compression facilities.
+
+### .NET implementation notes
+
+The implementation requirements in this subsection apply only to .NET backends.
+
 ### 5.1 Payloads
+
+The following implementation notes apply to .NET backends.
 *   **Null Suppression**: Configure the JSON serializer to ignore null values.
     See [C#](./CSHARP.md#51-payloads).
 *   **Compression**: Enable Response Compression (Brotli/Gzip) in ASP.NET Core middleware.
     See [C#](./CSHARP.md#51-payloads).
 
 ### 5.2 Latency Reduction
+
+The following implementation note applies to .NET backends. Java uses its configured concurrency model.
 *   **Parallelism**: If an API needs data from three independent services/tables, fetch them in parallel using `Task.WhenAll`, not sequentially.
     See [C#](./CSHARP.md#52-latency-reduction).
 
 ## data-fetching optimization patterns
+
+Apply bounded fetching and batching principles across backends. C#/EF Core and GreenDonut are .NET implementation examples.
+Java services use their configured data-access and batching facilities.
 
 The following patterns **must** be prioritized by coding agents over naive "fetch all" or "sequential" implementations.
 
@@ -137,7 +159,7 @@ The following patterns **must** be prioritized by coding agents over naive "fetc
 
 ### 7.2 Pattern: The DataLoader (Batching & Deduplication)
 *   **Purpose:** Solve the "N+1 Problem" by batching multiple independent requests into a single call.
-*   **Implementation:** Use **GreenDonut** or similar for .NET batching logic.
+*   **.NET implementation:** Use **GreenDonut** or similar for .NET batching logic.
 
 ## API latency budget
 
@@ -147,13 +169,15 @@ The following patterns **must** be prioritized by coding agents over naive "fetc
 
 *   **Load Testing**: Use k6 or JMeter to stress test endpoints.
 
-*   **Profiling**: Use `dotnet-counters` and `dotnet-trace` to identify bottlenecks in the backend.
+*   **Java profiling:** Use the Java Flight Recorder and allocation/GC guidance in [JAVA.md](./JAVA.md#performance).
+*   **.NET profiling:** Use `dotnet-counters` and `dotnet-trace` for configured .NET backends.
 
 ## API security defaults
 
 - **"Secure by Design, not by Patch."**
 - **No PII in URLs:** Never pass email, names, or IDs in Query Parameters. Use Session/Claims or POST bodies.
-- **Auth Decorators:** No API endpoint is created without an `[Authorize]` or `[RequirePermission]` attribute unless explicitly public (like login).
+- Protect nonpublic endpoints using the configured framework's authentication and authorization mechanism.
+- **.NET implementation:** Use `[Authorize]` or `[RequirePermission]` unless the endpoint is explicitly public, such as login.
 
 ## host dependency verification
 
@@ -161,9 +185,12 @@ The following patterns **must** be prioritized by coding agents over naive "fetc
 
 ## Bounded API data access
 
-1.  **Stop the "Fetch All" Habit**: Never use `SELECT *` or `FindAsync(id)` if the UI only needs a subset of columns.
-2.  **Cap Everything**: Every list or search API **must** have a hard `LIMIT` or `Take()`.
-3.  **Parallelize I/O**: Use `Task.WhenAll` for independent fetches from different sources.
+1. Retrieve only the fields required by the requested view.
+2. Apply a hard result limit to every list or search API.
+3. Run independent I/O concurrently using the configured language and runtime.
+
+For SQL, use an explicit projection and LIMIT. For C#/EF Core, use the matching projection and Take().
+Task.WhenAll is the .NET example. Java code follows its configured concurrency and cancellation model.
 
 ---
 

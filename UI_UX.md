@@ -457,6 +457,26 @@ WCAG 2.2 specifically adds requirements concerning focus obstruction, dragging, 
 
 ## Validation and error behavior
 
+### Error placement
+
+Choose the error surface from the failed operation and the interface available to explain it.
+
+| Situation | Presentation |
+| --- | --- |
+| Invalid value in a visible form | Inline field error, with an error summary when needed |
+| Form submission or save fails | The visible form's error summary or persistent operation-status area |
+| User command fails without a suitable visible error surface, such as Save on a canvas | Literate error dialog with recovery advice and relevant technical details |
+| Background work has an established progress or status surface | Persistent failure state in that surface, with escalation when immediate user action is required |
+
+A Save button alone does not provide a form error surface. Its failed operation can require a literate dialog.
+A form's operation error need not attach to a field when the failure is not caused by a field value.
+Keep inline errors visible until corrected. Preserve user input and pending changes after a failure.
+Do not report a failed command only in technical logs.
+
+Use [literate error content](./LITERATE_ERRORS.md) for either presentation.
+Browser operation dialogs use the configured [error component](./ERROR_DIALOG_COMPONENT.md).
+Native interfaces use their platform equivalent. Bootstrap markup and browser API contracts remain browser-specific.
+
 ### Validation levels
 
 Validation must be treated as a pipeline.
@@ -569,7 +589,7 @@ A system error should include:
 - Correlation or request identifier when useful.
 - Expandable technical details when appropriate.
 
-The browser library profile uses `Error Dialog` for structured application failures.
+The browser library profile uses `Error Dialog` for operation failures selected by [error placement](#error-placement).
 
 ---
 
@@ -777,7 +797,7 @@ It should not merely expose the domain's storage format.
 ## Design prerequisites
 
 Always consider the user experience before finalizing UI or workflow changes.
-- If a `UI_UX_EXPERIENCES.md` file exists, consult it as well and follow its guidance.
+- Read the configured ADDITIONAL.md refinements. Follow any project-owned experience references explicitly listed there.
 - If the intended user flow is unclear, **pause and ask for clarification**.
 
 ## UI engineering acceptance checklist

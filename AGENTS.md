@@ -13,6 +13,20 @@ Created: 2026
 
 First, read `README.md` to understand the situation, background and problem statement we are addressing and the solution we are building. Then continue from here.
 
+## Load project configuration
+
+Read PROJECT_PROFILE.md when it exists.
+Read its configured project-facts and additional-instructions files before planning or editing.
+PROJECT.md contains facts, not behavioral instructions.
+Use only enabled components that the task changes. Select their targets, actual languages, platforms, and applicable shared concerns.
+For a SaaS client integration, also read the SaaS composition and the configured SDK component's contract guidance.
+A shared API-contract change selects affected consumers. A local UI change does not select unrelated backend implementation.
+Unchecked components and examples do not enter scope merely because their files are present.
+Treat missing configured files, unresolved values in enabled components, or source/profile disagreements as configuration gaps. Resolve them before dependent work.
+For an older repository without a profile, infer existing scope from its README, source, manifests, and scripts.
+Do not invent project facts or enable components from this instruction repository's examples.
+
+Read [REPO.md](./REPO.md#project-configuration) for profile setup and selection rules.
 Read [REPO.md](./REPO.md) for shared repository setup, commands, source verification, and session records.
 
 ## Select target guides
@@ -24,19 +38,23 @@ Read the sections that apply to the changed behavior and the configured project 
 
 | Work in the task | Target guides | Language examples |
 | --- | --- | --- |
-| Backend services, APIs, databases, entities, relationships, data models, containers, and service development | [BACKEND.md](./BACKEND.md) | C#, Java, SQL, or the service's actual language |
+| Backend services, APIs, backend-owned data models and persistence, containers, and service development | [BACKEND.md](./BACKEND.md) | C#, Java, SQL, or the service's actual language |
 | Browser pages, dynamic pages, login, and web application UI | [FRONTEND.md](./FRONTEND.md) | TypeScript, JavaScript, HTML, CSS, SCSS |
-| SaaS or web application flows across backend and frontend | [SAAS.md](./SAAS.md), [BACKEND.md](./BACKEND.md), and [FRONTEND.md](./FRONTEND.md) | The backend and frontend languages involved |
+| SaaS flows across browser, backend, SDKs, or optional native clients | [SAAS.md](./SAAS.md), plus only affected target guides | The languages of the affected components |
 | CLI tools, CLI plugins, and plugins for CLI tools | [TOOLS.md](./TOOLS.md) | Python, Go, Rust, or the tool's actual language |
 | Native iOS, Android, iPadOS, ChromeOS, or macOS applications | [APPS.md](./APPS.md) | Swift for the existing Apple examples, or the target's actual language |
 | Static websites without an application backend | [WEBSITES.md](./WEBSITES.md) and [STATIC_ASSETS.md](./STATIC_ASSETS.md) | HTML, CSS, SCSS, JavaScript, TypeScript |
 | Static assets, bundles, compilation, hosting, CDN delivery, or component-library distribution | [STATIC_ASSETS.md](./STATIC_ASSETS.md) | The affected source and build languages |
-| SDKs and clients generated from an OpenAPI endpoint | [SDKs.md](./SDKs.md) | TypeScript, Java, C#, Go, Python, or the generated language |
+| SDKs and clients generated from an OpenAPI endpoint | [SDKs.md](./SDKs.md) | Swift, TypeScript, Java, C#, Go, Python, or the generated language |
+| Documentation and published project information | [DOCUMENTATION.md](./DOCUMENTATION.md) | Natural language, plus changed code-example languages |
 
 For a reusable browser component library, combine frontend and static asset guidance.
 For a web application, packaging and serving may be combined or separate. The SaaS guide retains the existing combined examples.
 Static hosting, including Cloudflare hosting, does not by itself select backend application guidance.
-A native app and its public website select separate target guides within the same repository.
+A native app and its public website select separate target guides within the same monolithic repository.
+A SaaS may combine backend, browser, persistence, SDKs, docs, website, and optional native components.
+A native SaaS client selects APPS.md, SAAS.md, SDKs.md, and its actual language for the changed integration.
+Native clients use generated SDKs by default. Native presence, platforms, and SaaS-client behavior remain explicit choices.
 A Python backend selects backend and Python guidance. A Go CLI selects tool and Go guidance.
 Existing native platform instructions cover Apple platforms. The SDK guide indexes existing API and language material.
 
@@ -84,6 +102,9 @@ LANGUAGE.md governs natural-language writing and is separate from the programmin
 For documentation-only changes, read LANGUAGE.md and DOCUMENTATION.md.
 Read a programming-language guide when the task changes or verifies examples in that language.
 Product, framework, and component reference files remain selected by the task under Development below.
+In every shared guide, read framework-, platform-, and product-specific implementations only when the enabled component uses them.
+A requirement inside a scoped example applies within that example. It does not select its framework for another component.
+The shared rules still apply. For example, a Java backend uses Java runtime guidance and skips .NET implementations.
 
 # Structure
 
@@ -177,8 +198,7 @@ consistent, thoughtful and complete end to end experience.
 - Always consult CODING_STYLE.md when writing code. This is important for maintainability.
 - **(CRITICAL)** Always consult GOF_PATTERNS.md when designing new services, controllers, or significant features. 
   Select patterns during the **Plan** step, not during implementation. Consult the "Usage Guidance in This Codebase" 
-  section for patterns already in use and anti-patterns to avoid. Consult GOF_REFACTOR.md for the active 
-  refactoring backlog and to understand the target architecture.
+  section for patterns already in use and anti-patterns to avoid. If the project supplies GOF_REFACTOR.md, consult its refactoring backlog.
 - Always consult DOCUMENTATION.md when generating internal operator or external user facing documentation.
 - Always consult MIGRATIONS.md when migrating from one stack to another such as Javascript to TypeScript, Python to .NET Core etc.
 - Always consult LOGGING.md so that you add appropriate logging configuration and log statements to all generated code.
@@ -199,7 +219,7 @@ consistent, thoughtful and complete end to end experience.
 - For backend library selection, see [BACKEND.md](./BACKEND.md#backend-library-selection).
 - For frontend library selection, see [FRONTEND.md](./FRONTEND.md#frontend-library-selection).
 - For browser component reuse, see [FRONTEND.md](./FRONTEND.md#component-reuse-workflow).
-- Always consult RESTABLE_RESOURCES.md for how to setup resource URLs to be restable and usable by humans.
+- For resource URLs and deep links, consult RESTABLE_RESOURCES.md. Apply its shell messaging example only to that configured shell.
 - Always consult LITERATE_ERRORS.md for how to construct error messages to be usable and meaningful to users
   and operators.
 - Always consult LLM_TECHNIQUES.md and NON_LLM_AIML_TECHNIQUES.md to determine the best approach for infusing 
@@ -207,7 +227,8 @@ consistent, thoughtful and complete end to end experience.
   with LLMs. Make sure to consult AIML_SECURITY.md *every time* to make sure AI or ML features, especially 
   those involving LLMs do not lead to system compromise or data exfiltration.
 - When creating SDKs, consult SDKs.md.
-- **When implementing access control, sharing, or permissions, always consult ACCESS_CONTROL.md.** This includes:
+- **For application authorization or resource sharing, consult ACCESS_CONTROL.md and the configured project model.**
+  Native OS permissions and platform share sheets use APPS.md. Application authorization work includes:
   - Defining new permissions and roles
   - Setting resource ownership
   - Adding permission checks to controllers

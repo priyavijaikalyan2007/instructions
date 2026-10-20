@@ -13,6 +13,10 @@ Created: 2026
 
 **Goal:** Correct the inherent bias of LLMs towards generating insecure "happy path" code. All generated code must be secure-by-design, assuming a hostile environment.
 
+Apply universal principles to every selected component.
+Read framework-specific sections only for components that use that framework. ASP.NET Core and EF Core are not Java requirements.
+Use the project's configured identity and authorization mechanisms for Java services and native clients.
+
 ## 1. Universal Principles
 *   **Zero Trust:** Never trust input from the client, database, or internal APIs. Validate at every boundary.
 *   **Least Privilege:** Grants only the absolute minimum permissions required (IAM roles, Database users, CORS policies).

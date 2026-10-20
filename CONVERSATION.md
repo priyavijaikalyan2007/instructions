@@ -360,3 +360,30 @@ Recorded a manual routing test for one containerized Java SaaS monolith with fro
 The route reaches major guides, but native SaaS composition, Swift SDK navigation, and several generic .NET assumptions remain incomplete.
 The profile/configuration system remains proposed. This review changes no generic instructions.
 Recorded the complete reading map and evidence in specs/ui-ux-and-java-saas-audit.md for PR review.
+
+## 20 October 2026: implement profiles and clarify error surfaces
+
+### User request
+
+> On: "I found a real conflict: ERROR_DIALOG_COMPONENT.md requires dialogs whenever users need an error message. UI_UX.md instead requires inline field errors and more selective modal use. That needs correction." --Actually both make sense. Literate error dialogs make sense for operations that show no visible interface. For example, a "Save" butotn just saves teh resource. So an error dialog there makes sense. Howevre, a "form" has a visible interface which can show inline errors. Let's clarify the two if thats causing confusion. Both have their uses. On: "This test is a partial pass. The major guides are reachable, but:
+>
+> - SAAS.md still describes backend/browser composition without native clients.
+> - SDKs.md lacks a Swift reference.
+> - Broad backend sections still impose .NET tools and syntax on Java work.
+> - The profile selector remains proposed, so this was a manual document trace.
+> " - Let's go fix that.
+
+### Outcome
+
+Implemented manual PROJECT_PROFILE.md selection, facts-only PROJECT.md, and local ADDITIONAL.md with reusable templates.
+AGENTS.md reads configured project files and limits target/language selection to affected enabled components.
+Connected optional native SaaS clients to generated SDK guidance and added Swift to the SDK index.
+Scoped .NET, Knobby, shell, and browser implementation examples so they do not select frameworks for unrelated components.
+Clarified literate dialogs for failed commands without a suitable visible error surface, inline field errors, persistent form save errors, and background failure status.
+Repaired the stray final error-dialog fence while preserving its two code examples.
+Added a fictional Java SaaS profile and repeated validation with a fresh-context sub-agent.
+The reviewer passes all ten cases after resolving its remaining scope and setup findings.
+Broader document checks preserve all 559 counted code blocks, existing encodings and headers, operating workflow, and append-only history.
+No new Markdown link defects were introduced. Existing external component-path defects are recorded separately.
+The interview script remains deferred. No application runtime build or test is claimed.
+Update PR #2 for owner review, without merging or changing main.

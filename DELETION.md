@@ -10,7 +10,11 @@ Created: 2026
 <!-- AGENT: Soft-delete patterns, trash folder UI, and recovery guidelines for Knobby. -->
 # Deletion Patterns and Guidelines
 
-This document describes the deletion patterns implemented in the Knobby platform. **All future features that support deletion MUST follow these patterns.**
+This document describes the selected Knobby deletion example.
+Apply its database columns, service interfaces, trash UI, and browser storage only when that project choice is checked in PROJECT_PROFILE.md.
+Other components follow their declared deletion and retention requirements, persistence integrity, and shared UI recovery rules.
+A native document operation does not require SQL columns or browser storage solely because deletion is involved.
+Within the selected example, future features that support deletion must follow the patterns below.
 
 ## Philosophy
 

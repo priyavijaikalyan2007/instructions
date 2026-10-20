@@ -13,7 +13,31 @@ Created: 2026
 
 ## Target scope
 
-A composition of backend and frontend targets. The existing combined-application and super-app examples are grouped below.
+A SaaS is a product composed of the enabled services and user interfaces in one monolithic repository.
+It may include a backend, browser frontend, database, static assets, docs, website, generated SDKs, and native clients.
+Native clients are optional. Their platforms and SaaS-client relationship come from PROJECT_PROFILE.md.
+Read only the components changed by the task. Presence in the repository does not require reading every component's implementation.
+
+## Surface selection
+
+| Changed surface | Read |
+| --- | --- |
+| Java or C# service implementation | [BACKEND.md](./BACKEND.md) and the configured service language |
+| Browser interface | [FRONTEND.md](./FRONTEND.md), affected browser languages, and static asset guidance |
+| Native client integration | [APPS.md](./APPS.md), [SDKs.md](./SDKs.md), and the native source language |
+| API contract shared by clients | [API_GUIDELINES.md](./API_GUIDELINES.md), [SDKs.md](./SDKs.md), and affected consumer guides |
+| Stored data | [PERSISTENCE.md](./PERSISTENCE.md), with SQL guidance only for SQL changes |
+| Separate static website | [WEBSITES.md](./WEBSITES.md) and affected asset/language guidance |
+
+Use generated SDKs from the API specification as the normal native service boundary.
+Keep generator configuration, output paths, server framework, and packaging facts in PROJECT.md.
+Native application behavior still includes appropriate session handling, secure credential storage, and usable failure feedback.
+Offline editing, background synchronization, tenants, and workspaces apply only when configured product capabilities need them.
+A container can package the server and browser frontend. Native clients have separate application build and release artifacts.
+
+The enterprise browser-shell sections below are a selectable example, not the definition of SaaS.
+Apply that shell, its layout, settings, and test identities only when the corresponding project choice is checked.
+The .NET layout and packaging examples apply only to that declared backend model.
 
 ## Topic references
 
@@ -24,6 +48,8 @@ A composition of backend and frontend targets. The existing combined-application
 | Shared UI/UX behavior | [UI_UX.md](./UI_UX.md) |
 | Backend target | [BACKEND.md](./BACKEND.md) |
 | Frontend target | [FRONTEND.md](./FRONTEND.md) |
+| Optional native SaaS client | [APPS.md](./APPS.md#native-saas-clients) |
+| Generated SDKs and client contracts | [SDKs.md](./SDKs.md) |
 | Static assets and delivery | [STATIC_ASSETS.md](./STATIC_ASSETS.md) |
 | Access control and sharing across the application | [ACCESS_CONTROL.md](./ACCESS_CONTROL.md) |
 | Resource deletion across backend and UI | [DELETION.md](./DELETION.md) |
@@ -33,6 +59,8 @@ A composition of backend and frontend targets. The existing combined-application
 - Serve frontend routes and APIs through the application, including pages when needed.
 
 ## combined layout
+
+This is a .NET/browser layout example. Use the configured component paths from PROJECT.md.
 
 ```text
 api/                   .NET backend, domain services, HTTP boundaries, and persistence
@@ -49,6 +77,8 @@ docs/                  User and integrator documentation
 
 ## frontend source layout
 
+These paths belong to the enterprise browser example. Use the configured source/output mapping in other projects.
+
 - Use TypeScript files in the ./typescript/ folder instead of inline Javascript.
   - App specific TypeScript can be kept as separate modules.
 - Use CSS files in the frontend/ folder instead of inline CSS.
@@ -63,6 +93,8 @@ docs/                  User and integrator documentation
 
 ## super-app shell
 
+Apply this section only when the Enterprise browser shell example is selected in PROJECT_PROFILE.md.
+
 - Implement a super-app model.
 - In the super-app model, there is a **platform menu-bar** at the top for the user, application dropdown,
   links to documentation, help, support etc.
@@ -75,6 +107,8 @@ docs/                  User and integrator documentation
 ---
 
 ## sub-application structure
+
+Apply this section only to the selected enterprise browser shell. Native clients use native navigation.
 
 ### 8.1. Super-App Model
 
@@ -96,7 +130,9 @@ The main `index.html` file implements a "super-app". Every link in the top nav b
 
 ### 8.3. UI Behaviors
 
-* Never show modal dialogs for common errors. Always, write errors to the log console. In some specific instances, modal dialogs may be shown for some specific erroneous problems, but in general it is best to indicate failures with UI hints and cues next to the relevant elements directly.
+* Show validation and form errors inline in the visible editing surface.
+* For a failed command such as Save without a suitable visible error surface, show the literate error dialog.
+* Keep technical diagnostics in the log console. Follow [error placement](./UI_UX.md#error-placement) for the presentation choice.
 * Do not use the vanilla Javascript alert or error dialogs which are browser blocking. Instead, prefer the Bootstrap modal dialog instead.
 * All applications are responsive in general so that users can use any device they want.
 
@@ -129,6 +165,9 @@ Native apps, tools, static websites, and other services use their repository's d
 
 ## persistence and UI integration
 
+Follow the save through the generated SDK or configured client to the backend and persistence boundary.
+The fetch-based checklist below describes the browser implementation of that flow.
+
 - **"UI updates are secondary to Persistence."**
 - **Persistence First:** When implementing a CRUD action (Delete, Save, Update), write the API call **first**. Do not write the optimistic UI update until the API call is scaffolded.
 - **Verify the Loop:** For every `delete()` or `save()` function:
@@ -138,6 +177,8 @@ Native apps, tools, static websites, and other services use their repository's d
 
 ## cross-layer naming
 
+Keep the configured serialization contract consistent. The Program.cs example applies only to a .NET backend.
+
 - **"Uniformity is a feature."**
 - **Global Standards:** If you encounter a camelCase vs. snake_case mismatch between backend/frontend or components:
   - **Do NOT** apply local patches or field renaming in a single component.
@@ -145,6 +186,8 @@ Native apps, tools, static websites, and other services use their repository's d
 - **Rule:** A codebase should look like it was written by one person. Mismatched casing styles across files are unacceptable.
 
 ## local test identities
+
+This test-identity convention belongs to the selected enterprise browser-shell example.
 
 - Use test users in the format `userNNN@test.<appdomain>.io` (e.g., `user001@test.domain.io`, `user042@test.domain.io`).
 - `test.<appdomain>.io` is a non-existent domain reserved exclusively for testing.
@@ -157,7 +200,9 @@ Native apps, tools, static websites, and other services use their repository's d
 
 ## application URL configuration
 
-- **Environment Isolation:** **Never** hardcode URLs (e.g., `http://localhost:5000`) inside code. Use `appsettings.json` (backend) or `import.meta.env` (frontend).
+- Keep application URLs in the configured environment settings rather than hardcoding them in source.
+- Use the Java framework's configured properties for Java services and the project's configuration mechanism for native clients.
+- For .NET use `appsettings.json`. For the configured Vite frontend use `import.meta.env`.
 
 ## web performance context
 
@@ -179,6 +224,8 @@ This document outlines the performance standards and best practices for our high
 
 ## access-control integration
 
+This section describes the selected Knobby authorization example. Other projects use their configured authorization model.
+
 ### RBAC & FGAC Compliance
 A full Role-Based Access Control (RBAC) and Fine-Grained Access Control (FGAC) system has been implemented. Refer to:
 - `specs/access_control.raw.md`
@@ -192,6 +239,8 @@ For every new application, resource type, or feature, you must:
 
 ## workspace settings integration
 
+This section applies to the selected enterprise browser shell with workspace/global settings.
+
 ### Feature Settings Management
 Every new feature, capability, application, or change may introduce settings that control behavior. You must:
 - Identify any new settings required by the change
@@ -200,6 +249,8 @@ Every new feature, capability, application, or change may introduce settings tha
 - Ensure global-to-workspace settings inheritance remains intact
 
 ## Enterprise shell consistency
+
+Apply this section only to the selected enterprise browser shell.
 
 ### 2.1. Standardized Panel Placement
 To optimize for muscle memory, key functional areas must always appear in the same relative positions across all sub-apps:
@@ -236,6 +287,8 @@ Application-specific view controls (Zoom, Pan, Fit, Grid Snapping) should follow
 
 ## Enterprise shell feedback
 
+Apply this section only to the selected enterprise browser shell.
+
 ### 4.1. Action Feedback
 *   Every button click must result in an immediate visual state change (active/pressed state).
 *   For blocking operations in this browser shell, use the standardized `Progress Modal` from `MASTER_COMPONENT_LIST.md`.
@@ -243,4 +296,4 @@ Application-specific view controls (Zoom, Pan, Fit, Grid Snapping) should follow
 
 ### 4.2. Error Handling
 *   Write technical diagnostics to the shell **Log Console**. Show actionable failure guidance at the affected field or operation, as specified in [UI_UX.md](./UI_UX.md#validation-and-error-behavior).
-*   Critical failures that require immediate user acknowledgement should use standard Bootstrap Modals, never browser `alert()` or `confirm()`.
+*   Failed commands without a suitable visible error surface use the literate error dialog. Form errors remain inline or in a persistent summary. Never use browser `alert()` or `confirm()`.

@@ -25,8 +25,24 @@ The existing platform instructions below cover Apple applications.
 | Common interaction and save safety | [UI_UX.md](./UI_UX.md) |
 | Selected native control behavior profiles | [UI_UX_COMPONENTS.md](./UI_UX_COMPONENTS.md) |
 | Apple language and runtime rules | [SWIFT.md](./SWIFT.md) |
+| Native SaaS integration, when enabled | [SAAS.md](./SAAS.md#surface-selection) |
+| Generated service clients and API contracts | [SDKs.md](./SDKs.md#generated-native-clients) |
 | Existing shared save and navigation safety | [UI_UX.md](./UI_UX.md#save-and-navigation-safety) |
 | Native and server secret boundaries | [SECRET_HANDLING.md](./SECRET_HANDLING.md#native-clients-and-tools) |
+
+## Native SaaS clients
+
+A native app may be standalone or a SaaS client. Read that choice from its enabled component in PROJECT_PROFILE.md.
+For a SaaS integration change, read SAAS.md and the configured SDK component's contract guidance in SDKs.md.
+Use the generated SDK from the API specification as the normal service boundary.
+Do not add another handwritten client layer merely because a native client exists.
+Keep generator settings and output paths in project configuration or PROJECT.md.
+
+Use native controls and secure token storage. Follow the configured identity flow for sign-in, renewal, and sign-out.
+Reflect server-enforced permissions in the interface without treating client controls as authorization enforcement.
+Show failures using [error placement](./UI_UX.md#error-placement), including native literate dialogs for commands without an error surface.
+Read persistence and synchronization guidance only when those capabilities are affected.
+A layout-only task selects native and UI guidance without unrelated backend implementation instructions.
 
 ## Apple platform stack
 

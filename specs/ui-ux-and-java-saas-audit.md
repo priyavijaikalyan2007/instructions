@@ -17,6 +17,12 @@ Method: inspect tracked branch and main files, verify PR file statuses, compare 
 This is a manual instruction-routing test. It does not run an application, an installer, or a generated project profile.
 No generic instruction changed during this review.
 
+## Follow-up status
+
+This document records the earlier audit before the routing corrections.
+The [implementation validation](./project-profile-validation.md) records the manual profile, native SaaS links, framework scopes, and error-placement clarification.
+The findings below remain historical evidence. The later report identifies resolved cases and remaining boundaries.
+
 ## Current UI guide inventory
 
 The PR file list contains both added and deleted files. It does not mean that all listed guides remain after merging.

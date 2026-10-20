@@ -15,6 +15,53 @@ Read this guide for repository setup, build/test/run commands, source verificati
 Use [AGENTS.md](./AGENTS.md#select-target-guides) to select targets and languages for the changed work.
 Backend containers, native signing, and static bundle delivery remain in their target guides.
 
+## Project configuration
+
+The manual profile is PROJECT_PROFILE.md. AGENTS.md reads it before target and language selection.
+Its Project files table declares the project-facts file and the local additional-instructions file.
+Resolve configured paths from the consuming repository root.
+Those default to PROJECT.md and ADDITIONAL.md. Both declared files must exist before dependent work.
+
+PROJECT.md contains project-specific facts: purpose, structure, configured commands, versions, and environment names.
+ADDITIONAL.md contains local instructions, explicit exceptions, and emerging lessons.
+Keep generic rules in their subject guides. Preserve all three project-owned files when updating generic instructions.
+An instruction that is reusable across projects can be proposed for its generic guide, then shortened locally after adoption.
+
+### Manual setup
+
+1. Copy PROJECT_PROFILE_TEMPLATE.md to PROJECT_PROFILE.md when no profile exists.
+2. Copy PROJECT_TEMPLATE.md to the configured project-facts path when that file is absent.
+3. Copy ADDITIONAL_TEMPLATE.md to the configured additional-instructions path when that file is absent.
+4. Replace placeholder values for enabled components and project files with verified facts.
+5. Check Enabled for each component that exists in the repository.
+6. Record the component's source paths, targets, languages, platforms, SDK relationship, and deployment mode.
+7. Check only the project choices that match the actual architecture.
+8. Verify project-file paths and enabled component paths against the consuming repository.
+9. Assign each copied file a new GUID according to COPYRIGHT_HEADER.md.
+
+Unchecked example components may retain template placeholders. They do not select guides or require source paths.
+For an existing setup, edit its profile and local files in place. Preserve handwritten content and local refinements.
+The interview script remains a future editor of this same profile. Manual selection requires no script or external dependency.
+
+### Selection contract
+
+Components use unique identifiers and an Enabled checkbox. Unchecked components do not select guides.
+Targets are backend, frontend, saas, tools, apps, websites, static-assets, sdks, and documentation.
+Use the target and language tables in AGENTS.md to resolve those names to generic guides.
+
+Intersect enabled component paths with the files and behavior changed by the task.
+Read the matching target and language sections, then add shared concerns for that behavior.
+For a generated SDK contract change, include affected consumers and their languages.
+For native SaaS integration, add SAAS.md and SDKs.md without loading unrelated server implementation details.
+For a native layout-only change, use the app, Swift, and relevant UI guides.
+For a backend packaging-only change, use the backend, build/runtime, and actual container configuration.
+Container deployment does not select Kubernetes, Cloud Run, or a static hosting provider by itself.
+A missing platform guide is a coverage gap, not permission to substitute Swift or browser instructions for another platform.
+
+The checked examples in Project choices select scoped legacy implementations, not additional components or languages.
+For missing profiles, infer existing scope from source and manifests. Do not initialize a profile during unrelated work.
+Report profile/source disagreements before work that depends on the disputed choice.
+
 ## Build and release boundaries
 
 A build or test command does not authorize deployment, signing-key export, app-store submission, or release.

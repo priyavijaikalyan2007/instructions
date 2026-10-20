@@ -83,6 +83,9 @@ PGPASSWORD=<password> psql -h <host> -p <port> -U <user> -d <database> -f <migra
 
 ## Materialized projections
 
+The PostgreSQL implementation below applies only when that database is configured.
+Other engines use the project's declared projection mechanism.
+
 *   **Purpose:** Pre-calculate complex joins into a flat, read-optimized table.
 *   **Implementation:** Use Postgres `MATERIALIZED VIEW` with unique indexes and concurrent refreshes.
 

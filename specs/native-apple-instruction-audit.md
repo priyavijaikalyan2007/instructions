@@ -16,6 +16,12 @@ Scope: `docs/target-guides`, after restoration of the document callouts, based o
 Method: a sub-agent started without the parent conversation and followed README.md, AGENTS.md, and their task references.
 The parent checked the main findings against the source. This audit changed no engineering policy.
 
+## Follow-up status
+
+This document records the earlier audit before the routing corrections.
+The [implementation validation](./project-profile-validation.md) records the manual profile, native SaaS links, framework scopes, and error-placement clarification.
+The findings below remain historical evidence. The later report identifies resolved cases and remaining boundaries.
+
 ## Result
 
 The route reaches the native Apple and Swift instructions, but older shared mandates still create conflicting requirements.

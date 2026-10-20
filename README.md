@@ -26,6 +26,17 @@ Load only relevant [component profiles](./UI_UX_COMPONENTS.md#select-component-p
 Some sections describe a .NET SaaS example. Apply those sections only when they match the changed target and project model.
 Keep project-specific architecture, toolchain versions, and commands consistent with that repository's README and build configuration.
 
+## Project configuration
+
+[AGENTS.md](./AGENTS.md#load-project-configuration) reads the active PROJECT_PROFILE.md before selecting guides.
+The profile identifies project facts and local refinements, then selects enabled components and their source languages.
+PROJECT.md contains facts only. ADDITIONAL.md contains project-specific instructions and emerging lessons.
+
+Use the [profile template](./PROJECT_PROFILE_TEMPLATE.md), [facts template](./PROJECT_TEMPLATE.md), and [refinement template](./ADDITIONAL_TEMPLATE.md).
+Follow [manual setup](./REPO.md#manual-setup) for a new project or edit an existing profile in place.
+This repository's active profile describes the instruction library itself. Application examples do not enable application components here.
+Generic instruction updates preserve project-owned profiles, facts, and refinements.
+
 ## Selective target reading
 
 Start at [AGENTS.md](./AGENTS.md#select-target-guides). Select targets for the changed work, then select its languages.
@@ -36,7 +47,7 @@ The target guides contain existing instructions and links to existing topic guid
 | --- | --- | --- |
 | Backend | [BACKEND.md](./BACKEND.md) | APIs, runtime, containers, and backend service boundaries |
 | Frontend | [FRONTEND.md](./FRONTEND.md) | Browser pages, dynamic UI, login, components, and browser tests |
-| SaaS or web application | [SAAS.md](./SAAS.md) | Backend/frontend composition, cross-layer contracts, and combined application examples |
+| SaaS or web application | [SAAS.md](./SAAS.md) | Backend, browser, generated SDK, and optional native composition, with cross-layer contracts |
 | Tools | [TOOLS.md](./TOOLS.md) | CLI tools and plugins, module layouts, local commands, stdout, and stderr |
 | Native apps | [APPS.md](./APPS.md) | Existing Apple platform, lifecycle, layout, performance, testing, and credential guidance |
 | Static websites | [WEBSITES.md](./WEBSITES.md) | Websites without an application backend and relevant browser references |

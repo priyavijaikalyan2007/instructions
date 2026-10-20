@@ -74,11 +74,12 @@ Integration tests verify that multiple components work together correctly. They 
 
 ### End-to-End Tests
 
-End-to-end tests validate complete user journeys through the application using browser automation tools like Playwright or Selenium.
+End-to-end tests validate complete user journeys using the tools for the affected surface.
+Browser journeys use tools such as Playwright or Selenium. Native Apple journeys use XCTest UI tests from APPS.md and SWIFT.md.
 
 **Requirements:**
 - Required for critical user workflows
-- Use Playwright as the preferred tool for new projects
+- For new browser projects, prefer Playwright. Native Apple targets use the configured XCTest UI test setup.
 - Run by developers and in CI pipelines before deployment
 - Include visual regression testing for UI-critical paths
 
@@ -495,7 +496,9 @@ See [C#](./CSHARP.md#simple-performance-assertions).
 
 ### Benchmark Tests
 
-Use BenchmarkDotNet for detailed performance analysis:
+Use the benchmark or profiler tools in the selected language guide.
+Java uses the configured benchmark harness and Java Flight Recorder. Native Apple apps use Instruments and Xcode diagnostics.
+For .NET, use BenchmarkDotNet for detailed performance analysis:
 
 See [C#](./CSHARP.md#benchmark-tests).
 

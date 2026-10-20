@@ -64,19 +64,21 @@ The [audit](./native-apple-instruction-audit.md) lists startup, shared, native, 
 The native route works, but shared web-platform mandates, a missing planning reference, and workflow conflicts remain.
 Proposed corrections are recorded for review. This pass changes no engineering policy.
 
-## Proposed next phase
+## Current phase: manual project profiles and scoped SaaS clients
 
-The [revised proposal](./instructions-plan.md#proposal-project-profiles-and-native-saas-clients) assumes one monolithic repository with optional components.
-Native SaaS clients, their platforms, and generated SDK integration are selectable.
-PROJECT_PROFILE.md holds configuration, PROJECT.md holds project facts only, and ADDITIONAL.md holds local instructions and emerging lessons.
-The profile and AGENTS.md explicitly reference the refinement file. Reusable lessons can be proposed for the generic guides.
-Manual selection comes first. A later interview script edits the same profile while preserving local files.
-No cross-repository coordination is in scope. No routing, template, or script changes are implemented.
-Proposal records are pushed to docs/target-guides for review in PR #2.
+The manual profile and templates are implemented on docs/target-guides for PR #2.
+AGENTS.md reads PROJECT_PROFILE.md, the configured facts-only PROJECT.md, and the configured local ADDITIONAL.md.
+Enabled component paths and changed behavior select targets, languages, platforms, and shared concerns.
+Native SaaS clients are optional and normally use generated SDKs. Swift is indexed in SDKs.md.
+The interview script remains deferred. No cross-repository coordination is introduced.
 
-## UI overlap and Java SaaS validation
+Failed commands without a suitable visible error surface use literate dialogs.
+Visible forms use inline errors or a persistent summary. Native interfaces use platform presentation.
+Framework and product examples now have explicit applicability conditions.
 
-The [review and routing test](./ui-ux-and-java-saas-audit.md) compares main and PR UI guides and traces the Java/container/frontend/Apple scenario.
-The two old UI/UX guides are deleted in PR #2. Retained behavior, profiles, browser shortcuts, and implementation references still overlap.
-The manual test is a partial pass: major guides are reachable, but native SaaS/SDK links and generic scope need correction.
-No generic instructions changed during this validation. The profile and interview script remain proposals.
+The [validation report](./project-profile-validation.md) records all ten fresh-context reading/error cases as passing.
+All 559 code blocks counted across the broader Markdown baseline remain unchanged.
+No new Markdown link defects were introduced. Existing encoding, headers, workflow, and append-only history checks pass.
+The prior audits remain dated evidence with pointers to this follow-up.
+The older TDD-exception and production-fix permission-policy conflicts remain outside this change.
+No application build or runtime test is claimed for these documentation changes.

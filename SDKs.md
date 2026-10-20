@@ -25,8 +25,24 @@ Existing guidance is limited to those linked contracts and conventions.
 | OpenAPI documentation contract | [API_GUIDELINES.md](./API_GUIDELINES.md#8-documentation) |
 | Resource names, request/response fields, errors, and versioning | [API_GUIDELINES.md](./API_GUIDELINES.md) |
 | Consumer API and artifact contracts | [DOCUMENTATION.md](./DOCUMENTATION.md#verified-facts-and-published-contracts) |
+| Swift conventions | [SWIFT.md](./SWIFT.md) |
+| Native client behavior and lifecycle | [APPS.md](./APPS.md#native-saas-clients) |
+| SaaS surface composition | [SAAS.md](./SAAS.md#surface-selection) |
 | TypeScript conventions | [TYPESCRIPT.md](./TYPESCRIPT.md) |
 | Java conventions | [JAVA.md](./JAVA.md) |
 | C# conventions | [CSHARP.md](./CSHARP.md) |
 | Go conventions | [GO.md](./GO.md) |
 | Python conventions | [PYTHON.md](./PYTHON.md) |
+
+## Generated native clients
+
+Most native SaaS clients use SDKs generated from the API specification and Swagger tooling.
+Use that generated client as the normal API boundary. Additional handwritten client abstractions are not required by default.
+Read the configured specification, generator version, options, and output mapping before changing generation or client integration.
+Use the documented generation command rather than editing generated output as a substitute for its source contract.
+
+Select the languages of affected outputs and consumers. A Swift SDK change selects SWIFT.md, not every SDK language.
+Check request/response names, types, errors, and authentication integration against the actual generated contract.
+A changed API contract selects affected browser and native consumers in the same repository.
+Project-specific generator settings and output paths belong in PROJECT.md or referenced configuration files.
+App-side sessions, credential storage, lifecycle, and error presentation remain in APPS.md and the shared UI/error guides.

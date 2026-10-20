@@ -88,6 +88,8 @@ Verify the published output and its links, not only the source file's existence.
 
 ## Hosting and Deployment Architecture
 
+Use the project's declared documentation delivery. The linked .NET monolith packaging is a configured example, not a Java or native requirement.
+
 See [SAAS.md](./SAAS.md#monolith-documentation-packaging).
 
 ## Visual Identity and Styling
@@ -96,7 +98,7 @@ To maintain a cohesive user experience, the documentation website must be indist
 
 1.  **Unified Styling:** Use the same CSS frameworks, design tokens, colour palettes, and typography as the main application.
 2.  **Shared Components:** Where possible, reuse UI components (e.g., headers, footers, navigation bars) from the application to ensure consistency.
-3.  **No Stylistic Divergence:** Avoid using default documentation templates (e.g., standard Swagger UI or Docusaurus themes) if they do not match the application's unique aesthetic. All documentation interfaces must be customised to align with the Knobby brand.
+3.  **No Stylistic Divergence:** Avoid using default documentation templates (e.g., standard Swagger UI or Docusaurus themes) if they do not match the application's unique aesthetic. Customize documentation interfaces to the consuming project's declared design system.
 
 ---
 

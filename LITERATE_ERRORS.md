@@ -174,6 +174,14 @@ Components should map this structure to the `LiterateError` interface for render
 
 ## 6. ErrorDialog Component Integration
 
+The literate error content applies to inline form feedback and operation dialogs.
+Use [error placement](./UI_UX.md#error-placement) to choose between them.
+A failed Save command without a suitable visible error surface uses a literate dialog.
+A visible form shows field errors inline and submission failures in its summary or persistent status area.
+Native apps use platform controls with the same user-facing content and appropriate technical details.
+
+The integration below describes the selected browser component only.
+
 The ErrorDialog component (see `https://theme.priyavijai-kalyan2007.workers.dev/docs/docs/components/errordialog/README.md`)
 is the primary consumer of literate errors from the frontend framework. It renders:
 

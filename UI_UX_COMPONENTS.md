@@ -1149,7 +1149,9 @@ Undo must be available for direct-manipulation edits.
 
 ### Modal dialogs
 
-Use a modal only when the user must resolve the interaction before continuing.
+Use a modal when the user must resolve the interaction before continuing.
+A literate failure dialog also explains a failed user command that has no suitable visible error surface.
+Use [error placement](./UI_UX.md#error-placement) to distinguish that operation from visible form errors.
 
 A modal must:
 

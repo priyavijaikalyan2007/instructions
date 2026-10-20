@@ -16,6 +16,9 @@ Created: 2026
 Browser pages, dynamic UI, login flows, and reusable browser components.
 API, authentication, synchronization, and permission sections apply to browser work that uses those features.
 SaaS composition and asset compilation/delivery examples are linked separately.
+Use the frontend framework and design system recorded in PROJECT.md.
+Bootstrap, HTMX, the enterprise shell, and the supplied theme catalog are scoped implementation profiles, not consequences of having a browser frontend.
+Read their sections only when that component uses the named stack or the corresponding project choice is checked.
 
 ## Topic references
 
@@ -77,6 +80,8 @@ See [SAAS.md](./SAAS.md#frontend-source-layout).
 - Use try-catch blocks strategically
 
 ## 1.5. Recommended Technologies
+
+This is the vanilla TypeScript/Bootstrap implementation profile. Apply it only when that frontend stack is configured.
 
 - Use Bootstrap 5 as the primary UI and component framework.
 - Use TypeScript with a simple compile step to convert into Javascript. Fallback to vanilla Javascript.
@@ -231,6 +236,8 @@ See [STATIC_ASSETS.md](./STATIC_ASSETS.md#static-build-and-hosting-example).
 See [STATIC_ASSETS.md](./STATIC_ASSETS.md#theme-resources).
 
 ## 2.2. Styling Principles
+
+Bootstrap and the theme catalog below apply only to that configured design system. Other frontends use their declared tokens and catalog.
 
 1. Prefer vanilla Bootstrap styles.
 2. Write custom CSS/JS/Typescript only when absolutely necessary.
@@ -538,6 +545,9 @@ See [SAAS.md](./SAAS.md#sub-application-structure).
 
 # 9. Access Control UI Patterns
 
+The permission services, field names, and sharing APIs below implement the selected Knobby authorization example.
+Other clients reflect their own server contract. Native platform permissions and share sheets use APPS.md.
+
 ## 9.1. Access Level Indicator
 
 All applications with sharing functionality should display the user's access level prominently.
@@ -807,6 +817,9 @@ if (!window.api || !window.api.isAuthenticated()) { ... }
 
 ## component-reuse workflow
 
+Use the component catalog recorded in PROJECT.md before implementing a replacement.
+The URL workflow below applies only when the supplied theme catalog is selected for the component.
+
 - Before building new browser UI components, always consult the file
   `https://theme.priyavijai-kalyan2007.workers.dev/docs/COMPONENT_INDEX.md` to see
   if a reusable component exists. If a resuable component exists, then consult
@@ -910,6 +923,8 @@ See [STATIC_ASSETS.md](./STATIC_ASSETS.md#asset-caching).
 
 ## Bootstrap discipline
 
+Apply these rules only to components built with the configured Bootstrap theme.
+
 - **"Override, don't overwrite."**
 - **Variables First:** When changing the appearance of any Bootstrap element, modify `_variables.scss` before writing custom CSS. If Bootstrap provides a variable for the property, use it.
 - **No Hardcoded Values:** Never hardcode hex colours (e.g., `#FF0000`), pixel sizes, or font stacks in component SCSS or HTML. Use the semantic names defined in `_variables.scss` (e.g., `$danger`, `$font-size-sm`, `$spacer`).
@@ -938,6 +953,9 @@ When building TypeScript components, add unit tests using Jest or Vitest that ve
 
 ## component visual checks
 
+Use the configured demo or integration surface for the affected component.
+The demo/index.html path below belongs to the selected theme component-library example.
+
 After any theme or component change, open `demo/index.html` in a browser and visually verify that:
 - No existing components are broken.
 - New components render as specified.
@@ -953,11 +971,15 @@ You must add Playwright end-to-end tests for all user-facing changes.
 
 ## browser dependency restriction
 
+This restriction applies to the configured vanilla component-library profile. Other components retain their declared framework.
+
 - **No UI Frameworks:** Do not install React, Vue, Angular, jQuery, or any UI framework. This is explicitly prohibited by the project's architecture.
 
 ## UI error propagation
 
-- **UI Propagation:** Ensure errors propagate to the UI consistently. If the app uses a global Toast notification system for API errors, do not implement a local `alert()` or console-only error log.
+- **UI Propagation:** Follow [error placement](./UI_UX.md#error-placement). Visible forms show inline errors or a persistent summary.
+- Use the configured literate error dialog for failed commands without a suitable visible error surface, such as Save on a canvas.
+- Keep transient notifications consistent with the host. Do not replace an actionable failure with a console-only log or native browser alert.
 
 ## stylesheet cleanup
 
@@ -980,6 +1002,8 @@ Users shouldn't have to relearn how to use a computer when they use our software
 *   **Fitts's Law:** Make important targets (like "Save" or "Delete") large and easy to click. Place related controls close to each other.
 
 ## Browser visual examples
+
+The Bootstrap grid, font sizes, and color palette below are examples for that configured design system.
 
 ### 3.1. Color & Contrast
 *   **Semantic Colors:**
@@ -1014,7 +1038,7 @@ Users shouldn't have to relearn how to use a computer when they use our software
     *   **Background Actions (Auto-save):** Show a non-intrusive status indicator (e.g., "Saving..." -> "All changes saved") in the toolbar or footer.
     *   **Blocking Operations:** If the user *cannot* interact with the app while processing (e.g., "Importing large file"), use a **Progress Modal** with a visible progress bar or spinner and a descriptive text ("Importing... 45%").
     *   **Lazy Loading:** When loading parts of the UI (like a heavy tool palette), show a local spinner placeholder where the content will appear.
-*   **Success/Error:** Use toast notifications (top-right or bottom-right) for transient messages. Do not block the screen with "Success!" modals.
+*   **Transient feedback:** Use the configured toast surface for transient messages. Use [error placement](./UI_UX.md#error-placement) for failures. Do not show success modals.
 
 ## Browser markup accessibility
 
@@ -1024,6 +1048,9 @@ Accessibility is not just for disabled users; it improves the experience for eve
 *   **Screen Readers:** Ensure logical tab order.
 
 ## Browser theme and component reuse
+
+The named catalog and theme resource below apply when PROJECT.md selects that catalog.
+Other frontends reuse their own declared components and appearance tokens.
 
 ### 1.1. Standardized Component Library
 *   **Mandate:** Agents MUST NOT create new UI components if a suitable component exists in `MASTER_COMPONENT_LIST.md`.
@@ -1036,6 +1063,9 @@ Accessibility is not just for disabled users; it improves the experience for eve
 *   **Modals:** Ensure Bootstrap modals use the standard theme classes. Buttons in modals must match the sizing and styling of buttons in the main application toolbar.
 
 ## Browser layout state
+
+The localStorage adapter below belongs to the selected enterprise browser-shell example.
+Other browser components preserve required state through their configured persistence mechanism.
 
 ### 3.1. Persistence Mandate
 *   **Mandate:** UI configuration state MUST be preserved across sessions and sub-app switches using `localStorage`.

@@ -35,7 +35,7 @@ Source assets, compiled browser bundles, component-library output, static hostin
 
 ## Source and compiled output
 
-- Keep the configured Vite source/output mapping. Do not edit compiled JavaScript as a substitute for its TypeScript source.
+- When Vite is configured, keep its source/output mapping. Do not edit compiled JavaScript as a substitute for TypeScript source.
 
 ## Component-library build
 
@@ -62,7 +62,9 @@ Keep source and generated documents distinguishable. Register new demos and guid
 
 ## static build and hosting example
 
-This repository uses a deliberately simple stack:
+This example applies only when the Theme component-library example is checked in PROJECT_PROFILE.md.
+It does not select Cloudflare hosting or a library build for a Java SaaS container.
+The selected library example uses this stack:
 
 | Layer | Technology | Notes |
 |-------|-----------|-------|
@@ -81,6 +83,8 @@ This repository uses a deliberately simple stack:
 ---
 
 ## theme resources
+
+These URLs belong to the selected theme-library example. Other components use the catalog recorded in PROJECT.md.
 
 - CSS Theme: https://theme.priyavijai-kalyan2007.workers.dev/css/custom.css
 - Bootstrap JS: theme.priyavijai-kalyan2007.workers.dev/js/bootstrap.bundle.min.js

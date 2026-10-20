@@ -17,6 +17,8 @@ Use the application's established logging API and configuration. A reusable libr
 Use [FRONTEND_LOGGING.md](./FRONTEND_LOGGING.md) for the component logging mechanism when that guide applies.
 
 Read the logging integration section in the selected language guide.
+Service/request metadata and deployment-environment rules apply to server components that have those concepts.
+Native Apple apps use Swift unified logging and local operation context. They do not invent HTTP requests or tenants for local actions.
 
 See [TOOLS.md](./TOOLS.md#cli-output-and-diagnostics).
 Do not add a new logging dependency when the existing API meets the requirement.
@@ -210,13 +212,17 @@ Wrap all highly detailed log levels such as DEBUG/TRACE with an if check to make
 ### 2.1 Configuration-Driven Only
 
 * **Do not hardcode logging behavior** (levels, formatters, appenders, sinks).
-* All logging behavior must be controlled via **configuration files and environment variables**.
+* Use the selected platform's logging configuration mechanism.
+* Service deployments use configuration files and environment variables. Native apps and libraries follow their platform or host configuration.
 * Code may only:
 
   * Obtain a logger
   * Emit log statements
 
 ### 2.2 Environment Separation
+
+This deployment example applies to server components. Use the actual environment names from PROJECT.md.
+Local native apps do not need staging or production service configurations merely to emit logs.
 
 * Maintain **separate explicit configurations** for:
 
@@ -266,7 +272,7 @@ Agents **must not** misuse levels.
 
 ## 4. Mandatory Metadata (Every Log Line)
 
-Every log entry **must contain**:
+Within request-handling services, every log entry **must contain**:
 
 * Timestamp (UTC, ISO-8601)
 * Log level
@@ -286,6 +292,10 @@ This metadata **must be injected automatically**, not manually appended in each 
 ---
 
 ## 5. Correlation, Request, Tenant, User IDs
+
+The request/response rules below apply to service requests.
+For native local work, use operation, document, scene, or task context where relevant, as described in SWIFT.md.
+Carry service correlation information through a generated SDK when the configured service contract provides it.
 
 ### 5.1 Correlation ID
 

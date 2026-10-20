@@ -363,7 +363,7 @@ Its policy corrections remain proposals. The earlier callout-removal plan is sup
 
 ## Proposal: project profiles and native SaaS clients
 
-Status: revised for owner review on 20 October 2026. No router, template, or setup script changes are implemented.
+Status: manual profile, templates, and routing corrections implemented on 20 October 2026. The interview script remains deferred.
 This revision replaces the earlier proposal for service relationships across repositories.
 
 Treat every consuming repository as one monolith with selectable components.
@@ -419,3 +419,32 @@ Proposed implementation order:
 
 Coverage gaps remain explicit. Selecting Android or ChromeOS does not imply that detailed platform guidance already exists.
 No pattern required for this proposal. Script interfaces and implementation details remain for a later approved design.
+
+## Implementation: error surfaces and selectable project scope
+
+Authorized on 20 October 2026 after the Java SaaS routing review.
+Implement the manual profile now. The interview script remains a later step, as previously proposed.
+
+1. Clarify operation dialogs versus inline form errors in ERROR_DIALOG_COMPONENT.md, UI_UX.md, UI_UX_COMPONENTS.md, LITERATE_ERRORS.md, FRONTEND.md, and SAAS.md.
+2. Add PROJECT_PROFILE_TEMPLATE.md, PROJECT_TEMPLATE.md, and ADDITIONAL_TEMPLATE.md. Add the instruction repository's own PROJECT_PROFILE.md, PROJECT.md, and ADDITIONAL.md.
+3. Add profile reading and scope selection to AGENTS.md and REPO.md. Document setup in README.md.
+4. Update SAAS.md, APPS.md, and SDKs.md for optional native SaaS clients and generated Swift SDK integration.
+5. Scope framework-specific rules in API_GUIDELINES.md, BACKEND.md, BACKEND_LIBRARY_SELECTION.md, FRONTEND_LIBRARY_SELECTION.md, FRONTEND_SELECTION.md, SECURITY_GUIDELINES.md, LOGGING.md, TESTING.md, PERSISTENCE.md, STATIC_ASSETS.md, DOCUMENTATION.md, ACCESS_CONTROL.md, DELETION.md, and RESTABLE_RESOURCES.md.
+6. Preserve language callouts, existing examples, copyright headers, and source encodings. Retain shared engineering policies outside the requested applicability corrections.
+7. Add a reviewable Java SaaS profile example and rerun the reading-path and error-surface cases. Update the prior audit with its correction status.
+8. Update CHANGELOG.md, CONVERSATION.md, specs/instructions.status.md, and append-only history. Commit and push to PR #2.
+
+Profile contract: explicit project/refinement paths, project choices, and enabled components with source paths, targets, languages, platforms, SDK links, and deployment facts.
+PROJECT.md contains facts only. ADDITIONAL.md contains local instructions and emerging lessons. Generic guides retain reusable rules.
+No runtime API changes are involved. No design pattern is required for document routing and configuration templates.
+Validation uses document integrity checks and task reading cases rather than application runtime tests.
+
+### Implementation outcome
+
+Implemented the manual profile and three project-owned file roles, with templates and an active profile for this instruction repository.
+Added a fictional Java SaaS fixture and [validation report](./project-profile-validation.md).
+Clarified operation dialogs versus visible form errors and native platform presentation.
+Connected optional native SaaS clients to their generated SDKs, including Swift.
+Scoped .NET, Knobby, shell, and browser catalog implementations without removing navigation callouts or code examples.
+The fresh-context reviewer passes all ten routing/error cases after the identified refinements.
+The interview script and older TDD/permission-policy conflicts remain outside this implementation.
