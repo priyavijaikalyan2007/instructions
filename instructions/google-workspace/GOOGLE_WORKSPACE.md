@@ -37,6 +37,7 @@ See [Google add-on types](https://developers.google.com/workspace/add-ons/concep
 Common workflow, writing style, testing, logging, and security requirements remain applicable.
 
 - Read [JavaScript](../javascript/JAVASCRIPT.md) for Apps Script or JavaScript source.
+- Read [Apps Script](../apps-script/APPS_SCRIPT.md) for the Apps Script runtime, including compiled TypeScript output.
 - Read [TypeScript](../typescript/TYPESCRIPT.md) when the repository compiles TypeScript.
 - Read [HTML](../html/HTML.md) and [CSS](../css/CSS.md) for HTML-service sidebars or dialogs.
 - Read [UI_UX.md](../UI_UX.md) and matching [component profiles](../UI_UX_COMPONENTS.md) for interaction behavior.

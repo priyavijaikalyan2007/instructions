@@ -402,7 +402,7 @@ Existing guide updates and removal of superseded flat copies require a separate 
 
 Choose 7 for a Google Workspace or Editor add-on. Record its host and add-on type in Platforms.
 Record Apps Script or HTTP runtime and the distribution mode in Packaging or delivery.
-Apps Script and Google Apps Script language labels route to JavaScript guidance.
+Apps Script and Google Apps Script language labels select both Apps Script and JavaScript guidance.
 Select TypeScript when that is the actual source compiled by the project.
 
 Choose 8 for browser extensions. Record browsers and operating systems, such as Chrome, Firefox, or Safari on macOS and iOS.
@@ -528,7 +528,9 @@ Personal testing and public Marketplace distribution remain separate choices.
 The interview explains build output, UI assets, OAuth, host testing, and release preparation for the selected model.
 Read the linked [Workspace lifecycle guidance](google-workspace/GOOGLE_WORKSPACE.md#build-and-package) when implementing that component.
 Host cards do not automatically select a browser frontend. An HTTP runtime selects backend guidance for its service.
-TypeScript selects JavaScript guidance too. JavaScript/TypeScript input selects both language guides.
+The apps-script runtime selects [APPS_SCRIPT.md](apps-script/APPS_SCRIPT.md) and shared JavaScript rules, regardless of source language.
+TypeScript selects its own guide too. JavaScript/TypeScript input selects both language guides.
+An HTTP runtime does not select Apps Script guidance solely because the source is JavaScript or TypeScript.
 Keep future host integrations out of the active selection until their work starts.
 
 The profile records these optional fields for Workspace components:

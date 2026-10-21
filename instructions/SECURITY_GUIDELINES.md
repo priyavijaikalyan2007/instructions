@@ -42,6 +42,7 @@ These controls serve different purposes. A sanitized value still requires author
 | Python services or tools | [Python security](python/PYTHON.md#security) |
 | SQL, query builders, migrations, database roles | [SQL security](sql/SQL.md#security), [PERSISTENCE.md](PERSISTENCE.md) |
 | JavaScript or TypeScript | [JavaScript security](javascript/JAVASCRIPT.md#security), [TypeScript security](typescript/TYPESCRIPT.md#security) |
+| Apps Script server callbacks and Google service access | [Apps Script security](apps-script/APPS_SCRIPT.md#security), plus JavaScript security |
 | HTML and browser delivery | [HTML security](html/HTML.md#security), [frontend security](frontend/FRONTEND.md#security-boundaries) |
 | CSS or SCSS | [CSS security](css/CSS.md#security), [SCSS security](scss/SCSS.md#security) |
 | Shell commands or scripts | [Shell security](shell/SHELL.md#security) |

@@ -59,3 +59,6 @@ Planned literal source paths are supported through an explicit source_state fiel
 New-component layout defaults are documented in REPO.md and each selected target guide.
 The interview offers named source-path examples only when a concrete component path is absent.
 This instruction repository retains its established scripts/ and scripts/tests/ paths.
+
+Apps Script runtimes select a runtime-specific guide alongside shared JavaScript rules.
+TypeScript source additionally selects TypeScript guidance. HTTP runtimes do not imply Apps Script.

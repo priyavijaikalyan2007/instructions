@@ -27,6 +27,10 @@ Examples may omit surrounding project types or test fixtures. Use the repository
 
 Read by task: [Naming](#naming), [File organization](#file-organization), [Async style](#consistent-async-style), [Comments](#comments), [Navigation markers](#navigation-markers), [Testing](../frontend/FRONTEND.md#browser-testing), [Test examples](#test-examples), [Coverage](#coverage), [Logging](#logging), [Performance examples](#performance-examples), [Design patterns](#design-patterns).
 
+For server-side Google Apps Script, also read [APPS_SCRIPT.md](../apps-script/APPS_SCRIPT.md).
+Its runtime restrictions apply to syntax, dependencies, host callbacks, and service calls.
+Browser-side HTML-service code follows browser JavaScript rules rather than server runtime restrictions.
+
 ## Naming
 
 | Element | Convention | Example |
@@ -37,7 +41,7 @@ Read by task: [Naming](#naming), [File organization](#file-organization), [Async
 | Properties | camelCase | `errorCode` |
 | Variables | camelCase | `containerElement` |
 | Constants | SCREAMING_SNAKE_CASE | `MAX_RETRY_COUNT` |
-| Private Members | #camelCase or _camelCase | `#container` |
+| Private Members | #camelCase or _camelCase, subject to runtime support | `#container` or `_container` |
 
 ## File organization
 

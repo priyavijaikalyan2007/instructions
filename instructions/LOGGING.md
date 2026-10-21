@@ -20,6 +20,9 @@ Read the logging integration section in the selected language guide.
 Service/request metadata and deployment-environment rules apply to server components that have those concepts.
 Native Apple apps use Swift unified logging and local operation context. They do not invent HTTP requests or tenants for local actions.
 
+Apps Script uses its [runtime logging guidance](apps-script/APPS_SCRIPT.md#logging) for Google-managed executions.
+Do not add invented HTTP request metadata to an Editor callback.
+
 See [TOOLS.md](tools/TOOLS.md#cli-output-and-diagnostics).
 Do not add a new logging dependency when the existing API meets the requirement.
 

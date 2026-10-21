@@ -11,6 +11,13 @@ Created: 2026
 
 # Changelog
 
+## 21 October 2026: Apps Script runtime guidance
+
+- Added Apps Script runtime rules and examples layered on shared JavaScript conventions.
+- Selected the runtime guide automatically for Apps Script Workspace runtimes and explicit Apps Script language labels.
+- Kept HTTP add-ons on their actual backend language guidance and preserved unselected installed guides.
+- Added five routing regression tests. All 106 selector tests pass.
+
 ## 21 October 2026: new-project initialization
 
 - Added explained project initialization with policy templates, identity fields, and explicit license choices.

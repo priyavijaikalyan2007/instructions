@@ -61,7 +61,8 @@ LANGUAGE_GUIDES = {
     "css": ["css/CSS.md"],
     "scss": ["scss/SCSS.md", "css/CSS.md"], "sql": ["sql/SQL.md"], "shell": ["shell/SHELL.md"],
     "bash": ["shell/SHELL.md"],
-    "apps script": ["javascript/JAVASCRIPT.md"], "google apps script": ["javascript/JAVASCRIPT.md"],
+    "apps script": ["javascript/JAVASCRIPT.md", "apps-script/APPS_SCRIPT.md"],
+    "google apps script": ["javascript/JAVASCRIPT.md", "apps-script/APPS_SCRIPT.md"],
 }
 IDENTIFIER = re.compile(r"[a-z][a-z0-9-]*\Z")
 
@@ -293,6 +294,16 @@ def validate_source_paths(root: Path, identifier: str, paths: str, state: str = 
     return warnings
 
 
+def workspace_runtime_guides(values: dict) -> set[str]:
+    """Select runtime guidance from validated Workspace metadata, not language guesses."""
+    runtime = values.get("workspace_runtime", "").strip("`")
+    if runtime == "apps-script":
+        return {"apps-script/APPS_SCRIPT.md", "javascript/JAVASCRIPT.md"}
+    if runtime == "http":
+        return {"backend/BACKEND.md"}
+    return set()
+
+
 def validate_component(root: Path, identifier: str, values: dict) -> tuple[set, list, list]:
     """Validate enabled metadata and report guide gaps without inventing coverage."""
     for key in REQUIRED_FIELDS:
@@ -309,8 +320,7 @@ def validate_component(root: Path, identifier: str, values: dict) -> tuple[set, 
     guides = {TARGET_GUIDES[target] for target in targets}
     if "google-workspace" in targets:
         warnings.extend(validate_workspace(values))
-        if values.get("workspace_runtime", "").strip("`") == "http":
-            guides.add("backend/BACKEND.md")
+        guides.update(workspace_runtime_guides(values))
     for language in language_values(values["languages"]):
         if language.lower() == "none":
             continue

@@ -769,3 +769,37 @@ Commit locally on docs/recommended-layouts. No push or merge was requested.
 
 The owner authorized pushing docs/recommended-layouts and opening a pull request against main.
 The verified implementation passed 101 tests. Leave the pull request unmerged for review.
+
+
+## 21 October 2026: Apps Script runtime guidance
+
+### Request
+
+> ok. reviewed and merged. I think we are largely in good shape. One question - for the Google Workspace extensions, we might need to be writing Javascript & Appscript code. Do you have guidance for those languages?
+
+The review found shared JavaScript guidance and Workspace lifecycle guidance, but no dedicated Apps Script runtime guide.
+The proposed change added that guide, concrete examples, and runtime-based profile selection.
+
+> good. go ahead.
+
+### Outcome
+
+Added instructions/apps-script/APPS_SCRIPT.md, layered on the shared JavaScript guide.
+It distinguishes server Apps Script, browser-side HTML-service code, and local Node.js tooling.
+It covers runtime syntax, file organization, callbacks, authorization, request validation, state, locks, quotas, logging, and testing.
+Examples show Editor menus, pure text processing, sidebar communication, shared properties, batched Sheets reads, and structured logs.
+Google's official documentation supports the runtime-specific facts.
+
+Workspace apps-script runtimes now select Apps Script and JavaScript guidance for either JavaScript or TypeScript source.
+Explicit Apps Script language labels select both guides, including in legacy profiles without structured runtime metadata.
+HTTP JavaScript add-ons select backend and JavaScript guidance without selecting the Apps Script runtime guide.
+Switching runtimes removes obsolete scope from AGENTS.md while preserving installed guide content.
+The existing answer format and this repository's active profile remain unchanged.
+
+All 106 selector tests pass. New routing cases failed before implementation.
+Six JavaScript example blocks parse and pass controlled local host-stub checks.
+Those checks cover validation, safe logging, menu callbacks, batching, lock failures, and sidebar errors.
+They do not verify live Google authorization, host behavior, deployment, or quotas.
+Local Markdown links and anchors pass. Existing code examples remain intact except the updated Workspace reading tree.
+The CP1252 guides remain byte-identical. Source profile check and dry run pass without changing the active selection.
+Commit locally on feat/apps-script-guidance. No push or publication was requested.

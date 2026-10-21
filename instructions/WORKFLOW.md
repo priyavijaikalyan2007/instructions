@@ -93,7 +93,8 @@ Code examples in this instruction repository do not select a language for the co
 | Rust source and Cargo configuration | [RUST.md](rust/RUST.md) |
 | Java source and JVM build configuration | [JAVA.md](java/JAVA.md) |
 | Python source and package configuration | [PYTHON.md](python/PYTHON.md) |
-| JavaScript or Apps Script source and runtime configuration | [JAVASCRIPT.md](javascript/JAVASCRIPT.md) |
+| JavaScript source and runtime configuration | [JAVASCRIPT.md](javascript/JAVASCRIPT.md) |
+| Server-side Apps Script, including compiled TypeScript output | [APPS_SCRIPT.md](apps-script/APPS_SCRIPT.md), plus shared JavaScript and actual source-language rules |
 | TypeScript source, declarations, and compiler configuration | [TYPESCRIPT.md](typescript/TYPESCRIPT.md) and its shared [JavaScript rules](javascript/JAVASCRIPT.md) |
 | HTML markup and markup in templates or views | [HTML.md](html/HTML.md) |
 | CSS stylesheets | [CSS.md](css/CSS.md) |

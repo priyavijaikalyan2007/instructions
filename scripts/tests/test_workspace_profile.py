@@ -207,6 +207,56 @@ class WorkspaceProfileTests(unittest.TestCase):
         build = result.stdout.split('Build and packaging for these choices:', 1)[1]
         self.assertNotIn('SCSS compilation', build)
 
+    def test_apps_script_runtime_selects_runtime_guide_for_javascript_and_typescript(self):
+        for language in ['JavaScript', 'TypeScript']:
+            with self.subTest(language=language):
+                result = self.run_cli(answers=self.workspace_answers(languages=[language]), flags=['--apply'])
+                self.assertEqual(result.returncode, 0, result.stderr)
+                self.assertIn('apps-script/APPS_SCRIPT.md', (self.root / 'AGENTS.md').read_text())
+
+    def test_explicit_apps_script_aliases_select_javascript_and_runtime_guides(self):
+        for language in ['Apps Script', 'Google Apps Script']:
+            with self.subTest(language=language):
+                answers = self.workspace_answers(languages=[language])
+                for key in list(answers['components']['workspace-extension']):
+                    if key.startswith('workspace_'):
+                        del answers['components']['workspace-extension'][key]
+                result = self.run_cli(answers=answers, flags=['--apply'])
+                self.assertEqual(result.returncode, 0, result.stderr)
+                agents = (self.root / 'AGENTS.md').read_text()
+                self.assertIn('javascript/JAVASCRIPT.md', agents)
+                self.assertIn('apps-script/APPS_SCRIPT.md', agents)
+
+    def test_http_javascript_does_not_select_apps_script_runtime(self):
+        answers = self.workspace_answers(workspace_model='workspace', workspace_runtime='http',
+                                         languages=['JavaScript'], platforms=['Gmail'])
+        result = self.run_cli(answers=answers, flags=['--apply'])
+        self.assertEqual(result.returncode, 0, result.stderr)
+        agents = (self.root / 'AGENTS.md').read_text()
+        self.assertIn('javascript/JAVASCRIPT.md', agents)
+        self.assertIn('backend/BACKEND.md', agents)
+        self.assertNotIn('apps-script/APPS_SCRIPT.md', agents)
+
+    def test_check_requires_selected_apps_script_guide(self):
+        self.assertEqual(self.run_cli(answers=self.workspace_answers(), flags=['--apply']).returncode, 0)
+        guide = self.root / 'instructions/apps-script/APPS_SCRIPT.md'
+        self.assertTrue(guide.exists())
+        guide.unlink()
+        result = self.run_cli(flags=['--check'])
+        self.assertEqual(result.returncode, 2)
+        self.assertIn('apps-script/APPS_SCRIPT.md', result.stderr)
+
+    def test_switching_to_http_retires_runtime_scope_and_preserves_installed_guide(self):
+        self.assertEqual(self.run_cli(answers=self.workspace_answers(), flags=['--apply']).returncode, 0)
+        guide = self.root / 'instructions/apps-script/APPS_SCRIPT.md'
+        self.assertTrue(guide.exists())
+        original = guide.read_bytes()
+        answers = self.workspace_answers(workspace_model='workspace', workspace_runtime='http',
+                                         languages=['TypeScript'], platforms=['Gmail'])
+        self.assertEqual(self.run_cli(answers=answers, flags=['--apply']).returncode, 0)
+        self.assertNotIn('apps-script/APPS_SCRIPT.md', (self.root / 'AGENTS.md').read_text())
+        self.assertEqual(guide.read_bytes(), original)
+
     def test_slash_language_names_select_both_guides_in_json(self):
         result = self.run_cli(answers=self.workspace_answers(languages=['Javascript/Typescript']), flags=['--apply'])
         self.assertEqual(result.returncode, 0, result.stderr)

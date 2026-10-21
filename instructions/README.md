@@ -98,6 +98,7 @@ Read applicable topic sections together with the selected language guide. Follow
 | Java | [JAVA.md](java/JAVA.md) |
 | Python | [PYTHON.md](python/PYTHON.md) |
 | JavaScript | [JAVASCRIPT.md](javascript/JAVASCRIPT.md) |
+| Apps Script runtime | [APPS_SCRIPT.md](apps-script/APPS_SCRIPT.md), plus shared JavaScript rules |
 | TypeScript | [TYPESCRIPT.md](typescript/TYPESCRIPT.md), plus shared JavaScript rules |
 | HTML | [HTML.md](html/HTML.md) |
 | CSS | [CSS.md](css/CSS.md) |
@@ -359,6 +360,8 @@ Use TOOLS.md for stdout, stderr, exit status, cancellation, and local data prote
 instructions/
 ├── google-workspace/
 │   └── GOOGLE_WORKSPACE.md
+├── apps-script/
+│   └── APPS_SCRIPT.md  [Apps Script runtime, including compiled TypeScript]
 ├── javascript/
 │   └── JAVASCRIPT.md  [Apps Script or JavaScript source]
 ├── typescript/
@@ -375,6 +378,8 @@ instructions/
 ```
 
 Use the common baseline too. Select the host's add-on model and the actual runtime language.
+Apps Script runtime selection loads both Apps Script and JavaScript guidance. TypeScript source adds its own guide.
+HTTP-based add-ons select backend and actual language guidance without automatically loading Apps Script.
 Card-based UI does not require HTML or a browser component library.
 A writing assistant does not require a backend or AI merely because it edits documents.
 
