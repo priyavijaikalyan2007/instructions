@@ -600,3 +600,10 @@ The actual utilextensions repository was not changed. Changes are prepared on fe
 
 Completed the remaining template-link checks. No new link defects or preservation discrepancies remain.
 Source policy files and LICENSE remain byte-identical. Commit the verified implementation on the local review branch.
+
+## 21 October 2026: publish project initialization for testing
+
+> great. yes, push the branch and raise the PR. I can try it out in a new repo again.
+
+The owner authorized pushing feat/project-initialization and opening a pull request for review.
+The implementation passed 77 tests. Publish the verified branch and leave the pull request unmerged for new-repository testing.

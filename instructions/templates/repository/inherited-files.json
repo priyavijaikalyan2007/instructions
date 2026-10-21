@@ -24,7 +24,8 @@
   ],
   "agentknowledge/history.jsonl": [
     "084ca7c0ad008c9c84a13d7d7d3e302ed555424a2c5824ff0d79cfc59ffc5dd6",
-    "a15fb7ae74067d29ba5fec92779c4da7c0e255ccf8430f294aca8ffb7e680c66"
+    "a15fb7ae74067d29ba5fec92779c4da7c0e255ccf8430f294aca8ffb7e680c66",
+    "d697eca6a39542e4418278af2fce7f24e61dcb0e86b5777123df86299b4390b0"
   ],
   "agentknowledge/lcv_constraints.yaml": [
     "92aef6dc2b2bb8f3665fcbf147fc889d84dbac5184d255da2e21b2fd7fef1b01"
@@ -83,6 +84,7 @@
     "9099ce19375424fb14b53bd53e15bc9eefa7be18983cc04ffb0888ba6fd244db"
   ],
   "instructions/project/CONVERSATION.md": [
+    "2436df79242341bc3846ab571756a6db3c662ba5adda1227464e938c4a1132b6",
     "3df8340420c493874199d047cb9aa8f4d686943a1ce480d4c7072cf8571a2c94",
     "a0a3e759672f989d343a463f26addee0bd6224347cb940efe9d5ec1e29341a20",
     "d5e61df491911ffe6a2b610283f0ec73bd6cf479de9d235d204ab4ca22d57595"
