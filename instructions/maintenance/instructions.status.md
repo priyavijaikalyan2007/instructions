@@ -114,3 +114,15 @@ Validation: 50 selector tests, live profile check and dry run, preserved example
 The .NET security harness accepted 3 valid responses and rejected 13 invalid responses.
 See scoped-guides-security-review.md for the move map, policy changes, preservation evidence, and test limits.
 Changes are committed locally for review. No push or merge is part of this update.
+
+
+## 21 October 2026: extension profiles ready for merge
+
+Added Google Workspace and browser extension guides, profile targets, interview choices, templates, and reading trees.
+Choices 1 through 6 remain stable. Choice 7 selects Google Workspace. Choice 8 selects browser extensions.
+The interview explains hosts, browsers, packaging, and optional SaaS relationships. Microsoft Office remains deferred.
+Existing profiles retain intentionally unlinked SDKs when users accept their current selections.
+All 55 tests pass. The repository profile check and dry run pass without generated changes.
+Link and preservation checks report no new defects. No host extension runtime or store publication was tested.
+The owner authorized pushing and merging this work together with the pending guide and security reorganization.
+This authorization supersedes the previous local-only delivery scope. Merge through a pull request, then synchronize main.

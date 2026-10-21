@@ -318,12 +318,82 @@ class ConfigureInstructionsTests(unittest.TestCase):
         result = self.run_cli(None, input_text="\n".join(answers) + "\n")
         self.assertTrue(result.returncode == 0 and "- Targets: apps" in (self.root / PROFILE).read_text())
 
-    def test_product_menu_matches_six_requested_categories(self):
+    def test_product_menu_preserves_original_six_categories(self):
         answers = ["4", "src", "Swift", "macOS", "native application", "no"]
         result = self.run_cli(None, input_text="\n".join(answers) + "\n")
         expected = ["1. SaaS", "2. SaaS with Native Clients", "3. Microservice", "4. Native App",
                     "5. Static Website", "6. CLI tools", "SaaS describes the product"]
         self.assertTrue(result.returncode == 0 and all(value in result.stdout for value in expected))
+
+    def test_retaining_profile_does_not_link_an_intentionally_unlinked_sdk(self):
+        answers = self.native_answers()
+        answers["saas_product"] = True
+        answers["components"]["native-client"]["saas_client"] = True
+        answers["components"]["sdk"] = {
+            "enabled": True, "source_paths": ["src"], "targets": ["sdks"], "languages": ["Swift"],
+            "platforms": ["iOS"], "saas_client": False, "sdk_component": "none", "deployment": "library",
+        }
+        self.assertEqual(self.run_cli(answers, "--apply").returncode, 0)
+        before = self.snapshot()
+        result = self.run_cli(None, input_text="\n" * 9 + "no\n")
+        self.assertEqual(result.returncode, 0, result.stderr)
+        self.assertIn("No changes.", result.stdout)
+        self.assertEqual(self.snapshot(), before)
+
+    def test_extension_interviews_select_independent_targets(self):
+        cases = [
+            ("7", "Apps Script", "Google Docs (Editor add-on)", "Apps Script test deployment",
+             "google-workspace", "google-workspace/GOOGLE_WORKSPACE.md"),
+            ("8", "TypeScript, HTML, CSS", "Chrome, Safari, Firefox", "browser store packages",
+             "browser-extensions", "browser-extensions/BROWSER_EXTENSIONS.md"),
+        ]
+        for number, languages, platforms, delivery, target, guide in cases:
+            with self.subTest(number=number):
+                answers = [number, "src", languages, platforms, delivery, "yes"]
+                result = self.run_cli(None, input_text="\n".join(answers) + "\n")
+                self.assertEqual(result.returncode, 0, result.stderr)
+                profile = (self.root / PROFILE).read_text()
+                self.assertIn("- Targets: " + target, profile)
+                self.assertIn("instructions/" + guide, (self.root / "AGENTS.md").read_text())
+                self.assertNotIn("backend/BACKEND.md", (self.root / "AGENTS.md").read_text())
+                self.assertEqual(self.run_cli(None, "--check").returncode, 0)
+
+    def test_extension_interview_explains_hosts_and_defers_office(self):
+        answers = ["7, 8", "src", "JavaScript", "Google Docs", "Apps Script test deployment",
+                   "src", "TypeScript", "Chrome, Firefox", "unpacked test extension", "no"]
+        result = self.run_cli(None, input_text="\n".join(answers) + "\n")
+        self.assertEqual(result.returncode, 0, result.stderr)
+        for phrase in ["7. Google Workspace Extensions", "8. Browser Extensions", "Editor add-on",
+                       "Chrome", "Firefox", "Safari", "Microsoft Office"]:
+            self.assertIn(phrase, result.stdout)
+        self.assertEqual(self.snapshot(), {})
+
+    def test_extension_saas_relationship_is_explicit_and_can_be_removed(self):
+        answers = ["3, 8", "yes", "src", "Java", "container", "src", "TypeScript", "Chrome", "store", "yes"]
+        result = self.run_cli(None, input_text="\n".join(answers) + "\n")
+        self.assertEqual(result.returncode, 0, result.stderr)
+        profile = (self.root / PROFILE).read_text()
+        extension = profile.split("### browser-extension", 1)[1]
+        self.assertIn("- SaaS client: yes", extension)
+        self.assertIn("instructions/saas/SAAS.md", (self.root / "AGENTS.md").read_text())
+        result = self.run_cli(None, input_text="8\n\n\n\n\nyes\n")
+        self.assertEqual(result.returncode, 0, result.stderr)
+        extension = (self.root / PROFILE).read_text().split("### browser-extension", 1)[1]
+        self.assertIn("- SaaS client: no", extension)
+        self.assertNotIn("instructions/saas/SAAS.md", (self.root / "AGENTS.md").read_text())
+
+    def test_extension_json_dry_run_and_nested_guide_validation(self):
+        answers = {"components": {"browser-extension": {
+            "enabled": True, "source_paths": ["src"], "targets": ["browser-extensions"],
+            "languages": ["TypeScript"], "platforms": ["Chrome"], "deployment": "unpacked test extension",
+            "saas_client": False, "sdk_component": "none",
+        }}}
+        result = self.run_cli(answers, "--dry-run")
+        self.assertEqual(result.returncode, 0, result.stderr)
+        self.assertEqual(self.snapshot(), {})
+        self.assertEqual(self.run_cli(answers, "--apply").returncode, 0)
+        (self.root / "instructions/browser-extensions/BROWSER_EXTENSIONS.md").unlink()
+        self.assertEqual(self.run_cli(None, "--check").returncode, 2)
 
     def test_accepting_defaults_retains_profile_bytes(self):
         self.initialize()

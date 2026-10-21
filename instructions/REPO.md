@@ -56,7 +56,7 @@ Use the [profile selector](#profile-selector) to interview or update the same pr
 ### Selection contract
 
 Components use unique identifiers and an Enabled checkbox. Unchecked components do not select guides.
-Targets are backend, frontend, saas, tools, apps, websites, static-assets, sdks, and documentation.
+Targets are backend, frontend, saas, tools, apps, websites, static-assets, sdks, documentation, google-workspace, and browser-extensions.
 Use the target and language tables in WORKFLOW.md to resolve those names to generic guides.
 
 Intersect enabled component paths with the files and behavior changed by the task.
@@ -181,6 +181,8 @@ The interview starts with these product categories:
 | 4 | Native App | Standalone native application for selected operating systems |
 | 5 | Static Website | Website and static assets, without an application backend |
 | 6 | CLI tools | Command-line tools and plugins |
+| 7 | Google Workspace Extensions | Workspace or Editor add-ons for selected host applications |
+| 8 | Browser Extensions | Packaged extensions for selected browsers and operating systems |
 
 Combine compatible choices in one repository. For example, 1, 5, 6 selects a SaaS, public website, and CLI tools.
 Choose only one of 1, 2, and 3 because those categories overlap.
@@ -296,3 +298,19 @@ The profile is the source of those selections. Narrow the list further for each 
 After manual profile edits, run the selector to regenerate the block. The --check mode detects stale routing.
 The --dry-run mode previews the regenerated block without writing files.
 Existing guide updates and removal of superseded flat copies require a separate reviewed migration.
+
+### Extension selections
+
+Choose 7 for a Google Workspace or Editor add-on. Record its host and add-on type in Platforms.
+Record Apps Script or HTTP runtime and the distribution mode in Packaging or delivery.
+Apps Script and Google Apps Script language labels route to JavaScript guidance.
+Select TypeScript when that is the actual source compiled by the project.
+
+Choose 8 for browser extensions. Record browsers and operating systems, such as Chrome, Firefox, or Safari on macOS and iOS.
+Combine an extension with a SaaS category when the repository contains both.
+The interview asks whether each selected extension consumes this repository's SaaS API.
+A Google account or browser account alone does not select SaaS-client behavior.
+When unambiguous, a selected SaaS client links to the enabled generated SDK component.
+Use manual or JSON configuration for multiple SDK relationships or an explicit direct-HTTP integration.
+Retaining an existing profile preserves intentionally unlinked SDKs unless the relationship changes explicitly.
+Microsoft Office extensions remain deferred and have no selectable preset.

@@ -48,6 +48,8 @@ Read the sections that apply to the changed behavior and the configured project 
 | Static websites without an application backend | [WEBSITES.md](website/WEBSITES.md) and [STATIC_ASSETS.md](static-assets/STATIC_ASSETS.md) | HTML, CSS, SCSS, JavaScript, TypeScript |
 | Static assets, bundles, compilation, hosting, CDN delivery, or component-library distribution | [STATIC_ASSETS.md](static-assets/STATIC_ASSETS.md) | The affected source and build languages |
 | SDKs and clients generated from an OpenAPI endpoint | [SDKs.md](sdk/SDKs.md) | Swift, TypeScript, Java, C#, Go, Python, or the generated language |
+| Google Workspace or Editor add-ons | [GOOGLE_WORKSPACE.md](google-workspace/GOOGLE_WORKSPACE.md) | Apps Script/JavaScript, TypeScript, or the configured HTTP runtime language |
+| Browser extensions for Chrome, Firefox, Safari, or compatible browsers | [BROWSER_EXTENSIONS.md](browser-extensions/BROWSER_EXTENSIONS.md) | TypeScript, JavaScript, HTML, CSS, and native wrapper code only when affected |
 | Documentation and published project information | [DOCUMENTATION.md](DOCUMENTATION.md) | Natural language, plus changed code-example languages |
 
 For a reusable browser component library, combine frontend and static asset guidance.
@@ -58,6 +60,9 @@ A SaaS may combine backend, browser, persistence, SDKs, docs, website, and optio
 A native SaaS client selects instructions/apps/APPS.md, instructions/saas/SAAS.md, instructions/sdk/SDKs.md, and its actual language for the changed integration.
 Native clients use generated SDKs by default. Native presence, platforms, and SaaS-client behavior remain explicit choices.
 A Python backend selects backend and Python guidance. A Go CLI selects tool and Go guidance.
+Google Workspace and browser extensions are independent targets. Select their actual hosts and runtime from project facts.
+An extension that consumes this repository's SaaS API also selects SaaS composition and SDK contract guidance.
+A standalone extension does not automatically select a server backend, native app, or static website.
 Existing native platform instructions cover Apple platforms. The SDK guide indexes existing API and language material.
 
 ## Select shared concerns
@@ -86,7 +91,7 @@ Code examples in this instruction repository do not select a language for the co
 | Rust source and Cargo configuration | [RUST.md](rust/RUST.md) |
 | Java source and JVM build configuration | [JAVA.md](java/JAVA.md) |
 | Python source and package configuration | [PYTHON.md](python/PYTHON.md) |
-| JavaScript source and runtime configuration | [JAVASCRIPT.md](javascript/JAVASCRIPT.md) |
+| JavaScript or Apps Script source and runtime configuration | [JAVASCRIPT.md](javascript/JAVASCRIPT.md) |
 | TypeScript source, declarations, and compiler configuration | [TYPESCRIPT.md](typescript/TYPESCRIPT.md) and its shared [JavaScript rules](javascript/JAVASCRIPT.md) |
 | HTML markup and markup in templates or views | [HTML.md](html/HTML.md) |
 | CSS stylesheets | [CSS.md](css/CSS.md) |

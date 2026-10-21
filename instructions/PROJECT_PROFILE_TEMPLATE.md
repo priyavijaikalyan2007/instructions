@@ -114,3 +114,25 @@ Replace angle-bracket values. Use `none` when a field does not apply.
 - SaaS client: no
 - SDK component: none
 - Deployment: `<CLI binary, package, or configured mode>`
+
+### workspace-extension
+
+- [ ] Enabled
+- Source paths: `<extension source, manifest, and build configuration paths>`
+- Targets: google-workspace
+- Languages: `<actual languages, such as JavaScript, TypeScript, HTML, CSS, or Apps Script>`
+- Platforms: `<Google Docs (Editor add-on), Gmail (Workspace add-on), or actual hosts>`
+- SaaS client: no
+- SDK component: none
+- Deployment: `<Apps Script or HTTP runtime, plus test/private/Marketplace distribution>`
+
+### browser-extension
+
+- [ ] Enabled
+- Source paths: `<extension source, manifest, and build configuration paths>`
+- Targets: browser-extensions
+- Languages: `<actual languages, such as JavaScript, TypeScript, HTML, CSS, or Apps Script>`
+- Platforms: `<Chrome, Firefox, Safari with operating systems, or actual browsers>`
+- SaaS client: no
+- SDK component: none
+- Deployment: `<unpacked test extension, browser store packages, or Safari app distribution>`

@@ -23,6 +23,10 @@ PRODUCTS = {
     "4": ("Native App", "Standalone application for selected operating systems.", {"apps"}),
     "5": ("Static Website", "Website and static assets without an application backend.", {"websites"}),
     "6": ("CLI tools", "Command-line tools or plugins for selected operating systems.", {"tools"}),
+    "7": ("Google Workspace Extensions", "Workspace or Editor add-ons, such as a Google Docs writing assistant.",
+          {"google-workspace"}),
+    "8": ("Browser Extensions", "Extensions for Chrome, Safari, Firefox, or selected compatible browsers.",
+          {"browser-extensions"}),
 }
 PARTS = {
     "backend": ("Server backend", "APIs, data models, persistence, and service runtime.", "backend", ["backend"]),
@@ -33,6 +37,10 @@ PARTS = {
     "websites": ("Static website", "Public pages, navigation, styles, and static assets.",
                  "website", ["websites", "static-assets"]),
     "tools": ("CLI tools", "Command-line programs and plugins.", "tool", ["tools"]),
+    "google-workspace": ("Google Workspace extension", "Host-integrated Workspace or Editor add-on behavior.",
+                         "workspace-extension", ["google-workspace"]),
+    "browser-extensions": ("Browser extension", "Packaged browser UI, content scripts, and background events.",
+                           "browser-extension", ["browser-extensions"]),
     "documentation": ("Documentation", "Product or developer documentation and instruction files.",
                       "documentation", ["documentation"]),
     "static-assets": ("Static assets", "Shared bundles, styles, fonts, icons, and other browser assets.",
@@ -95,6 +103,7 @@ def choose_products(is_new: bool) -> set[str] | None:
         print(f"  {number}. {label}: {description}")
     print("SaaS describes the product. Backend means server-side work. Frontend means the browser UI.")
     print("The microservice choice includes no browser frontend or static assets.")
+    print("Extensions can stand alone or combine with SaaS. Microsoft Office extensions are not included yet.")
     print("Combine compatible categories, such as 1, 5, 6 for a SaaS, public website, and CLI tools.")
     if not is_new:
         print("Press Enter to keep the existing profile's enabled parts and SaaS relationships.")
@@ -157,11 +166,13 @@ def select_parts(components: dict, choices: set[str]) -> tuple[dict, bool]:
     return working, is_saas
 
 
-def connect_sdks(components: dict) -> None:
+def connect_sdks(components: dict, selected: set[str] | None = None) -> None:
     """Connect selected clients to the single generated SDK scope when the relationship is unambiguous."""
     sdk_ids = [identifier for identifier, values in components.items()
                if values["enabled"] and part_role(values) == "sdks"]
-    for values in components.values():
+    for identifier, values in components.items():
+        if selected is not None and identifier not in selected:
+            continue
         if not values["enabled"] or values.get("saas_client") != "yes":
             continue
         current = values.get("sdk_component", "none")
@@ -185,6 +196,8 @@ def show_component(identifier: str, values: dict) -> str:
         print(f"Uses generated SDK: {sdk}" if sdk != "none" else "No generated SDK component is linked.")
     elif role == "apps":
         print("This is a standalone native app. It does not select SaaS authentication or a generated SDK by default.")
+    if role in {"google-workspace", "browser-extensions"}:
+        show_extension_help(role)
     return role
 
 
@@ -203,6 +216,42 @@ def ask_field(key: str, current: str) -> str:
         print("Enter an actual value for this selected part.")
 
 
+def show_extension_help(role: str) -> None:
+    """Describe host and runtime facts without imposing a single extension architecture."""
+    if role == "google-workspace":
+        print("Name the host and add-on type, such as Google Docs (Editor add-on) or Gmail (Workspace add-on).")
+        print("For packaging, record Apps Script or HTTP runtime and test, private, or Marketplace distribution.")
+    else:
+        print("Name supported browsers and operating systems, such as Chrome, Firefox, or Safari on macOS and iOS.")
+        print("For packaging, record unpacked tests, browser store packages, or Safari app distribution.")
+
+
+def configure_extension_clients(components: dict, is_saas: bool) -> set[str]:
+    """Ask about SaaS use explicitly and clear obsolete links when selecting standalone extensions."""
+    newly_connected = set()
+    for identifier, values in components.items():
+        if not values["enabled"] or part_role(values) not in {"google-workspace", "browser-extensions"}:
+            continue
+        default = values.get("saas_client", "no")
+        if default not in {"yes", "no"}:
+            default = "no"
+        answer = "no"
+        if is_saas:
+            print(f"\n{identifier}: a SaaS API connection selects SaaS and SDK contract guidance.")
+            while True:
+                answer = input(f"Does this extension use this repository's SaaS API? [{default}]: ").strip().lower()
+                answer = answer or default
+                if answer in {"yes", "no"}:
+                    break
+                print("Enter yes or no. A Google or browser account alone does not make this a SaaS client.")
+        if answer == "yes" and default != "yes":
+            newly_connected.add(identifier)
+        values["saas_client"] = answer
+        if answer == "no":
+            values["sdk_component"] = "none"
+    return newly_connected
+
+
 def configure_component(identifier: str, values: dict) -> dict:
     """Ask only for facts relevant to the selected part. Target codes remain an implementation detail."""
     role = show_component(identifier, values)
@@ -212,7 +261,7 @@ def configure_component(identifier: str, values: dict) -> dict:
         changes["languages"] = values_list(ask_field("languages", values.get("languages", "")))
     else:
         changes["languages"] = values_list(values.get("languages", "none")) or ["none"]
-    if role in {"apps", "sdks", "tools", "custom", "static-assets"}:
+    if role in {"apps", "sdks", "tools", "custom", "static-assets", "google-workspace", "browser-extensions"}:
         changes["platforms"] = values_list(ask_field("platforms", values.get("platforms", "")))
     else:
         changes["platforms"] = values_list(values["platforms"])
@@ -230,7 +279,8 @@ def run_interview(root: Path, library_root: Path, components: dict, is_saas: boo
     working = deepcopy(components)
     if choices is not None:
         working, is_saas = select_parts(components, choices)
-        connect_sdks(working)
+    newly_connected = configure_extension_clients(working, is_saas)
+    connect_sdks(working, None if choices is not None else newly_connected)
     labels = [f"{PARTS.get(part_role(value), ('Project-specific part',))[0]} ({identifier})"
               for identifier, value in working.items() if value["enabled"]]
     print("\nIncluded parts: " + ", ".join(labels))

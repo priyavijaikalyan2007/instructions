@@ -547,3 +547,23 @@ Link checks found no new defects. Headers, encodings, previous history, and non-
 A .NET harness accepted three valid JSON responses, rejected 13 invalid responses, and verified buffer cleanup.
 Other language and platform examples were reviewed but not all executed. See maintenance/scoped-guides-security-review.md for details.
 Commit the verified changes locally. Do not push or merge during this update.
+
+
+## 21 October 2026: extension profiles and combined publication
+
+### User requests
+
+> Great, I want to create guidance for new types of profiles: "Google Workspace Extensions", "Microsoft Office 365 / Microsoft Office Extensions" and "Browser Extensions (typically Chrome, Safari or Mozilla)". At least knobby.io envisages building a browser extension. Google Workspace extension I am building for making my own writing easier; Microsoft Office 365/App extensions we can skip for now. Add that, incorporate that into the profiles in the interview script and then commit push and merge everything to main. I will then be able to test things out in some test repos to see how things work e2e.
+
+> continue
+
+### Outcome and delivery scope
+
+Added Google Workspace and browser extension guides, profile targets, interview choices, templates, and reading trees.
+Choices 1 through 6 remain stable. Choice 7 selects Google Workspace. Choice 8 selects browser extensions.
+The interview explains hosts, browsers, packaging, and optional SaaS relationships. Microsoft Office remains deferred.
+Existing profiles retain intentionally unlinked SDKs when users accept their current selections.
+All 55 tests pass. The repository profile check and dry run pass without generated changes.
+Link and preservation checks report no new defects. No host extension runtime or store publication was tested.
+The owner authorized pushing and merging this work together with the pending guide and security reorganization.
+This authorization supersedes the previous local-only delivery scope. Merge through a pull request, then synchronize main.

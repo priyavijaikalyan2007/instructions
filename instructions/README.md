@@ -70,6 +70,8 @@ The target guides contain existing instructions and links to existing topic guid
 | Native apps | [APPS.md](apps/APPS.md) | Existing Apple platform, lifecycle, layout, performance, testing, and credential guidance |
 | Static websites | [WEBSITES.md](website/WEBSITES.md) | Websites without an application backend and relevant browser references |
 | Static assets | [STATIC_ASSETS.md](static-assets/STATIC_ASSETS.md) | Compilation, bundles, component-library distribution, CDN delivery, and static hosting |
+| Google Workspace extensions | [GOOGLE_WORKSPACE.md](google-workspace/GOOGLE_WORKSPACE.md) | Workspace and Editor add-ons, host authorization, document changes, and distribution |
+| Browser extensions | [BROWSER_EXTENSIONS.md](browser-extensions/BROWSER_EXTENSIONS.md) | Browser permissions, messaging, background lifecycle, packaging, and SaaS clients |
 | SDKs | [SDKs.md](sdk/SDKs.md) | Index to existing OpenAPI contracts and language conventions |
 
 A web application can combine C#/Java backend guidance and TypeScript/HTML frontend guidance.
@@ -318,6 +320,56 @@ instructions/
 Select the actual tool language. Other languages remain possible when the tool uses them.
 Browser and native UI guides do not enter scope for ordinary CLI processing.
 Use TOOLS.md for stdout, stderr, exit status, cancellation, and local data protection.
+
+### Google Workspace extension
+
+```text
+instructions/
+├── google-workspace/
+│   └── GOOGLE_WORKSPACE.md
+├── javascript/
+│   └── JAVASCRIPT.md  [Apps Script or JavaScript source]
+├── typescript/
+│   └── TYPESCRIPT.md  [TypeScript source]
+├── html/HTML.md      [HTML-service UI]
+├── css/CSS.md        [custom styles]
+├── UI_UX.md
+├── PERSISTENCE.md   [stored settings or document state]
+├── SECRET_HANDLING.md  [credentials]
+├── AIML_SECURITY.md    [AI-assisted writing or other AI features]
+├── saas/SAAS.md        [this repository's SaaS API integration]
+├── sdk/SDKs.md         [SaaS integration or generated SDK work]
+└── backend/BACKEND.md  [application-owned HTTP service implementation]
+```
+
+Use the common baseline too. Select the host's add-on model and the actual runtime language.
+Card-based UI does not require HTML or a browser component library.
+A writing assistant does not require a backend or AI merely because it edits documents.
+
+### Browser extension
+
+```text
+instructions/
+├── browser-extensions/
+│   └── BROWSER_EXTENSIONS.md
+├── javascript/JAVASCRIPT.md
+├── typescript/TYPESCRIPT.md  [TypeScript source]
+├── html/HTML.md              [extension markup]
+├── css/CSS.md                [styles]
+├── UI_UX.md
+├── frontend/KEYBOARD.md      [keyboard interactions]
+├── static-assets/STATIC_ASSETS.md  [applicable build and bundle sections]
+├── SECRET_HANDLING.md        [credentials]
+├── AIML_SECURITY.md          [AI features]
+├── saas/SAAS.md              [this repository's SaaS API integration]
+├── sdk/SDKs.md               [SaaS integration or generated SDK work]
+├── backend/API_GUIDELINES.md [consumed or changed service contracts]
+├── apps/APPS.md              [native wrapper or native messaging work]
+└── swift/SWIFT.md            [actual Swift source changes]
+```
+
+Use the common baseline too. Browser-specific manifests and packaging select the supported browsers, not unrelated application targets.
+Microsoft Office extension guidance is deferred.
 
 ### Author review
 

@@ -8,7 +8,7 @@
 # AGENT: Instruction configuration concepts and their implementation anchors.
 
 - name: "ProfileInterview"
-  definition: "Explains product categories and collects project facts for the instruction profile."
+  definition: "Explains eight product categories and collects project facts, including extension hosts and optional SaaS relationships."
   anchor_file: "scripts/profile_interview.py"
   related: ["ProfileConfiguration"]
 

@@ -46,6 +46,8 @@ TARGET_GUIDES = {
     "backend": "backend/BACKEND.md", "frontend": "frontend/FRONTEND.md", "saas": "saas/SAAS.md",
     "tools": "tools/TOOLS.md",
     "apps": "apps/APPS.md", "websites": "website/WEBSITES.md", "static-assets": "static-assets/STATIC_ASSETS.md",
+    "google-workspace": "google-workspace/GOOGLE_WORKSPACE.md",
+    "browser-extensions": "browser-extensions/BROWSER_EXTENSIONS.md",
     "sdks": "sdk/SDKs.md", "documentation": "DOCUMENTATION.md",
 }
 LANGUAGE_GUIDES = {
@@ -55,6 +57,7 @@ LANGUAGE_GUIDES = {
     "css": ["css/CSS.md"],
     "scss": ["scss/SCSS.md", "css/CSS.md"], "sql": ["sql/SQL.md"], "shell": ["shell/SHELL.md"],
     "bash": ["shell/SHELL.md"],
+    "apps script": ["javascript/JAVASCRIPT.md"], "google apps script": ["javascript/JAVASCRIPT.md"],
 }
 IDENTIFIER = re.compile(r"[a-z][a-z0-9-]*\Z")
 

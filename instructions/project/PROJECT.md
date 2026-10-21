@@ -18,9 +18,7 @@ Created: 2026
 | Repository | instructions |
 | Product | Generic coding-agent instructions and repository analysis tools |
 | Source | instructions/, the four root agent entries, scripts/, .github/, and agentknowledge/ |
-| Current review branch | refactor/scoped-guides-security |
-| Last merged review | PR #4 at bc2bafc in priyavijaikalyan2007/instructions |
-| Earlier merged reviews | PR #1, PR #2, and PR #3 in priyavijaikalyan2007/instructions |
+| Review history | Git history and merged pull requests in priyavijaikalyan2007/instructions |
 | Application runtime | none |
 | Generic build.sh or test.sh | absent |
 
@@ -47,3 +45,6 @@ The language snippets are examples for consuming projects. They are not a deploy
 The current change has no Java server, browser application, generated SDK, or native application artifact to build.
 The profile configurator is a local Python CLI with a Bash entry point and isolated filesystem integration tests.
 The Java SaaS profile under instructions/maintenance/examples/ is a fictional instruction-routing fixture.
+
+The interview supports eight product categories, including Google Workspace and browser extensions.
+Microsoft Office extension profiles are deferred. No extension host application exists in this repository.

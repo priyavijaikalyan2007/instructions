@@ -297,3 +297,15 @@ Apply this section only to the selected enterprise browser shell.
 ### 4.2. Error Handling
 *   Write technical diagnostics to the shell **Log Console**. Show actionable failure guidance at the affected field or operation, as specified in [UI_UX.md](../UI_UX.md#validation-and-error-behavior).
 *   Failed commands without a suitable visible error surface use the literate error dialog. Form errors remain inline or in a persistent summary. Never use browser `alert()` or `confirm()`.
+
+
+## Optional extension clients
+
+Google Workspace and browser extensions can provide additional interfaces to this repository's SaaS product.
+Their presence is an explicit profile choice. A SaaS product does not require either extension.
+Read [GOOGLE_WORKSPACE.md](../google-workspace/GOOGLE_WORKSPACE.md) or
+[BROWSER_EXTENSIONS.md](../browser-extensions/BROWSER_EXTENSIONS.md) for the affected client.
+Use the generated SDK contract where suitable for the extension runtime.
+Keep provider credentials and tenant authorization in the service's approved security boundary.
+A Google authorization grant or browser permission does not establish SaaS tenant membership.
+Select backend implementation only when the task changes the service, not for every extension UI change.

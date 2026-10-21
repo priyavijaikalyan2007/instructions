@@ -11,6 +11,13 @@ Created: 2026
 
 # Changelog
 
+## 21 October 2026: extension profiles
+
+- Added Google Workspace and browser extension guides with optional SaaS integration and linked platform sources.
+- Added explained interview choices 7 and 8, profile templates, target routing, and scenario reading trees.
+- Fixed default acceptance to preserve intentionally unlinked SDKs. All 55 selector tests pass.
+- Deferred Microsoft Office extensions.
+
 ## 20 October 2026
 
 - Changed the interview to six explained product categories with automatic target selection and clear project-fact prompts.
