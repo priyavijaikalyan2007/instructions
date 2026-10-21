@@ -70,7 +70,7 @@ In the database entity (e.g., `TenantSettings`, `IntegrationConfig`), the column
 
 Coding agents must implement/use a centralised service for all secret operations. Do not implement ad-hoc encryption logic in Controllers or Services.
 
-See [C#](CSHARP.md#31-the-isecretprotectionservice).
+See [C#](csharp/CSHARP.md#31-the-isecretprotectionservice).
 
 ### 3.2 Algorithm Requirements
 
@@ -90,7 +90,8 @@ When a user updates a setting containing a secret:
 2.  **Controller:** Accepts the DTO.
 3.  **Service:** Calls `ISecretProtectionService.ProtectAsync(dto.ApiKey)`.
 4.  **Database:** Saves the resulting JSON envelope string.
-5.  **Memory:** The plaintext string is discarded immediately after encryption.
+5.  **Memory:** Minimize the plaintext lifetime after encryption. Discarding a string does not erase its memory or copies.
+    Clear owned mutable buffers when supported. Follow [sensitive-memory controls](SECURITY_GUIDELINES.md#memory-swap-and-crash-dumps).
 
 ### 4.2 Read Operations (GET)
 
@@ -124,3 +125,12 @@ This architecture supports CMEK by utilizing the `kid` (Key ID) field in the env
 2.  **Centralised Logic:** Never import `System.Security.Cryptography` directly in feature code. Always inject `ISecretProtectionService`.
 3.  **Logs & Traces:** Explicitly prevent logging of secret values. Review `ToString()` methods on DTOs to ensure secrets are excluded.
 4.  **Verification:** When reviewing code, ask: "If I query the database directly, can I read this key?" If the answer is Yes, the implementation is rejected.
+
+
+## Transient copies and runtime limits
+
+Follow [sensitive-data lifecycle controls](SECURITY_GUIDELINES.md#sensitive-data-lifecycle) for clipboard, temporary files, caches, swap, and dumps.
+Use the selected language guide for supported buffer handling. Do not promise erasure through disposal or garbage collection.
+The C# guide explains why SecureString is not the default for new .NET applications.
+Keep the envelope example scoped to server-side retrievable integration secrets. Use platform credential stores for native credentials.
+Use a dedicated password-hashing scheme for authentication passwords instead of reversible encryption.

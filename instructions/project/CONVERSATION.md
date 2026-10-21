@@ -513,3 +513,57 @@ PR #4 is mergeable without conflicts. No GitHub check runs or review blockers ar
 Its implementation passed all 44 local tests before publication. This merge request changes no application or script behavior.
 Record the approval in the PR, merge it, synchronize local main, and remove fully merged review branches.
 Do not start further instruction refactoring during this request.
+
+
+## 21 October 2026: scoped folders, preserved common rules, and expanded security
+
+### User requests
+
+> ok. good. the next set of reorganization is this: 1) I think now instructions/ itself is very large. Let's organize like this: instructions/<type>/ -- where <type> is something like backend which might include all backend related instructions, instructions/website/ which might include static website related instructions and so on. Common ones that cut across would still stay in instructions/. Language specific ones go into instructions/<language>/. WDYT Of this organization scheme? I am essentially trying to set this up so that by convention, its intuitive and easy to know what files to edit to refine instructions for a particular language or a particular target. brainstorm this part with me.
+
+> This looks ok. Except the use of README.md repeatedly insidee each sub-folder. I would prefer the actual namme that we use now instead. So, saas/SAAS.md, apps/APPS.md and so on. It's much easier. I am also curious about what you did with the README_TEMPLATE.md? Did that become the REPO.md or PROJECT.md?
+
+> Good. The generalization makes sense. One question I have: after the interview is done, are the rest of the unnecessary files deleted? How does this work? What if they are needed later? Then, I see that AGENTS.md "Development" section still references several instructions again. Should that become more specific based on teh choices?
+
+> makes sense. be wary to not lose things that are common in there such as adherence to LANGUAGE.md etc. Also, there were two separate security related files: SECURITY_GUIDELINES.md and AIML related security. Did you check those two?
+
+> Agreed. Go ahead. I also think that, when you work on security guideliness, you need to account for certain things: 1) Language specific guidelines if any such as being secure with SQL, secure with C# (using SecureString if supported and so on), AI ML Security (input segregation, sanitization etc.), HTML / Javascript security (using eval on external code, innerHTML sanitization and so on) etc. 2) You should also think about multi-tenant service security, clipboard data security, temporary storage security, swap storage security, marking sensitive sections in memory (where supported) etc. In other words, not just editing the existing guidance but also expanding on them as appropriate.
+
+### Decisions and outcome
+
+PR #4 previously merged at bc2bafc. Created refactor/scoped-guides-security from the clean main branch.
+Moved 37 guides and reference files into target/language folders while retaining descriptive filenames.
+Renamed the shared inner AGENTS.md to WORKFLOW.md. The root AGENTS.md remains the entry point.
+Preserved all 31 Development requirements, including LANGUAGE.md, and grouped common and task-specific obligations.
+Updated active links and README scenario trees. Generalized README_TEMPLATE.md without merging it into PROJECT.md or REPO.md.
+The selector installs nested shared files, retains inactive guides, and excludes project records and maintenance fixtures.
+The generated root block lists shared requirements and enabled target/language guides. The profile remains authoritative.
+The --check mode rejects stale generated routing. Existing project-owned files and handwritten root content remain preserved.
+General and AI security remain separate common guides. Added language security sections and target security routing.
+Expanded tenant, clipboard, temporary-file, memory, swap, dump, logging, model, retrieval, and tool-execution controls.
+Corrected SecureString recommendations, prompt-prefix guarantees, regex extraction, blanket personal-data filtering, and implied memory erasure.
+All 50 selector tests pass. The Java SaaS/browser/Apple fixture routes correctly without selecting C#.
+Link checks found no new defects. Headers, encodings, previous history, and non-security examples remain intact.
+A .NET harness accepted three valid JSON responses, rejected 13 invalid responses, and verified buffer cleanup.
+Other language and platform examples were reviewed but not all executed. See maintenance/scoped-guides-security-review.md for details.
+Commit the verified changes locally. Do not push or merge during this update.
+
+
+## 21 October 2026: extension profiles and combined publication
+
+### User requests
+
+> Great, I want to create guidance for new types of profiles: "Google Workspace Extensions", "Microsoft Office 365 / Microsoft Office Extensions" and "Browser Extensions (typically Chrome, Safari or Mozilla)". At least knobby.io envisages building a browser extension. Google Workspace extension I am building for making my own writing easier; Microsoft Office 365/App extensions we can skip for now. Add that, incorporate that into the profiles in the interview script and then commit push and merge everything to main. I will then be able to test things out in some test repos to see how things work e2e.
+
+> continue
+
+### Outcome and delivery scope
+
+Added Google Workspace and browser extension guides, profile targets, interview choices, templates, and reading trees.
+Choices 1 through 6 remain stable. Choice 7 selects Google Workspace. Choice 8 selects browser extensions.
+The interview explains hosts, browsers, packaging, and optional SaaS relationships. Microsoft Office remains deferred.
+Existing profiles retain intentionally unlinked SDKs when users accept their current selections.
+All 55 tests pass. The repository profile check and dry run pass without generated changes.
+Link and preservation checks report no new defects. No host extension runtime or store publication was tested.
+The owner authorized pushing and merging this work together with the pending guide and security reorganization.
+This authorization supersedes the previous local-only delivery scope. Merge through a pull request, then synchronize main.

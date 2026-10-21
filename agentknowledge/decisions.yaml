@@ -1,0 +1,24 @@
+# SPDX-FileCopyrightText: 2026 Priya Vijai Kalyan <priyavijai.kalyan2007@proton.me>
+# SPDX-FileCopyrightText: 2026 Outcrop Inc
+# SPDX-License-Identifier: MIT
+# Repository: instructions
+# File GUID: eed1d9a2-32ac-4b2d-bab6-dd71d7445995
+# Created: 2026
+
+# AGENT: Architectural decisions for the generic instruction library.
+
+- id: ADR-001
+  title: Scope guides by target and language while preserving shared obligations
+  date: 2026-10-21
+  status: Accepted
+  context: >-
+    The owner approved named target and language folders, descriptive filenames, and retained common requirements.
+    The profile remains authoritative. Root scope links are derived, and unselected guides remain installed.
+    General security remains common. AI security is an additional task condition, with runtime details in language guides.
+  files:
+    - AGENTS.md
+    - instructions/WORKFLOW.md
+    - instructions/SECURITY_GUIDELINES.md
+    - instructions/AIML_SECURITY.md
+    - scripts/configure_instructions.py
+    - instructions/maintenance/scoped-guides-security-review.md

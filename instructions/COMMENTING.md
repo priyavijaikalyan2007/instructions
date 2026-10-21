@@ -116,9 +116,9 @@ Comment when:
 
 ### 3.1 What, Why — Not How
 
-See [C#](CSHARP.md#31-what-why--not-how).
+See [C#](csharp/CSHARP.md#31-what-why--not-how).
 
-See [TypeScript](TYPESCRIPT.md#31-what-why--not-how).
+See [TypeScript](typescript/TYPESCRIPT.md#31-what-why--not-how).
 
 ### 3.2 Standard Annotations
 
@@ -140,25 +140,25 @@ Use consistent annotations to mark code states and intentions:
 
 Format each annotation using the comment syntax in the selected language guide: `ANNOTATION: Description with context`.
 
-See [C#](CSHARP.md#32-standard-annotations).
+See [C#](csharp/CSHARP.md#32-standard-annotations).
 
-See [TypeScript](TYPESCRIPT.md#32-standard-annotations).
+See [TypeScript](typescript/TYPESCRIPT.md#32-standard-annotations).
 
 ### 3.3 Agent Markers
 
 Guide automated tools with explicit markers:
 
-See [C#](CSHARP.md#33-agent-markers).
+See [C#](csharp/CSHARP.md#33-agent-markers).
 
-See [TypeScript](TYPESCRIPT.md#33-agent-markers).
+See [TypeScript](typescript/TYPESCRIPT.md#33-agent-markers).
 
 ### 3.4 Section Headers
 
 For longer files, use section comments to create navigable structure:
 
-See [C#](CSHARP.md#34-section-headers).
+See [C#](csharp/CSHARP.md#34-section-headers).
 
-See [TypeScript](TYPESCRIPT.md#34-section-headers).
+See [TypeScript](typescript/TYPESCRIPT.md#34-section-headers).
 
 ---
 
@@ -166,43 +166,43 @@ See [TypeScript](TYPESCRIPT.md#34-section-headers).
 
 ### 4.1 C# / .NET
 
-See [C#](CSHARP.md#comments).
+See [C#](csharp/CSHARP.md#comments).
 
 ### 4.2 TypeScript / JavaScript
 
-See [TypeScript](TYPESCRIPT.md#comments).
+See [TypeScript](typescript/TYPESCRIPT.md#comments).
 
 ### 4.3 Python
 
-See [Python](PYTHON.md#comments).
+See [Python](python/PYTHON.md#comments).
 
 ### 4.4 SQL
 
-See [SQL](SQL.md#comments).
+See [SQL](sql/SQL.md#comments).
 
 ### 4.5 SCSS
 
-See [SCSS](SCSS.md#comments).
+See [SCSS](scss/SCSS.md#comments).
 
 ### 4.6 HTML
 
-See [HTML](HTML.md#comments).
+See [HTML](html/HTML.md#comments).
 
 ### 4.7 Swift
 
-See [Swift](SWIFT.md#comments).
+See [Swift](swift/SWIFT.md#comments).
 
 ### 4.8 Go
 
-See [Go](GO.md#comments).
+See [Go](go/GO.md#comments).
 
 ### 4.9 Rust
 
-See [Rust](RUST.md#comments).
+See [Rust](rust/RUST.md#comments).
 
 ### 4.10 Java
 
-See [Java](JAVA.md#comments).
+See [Java](java/JAVA.md#comments).
 
 ## 5. Maintaining Comments
 
@@ -259,9 +259,9 @@ Example structure:
 
 Don't comment self-evident operations:
 
-See [C#](CSHARP.md#62-obvious-code).
+See [C#](csharp/CSHARP.md#62-obvious-code).
 
-See [TypeScript](TYPESCRIPT.md#62-obvious-code).
+See [TypeScript](typescript/TYPESCRIPT.md#62-obvious-code).
 
 ---
 

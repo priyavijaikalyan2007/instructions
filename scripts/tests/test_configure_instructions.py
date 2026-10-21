@@ -66,10 +66,69 @@ class ConfigureInstructionsTests(unittest.TestCase):
     def test_initialize_installs_profile_and_required_guides(self):
         self.initialize()
         self.assertTrue(all((self.root / p).is_file() for p in [
-            PROFILE, "AGENTS.md", "instructions/AGENTS.md", "instructions/SWIFT.md",
+            PROFILE, "AGENTS.md", "instructions/WORKFLOW.md", "instructions/swift/SWIFT.md",
             "instructions/project/PROJECT.md", "instructions/project/ADDITIONAL.md",
             "CLAUDE.md", "CODEX.md", "GEMINI.md",
         ]))
+
+    def test_nested_library_retains_unselected_guides_and_excludes_local_records(self):
+        self.initialize()
+        self.assertTrue((self.root / "instructions/java/JAVA.md").is_file())
+        self.assertFalse((self.root / "instructions/maintenance").exists())
+        self.assertFalse((self.root / "instructions/project/CONVERSATION.md").exists())
+
+    def test_root_routing_includes_selected_guides_and_common_obligations(self):
+        self.initialize()
+        agents = (self.root / "AGENTS.md").read_text()
+        for guide in ["LANGUAGE.md", "SECURITY_GUIDELINES.md", "apps/APPS.md", "swift/SWIFT.md"]:
+            self.assertIn("instructions/" + guide, agents)
+        self.assertNotIn("java/JAVA.md", agents)
+        self.assertIn("AIML_SECURITY.md", agents)
+
+    def test_check_detects_profile_changed_without_regenerating_root(self):
+        self.initialize()
+        path = self.root / PROFILE
+        path.write_text(path.read_text().replace("Languages: Swift", "Languages: Java"))
+        result = self.run_cli(None, "--check")
+        self.assertNotEqual(result.returncode, 0)
+        self.assertIn("managed routing", result.stderr)
+
+    def test_category_change_retains_installed_guides(self):
+        self.initialize()
+        before = (self.root / "instructions/swift/SWIFT.md").read_bytes()
+        self.run_cli({"components": {"native-client": {"enabled": False}}}, "--apply")
+        self.assertEqual((self.root / "instructions/swift/SWIFT.md").read_bytes(), before)
+        self.assertNotIn("swift/SWIFT.md", (self.root / "AGENTS.md").read_text())
+
+    def test_nested_destination_symlink_is_rejected_without_writes(self):
+        folder = self.root / "instructions"
+        folder.mkdir()
+        outside = Path(self.directory.name) / "outside"
+        outside.mkdir()
+        (folder / "java").symlink_to(outside, target_is_directory=True)
+        before = self.snapshot()
+        result = self.run_cli(self.native_answers(), "--apply")
+        self.assertEqual(result.returncode, 2)
+        self.assertEqual(self.snapshot(), before)
+        self.assertEqual(list(outside.iterdir()), [])
+
+    def test_java_saas_native_fixture_resolves_without_dotnet_scope(self):
+        fixture = SCRIPT.parents[1] / "instructions/maintenance/examples/java-saas/instructions/project"
+        profile = self.root / PROFILE
+        profile.parent.mkdir(parents=True)
+        profile.write_bytes((fixture / "PROJECT_PROFILE.md").read_bytes())
+        for name in ["server", "web", "api/generator-config", "sdks/swift", "sdks/typescript", "apps/apple"]:
+            (self.root / name).mkdir(parents=True)
+        for name in ["Dockerfile", "pom.xml", "mvnw", "package.json", "api/openapi.yaml"]:
+            (self.root / name).touch()
+        result = self.run_cli({}, "--apply")
+        self.assertEqual(result.returncode, 0, result.stderr)
+        agents = (self.root / "AGENTS.md").read_text()
+        for guide in ["java/JAVA.md", "apps/APPS.md", "swift/SWIFT.md", "backend/BACKEND.md",
+                      "frontend/FRONTEND.md", "saas/SAAS.md", "sdk/SDKs.md", "LANGUAGE.md"]:
+            self.assertIn("instructions/" + guide, agents)
+        self.assertNotIn("csharp/CSHARP.md", agents)
+        self.assertEqual(self.run_cli(None, "--check").returncode, 0)
 
     def test_dry_run_has_no_writes(self):
         before = self.snapshot()
@@ -100,7 +159,7 @@ class ConfigureInstructionsTests(unittest.TestCase):
     def test_preserves_project_facts_refinements_and_existing_guides(self):
         self.initialize()
         paths = ["instructions/project/PROJECT.md", "instructions/project/ADDITIONAL.md",
-                 "instructions/SWIFT.md"]
+                 "instructions/swift/SWIFT.md"]
         for path in paths:
             with (self.root / path).open("a") as stream:
                 stream.write("\nHandwritten content stays.\n")
@@ -226,7 +285,7 @@ class ConfigureInstructionsTests(unittest.TestCase):
         self.initialize()
         profile_path = self.root / PROFILE
         profile_path.write_text(profile_path.read_text().replace(
-            "instructions/project/PROJECT.md", "instructions/SWIFT.md"))
+            "instructions/project/PROJECT.md", "instructions/swift/SWIFT.md"))
         result = self.run_cli(None, "--check")
         self.assertEqual(result.returncode, 2)
 
@@ -259,12 +318,82 @@ class ConfigureInstructionsTests(unittest.TestCase):
         result = self.run_cli(None, input_text="\n".join(answers) + "\n")
         self.assertTrue(result.returncode == 0 and "- Targets: apps" in (self.root / PROFILE).read_text())
 
-    def test_product_menu_matches_six_requested_categories(self):
+    def test_product_menu_preserves_original_six_categories(self):
         answers = ["4", "src", "Swift", "macOS", "native application", "no"]
         result = self.run_cli(None, input_text="\n".join(answers) + "\n")
         expected = ["1. SaaS", "2. SaaS with Native Clients", "3. Microservice", "4. Native App",
                     "5. Static Website", "6. CLI tools", "SaaS describes the product"]
         self.assertTrue(result.returncode == 0 and all(value in result.stdout for value in expected))
+
+    def test_retaining_profile_does_not_link_an_intentionally_unlinked_sdk(self):
+        answers = self.native_answers()
+        answers["saas_product"] = True
+        answers["components"]["native-client"]["saas_client"] = True
+        answers["components"]["sdk"] = {
+            "enabled": True, "source_paths": ["src"], "targets": ["sdks"], "languages": ["Swift"],
+            "platforms": ["iOS"], "saas_client": False, "sdk_component": "none", "deployment": "library",
+        }
+        self.assertEqual(self.run_cli(answers, "--apply").returncode, 0)
+        before = self.snapshot()
+        result = self.run_cli(None, input_text="\n" * 9 + "no\n")
+        self.assertEqual(result.returncode, 0, result.stderr)
+        self.assertIn("No changes.", result.stdout)
+        self.assertEqual(self.snapshot(), before)
+
+    def test_extension_interviews_select_independent_targets(self):
+        cases = [
+            ("7", "Apps Script", "Google Docs (Editor add-on)", "Apps Script test deployment",
+             "google-workspace", "google-workspace/GOOGLE_WORKSPACE.md"),
+            ("8", "TypeScript, HTML, CSS", "Chrome, Safari, Firefox", "browser store packages",
+             "browser-extensions", "browser-extensions/BROWSER_EXTENSIONS.md"),
+        ]
+        for number, languages, platforms, delivery, target, guide in cases:
+            with self.subTest(number=number):
+                answers = [number, "src", languages, platforms, delivery, "yes"]
+                result = self.run_cli(None, input_text="\n".join(answers) + "\n")
+                self.assertEqual(result.returncode, 0, result.stderr)
+                profile = (self.root / PROFILE).read_text()
+                self.assertIn("- Targets: " + target, profile)
+                self.assertIn("instructions/" + guide, (self.root / "AGENTS.md").read_text())
+                self.assertNotIn("backend/BACKEND.md", (self.root / "AGENTS.md").read_text())
+                self.assertEqual(self.run_cli(None, "--check").returncode, 0)
+
+    def test_extension_interview_explains_hosts_and_defers_office(self):
+        answers = ["7, 8", "src", "JavaScript", "Google Docs", "Apps Script test deployment",
+                   "src", "TypeScript", "Chrome, Firefox", "unpacked test extension", "no"]
+        result = self.run_cli(None, input_text="\n".join(answers) + "\n")
+        self.assertEqual(result.returncode, 0, result.stderr)
+        for phrase in ["7. Google Workspace Extensions", "8. Browser Extensions", "Editor add-on",
+                       "Chrome", "Firefox", "Safari", "Microsoft Office"]:
+            self.assertIn(phrase, result.stdout)
+        self.assertEqual(self.snapshot(), {})
+
+    def test_extension_saas_relationship_is_explicit_and_can_be_removed(self):
+        answers = ["3, 8", "yes", "src", "Java", "container", "src", "TypeScript", "Chrome", "store", "yes"]
+        result = self.run_cli(None, input_text="\n".join(answers) + "\n")
+        self.assertEqual(result.returncode, 0, result.stderr)
+        profile = (self.root / PROFILE).read_text()
+        extension = profile.split("### browser-extension", 1)[1]
+        self.assertIn("- SaaS client: yes", extension)
+        self.assertIn("instructions/saas/SAAS.md", (self.root / "AGENTS.md").read_text())
+        result = self.run_cli(None, input_text="8\n\n\n\n\nyes\n")
+        self.assertEqual(result.returncode, 0, result.stderr)
+        extension = (self.root / PROFILE).read_text().split("### browser-extension", 1)[1]
+        self.assertIn("- SaaS client: no", extension)
+        self.assertNotIn("instructions/saas/SAAS.md", (self.root / "AGENTS.md").read_text())
+
+    def test_extension_json_dry_run_and_nested_guide_validation(self):
+        answers = {"components": {"browser-extension": {
+            "enabled": True, "source_paths": ["src"], "targets": ["browser-extensions"],
+            "languages": ["TypeScript"], "platforms": ["Chrome"], "deployment": "unpacked test extension",
+            "saas_client": False, "sdk_component": "none",
+        }}}
+        result = self.run_cli(answers, "--dry-run")
+        self.assertEqual(result.returncode, 0, result.stderr)
+        self.assertEqual(self.snapshot(), {})
+        self.assertEqual(self.run_cli(answers, "--apply").returncode, 0)
+        (self.root / "instructions/browser-extensions/BROWSER_EXTENSIONS.md").unlink()
+        self.assertEqual(self.run_cli(None, "--check").returncode, 2)
 
     def test_accepting_defaults_retains_profile_bytes(self):
         self.initialize()
@@ -359,9 +488,9 @@ class ConfigureInstructionsTests(unittest.TestCase):
 
     def test_check_requires_selected_language_guide(self):
         self.initialize()
-        (self.root / "instructions/SWIFT.md").unlink()
+        (self.root / "instructions/swift/SWIFT.md").unlink()
         result = self.run_cli(None, "--check")
-        self.assertTrue(result.returncode == 2 and "SWIFT.md" in result.stderr)
+        self.assertTrue(result.returncode == 2 and "swift/SWIFT.md" in result.stderr)
 
     def test_existing_project_file_encoding_is_preserved(self):
         self.initialize()
@@ -390,16 +519,18 @@ class ConfigureInstructionsTests(unittest.TestCase):
     def test_five_requested_scenarios_select_only_their_guides(self):
         cases = [
             ("standalone", False, {"native": (["apps"], ["Swift"])},
-             {"APPS.md", "SWIFT.md"}),
+             {"apps/APPS.md", "swift/SWIFT.md"}),
             ("native-saas", True, {"native": (["apps"], ["Swift"]), "generated": (["sdks"], ["Swift"])},
-             {"APPS.md", "SWIFT.md", "SAAS.md", "SDKs.md"}),
+             {"apps/APPS.md", "swift/SWIFT.md", "saas/SAAS.md", "sdk/SDKs.md"}),
             ("saas-frontend", True, {"server": (["backend"], ["Java"]),
                                      "browser": (["frontend", "static-assets"], ["TypeScript", "HTML", "SCSS"])},
-             {"SAAS.md", "BACKEND.md", "JAVA.md", "FRONTEND.md", "STATIC_ASSETS.md", "TYPESCRIPT.md",
-              "JAVASCRIPT.md", "HTML.md", "SCSS.md", "CSS.md"}),
+             {"saas/SAAS.md", "backend/BACKEND.md", "java/JAVA.md", "frontend/FRONTEND.md",
+             "static-assets/STATIC_ASSETS.md", "typescript/TYPESCRIPT.md",
+              "javascript/JAVASCRIPT.md", "html/HTML.md", "scss/SCSS.md", "css/CSS.md"}),
             ("website", False, {"site": (["websites", "static-assets"], ["JavaScript", "HTML", "CSS"])},
-             {"WEBSITES.md", "STATIC_ASSETS.md", "JAVASCRIPT.md", "HTML.md", "CSS.md"}),
-            ("cli", False, {"command": (["tools"], ["Rust"])}, {"TOOLS.md", "RUST.md"}),
+             {"website/WEBSITES.md", "static-assets/STATIC_ASSETS.md", "javascript/JAVASCRIPT.md",
+             "html/HTML.md", "css/CSS.md"}),
+            ("cli", False, {"command": (["tools"], ["Rust"])}, {"tools/TOOLS.md", "rust/RUST.md"}),
         ]
         for name, saas, scopes, expected in cases:
             with self.subTest(name=name):

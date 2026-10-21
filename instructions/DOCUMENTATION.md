@@ -90,7 +90,7 @@ Verify the published output and its links, not only the source file's existence.
 
 Use the project's declared documentation delivery. The linked .NET monolith packaging is a configured example, not a Java or native requirement.
 
-See [SAAS.md](SAAS.md#monolith-documentation-packaging).
+See [SAAS.md](saas/SAAS.md#monolith-documentation-packaging).
 
 ## Visual Identity and Styling
 
@@ -162,6 +162,6 @@ If required media cannot be captured, use the following labeled placeholder and 
 Documentation is part of the "Definition of Done". A change is not complete until:
 
 1. The relevant documentation files are updated.
-2. `instructions/COMPONENTS.md` is updated if a component was added or changed.
+2. `instructions/frontend/COMPONENTS.md` is updated if a component was added or changed.
 3. `demo/index.html` includes the new or changed component.
 4. `instructions/project/CONVERSATION.md` records the change.

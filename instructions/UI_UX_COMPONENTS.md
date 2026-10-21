@@ -14,7 +14,7 @@ Created: 2026
 Read the [shared UI/UX baseline](UI_UX.md) with only the profiles that match the changed controls or workflow.
 A component may use several profiles. A static page does not inherit expression, directory, or workflow requirements by default.
 Catalog names refer to the enterprise browser library profile. They do not imply that every consuming project implements those components.
-Native applications use their platform equivalents from [APPS.md](APPS.md), rather than JavaScript options or ARIA APIs.
+Native applications use their platform equivalents from [APPS.md](apps/APPS.md), rather than JavaScript options or ARIA APIs.
 Client/server authorization requirements apply when the workflow uses a server.
 
 ## Select component profiles

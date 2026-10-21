@@ -73,7 +73,7 @@ For deeper code verification (like "every branch must log"), we generate Roslyn 
 ## 5. Integration
 *   **Agent Interaction**: Agents check `lcv_constraints.yaml` before generating code.
 *   **CI/CD**: The `LCV.Tests` project runs as part of every PR.
-*   **Documentation**: Constraints are automatically cross-referenced in `instructions/API_GUIDELINES.md` and `instructions/SECURITY_GUIDELINES.md`.
+*   **Documentation**: Constraints are automatically cross-referenced in `instructions/backend/API_GUIDELINES.md` and `instructions/SECURITY_GUIDELINES.md`.
 
 ## 6. Supported Constraints (Initial)
 *   **Attributes**: Required/Forbidden attributes on classes/methods (e.g., `[Authorize]`).

@@ -11,6 +11,10 @@ Created: 2026
 
 # Non-LLM AI/ML Techniques Guide for Coding Agents
 
+For any implementation, read [AIML_SECURITY.md](AIML_SECURITY.md) and [SECURITY_GUIDELINES.md](SECURITY_GUIDELINES.md).
+Select the actual language and runtime controls. Technique selection does not replace authorization, isolation, or output validation.
+
+
 **Goal:** Efficiently solve problems using specialized AI/ML techniques. While LLMs are powerful, traditional ML and graph algorithms are often faster, cheaper, deterministic, and more interpretable for specific tasks.
 
 ## Decision Matrix: Selecting a Non-LLM Technique

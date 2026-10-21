@@ -24,14 +24,27 @@ These instructions cover Swift apps for macOS and iOS, Go and Rust tools, Java a
 Existing Python, SQL, CSS, and SCSS guidance also applies where those languages are used.
 Read [REPO.md](REPO.md) for shared repository operations.
 Select [PERSISTENCE.md](PERSISTENCE.md) for stored data and [UI_UX.md](UI_UX.md) for user-facing behavior.
-Load only relevant [component profiles](UI_UX_COMPONENTS.md#select-component-profiles) and [keyboard details](KEYBOARD.md).
+Load only relevant [component profiles](UI_UX_COMPONENTS.md#select-component-profiles) and [keyboard details](frontend/KEYBOARD.md).
 
 Some sections describe a .NET SaaS example. Apply those sections only when they match the changed target and project model.
 Keep project-specific architecture, toolchain versions, and commands consistent with that repository's README and build configuration.
 
+## Guide ownership and retained files
+
+Common guides stay directly under `instructions/`. Target guides live under their target folder.
+Language guides live under their language folder. Keep descriptive filenames, such as `apps/APPS.md` and `swift/SWIFT.md`.
+The shared workflow is `instructions/WORKFLOW.md`. The root `AGENTS.md` remains the agent entry point.
+
+The selector installs the full shared library, including unselected guides. It excludes project records and maintenance examples.
+Changing a profile never deletes guides or application source. Select additional categories when they become relevant.
+The profile remains authoritative. The selector derives its root links from those choices and preserves text outside its managed block.
+Run the selector after manual profile edits. Use `--check` to detect outdated root links.
+Generic guide upgrades remain a separate reviewed operation. Existing installed guides are preserved.
+For an existing flat installation, review the relocation map before retiring old copies. The selector does not delete them.
+
 ## Project configuration
 
-[AGENTS.md](AGENTS.md#load-project-configuration) reads the active instructions/project/PROJECT_PROFILE.md before selecting guides.
+[WORKFLOW.md](WORKFLOW.md#load-project-configuration) reads the active instructions/project/PROJECT_PROFILE.md before selecting guides.
 The profile identifies project facts and local refinements, then selects enabled components and their source languages.
 instructions/project/PROJECT.md contains facts only. instructions/project/ADDITIONAL.md contains project-specific instructions and emerging lessons.
 
@@ -44,20 +57,22 @@ Generic instruction updates preserve project-owned profiles, facts, and refineme
 
 ## Selective target reading
 
-Start at [AGENTS.md](AGENTS.md#select-target-guides). Select targets for the changed work, then select its languages.
+Start at [WORKFLOW.md](WORKFLOW.md#select-target-guides). Select targets for the changed work, then select its languages.
 Targets describe the work. Languages describe the source. A repository can combine several targets and languages.
 The target guides contain existing instructions and links to existing topic guides.
 
 | Target | Guide | Existing material grouped here |
 | --- | --- | --- |
-| Backend | [BACKEND.md](BACKEND.md) | APIs, runtime, containers, and backend service boundaries |
-| Frontend | [FRONTEND.md](FRONTEND.md) | Browser pages, dynamic UI, login, components, and browser tests |
-| SaaS or web application | [SAAS.md](SAAS.md) | Backend, browser, generated SDK, and optional native composition, with cross-layer contracts |
-| Tools | [TOOLS.md](TOOLS.md) | CLI tools and plugins, module layouts, local commands, stdout, and stderr |
-| Native apps | [APPS.md](APPS.md) | Existing Apple platform, lifecycle, layout, performance, testing, and credential guidance |
-| Static websites | [WEBSITES.md](WEBSITES.md) | Websites without an application backend and relevant browser references |
-| Static assets | [STATIC_ASSETS.md](STATIC_ASSETS.md) | Compilation, bundles, component-library distribution, CDN delivery, and static hosting |
-| SDKs | [SDKs.md](SDKs.md) | Index to existing OpenAPI contracts and language conventions |
+| Backend | [BACKEND.md](backend/BACKEND.md) | APIs, runtime, containers, and backend service boundaries |
+| Frontend | [FRONTEND.md](frontend/FRONTEND.md) | Browser pages, dynamic UI, login, components, and browser tests |
+| SaaS or web application | [SAAS.md](saas/SAAS.md) | Backend, browser, generated SDK, and optional native composition, with cross-layer contracts |
+| Tools | [TOOLS.md](tools/TOOLS.md) | CLI tools and plugins, module layouts, local commands, stdout, and stderr |
+| Native apps | [APPS.md](apps/APPS.md) | Existing Apple platform, lifecycle, layout, performance, testing, and credential guidance |
+| Static websites | [WEBSITES.md](website/WEBSITES.md) | Websites without an application backend and relevant browser references |
+| Static assets | [STATIC_ASSETS.md](static-assets/STATIC_ASSETS.md) | Compilation, bundles, component-library distribution, CDN delivery, and static hosting |
+| Google Workspace extensions | [GOOGLE_WORKSPACE.md](google-workspace/GOOGLE_WORKSPACE.md) | Workspace and Editor add-ons, host authorization, document changes, and distribution |
+| Browser extensions | [BROWSER_EXTENSIONS.md](browser-extensions/BROWSER_EXTENSIONS.md) | Browser permissions, messaging, background lifecycle, packaging, and SaaS clients |
+| SDKs | [SDKs.md](sdk/SDKs.md) | Index to existing OpenAPI contracts and language conventions |
 
 A web application can combine C#/Java backend guidance and TypeScript/HTML frontend guidance.
 A change to one side selects that side. A flow across both sides selects both.
@@ -67,26 +82,26 @@ The native material covers Apple platforms. This extraction adds no Android, Chr
 
 ## Selective language reading
 
-Start at [AGENTS.md](AGENTS.md#select-language-guides) and select guides for the files and boundaries the task changes.
-Language guides live under instructions/. Each guide contains conventions and task examples for its language.
+Start at [WORKFLOW.md](WORKFLOW.md#select-language-guides) and select guides for the files and boundaries the task changes.
+Language guides live under instructions/<language>/. Each guide contains conventions and task examples for its language.
 Common rules remain in the existing topic files, including style, comments, markers, testing, logging, performance, and patterns.
 Read applicable topic sections together with the selected language guide. Follow other language links only when the task needs them.
 
 | Language | Guide |
 | --- | --- |
-| C# | [CSHARP.md](CSHARP.md) |
-| Swift | [SWIFT.md](SWIFT.md) |
-| Go | [GO.md](GO.md) |
-| Rust | [RUST.md](RUST.md) |
-| Java | [JAVA.md](JAVA.md) |
-| Python | [PYTHON.md](PYTHON.md) |
-| JavaScript | [JAVASCRIPT.md](JAVASCRIPT.md) |
-| TypeScript | [TYPESCRIPT.md](TYPESCRIPT.md), plus shared JavaScript rules |
-| HTML | [HTML.md](HTML.md) |
-| CSS | [CSS.md](CSS.md) |
-| SCSS | [SCSS.md](SCSS.md), plus shared CSS rules |
-| SQL | [SQL.md](SQL.md) |
-| Shell | [SHELL.md](SHELL.md) |
+| C# | [CSHARP.md](csharp/CSHARP.md) |
+| Swift | [SWIFT.md](swift/SWIFT.md) |
+| Go | [GO.md](go/GO.md) |
+| Rust | [RUST.md](rust/RUST.md) |
+| Java | [JAVA.md](java/JAVA.md) |
+| Python | [PYTHON.md](python/PYTHON.md) |
+| JavaScript | [JAVASCRIPT.md](javascript/JAVASCRIPT.md) |
+| TypeScript | [TYPESCRIPT.md](typescript/TYPESCRIPT.md), plus shared JavaScript rules |
+| HTML | [HTML.md](html/HTML.md) |
+| CSS | [CSS.md](css/CSS.md) |
+| SCSS | [SCSS.md](scss/SCSS.md), plus shared CSS rules |
+| SQL | [SQL.md](sql/SQL.md) |
+| Shell | [SHELL.md](shell/SHELL.md) |
 
 For example, a Swift-only model change does not require C#, Java, or Rust instructions.
 The file [LANGUAGE.md](LANGUAGE.md) continues to define natural-language writing style.
@@ -120,7 +135,7 @@ An agent starts with its own entry file and AGENTS.md. It does not need every ag
     │   ├── PROJECT.md                    Project facts
     │   ├── ADDITIONAL.md                 Local instructions and emerging lessons
     │   └── CONVERSATION.md               Prior context and session records
-    ├── AGENTS.md                         Shared workflow and guide selection
+    ├── WORKFLOW.md                       Shared workflow and guide selection
     ├── REPO.md                           Setup, commands, and scope selection
     ├── LANGUAGE.md
     ├── CODING_STYLE.md
@@ -128,7 +143,8 @@ An agent starts with its own entry file and AGENTS.md. It does not need every ag
     ├── MARKERS.md
     ├── TESTING.md
     ├── LOGGING.md
-    ├── SECURITY_GUIDELINES.md
+    ├── SECURITY_GUIDELINES.md             Includes applicable language security sections
+    ├── AIML_SECURITY.md                   [any AI or ML feature]
     ├── PERFORMANCE.md                    Relevant workload sections
     ├── LITERATE_ERRORS.md
     ├── COPYRIGHT_HEADER.md
@@ -143,20 +159,24 @@ An agent starts with its own entry file and AGENTS.md. It does not need every ag
 
 Read existing project knowledge records and relevant product specifications when the task needs them.
 Actual product specifications remain in specs/. Instruction-maintenance records remain in instructions/maintenance/.
-For documentation-only work, use the documented narrower reading path in AGENTS.md.
+For documentation-only work, use the narrower reading path in WORKFLOW.md.
 
 ### Native standalone app
 
 ```text
 instructions/
-├── APPS.md
-├── SWIFT.md                              [Swift Apple targets]
-├── UI_UX.md                              [user-facing behavior]
-├── UI_UX_COMPONENTS.md                   [only matching control profiles]
-├── PERSISTENCE.md                        [stored files, data, or state]
-├── SQL.md                                [actual SQL changes]
-├── SECRET_HANDLING.md                    [credentials or tokens]
-└── SHELL.md                              [changed shell scripts]
+├── apps/
+│   └── APPS.md
+├── swift/
+│   └── SWIFT.md  [Swift Apple targets]
+├── UI_UX.md  [user-facing behavior]
+├── UI_UX_COMPONENTS.md  [only matching control profiles]
+├── PERSISTENCE.md  [stored files, data, or state]
+├── sql/
+│   └── SQL.md  [actual SQL changes]
+├── SECRET_HANDLING.md  [credentials or tokens]
+└── shell/
+    └── SHELL.md  [changed shell scripts]
 ```
 
 Use native controls, state restoration, accessibility, and test tools.
@@ -167,18 +187,24 @@ Select the actual source language for other platforms. Missing platform-specific
 
 ```text
 instructions/
-├── APPS.md
-├── SWIFT.md                              [Swift Apple targets]
-├── SAAS.md                               Surface composition and client boundary
-├── SDKs.md                               Generated SDK integration
-├── API_GUIDELINES.md                     API contract used by the client
+├── apps/
+│   └── APPS.md
+├── swift/
+│   └── SWIFT.md  [Swift Apple targets]
+├── saas/
+│   └── SAAS.md  Surface composition and client boundary
+├── sdk/
+│   └── SDKs.md  Generated SDK integration
+├── backend/
+│   └── API_GUIDELINES.md  API contract used by the client
 ├── UI_UX.md
-├── UI_UX_COMPONENTS.md                   [only matching control profiles]
-├── SECRET_HANDLING.md                    Sessions and native credential storage
-├── PERSISTENCE.md                        [local saved data or synchronization]
-├── ACCESS_CONTROL.md                    [application authorization changes]
-├── RESTABLE_RESOURCES.md                 [resource URLs or deep links]
-└── SHELL.md                              [changed shell scripts]
+├── UI_UX_COMPONENTS.md  [only matching control profiles]
+├── SECRET_HANDLING.md  Sessions and native credential storage
+├── PERSISTENCE.md  [local saved data or synchronization]
+├── ACCESS_CONTROL.md  [application authorization changes]
+├── RESTABLE_RESOURCES.md  [resource URLs or deep links]
+└── shell/
+    └── SHELL.md  [changed shell scripts]
 ```
 
 The generated SDK is the normal client boundary. Native dialogs use the platform equivalent of literate error content.
@@ -190,33 +216,46 @@ Knobby authorization and browser-shell examples apply only when selected in the 
 
 ```text
 instructions/
-├── SAAS.md
-├── BACKEND.md
-├── JAVA.md                               [Java backend]
-├── CSHARP.md                             [C# backend]
-├── API_GUIDELINES.md
-├── FRONTEND.md
-├── TYPESCRIPT.md                         [TypeScript source]
-├── JAVASCRIPT.md                         Shared browser language rules
-├── HTML.md
-├── CSS.md
-├── SCSS.md                               [SCSS source]
-├── STATIC_ASSETS.md                      Bundles and delivery
+├── saas/
+│   └── SAAS.md
+├── backend/
+│   ├── BACKEND.md
+│   ├── API_GUIDELINES.md
+│   └── BACKEND_LIBRARY_SELECTION.md  [backend dependency selection]
+├── java/
+│   └── JAVA.md  [Java backend]
+├── csharp/
+│   └── CSHARP.md  [C# backend]
+├── frontend/
+│   ├── FRONTEND.md
+│   ├── KEYBOARD.md  [browser keyboard behavior]
+│   ├── FRONTEND_LOGGING.md  [configured browser logging]
+│   ├── FRONTEND_LIBRARY_SELECTION.md  [browser dependency selection]
+│   ├── FRONTEND_SELECTION.md  [configured vanilla/Bootstrap stack]
+│   └── ERROR_DIALOG_COMPONENT.md  [browser commands without an error surface]
+├── typescript/
+│   └── TYPESCRIPT.md  [TypeScript source]
+├── javascript/
+│   └── JAVASCRIPT.md  Shared browser language rules
+├── html/
+│   └── HTML.md
+├── css/
+│   └── CSS.md
+├── scss/
+│   └── SCSS.md  [SCSS source]
+├── static-assets/
+│   └── STATIC_ASSETS.md  Bundles and delivery
 ├── UI_UX.md
-├── UI_UX_COMPONENTS.md                   [only matching control profiles]
-├── KEYBOARD.md                           [browser keyboard behavior]
-├── FRONTEND_LOGGING.md                   [configured browser logging]
-├── SDKs.md                               [generated client integration]
-├── PERSISTENCE.md                        [stored data and transactions]
-├── SQL.md                                [SQL source or schema]
-├── SECRET_HANDLING.md                    [server secrets or client tokens]
-├── ACCESS_CONTROL.md                    [application authorization changes]
-├── DELETION.md                           [resource deletion or retention]
-├── RESTABLE_RESOURCES.md                 [resource URLs]
-├── BACKEND_LIBRARY_SELECTION.md          [backend dependency selection]
-├── FRONTEND_LIBRARY_SELECTION.md         [browser dependency selection]
-├── FRONTEND_SELECTION.md                 [configured vanilla/Bootstrap stack]
-└── ERROR_DIALOG_COMPONENT.md             [browser commands without an error surface]
+├── UI_UX_COMPONENTS.md  [only matching control profiles]
+├── sdk/
+│   └── SDKs.md  [generated client integration]
+├── PERSISTENCE.md  [stored data and transactions]
+├── sql/
+│   └── SQL.md  [SQL source or schema]
+├── SECRET_HANDLING.md  [server secrets or client tokens]
+├── ACCESS_CONTROL.md  [application authorization changes]
+├── DELETION.md  [resource deletion or retention]
+└── RESTABLE_RESOURCES.md  [resource URLs]
 ```
 
 Select the backend's actual language. Java does not select .NET implementation rules or DOTNETFX_SELECTION.md.
@@ -228,18 +267,26 @@ Add the static website tree only when the task changes that separate surface.
 
 ```text
 instructions/
-├── WEBSITES.md
-├── STATIC_ASSETS.md
-├── FRONTEND.md                           Applicable browser standards and accessibility
-├── HTML.md
-├── CSS.md
-├── SCSS.md                               [SCSS source]
-├── JAVASCRIPT.md                         [browser scripts]
-├── TYPESCRIPT.md                         [TypeScript source]
-├── UI_UX.md                              [navigation and user-facing behavior]
-├── UI_UX_COMPONENTS.md                   [interactive controls]
-├── KEYBOARD.md                           [browser keyboard interactions]
-└── FRONTEND_LOGGING.md                   [configured browser component logging]
+├── website/
+│   └── WEBSITES.md
+├── static-assets/
+│   └── STATIC_ASSETS.md
+├── frontend/
+│   ├── FRONTEND.md  Applicable browser standards and accessibility
+│   ├── KEYBOARD.md  [browser keyboard interactions]
+│   └── FRONTEND_LOGGING.md  [configured browser component logging]
+├── html/
+│   └── HTML.md
+├── css/
+│   └── CSS.md
+├── scss/
+│   └── SCSS.md  [SCSS source]
+├── javascript/
+│   └── JAVASCRIPT.md  [browser scripts]
+├── typescript/
+│   └── TYPESCRIPT.md  [TypeScript source]
+├── UI_UX.md  [navigation and user-facing behavior]
+└── UI_UX_COMPONENTS.md  [interactive controls]
 ```
 
 A static website does not select backend, database, SaaS, or native-app implementation by default.
@@ -250,21 +297,79 @@ Use the configured static delivery pipeline rather than assuming the example the
 
 ```text
 instructions/
-├── TOOLS.md
-├── PYTHON.md                             [Python source]
-├── GO.md                                 [Go source]
-├── RUST.md                               [Rust source]
-├── SHELL.md                              [shell entry points or scripts]
-├── PERSISTENCE.md                        [stored files, state, or data]
-├── SQL.md                                [actual SQL source]
-├── SECRET_HANDLING.md                    [credentials or secret providers]
-├── SDKs.md                               [generated service-client integration]
-└── API_GUIDELINES.md                     [service contracts changed or consumed]
+├── tools/
+│   └── TOOLS.md
+├── python/
+│   └── PYTHON.md  [Python source]
+├── go/
+│   └── GO.md  [Go source]
+├── rust/
+│   └── RUST.md  [Rust source]
+├── shell/
+│   └── SHELL.md  [shell entry points or scripts]
+├── PERSISTENCE.md  [stored files, state, or data]
+├── sql/
+│   └── SQL.md  [actual SQL source]
+├── SECRET_HANDLING.md  [credentials or secret providers]
+├── sdk/
+│   └── SDKs.md  [generated service-client integration]
+└── backend/
+    └── API_GUIDELINES.md  [service contracts changed or consumed]
 ```
 
 Select the actual tool language. Other languages remain possible when the tool uses them.
 Browser and native UI guides do not enter scope for ordinary CLI processing.
 Use TOOLS.md for stdout, stderr, exit status, cancellation, and local data protection.
+
+### Google Workspace extension
+
+```text
+instructions/
+├── google-workspace/
+│   └── GOOGLE_WORKSPACE.md
+├── javascript/
+│   └── JAVASCRIPT.md  [Apps Script or JavaScript source]
+├── typescript/
+│   └── TYPESCRIPT.md  [TypeScript source]
+├── html/HTML.md      [HTML-service UI]
+├── css/CSS.md        [custom styles]
+├── UI_UX.md
+├── PERSISTENCE.md   [stored settings or document state]
+├── SECRET_HANDLING.md  [credentials]
+├── AIML_SECURITY.md    [AI-assisted writing or other AI features]
+├── saas/SAAS.md        [this repository's SaaS API integration]
+├── sdk/SDKs.md         [SaaS integration or generated SDK work]
+└── backend/BACKEND.md  [application-owned HTTP service implementation]
+```
+
+Use the common baseline too. Select the host's add-on model and the actual runtime language.
+Card-based UI does not require HTML or a browser component library.
+A writing assistant does not require a backend or AI merely because it edits documents.
+
+### Browser extension
+
+```text
+instructions/
+├── browser-extensions/
+│   └── BROWSER_EXTENSIONS.md
+├── javascript/JAVASCRIPT.md
+├── typescript/TYPESCRIPT.md  [TypeScript source]
+├── html/HTML.md              [extension markup]
+├── css/CSS.md                [styles]
+├── UI_UX.md
+├── frontend/KEYBOARD.md      [keyboard interactions]
+├── static-assets/STATIC_ASSETS.md  [applicable build and bundle sections]
+├── SECRET_HANDLING.md        [credentials]
+├── AIML_SECURITY.md          [AI features]
+├── saas/SAAS.md              [this repository's SaaS API integration]
+├── sdk/SDKs.md               [SaaS integration or generated SDK work]
+├── backend/API_GUIDELINES.md [consumed or changed service contracts]
+├── apps/APPS.md              [native wrapper or native messaging work]
+└── swift/SWIFT.md            [actual Swift source changes]
+```
+
+Use the common baseline too. Browser-specific manifests and packaging select the supported browsers, not unrelated application targets.
+Microsoft Office extension guidance is deferred.
 
 ### Author review
 

@@ -101,7 +101,7 @@ Do not expose raw database UUIDs or auto-increment integers if possible. They ar
 Use a combination of a **short, collision-resistant ID** and a **user-controlled slug**.
 
 *   **Format:** `{short-id}-{slug}`
-*   **Library:** Use **Sqids** (recommended in `instructions/DOTNETFX_SELECTION.md`) to encode IDs, or **NanoID** for random strings.
+*   **Library:** Use **Sqids** (recommended in `instructions/csharp/DOTNETFX_SELECTION.md`) to encode IDs, or **NanoID** for random strings.
 
 **Example:**
 *   Database ID: `550e8400-e29b...`

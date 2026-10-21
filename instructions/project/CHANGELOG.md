@@ -11,6 +11,13 @@ Created: 2026
 
 # Changelog
 
+## 21 October 2026: extension profiles
+
+- Added Google Workspace and browser extension guides with optional SaaS integration and linked platform sources.
+- Added explained interview choices 7 and 8, profile templates, target routing, and scenario reading trees.
+- Fixed default acceptance to preserve intentionally unlinked SDKs. All 55 selector tests pass.
+- Deferred Microsoft Office extensions.
+
 ## 20 October 2026
 
 - Changed the interview to six explained product categories with automatic target selection and clear project-fact prompts.
@@ -70,3 +77,11 @@ Created: 2026
 ## 14 October 2026
 
 - Added a cross-repository instruction review, source inventory, and proposed migration plan for owner review.
+
+
+## 21 October 2026
+
+- Changed: Organized target and language guides into named folders and retained every shared Development requirement.
+- Changed: Profile selection now generates current scope links and installs nested shared guides without deleting inactive files.
+- Added: Language, tenant, clipboard, temporary-storage, memory, swap, and dump security guidance with primary-source references.
+- Fixed: AI security examples now use explicit trust boundaries, strict output validation, and scoped data policies.

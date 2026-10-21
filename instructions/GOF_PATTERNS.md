@@ -43,7 +43,7 @@ Avoid when: Only one product family or no compatibility constraints.
 
 The language examples use product labels to show compatible families without UI dependencies. Real factories return the project's control interfaces.
 
-Language examples: [C#](CSHARP.md#1-abstract-factory), [TypeScript](TYPESCRIPT.md#1-abstract-factory), [JavaScript](JAVASCRIPT.md#1-abstract-factory), [Python](PYTHON.md#1-abstract-factory), [Swift](SWIFT.md#1-abstract-factory), [Go](GO.md#1-abstract-factory), [Java](JAVA.md#1-abstract-factory), [Rust](RUST.md#1-abstract-factory).
+Language examples: [C#](csharp/CSHARP.md#1-abstract-factory), [TypeScript](typescript/TYPESCRIPT.md#1-abstract-factory), [JavaScript](javascript/JAVASCRIPT.md#1-abstract-factory), [Python](python/PYTHON.md#1-abstract-factory), [Swift](swift/SWIFT.md#1-abstract-factory), [Go](go/GO.md#1-abstract-factory), [Java](java/JAVA.md#1-abstract-factory), [Rust](rust/RUST.md#1-abstract-factory).
 
 ### 2) Builder
 
@@ -53,7 +53,7 @@ Avoid when: A simple constructor or object literal is enough.
 
 The example builders return an independent string value. For mutable report objects, copy state or consume the builder to prevent later mutation.
 
-Language examples: [C#](CSHARP.md#2-builder), [TypeScript](TYPESCRIPT.md#2-builder), [JavaScript](JAVASCRIPT.md#2-builder), [Python](PYTHON.md#2-builder), [Swift](SWIFT.md#2-builder), [Go](GO.md#2-builder), [Java](JAVA.md#2-builder), [Rust](RUST.md#2-builder).
+Language examples: [C#](csharp/CSHARP.md#2-builder), [TypeScript](typescript/TYPESCRIPT.md#2-builder), [JavaScript](javascript/JAVASCRIPT.md#2-builder), [Python](python/PYTHON.md#2-builder), [Swift](swift/SWIFT.md#2-builder), [Go](go/GO.md#2-builder), [Java](java/JAVA.md#2-builder), [Rust](rust/RUST.md#2-builder).
 
 ### 3) Factory Method
 
@@ -63,7 +63,7 @@ Avoid when: Only one concrete type exists.
 
 Python and Java use class-based creation hooks. Swift and Rust use protocol or trait defaults. Go injects a factory function.
 
-Language examples: [C#](CSHARP.md#3-factory-method), [TypeScript](TYPESCRIPT.md#3-factory-method), [JavaScript](JAVASCRIPT.md#3-factory-method), [Python](PYTHON.md#3-factory-method), [Swift](SWIFT.md#3-factory-method), [Go](GO.md#3-factory-method), [Java](JAVA.md#3-factory-method), [Rust](RUST.md#3-factory-method).
+Language examples: [C#](csharp/CSHARP.md#3-factory-method), [TypeScript](typescript/TYPESCRIPT.md#3-factory-method), [JavaScript](javascript/JAVASCRIPT.md#3-factory-method), [Python](python/PYTHON.md#3-factory-method), [Swift](swift/SWIFT.md#3-factory-method), [Go](go/GO.md#3-factory-method), [Java](java/JAVA.md#3-factory-method), [Rust](rust/RUST.md#3-factory-method).
 
 ### 4) Prototype
 
@@ -73,7 +73,7 @@ Avoid when: Cloning is complex or error-prone.
 
 Copy mutable owned state when independent edits are required. Swift and Rust value copies, Go slice copies, and Java defensive copies express that contract.
 
-Language examples: [C#](CSHARP.md#4-prototype), [TypeScript](TYPESCRIPT.md#4-prototype), [JavaScript](JAVASCRIPT.md#4-prototype), [Python](PYTHON.md#4-prototype), [Swift](SWIFT.md#4-prototype), [Go](GO.md#4-prototype), [Java](JAVA.md#4-prototype), [Rust](RUST.md#4-prototype).
+Language examples: [C#](csharp/CSHARP.md#4-prototype), [TypeScript](typescript/TYPESCRIPT.md#4-prototype), [JavaScript](javascript/JAVASCRIPT.md#4-prototype), [Python](python/PYTHON.md#4-prototype), [Swift](swift/SWIFT.md#4-prototype), [Go](go/GO.md#4-prototype), [Java](java/JAVA.md#4-prototype), [Rust](rust/RUST.md#4-prototype).
 
 ### 5) Singleton
 
@@ -83,7 +83,7 @@ Avoid when: You need multiple configurations or test isolation; prefer DI.
 
 These instances are process-local. Prefer injected settings when tests need isolation. Protect mutable shared state rather than assuming singleton construction makes it safe.
 
-Language examples: [C#](CSHARP.md#5-singleton), [TypeScript](TYPESCRIPT.md#5-singleton), [JavaScript](JAVASCRIPT.md#5-singleton), [Python](PYTHON.md#5-singleton), [Swift](SWIFT.md#5-singleton), [Go](GO.md#5-singleton), [Java](JAVA.md#5-singleton), [Rust](RUST.md#5-singleton).
+Language examples: [C#](csharp/CSHARP.md#5-singleton), [TypeScript](typescript/TYPESCRIPT.md#5-singleton), [JavaScript](javascript/JAVASCRIPT.md#5-singleton), [Python](python/PYTHON.md#5-singleton), [Swift](swift/SWIFT.md#5-singleton), [Go](go/GO.md#5-singleton), [Java](java/JAVA.md#5-singleton), [Rust](rust/RUST.md#5-singleton).
 
 ## Structural Patterns
 
@@ -95,7 +95,7 @@ Avoid when: You can change the client or use native interface directly.
 
 The adapter translates the boundary contract and delegates once. Preserve real encoding and failure rules instead of concealing them.
 
-Language examples: [C#](CSHARP.md#6-adapter), [TypeScript](TYPESCRIPT.md#6-adapter), [JavaScript](JAVASCRIPT.md#6-adapter), [Python](PYTHON.md#6-adapter), [Swift](SWIFT.md#6-adapter), [Go](GO.md#6-adapter), [Java](JAVA.md#6-adapter), [Rust](RUST.md#6-adapter).
+Language examples: [C#](csharp/CSHARP.md#6-adapter), [TypeScript](typescript/TYPESCRIPT.md#6-adapter), [JavaScript](javascript/JAVASCRIPT.md#6-adapter), [Python](python/PYTHON.md#6-adapter), [Swift](swift/SWIFT.md#6-adapter), [Go](go/GO.md#6-adapter), [Java](java/JAVA.md#6-adapter), [Rust](rust/RUST.md#6-adapter).
 
 ### 7) Bridge
 
@@ -105,7 +105,7 @@ Avoid when: Only one dimension exists.
 
 The shape owns geometry and receives a renderer. More shapes and rendering backends can vary independently without a subclass for each combination.
 
-Language examples: [C#](CSHARP.md#7-bridge), [TypeScript](TYPESCRIPT.md#7-bridge), [JavaScript](JAVASCRIPT.md#7-bridge), [Python](PYTHON.md#7-bridge), [Swift](SWIFT.md#7-bridge), [Go](GO.md#7-bridge), [Java](JAVA.md#7-bridge), [Rust](RUST.md#7-bridge).
+Language examples: [C#](csharp/CSHARP.md#7-bridge), [TypeScript](typescript/TYPESCRIPT.md#7-bridge), [JavaScript](javascript/JAVASCRIPT.md#7-bridge), [Python](python/PYTHON.md#7-bridge), [Swift](swift/SWIFT.md#7-bridge), [Go](go/GO.md#7-bridge), [Java](java/JAVA.md#7-bridge), [Rust](rust/RUST.md#7-bridge).
 
 ### 8) Composite
 
@@ -115,7 +115,7 @@ Avoid when: Simple flat lists.
 
 The uniform node or enum gives leaves and branches the same traversal contract. Bound recursion and reject cycles when loading external trees.
 
-Language examples: [C#](CSHARP.md#8-composite), [TypeScript](TYPESCRIPT.md#8-composite), [JavaScript](JAVASCRIPT.md#8-composite), [Python](PYTHON.md#8-composite), [Swift](SWIFT.md#8-composite), [Go](GO.md#8-composite), [Java](JAVA.md#8-composite), [Rust](RUST.md#8-composite).
+Language examples: [C#](csharp/CSHARP.md#8-composite), [TypeScript](typescript/TYPESCRIPT.md#8-composite), [JavaScript](javascript/JAVASCRIPT.md#8-composite), [Python](python/PYTHON.md#8-composite), [Swift](swift/SWIFT.md#8-composite), [Go](go/GO.md#8-composite), [Java](java/JAVA.md#8-composite), [Rust](rust/RUST.md#8-composite).
 
 ### 9) Decorator
 
@@ -125,7 +125,7 @@ Avoid when: Behavior is fixed or class hierarchy is simpler.
 
 A function wrapper is sufficient when only behavior changes. Use a richer interface when resource ownership or several operations require it.
 
-Language examples: [C#](CSHARP.md#9-decorator), [TypeScript](TYPESCRIPT.md#9-decorator), [JavaScript](JAVASCRIPT.md#9-decorator), [Python](PYTHON.md#9-decorator), [Swift](SWIFT.md#9-decorator), [Go](GO.md#9-decorator), [Java](JAVA.md#9-decorator), [Rust](RUST.md#9-decorator).
+Language examples: [C#](csharp/CSHARP.md#9-decorator), [TypeScript](typescript/TYPESCRIPT.md#9-decorator), [JavaScript](javascript/JAVASCRIPT.md#9-decorator), [Python](python/PYTHON.md#9-decorator), [Swift](swift/SWIFT.md#9-decorator), [Go](go/GO.md#9-decorator), [Java](java/JAVA.md#9-decorator), [Rust](rust/RUST.md#9-decorator).
 
 ### 10) Facade
 
@@ -135,7 +135,7 @@ Avoid when: Subsystem is already small.
 
 The facade orders read, format, and write operations. Failures propagate to the caller, and a failed read or format must prevent the write.
 
-Language examples: [C#](CSHARP.md#10-facade), [TypeScript](TYPESCRIPT.md#10-facade), [JavaScript](JAVASCRIPT.md#10-facade), [Python](PYTHON.md#10-facade), [Swift](SWIFT.md#10-facade), [Go](GO.md#10-facade), [Java](JAVA.md#10-facade), [Rust](RUST.md#10-facade).
+Language examples: [C#](csharp/CSHARP.md#10-facade), [TypeScript](typescript/TYPESCRIPT.md#10-facade), [JavaScript](javascript/JAVASCRIPT.md#10-facade), [Python](python/PYTHON.md#10-facade), [Swift](swift/SWIFT.md#10-facade), [Go](go/GO.md#10-facade), [Java](java/JAVA.md#10-facade), [Rust](rust/RUST.md#10-facade).
 
 ### 11) Flyweight
 
@@ -145,7 +145,7 @@ Avoid when: State is mostly unique or mutation makes sharing risky.
 
 The factory shares immutable icons. These caches are confined to one execution context. Define synchronization, cache bounds, and eviction for production.
 
-Language examples: [C#](CSHARP.md#11-flyweight), [TypeScript](TYPESCRIPT.md#11-flyweight), [JavaScript](JAVASCRIPT.md#11-flyweight), [Python](PYTHON.md#11-flyweight), [Swift](SWIFT.md#11-flyweight), [Go](GO.md#11-flyweight), [Java](JAVA.md#11-flyweight), [Rust](RUST.md#11-flyweight).
+Language examples: [C#](csharp/CSHARP.md#11-flyweight), [TypeScript](typescript/TYPESCRIPT.md#11-flyweight), [JavaScript](javascript/JAVASCRIPT.md#11-flyweight), [Python](python/PYTHON.md#11-flyweight), [Swift](swift/SWIFT.md#11-flyweight), [Go](go/GO.md#11-flyweight), [Java](java/JAVA.md#11-flyweight), [Rust](rust/RUST.md#11-flyweight).
 
 ### 12) Proxy
 
@@ -155,7 +155,7 @@ Avoid when: Direct access is safe and simple.
 
 Authorize every protected read before delegation. Supply trusted resource-scoped authorization from the server or local security boundary, not a UI visibility flag.
 
-Language examples: [C#](CSHARP.md#12-proxy), [TypeScript](TYPESCRIPT.md#12-proxy), [JavaScript](JAVASCRIPT.md#12-proxy), [Python](PYTHON.md#12-proxy), [Swift](SWIFT.md#12-proxy), [Go](GO.md#12-proxy), [Java](JAVA.md#12-proxy), [Rust](RUST.md#12-proxy).
+Language examples: [C#](csharp/CSHARP.md#12-proxy), [TypeScript](typescript/TYPESCRIPT.md#12-proxy), [JavaScript](javascript/JAVASCRIPT.md#12-proxy), [Python](python/PYTHON.md#12-proxy), [Swift](swift/SWIFT.md#12-proxy), [Go](go/GO.md#12-proxy), [Java](java/JAVA.md#12-proxy), [Rust](rust/RUST.md#12-proxy).
 
 ## Behavioral Patterns
 
@@ -167,7 +167,7 @@ Avoid when: A single, fixed handler suffices.
 
 Stop at the first validation failure. Define whether later checks depend on earlier checks before changing their order.
 
-Language examples: [C#](CSHARP.md#13-chain-of-responsibility), [TypeScript](TYPESCRIPT.md#13-chain-of-responsibility), [JavaScript](JAVASCRIPT.md#13-chain-of-responsibility), [Python](PYTHON.md#13-chain-of-responsibility), [Swift](SWIFT.md#13-chain-of-responsibility), [Go](GO.md#13-chain-of-responsibility), [Java](JAVA.md#13-chain-of-responsibility), [Rust](RUST.md#13-chain-of-responsibility).
+Language examples: [C#](csharp/CSHARP.md#13-chain-of-responsibility), [TypeScript](typescript/TYPESCRIPT.md#13-chain-of-responsibility), [JavaScript](javascript/JAVASCRIPT.md#13-chain-of-responsibility), [Python](python/PYTHON.md#13-chain-of-responsibility), [Swift](swift/SWIFT.md#13-chain-of-responsibility), [Go](go/GO.md#13-chain-of-responsibility), [Java](java/JAVA.md#13-chain-of-responsibility), [Rust](rust/RUST.md#13-chain-of-responsibility).
 
 ### 14) Command
 
@@ -177,7 +177,7 @@ Avoid when: Simple direct method call.
 
 The invoker pairs execution and undo and serializes changes to the target. These examples do not provide an undo history or concurrent editing protocol.
 
-Language examples: [C#](CSHARP.md#14-command), [TypeScript](TYPESCRIPT.md#14-command), [JavaScript](JAVASCRIPT.md#14-command), [Python](PYTHON.md#14-command), [Swift](SWIFT.md#14-command), [Go](GO.md#14-command), [Java](JAVA.md#14-command), [Rust](RUST.md#14-command).
+Language examples: [C#](csharp/CSHARP.md#14-command), [TypeScript](typescript/TYPESCRIPT.md#14-command), [JavaScript](javascript/JAVASCRIPT.md#14-command), [Python](python/PYTHON.md#14-command), [Swift](swift/SWIFT.md#14-command), [Go](go/GO.md#14-command), [Java](java/JAVA.md#14-command), [Rust](rust/RUST.md#14-command).
 
 ### 15) Interpreter
 
@@ -187,7 +187,7 @@ Avoid when: Use a real parser or library instead.
 
 Interpret a typed expression tree rather than executing source text. Bound depth and validate numeric overflow when accepting external expressions.
 
-Language examples: [C#](CSHARP.md#15-interpreter), [TypeScript](TYPESCRIPT.md#15-interpreter), [JavaScript](JAVASCRIPT.md#15-interpreter), [Python](PYTHON.md#15-interpreter), [Swift](SWIFT.md#15-interpreter), [Go](GO.md#15-interpreter), [Java](JAVA.md#15-interpreter), [Rust](RUST.md#15-interpreter).
+Language examples: [C#](csharp/CSHARP.md#15-interpreter), [TypeScript](typescript/TYPESCRIPT.md#15-interpreter), [JavaScript](javascript/JAVASCRIPT.md#15-interpreter), [Python](python/PYTHON.md#15-interpreter), [Swift](swift/SWIFT.md#15-interpreter), [Go](go/GO.md#15-interpreter), [Java](java/JAVA.md#15-interpreter), [Rust](rust/RUST.md#15-interpreter).
 
 ### 16) Iterator
 
@@ -197,7 +197,7 @@ Avoid when: Native iterators already exist and suffice.
 
 The iterator exposes exhaustion explicitly. Keep traversal state private, and define mutation behavior if the underlying collection can change.
 
-Language examples: [C#](CSHARP.md#16-iterator), [TypeScript](TYPESCRIPT.md#16-iterator), [JavaScript](JAVASCRIPT.md#16-iterator), [Python](PYTHON.md#16-iterator), [Swift](SWIFT.md#16-iterator), [Go](GO.md#16-iterator), [Java](JAVA.md#16-iterator), [Rust](RUST.md#16-iterator).
+Language examples: [C#](csharp/CSHARP.md#16-iterator), [TypeScript](typescript/TYPESCRIPT.md#16-iterator), [JavaScript](javascript/JAVASCRIPT.md#16-iterator), [Python](python/PYTHON.md#16-iterator), [Swift](swift/SWIFT.md#16-iterator), [Go](go/GO.md#16-iterator), [Java](java/JAVA.md#16-iterator), [Rust](rust/RUST.md#16-iterator).
 
 ### 17) Mediator
 
@@ -207,7 +207,7 @@ Avoid when: Only a few direct relationships.
 
 The mediator coordinates related actions through injected callbacks. Keep business rules in services when coordination grows beyond this UI interaction.
 
-Language examples: [C#](CSHARP.md#17-mediator), [TypeScript](TYPESCRIPT.md#17-mediator), [JavaScript](JAVASCRIPT.md#17-mediator), [Python](PYTHON.md#17-mediator), [Swift](SWIFT.md#17-mediator), [Go](GO.md#17-mediator), [Java](JAVA.md#17-mediator), [Rust](RUST.md#17-mediator).
+Language examples: [C#](csharp/CSHARP.md#17-mediator), [TypeScript](typescript/TYPESCRIPT.md#17-mediator), [JavaScript](javascript/JAVASCRIPT.md#17-mediator), [Python](python/PYTHON.md#17-mediator), [Swift](swift/SWIFT.md#17-mediator), [Go](go/GO.md#17-mediator), [Java](java/JAVA.md#17-mediator), [Rust](rust/RUST.md#17-mediator).
 
 ### 18) Memento
 
@@ -217,7 +217,7 @@ Avoid when: State is huge or storing is expensive.
 
 The snapshot stores an independent value. For complex documents, define deep-copy boundaries, versioning, and memory limits for retained snapshots.
 
-Language examples: [C#](CSHARP.md#18-memento), [TypeScript](TYPESCRIPT.md#18-memento), [JavaScript](JAVASCRIPT.md#18-memento), [Python](PYTHON.md#18-memento), [Swift](SWIFT.md#18-memento), [Go](GO.md#18-memento), [Java](JAVA.md#18-memento), [Rust](RUST.md#18-memento).
+Language examples: [C#](csharp/CSHARP.md#18-memento), [TypeScript](typescript/TYPESCRIPT.md#18-memento), [JavaScript](javascript/JAVASCRIPT.md#18-memento), [Python](python/PYTHON.md#18-memento), [Swift](swift/SWIFT.md#18-memento), [Go](go/GO.md#18-memento), [Java](java/JAVA.md#18-memento), [Rust](rust/RUST.md#18-memento).
 
 ### 19) Observer
 
@@ -227,7 +227,7 @@ Avoid when: Tight synchronous control needed.
 
 Retain the subscription token and unsubscribe at the owner's lifecycle boundary. The examples are confined to one execution context. Callback snapshots permit stable delivery during dispatch. Rust borrowing prevents subscription changes during its synchronous publish call.
 
-Language examples: [C#](CSHARP.md#19-observer), [TypeScript](TYPESCRIPT.md#19-observer), [JavaScript](JAVASCRIPT.md#19-observer), [Python](PYTHON.md#19-observer), [Swift](SWIFT.md#19-observer), [Go](GO.md#19-observer), [Java](JAVA.md#19-observer), [Rust](RUST.md#19-observer).
+Language examples: [C#](csharp/CSHARP.md#19-observer), [TypeScript](typescript/TYPESCRIPT.md#19-observer), [JavaScript](javascript/JAVASCRIPT.md#19-observer), [Python](python/PYTHON.md#19-observer), [Swift](swift/SWIFT.md#19-observer), [Go](go/GO.md#19-observer), [Java](java/JAVA.md#19-observer), [Rust](rust/RUST.md#19-observer).
 
 ### 20) State
 
@@ -237,7 +237,7 @@ Avoid when: Simple if/else is enough.
 
 Only valid transitions change state. Define retry, cancellation, and recovery states when the real workflow requires them.
 
-Language examples: [C#](CSHARP.md#20-state), [TypeScript](TYPESCRIPT.md#20-state), [JavaScript](JAVASCRIPT.md#20-state), [Python](PYTHON.md#20-state), [Swift](SWIFT.md#20-state), [Go](GO.md#20-state), [Java](JAVA.md#20-state), [Rust](RUST.md#20-state).
+Language examples: [C#](csharp/CSHARP.md#20-state), [TypeScript](typescript/TYPESCRIPT.md#20-state), [JavaScript](javascript/JAVASCRIPT.md#20-state), [Python](python/PYTHON.md#20-state), [Swift](swift/SWIFT.md#20-state), [Go](go/GO.md#20-state), [Java](java/JAVA.md#20-state), [Rust](rust/RUST.md#20-state).
 
 ### 21) Strategy
 
@@ -247,7 +247,7 @@ Avoid when: Only one algorithm needed.
 
 Inject a function when one operation varies. Use a protocol, trait, or interface only when a wider contract earns the extra abstraction.
 
-Language examples: [C#](CSHARP.md#21-strategy), [TypeScript](TYPESCRIPT.md#21-strategy), [JavaScript](JAVASCRIPT.md#21-strategy), [Python](PYTHON.md#21-strategy), [Swift](SWIFT.md#21-strategy), [Go](GO.md#21-strategy), [Java](JAVA.md#21-strategy), [Rust](RUST.md#21-strategy).
+Language examples: [C#](csharp/CSHARP.md#21-strategy), [TypeScript](typescript/TYPESCRIPT.md#21-strategy), [JavaScript](javascript/JAVASCRIPT.md#21-strategy), [Python](python/PYTHON.md#21-strategy), [Swift](swift/SWIFT.md#21-strategy), [Go](go/GO.md#21-strategy), [Java](java/JAVA.md#21-strategy), [Rust](rust/RUST.md#21-strategy).
 
 ### 22) Template Method
 
@@ -257,7 +257,7 @@ Avoid when: Composition or Strategy is clearer.
 
 A failed read or validation prevents saving. Java uses a final template method. Protocol and trait defaults do not enforce that same override restriction.
 
-Language examples: [C#](CSHARP.md#22-template-method), [TypeScript](TYPESCRIPT.md#22-template-method), [JavaScript](JAVASCRIPT.md#22-template-method), [Python](PYTHON.md#22-template-method), [Swift](SWIFT.md#22-template-method), [Go](GO.md#22-template-method), [Java](JAVA.md#22-template-method), [Rust](RUST.md#22-template-method).
+Language examples: [C#](csharp/CSHARP.md#22-template-method), [TypeScript](typescript/TYPESCRIPT.md#22-template-method), [JavaScript](javascript/JAVASCRIPT.md#22-template-method), [Python](python/PYTHON.md#22-template-method), [Swift](swift/SWIFT.md#22-template-method), [Go](go/GO.md#22-template-method), [Java](java/JAVA.md#22-template-method), [Rust](rust/RUST.md#22-template-method).
 
 ### 23) Visitor
 
@@ -267,7 +267,7 @@ Avoid when: Structure changes frequently or overhead is high.
 
 Swift and Rust use exhaustive enum dispatch for a closed set of values. Class-based visitors suit a stable type hierarchy that gains new operations.
 
-Language examples: [C#](CSHARP.md#23-visitor), [TypeScript](TYPESCRIPT.md#23-visitor), [JavaScript](JAVASCRIPT.md#23-visitor), [Python](PYTHON.md#23-visitor), [Swift](SWIFT.md#23-visitor), [Go](GO.md#23-visitor), [Java](JAVA.md#23-visitor), [Rust](RUST.md#23-visitor).
+Language examples: [C#](csharp/CSHARP.md#23-visitor), [TypeScript](typescript/TYPESCRIPT.md#23-visitor), [JavaScript](javascript/JAVASCRIPT.md#23-visitor), [Python](python/PYTHON.md#23-visitor), [Swift](swift/SWIFT.md#23-visitor), [Go](go/GO.md#23-visitor), [Java](java/JAVA.md#23-visitor), [Rust](rust/RUST.md#23-visitor).
 
 ## Usage Guidance in This Codebase
 

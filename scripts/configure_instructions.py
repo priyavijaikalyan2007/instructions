@@ -31,29 +31,33 @@ LIBRARY_ROOT = Path(__file__).resolve().parents[1]
 PROFILE_PATH = "instructions/project/PROJECT_PROFILE.md"
 START = "<!-- instructions:managed:start -->"
 END = "<!-- instructions:managed:end -->"
-MANAGED = "\n".join([
-    START,
-    "Read [the shared agent instructions](instructions/AGENTS.md) before planning or editing.",
-    "Read `instructions/project/PROJECT_PROFILE.md` and its configured project-facts and additional-instructions "
-    "files.",
-    "Select only the enabled components, languages, and shared concerns affected by the task.",
-    END,
-])
+COMMON_GUIDES = {
+    "WORKFLOW.md", "REPO.md", "LANGUAGE.md", "SECURITY_GUIDELINES.md", "CODING_STYLE.md",
+    "COMMENTING.md", "MARKERS.md", "TESTING.md", "LOGGING.md", "COPYRIGHT_HEADER.md",
+    "CODE_COMPLETE.md", "CODE_COMPLETE.checklist.md", "PRAGMATIC_PROGRAMMER.md",
+    "PRAGMATIC_PROGRAMMER.checklist.md", "LITERATE_ERRORS.md",
+}
 FIELDS = {
     "source_paths": "Source paths", "targets": "Targets", "languages": "Languages", "platforms": "Platforms",
     "saas_client": "SaaS client", "sdk_component": "SDK component", "deployment": "Deployment",
 }
 LIST_FIELDS = {"source_paths", "targets", "languages", "platforms"}
 TARGET_GUIDES = {
-    "backend": "BACKEND.md", "frontend": "FRONTEND.md", "saas": "SAAS.md", "tools": "TOOLS.md",
-    "apps": "APPS.md", "websites": "WEBSITES.md", "static-assets": "STATIC_ASSETS.md",
-    "sdks": "SDKs.md", "documentation": "DOCUMENTATION.md",
+    "backend": "backend/BACKEND.md", "frontend": "frontend/FRONTEND.md", "saas": "saas/SAAS.md",
+    "tools": "tools/TOOLS.md",
+    "apps": "apps/APPS.md", "websites": "website/WEBSITES.md", "static-assets": "static-assets/STATIC_ASSETS.md",
+    "google-workspace": "google-workspace/GOOGLE_WORKSPACE.md",
+    "browser-extensions": "browser-extensions/BROWSER_EXTENSIONS.md",
+    "sdks": "sdk/SDKs.md", "documentation": "DOCUMENTATION.md",
 }
 LANGUAGE_GUIDES = {
-    "c#": ["CSHARP.md"], "swift": ["SWIFT.md"], "go": ["GO.md"], "rust": ["RUST.md"],
-    "java": ["JAVA.md"], "python": ["PYTHON.md"], "javascript": ["JAVASCRIPT.md"],
-    "typescript": ["TYPESCRIPT.md", "JAVASCRIPT.md"], "html": ["HTML.md"], "css": ["CSS.md"],
-    "scss": ["SCSS.md", "CSS.md"], "sql": ["SQL.md"], "shell": ["SHELL.md"], "bash": ["SHELL.md"],
+    "c#": ["csharp/CSHARP.md"], "swift": ["swift/SWIFT.md"], "go": ["go/GO.md"], "rust": ["rust/RUST.md"],
+    "java": ["java/JAVA.md"], "python": ["python/PYTHON.md"], "javascript": ["javascript/JAVASCRIPT.md"],
+    "typescript": ["typescript/TYPESCRIPT.md", "javascript/JAVASCRIPT.md"], "html": ["html/HTML.md"],
+    "css": ["css/CSS.md"],
+    "scss": ["scss/SCSS.md", "css/CSS.md"], "sql": ["sql/SQL.md"], "shell": ["shell/SHELL.md"],
+    "bash": ["shell/SHELL.md"],
+    "apps script": ["javascript/JAVASCRIPT.md"], "google apps script": ["javascript/JAVASCRIPT.md"],
 }
 IDENTIFIER = re.compile(r"[a-z][a-z0-9-]*\Z")
 
@@ -258,8 +262,10 @@ def project_paths(text: str) -> dict[str, str]:
 def validate_project_paths(root: Path, text: str) -> None:
     """Keep project context separate from shared guides, scripts, and agent entry points."""
     reserved = {PROFILE_PATH, "AGENTS.md", "CLAUDE.md", "CODEX.md", "GEMINI.md"}
-    reserved.update("instructions/" + path.name for path in (LIBRARY_ROOT / "instructions").iterdir()
-                    if path.is_file())
+    reserved.update(str(path.relative_to(LIBRARY_ROOT))
+                    for path in (LIBRARY_ROOT / "instructions").rglob("*")
+                    if path.is_file() and path.relative_to(LIBRARY_ROOT / "instructions").parts[0]
+                    not in {"project", "maintenance"})
     seen = set()
     for relative in project_paths(text):
         path = safe_path(root, relative)
@@ -317,7 +323,7 @@ def validate_profile(root: Path, text: str) -> tuple[set, list]:
     """Validate relationships after every update so referenced SDKs cannot silently disappear."""
     saas = checked_saas(text)
     components = {key: component_values(text[start:end]) for key, (start, end) in component_blocks(text).items()}
-    guides, warnings = ({"SAAS.md"} if saas else set()), []
+    guides, warnings = ({"saas/SAAS.md"} if saas else set()), []
     for identifier, values in components.items():
         if not values["enabled"]:
             continue
@@ -328,7 +334,7 @@ def validate_profile(root: Path, text: str) -> tuple[set, list]:
         if client and not saas:
             raise ValueError(f"{identifier}: a SaaS client requires the SaaS product choice.")
         if client:
-            guides.update(["SAAS.md", "SDKs.md"])
+            guides.update(["saas/SAAS.md", "sdk/SDKs.md"])
         sdk = values["sdk_component"].strip("`")
         if sdk != "none":
             other = components.get(sdk, {})
@@ -340,19 +346,55 @@ def validate_profile(root: Path, text: str) -> tuple[set, list]:
     return guides, warnings
 
 
-def managed_agents(existing: str) -> str:
+def routing_block(guides: set[str]) -> str:
+    """Derive scope links from the profile while keeping common and conditional obligations explicit."""
+    lines = [START,
+             "Read [the shared workflow](instructions/WORKFLOW.md) before planning or editing.",
+             "Read `instructions/project/PROJECT_PROFILE.md` and its configured facts and additional instructions.",
+             "The profile is authoritative. Regenerate this block after changing its selections.",
+             "",
+             "Common requirements apply in every profile. Read the relevant task sections:", ""]
+    lines.extend(f"- [{name}](instructions/{name})" for name in sorted(COMMON_GUIDES - {"WORKFLOW.md"}))
+    lines.extend(["", "Enabled target and language guides. Read only those affected by the task:", ""])
+    lines.extend(f"- [{name}](instructions/{name})" for name in sorted(guides))
+    if not guides:
+        lines.append("- No target or language guides selected.")
+    lines.extend(["", "For AI or ML work, also read [AIML_SECURITY.md](instructions/AIML_SECURITY.md).",
+                  "For credentials or sensitive data, read [SECRET_HANDLING.md](instructions/SECRET_HANDLING.md).",
+                  "Select other task concerns from [WORKFLOW.md](instructions/WORKFLOW.md#select-shared-concerns).",
+                  "Unselected guides remain installed for future use.", END])
+    return "\n".join(lines)
+
+
+def missing_shared_guides(root: Path) -> dict[str, bytes]:
+    """Install nested shared guides, excluding project records and maintenance fixtures."""
+    changes = {}
+    library = LIBRARY_ROOT / "instructions"
+    for path in sorted(library.rglob("*")):
+        local = path.relative_to(library)
+        if local.parts[0] in {"project", "maintenance"} or path.is_dir():
+            continue
+        relative = "instructions/" + local.as_posix()
+        source = safe_path(LIBRARY_ROOT, relative)
+        if source.is_file() and not safe_path(root, relative).exists():
+            changes[relative] = source.read_bytes()
+    return changes
+
+
+def managed_agents(existing: str, guides: set[str]) -> str:
     """Replace only our complete managed block or append it to handwritten root instructions."""
+    managed = routing_block(guides)
     if existing.count(START) != existing.count(END) or existing.count(START) > 1:
         raise ValueError("Malformed AGENTS.md managed block. Preserve and repair it manually before configuration.")
     if START not in existing:
-        return existing + ("\n\n" if existing else "") + MANAGED + "\n"
+        return existing + ("\n\n" if existing else "") + managed + "\n"
     start, end = existing.index(START), existing.index(END)
     if end < start:
         raise ValueError("Malformed AGENTS.md managed block order.")
-    return existing[:start] + MANAGED + existing[end + len(END):]
+    return existing[:start] + managed + existing[end + len(END):]
 
 
-def plan_changes(root: Path, profile: str, check: bool) -> dict[str, bytes]:
+def plan_changes(root: Path, profile: str, check: bool, guides: set[str]) -> dict[str, bytes]:
     """Plan additions without replacing installed guides, project facts, or local refinements."""
     if check:
         for relative in project_paths(profile):
@@ -360,11 +402,7 @@ def plan_changes(root: Path, profile: str, check: bool) -> dict[str, bytes]:
                 raise ValueError(f"Missing configured project file: {relative}")
         return {}
     changes = {PROFILE_PATH: profile.encode("utf-8")}
-    for path in sorted((LIBRARY_ROOT / "instructions").iterdir()):
-        if path.is_file():
-            relative = "instructions/" + path.name
-            if not safe_path(root, relative).exists():
-                changes[relative] = path.read_bytes()
+    changes.update(missing_shared_guides(root))
     for relative, template in project_paths(profile).items():
         if relative in changes or relative in {PROFILE_PATH, "AGENTS.md", "CLAUDE.md", "CODEX.md", "GEMINI.md"}:
             raise ValueError(f"Project file conflicts with an instruction file: {relative}")
@@ -372,7 +410,7 @@ def plan_changes(root: Path, profile: str, check: bool) -> dict[str, bytes]:
             changes[relative] = fresh_template(template).encode("utf-8")
     agents = read_optional(root, "AGENTS.md")
     agents = (LIBRARY_ROOT / "AGENTS.md").read_text() if agents is None else agents
-    changes["AGENTS.md"] = managed_agents(agents).encode("utf-8")
+    changes["AGENTS.md"] = managed_agents(agents, guides).encode("utf-8")
     for name in ["CLAUDE.md", "CODEX.md", "GEMINI.md"]:
         if not safe_path(root, name).exists():
             changes[name] = (LIBRARY_ROOT / name).read_bytes()
@@ -452,10 +490,10 @@ def load_profile(root: Path, args: argparse.Namespace) -> str:
     return profile
 
 
-def check_root_routing(root: Path) -> None:
+def check_root_routing(root: Path, guides: set[str]) -> None:
     """Require the current managed routing block when validating an installed setup."""
     agents = read_optional(root, "AGENTS.md")
-    if agents is None or START not in agents or managed_agents(agents) != agents:
+    if agents is None or START not in agents or managed_agents(agents, guides) != agents:
         raise ValueError("AGENTS.md needs the current managed routing block. Run the configurator to preview repair.")
 
 
@@ -467,8 +505,8 @@ def main() -> int:
     root = args.root.resolve()
     profile = load_profile(root, args)
     guides, warnings = validate_profile(root, profile)
-    changes = plan_changes(root, profile, args.check)
-    for guide in sorted(guides | {"AGENTS.md", "REPO.md"}):
+    changes = plan_changes(root, profile, args.check, guides)
+    for guide in sorted(guides | COMMON_GUIDES | {"AIML_SECURITY.md", "SECRET_HANDLING.md"}):
         relative = "instructions/" + guide
         if relative not in changes and not safe_path(root, relative).is_file():
             raise ValueError(f"Missing selected guide: {relative}")
@@ -476,7 +514,7 @@ def main() -> int:
         print(f"Note: {warning}", file=sys.stderr)
     print("Selected target/language guides (narrow further by the task): " + ", ".join(sorted(guides)))
     if args.check:
-        check_root_routing(root)
+        check_root_routing(root, guides)
         print("Profile check passed.")
         return 0
     preview(root, changes)

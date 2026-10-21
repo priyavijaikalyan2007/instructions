@@ -12,7 +12,7 @@ Created: 2026
 # Repository work
 
 Read this guide for repository setup, build/test/run commands, source verification, and session records.
-Use [AGENTS.md](AGENTS.md#select-target-guides) to select targets and languages for the changed work.
+Use [WORKFLOW.md](WORKFLOW.md#select-target-guides) to select targets and languages for the changed work.
 Backend containers, native signing, and static bundle delivery remain in their target guides.
 
 ## Project configuration
@@ -29,7 +29,8 @@ An instruction that is reusable across projects can be proposed for its generic 
 
 ### Instruction layout
 
-Keep shared guides and templates under instructions/.
+Keep common guides and templates under instructions/.
+Keep target and language guides under their named folders, retaining descriptive filenames.
 Keep AGENTS.md, CLAUDE.md, GEMINI.md, and CODEX.md as the root instruction entry files.
 Store project-owned facts, profiles, refinements, and conversation records under instructions/project/ by default.
 Store instruction-library plans, audits, and examples under instructions/maintenance/.
@@ -55,13 +56,13 @@ Use the [profile selector](#profile-selector) to interview or update the same pr
 ### Selection contract
 
 Components use unique identifiers and an Enabled checkbox. Unchecked components do not select guides.
-Targets are backend, frontend, saas, tools, apps, websites, static-assets, sdks, and documentation.
-Use the target and language tables in AGENTS.md to resolve those names to generic guides.
+Targets are backend, frontend, saas, tools, apps, websites, static-assets, sdks, documentation, google-workspace, and browser-extensions.
+Use the target and language tables in WORKFLOW.md to resolve those names to generic guides.
 
 Intersect enabled component paths with the files and behavior changed by the task.
 Read the matching target and language sections, then add shared concerns for that behavior.
 For a generated SDK contract change, include affected consumers and their languages.
-For native SaaS integration, add instructions/SAAS.md and instructions/SDKs.md without loading unrelated server implementation details.
+For native SaaS integration, add instructions/saas/SAAS.md and instructions/sdk/SDKs.md without loading unrelated server implementation details.
 For a native layout-only change, use the app, Swift, and relevant UI guides.
 For a backend packaging-only change, use the backend, build/runtime, and actual container configuration.
 Container deployment does not select Kubernetes, Cloud Run, or a static hosting provider by itself.
@@ -180,6 +181,8 @@ The interview starts with these product categories:
 | 4 | Native App | Standalone native application for selected operating systems |
 | 5 | Static Website | Website and static assets, without an application backend |
 | 6 | CLI tools | Command-line tools and plugins |
+| 7 | Google Workspace Extensions | Workspace or Editor add-ons for selected host applications |
+| 8 | Browser Extensions | Packaged extensions for selected browsers and operating systems |
 
 Combine compatible choices in one repository. For example, 1, 5, 6 selects a SaaS, public website, and CLI tools.
 Choose only one of 1, 2, and 3 because those categories overlap.
@@ -282,3 +285,32 @@ Generic guide upgrades remain a separate reviewed operation.
 
 The CLI returns 0 for a successful check, preview, apply, no-change result, or cancelled confirmation.
 It returns 2 for invalid input, missing required configuration, or a filesystem error.
+
+### Retained guides and generated scope
+
+The selector copies missing shared files recursively, including currently unselected guides.
+It excludes instructions/project/ and instructions/maintenance/ from the shared copy.
+Project facts and local instructions are initialized separately and preserved after creation.
+Changing selections never removes source or guide files.
+
+The root managed block lists common obligations and the enabled target and language guides.
+The profile is the source of those selections. Narrow the list further for each task.
+After manual profile edits, run the selector to regenerate the block. The --check mode detects stale routing.
+The --dry-run mode previews the regenerated block without writing files.
+Existing guide updates and removal of superseded flat copies require a separate reviewed migration.
+
+### Extension selections
+
+Choose 7 for a Google Workspace or Editor add-on. Record its host and add-on type in Platforms.
+Record Apps Script or HTTP runtime and the distribution mode in Packaging or delivery.
+Apps Script and Google Apps Script language labels route to JavaScript guidance.
+Select TypeScript when that is the actual source compiled by the project.
+
+Choose 8 for browser extensions. Record browsers and operating systems, such as Chrome, Firefox, or Safari on macOS and iOS.
+Combine an extension with a SaaS category when the repository contains both.
+The interview asks whether each selected extension consumes this repository's SaaS API.
+A Google account or browser account alone does not select SaaS-client behavior.
+When unambiguous, a selected SaaS client links to the enabled generated SDK component.
+Use manual or JSON configuration for multiple SDK relationships or an explicit direct-HTTP integration.
+Retaining an existing profile preserves intentionally unlinked SDKs unless the relationship changes explicitly.
+Microsoft Office extensions remain deferred and have no selectable preset.

@@ -18,9 +18,7 @@ Created: 2026
 | Repository | instructions |
 | Product | Generic coding-agent instructions and repository analysis tools |
 | Source | instructions/, the four root agent entries, scripts/, .github/, and agentknowledge/ |
-| Interview correction branch | fix/profile-interview-guidance |
-| Interview correction review | PR #4 in priyavijaikalyan2007/instructions |
-| Earlier merged reviews | PR #1, PR #2, and PR #3 in priyavijaikalyan2007/instructions |
+| Review history | Git history and merged pull requests in priyavijaikalyan2007/instructions |
 | Application runtime | none |
 | Generic build.sh or test.sh | absent |
 
@@ -29,7 +27,7 @@ Created: 2026
 | Subject | Fact |
 | --- | --- |
 | Generic entry point | AGENTS.md |
-| Shared agent workflow | instructions/AGENTS.md |
+| Shared agent workflow | instructions/WORKFLOW.md |
 | Agent entry files | CODEX.md, CLAUDE.md, GEMINI.md |
 | Project selections | instructions/project/PROJECT_PROFILE.md |
 | Local refinements | instructions/project/ADDITIONAL.md |
@@ -39,7 +37,7 @@ Created: 2026
 | Selector read-only check | ./scripts/configure-instructions.sh --check |
 | Repository-tool documentation | instructions/REPO_TOOLS_README.md |
 | Knowledge records | agentknowledge/history.jsonl and agentknowledge/lcv_constraints.yaml |
-| Source encoding | instructions/FRONTEND.md and instructions/DOCUMENTATION.md use CP1252. Most other guides use UTF-8. |
+| Source encoding | instructions/frontend/FRONTEND.md and instructions/DOCUMENTATION.md use CP1252. Most other guides use UTF-8. |
 
 ## Scope facts
 
@@ -47,3 +45,6 @@ The language snippets are examples for consuming projects. They are not a deploy
 The current change has no Java server, browser application, generated SDK, or native application artifact to build.
 The profile configurator is a local Python CLI with a Bash entry point and isolated filesystem integration tests.
 The Java SaaS profile under instructions/maintenance/examples/ is a fictional instruction-routing fixture.
+
+The interview supports eight product categories, including Google Workspace and browser extensions.
+Microsoft Office extension profiles are deferred. No extension host application exists in this repository.

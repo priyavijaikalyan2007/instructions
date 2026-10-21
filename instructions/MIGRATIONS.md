@@ -68,7 +68,7 @@ Once tests pass, the code is safe to improve. This is NOT optional for any chang
 
 ## Example Scenario: JavaScript to TypeScript
 
-See [TypeScript](TYPESCRIPT.md#migration-from-javascript).
+See [TypeScript](typescript/TYPESCRIPT.md#migration-from-javascript).
 
 ## Checklist for Agents
 

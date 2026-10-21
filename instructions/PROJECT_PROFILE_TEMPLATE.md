@@ -26,11 +26,11 @@ Read [REPO.md](REPO.md#project-configuration) for the selection rules and setup 
 ## Project choices
 
 - [ ] SaaS product
-- [ ] Enterprise browser shell example from instructions/SAAS.md
+- [ ] Enterprise browser shell example from instructions/saas/SAAS.md
 - [ ] Knobby authorization example from instructions/ACCESS_CONTROL.md
 - [ ] Knobby deletion example from instructions/DELETION.md
 - [ ] PostgreSQL/EF Core manual SQL example from instructions/PERSISTENCE.md
-- [ ] Theme component-library example from instructions/STATIC_ASSETS.md
+- [ ] Theme component-library example from instructions/static-assets/STATIC_ASSETS.md
 
 ## Components
 
@@ -114,3 +114,25 @@ Replace angle-bracket values. Use `none` when a field does not apply.
 - SaaS client: no
 - SDK component: none
 - Deployment: `<CLI binary, package, or configured mode>`
+
+### workspace-extension
+
+- [ ] Enabled
+- Source paths: `<extension source, manifest, and build configuration paths>`
+- Targets: google-workspace
+- Languages: `<actual languages, such as JavaScript, TypeScript, HTML, CSS, or Apps Script>`
+- Platforms: `<Google Docs (Editor add-on), Gmail (Workspace add-on), or actual hosts>`
+- SaaS client: no
+- SDK component: none
+- Deployment: `<Apps Script or HTTP runtime, plus test/private/Marketplace distribution>`
+
+### browser-extension
+
+- [ ] Enabled
+- Source paths: `<extension source, manifest, and build configuration paths>`
+- Targets: browser-extensions
+- Languages: `<actual languages, such as JavaScript, TypeScript, HTML, CSS, or Apps Script>`
+- Platforms: `<Chrome, Firefox, Safari with operating systems, or actual browsers>`
+- SaaS client: no
+- SDK component: none
+- Deployment: `<unpacked test extension, browser store packages, or Safari app distribution>`
