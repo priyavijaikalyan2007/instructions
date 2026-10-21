@@ -14,6 +14,8 @@
 from copy import deepcopy
 from pathlib import Path
 
+from project_initialization import is_source_repository
+
 
 PRODUCTS = {
     "1": ("SaaS", "Webapp with backend, browser frontend, and static assets.", {"backend", "frontend"}),
@@ -90,7 +92,7 @@ def show_intro(root: Path, library_root: Path, is_new: bool) -> None:
     print("Component identifiers are local names in this profile, not product types.")
     print("Guidance is selected automatically from your product choices and actual source languages.")
     print("Press Enter to keep a displayed current value. No files change until you approve the final preview.")
-    if root == library_root:
+    if root == library_root and is_source_repository(root):
         print("This is the instruction library's own repository.")
         print("Its components cover instruction documents and CLI tools.")
         print("To configure another project, cancel and restart with --root /path/to/that/project.")

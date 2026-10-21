@@ -126,3 +126,21 @@ All 55 tests pass. The repository profile check and dry run pass without generat
 Link and preservation checks report no new defects. No host extension runtime or store publication was tested.
 The owner authorized pushing and merging this work together with the pending guide and security reorganization.
 This authorization supersedes the previous local-only delivery scope. Merge through a pull request, then synchronize main.
+
+
+## 21 October 2026: copied-project initialization
+
+Implemented explicit new-project initialization in the existing profile configurator.
+The source repository's .github/README.md, CONTRIBUTING.md, CODE_OF_CONDUCT.md, SECURITY.md, and root LICENSE remain unchanged.
+New policy templates collect project identity and leave unknown project decisions as visible TODOs.
+Known inherited documents and records receive exact backups before replacement or removal.
+Customized documents, history, and profile notes remain untouched. Conflicting licenses and symlinks stop before writes.
+The generated documents honor custom project-facts and local-instruction paths.
+The interview supports MIT, Apache 2.0, LGPL 2.1/3.0, GPL 2.0/3.0, AGPL 3.0, Elastic 2.0, and SSPL 1.0.
+GNU choices require only or or-later. Multiple licenses use OR, with no product-name preset.
+Creative Commons 4.0 variants and CC0 1.0 apply to explicit content paths.
+Custom or undecided terms remain pending. Copied instruction material retains its MIT license and notices.
+Pinned SPDX texts and hashes support offline setup. LGPL 3.0 includes its GPL 3.0 companion text.
+A source-only maintenance command registers reviewed inherited-file hashes while retaining older versions.
+All 77 tests pass, including execution from a copied repository, preview, cancellation, repeat runs, and generated links.
+The actual utilextensions repository was not changed. Changes are prepared on feat/project-initialization for local review.

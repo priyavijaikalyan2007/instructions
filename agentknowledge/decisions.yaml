@@ -22,3 +22,18 @@
     - instructions/AIML_SECURITY.md
     - scripts/configure_instructions.py
     - instructions/maintenance/scoped-guides-security-review.md
+
+- id: ADR-002
+  title: Initialize project-owned documents separately from source policies and shared instructions
+  date: 2026-10-21
+  status: Accepted
+  context: >-
+    The owner approved separate templates and initialization after a GitHub template copy retained source-project identity.
+    Known whole-file hashes permit backed-up replacement. Customized files remain project-owned.
+    Exact license choices use bundled SPDX texts. OR alternatives and separate content scope remain explicit.
+    The instruction library retains its MIT notices independently of new project licensing.
+  files:
+    - scripts/project_initialization.py
+    - scripts/license_selection.py
+    - scripts/update_template_baseline.py
+    - instructions/templates/repository/TEMPLATES.md

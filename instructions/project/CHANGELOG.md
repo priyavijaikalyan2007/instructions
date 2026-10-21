@@ -11,6 +11,14 @@ Created: 2026
 
 # Changelog
 
+## 21 October 2026: new-project initialization
+
+- Added explained project initialization with policy templates, identity fields, and explicit license choices.
+- Preserved source policies and copied MIT notices while applying selected project licenses from pinned SPDX texts.
+- Added inherited-file backups, custom-file protection, source-repository protection, and offline dry runs.
+- Fixed copied-script repository identification and the generated profile's relative configuration link.
+- Added 22 regression and initialization tests, bringing the suite to 77 passing tests.
+
 ## 21 October 2026: extension profiles
 
 - Added Google Workspace and browser extension guides with optional SaaS integration and linked platform sources.

@@ -1,0 +1,8 @@
+# SPDX-FileCopyrightText: 2026 Priya Vijai Kalyan <priyavijai.kalyan2007@proton.me>
+# SPDX-FileCopyrightText: 2026 Outcrop Inc
+# SPDX-License-Identifier: MIT
+# Repository: instructions
+# File GUID: f6a1747f-dcf4-4463-91f2-0af93660aa62
+# Created: 2026
+# AGENT: Preserve exact upstream legal-text bytes, including intentional whitespace.
+*.txt -text whitespace=-blank-at-eol,-blank-at-eof

@@ -314,3 +314,105 @@ When unambiguous, a selected SaaS client links to the enabled generated SDK comp
 Use manual or JSON configuration for multiple SDK relationships or an explicit direct-HTTP integration.
 Retaining an existing profile preserves intentionally unlinked SDKs unless the relationship changes explicitly.
 Microsoft Office extensions remain deferred and have no selectable preset.
+
+## Initialize a repository created from this template
+
+GitHub template creation copies repository files. It does not replace their project identity.
+The profile selector offers initialization when it recognizes an inherited instruction-library profile.
+You can also request initialization explicitly:
+
+```bash
+./scripts/configure-instructions.sh --initialize-project --root /path/to/new-repository
+```
+
+Run the updated script from this library or from a new clone that includes it.
+Initialization requires Python 3.10+, Bash, and Git.
+For an older clone, use this library's current script with --root pointing to that clone.
+The initializer refuses to initialize the source instructions repository itself.
+The source repository's own README, contribution policy, conduct policy, security policy, and LICENSE remain unchanged.
+
+The interview collects repository identity, copyright ownership, software licensing, optional content licensing, and component choices.
+Unknown contribution rules, reporting contacts, support targets, and commands remain visible TODOs.
+The existing product interview still selects targets and languages.
+Source paths for enabled components must exist before the configuration can pass validation.
+Initialization does not create application source directories or invent build commands.
+
+### Generated project documents
+
+- .github/README.md, which GitHub uses as the repository landing page.
+- .github/CONTRIBUTING.md, .github/CODE_OF_CONDUCT.md, and .github/SECURITY.md.
+- LICENSE, plus full selected terms under LICENSES/.
+- THIRD_PARTY_NOTICES.md and instructions/LICENSE for copied instruction-library attribution.
+- The configured project-facts and additional-instructions files, normally under instructions/project/.
+- instructions/project/INITIALIZATION.json, which records completed initialization and licensing choices.
+
+The existing root agent files retain their roles. Their managed scope is regenerated from the selected profile.
+Custom context paths remain authoritative. Generated links follow those paths.
+Generated policy scaffolding retains its file-specific template attribution.
+New application material uses the selected project terms, subject to existing third-party notices.
+
+### Licensing choices
+
+Select MIT, Apache 2.0, LGPL 2.1 or 3.0, GPL 2.0 or 3.0, AGPL 3.0, Elastic 2.0, or SSPL 1.0.
+GNU choices require an explicit version-only or version-or-later decision.
+Select several software licenses to offer alternatives joined by OR.
+A product name such as Elasticsearch does not identify one universal license arrangement.
+Select the exact alternatives that the project owner intends to offer.
+
+Creative Commons offers a separate content choice, including the six 4.0 variants and CC0 1.0.
+Record the paths covered by that content choice. Existing third-party and explicit file notices still take precedence.
+Undecided or custom commercial terms remain pending until the owner supplies the actual terms.
+The initializer never fabricates commercial terms or silently relicenses existing project work.
+Read [the template and license catalog](templates/repository/TEMPLATES.md) for sources and exact behavior.
+
+### Preview and repeatable input
+
+Use --project-answers for identity and license choices. Use --answers for the existing component-selection JSON contract.
+For example, project.json can contain:
+
+```json
+{
+    "name": "utilextensions",
+    "owner": "Example Owner",
+    "year": "2026",
+    "repository_url": "https://github.com/example/utilextensions",
+    "description": "Writing tools and browser extensions",
+    "license": {
+        "software": ["MIT", "Apache-2.0"],
+        "content": "CC-BY-SA-4.0",
+        "content_paths": ["docs", "assets/art"]
+    }
+}
+```
+
+These values illustrate the input shape. They are not selections for the user's project.
+Use an empty software list for an undecided license. An optional custom_terms string describes the pending decision.
+Omit content and content_paths when no separate content license applies.
+
+```bash
+./scripts/configure-instructions.sh --root /path/to/new-repository \
+    --initialize-project --project-answers project.json --answers profile.json --dry-run
+```
+
+The dry run lists every planned creation, replacement, backup, and removal. It shows policy, license, profile, and root-routing diffs.
+A dry run never writes files or starts an interview. Initialization dry runs require --project-answers.
+Replace --dry-run with --apply to apply the reviewed inputs without an interactive confirmation.
+Without either option, the script requests confirmation after the preview. Cancellation writes nothing.
+
+### Preservation and inherited history
+
+Initialization recognizes inherited files by registered whole-file hashes, including supported earlier template versions.
+It backs up exact inherited originals under instructions/project/template-backup/ before replacing or removing them.
+It resets an unchanged inherited profile and generates new project facts and local-instruction placeholders.
+It removes unchanged source-library conversation, changelog, maintenance, and knowledge records from their active locations.
+Customized records and documents remain untouched and are reported for manual review.
+The backup is excluded from active project instructions. Retain it until you verify the initialization result.
+
+Unknown license files, conflicting backups, and symlink destinations stop the operation before any writes.
+Validation completes before application. Each file replacement is atomic, but the entire multi-file operation is not a transaction.
+If a filesystem failure interrupts application, inspect the backups and partial changes before retrying.
+The completion record is written last.
+
+Repeat initialization preserves project documents and rejects changed identity or license answers.
+Review later identity or licensing changes separately. Ordinary profile edits never replace project documents.
+Shared instruction updates remain a separate reviewed operation. Initialization preserves installed shared guides.

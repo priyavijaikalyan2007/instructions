@@ -48,3 +48,7 @@ The Java SaaS profile under instructions/maintenance/examples/ is a fictional in
 
 The interview supports eight product categories, including Google Workspace and browser extensions.
 Microsoft Office extension profiles are deferred. No extension host application exists in this repository.
+
+Project initialization: --initialize-project with optional --project-answers JSON.
+License texts: pinned SPDX license-list-data v3.29.0, installed without runtime network access.
+Source baseline check: python3 scripts/update_template_baseline.py.

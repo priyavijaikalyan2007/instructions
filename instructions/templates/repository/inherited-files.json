@@ -1,0 +1,99 @@
+{
+  ".github/CODE_OF_CONDUCT.md": [
+    "38be995706c143ca3b6b00621f66b52356b05f1d0f03cc08915edbe778447e29"
+  ],
+  ".github/CONTRIBUTING.md": [
+    "17d38676bea611910457cd589f8bedb4b59d239b3adebb679c113709959e9020"
+  ],
+  ".github/README.md": [
+    "92c462f386b26088ae26733991c079e5962b6e50125970421dd04619bc8acda9"
+  ],
+  ".github/SECURITY.md": [
+    "093366e8c71f268d8b91ed7c0d8288a1beb4cc57a97b0f8b986830d8c6363b92"
+  ],
+  "LICENSE": [
+    "12df52735802c33e97b57f9c59e976a700f79bf854bde40136a2c17511e61601"
+  ],
+  "agentknowledge/concepts.yaml": [
+    "0890f7435e208a49a76e5ccd2814a3a8c7529edced1b036d96eff97349c24ff9",
+    "1ba634f1f289cea51e28c11979c3e37dde64356bf58ca770d65d9a0a1864ff13"
+  ],
+  "agentknowledge/decisions.yaml": [
+    "0cb47b96bc886c9e31108106f75c6ae961450e91cc344ff6e98a9c492f9af056",
+    "a31080bee93c4d032c80fc7a44543555e192c6e469e52461fb4a3dbfdbbe6ded"
+  ],
+  "agentknowledge/history.jsonl": [
+    "084ca7c0ad008c9c84a13d7d7d3e302ed555424a2c5824ff0d79cfc59ffc5dd6",
+    "a15fb7ae74067d29ba5fec92779c4da7c0e255ccf8430f294aca8ffb7e680c66",
+    "d697eca6a39542e4418278af2fce7f24e61dcb0e86b5777123df86299b4390b0"
+  ],
+  "agentknowledge/lcv_constraints.yaml": [
+    "92aef6dc2b2bb8f3665fcbf147fc889d84dbac5184d255da2e21b2fd7fef1b01"
+  ],
+  "instructions/maintenance/examples/java-saas/instructions/project/ADDITIONAL.md": [
+    "5924b3e04f50040805ffd7bb55dab863e35a30a9b0b4f222096a14b5bb5d92e9"
+  ],
+  "instructions/maintenance/examples/java-saas/instructions/project/PROJECT.md": [
+    "ac3d5b0aa9274c86f972e8fc712d31c48dab54dd9c3b8b6f27e8e4412c8bf9c9"
+  ],
+  "instructions/maintenance/examples/java-saas/instructions/project/PROJECT_PROFILE.md": [
+    "a0997f3d2ad764a772f6857c89f0dce2e096f6d873c76fb8ac434cc80f9ddb9c"
+  ],
+  "instructions/maintenance/extension-profiles-review.md": [
+    "fedd46905a740cccf0bac6bffcd121583e0129d99e5288cd3c3f1ba0eda5f40a"
+  ],
+  "instructions/maintenance/instructions-plan.md": [
+    "04c7037ad5b713d50bc536d1516caa501b370fac36b1bc327c0d50c2bcaa87db"
+  ],
+  "instructions/maintenance/instructions-review.md": [
+    "aea643ec76e01d16a5183b95a7de2982f22d886e15396e34505fd5900cdf9b2e"
+  ],
+  "instructions/maintenance/instructions-source-inventory.md": [
+    "3f0c5dea6ba5ce752ed5ce248177ef8c3e45c9e9eb0b46a05c7e6693e81b6a20"
+  ],
+  "instructions/maintenance/instructions.status.md": [
+    "14face1724a3c40dcbb5185c4b4a36a58f7100f8b3897630b3c31e8cebab43b1",
+    "5dcbd4d581b9af6254551afdff38abb55df84dff255e818728349b4f054e6250"
+  ],
+  "instructions/maintenance/native-apple-instruction-audit.md": [
+    "79beaab6b5755301eb496a33e996ae0448d8595a4d875d55350508e29679a8d4"
+  ],
+  "instructions/maintenance/profile-selector-validation.md": [
+    "ff3df97760e09d0e75af8847478c93fe801a37a3e3a371bc6489b5cd56c76be0"
+  ],
+  "instructions/maintenance/project-initialization-review.md": [
+    "1fa28700a2ddf822aecc15c3198e25836be9b4eee77982d742b4c63b95a51028",
+    "63c6c1afbb7ab2180a3bd559b6f08218144442645b781c42056f06776fa5a866",
+    "a8a444c8d21dd6e3c76236975f45fdcc0c41db36b09175575cc58bece945059d",
+    "ac78384fe1f3490c6c8d87535f9e1a3aa123dd2a9b88dc9c635422785abd92f4"
+  ],
+  "instructions/maintenance/project-profile-validation.md": [
+    "66db1ccc228f131ef11100331cad3c57b46399448ccb5dda1c6c268842edef66"
+  ],
+  "instructions/maintenance/scoped-guides-security-review.md": [
+    "73c19b2f14de0ff869fa4021ad3d202e93a19eb0e2ff7aef594abd4affe69c95"
+  ],
+  "instructions/maintenance/ui-ux-and-java-saas-audit.md": [
+    "210d69362b347c5c42ae9a5a3c69b5209e3cea2def2a8cbbff17f9e858d14cd3"
+  ],
+  "instructions/project/ADDITIONAL.md": [
+    "62fd02680b920e0fbc80a34f090f992047d3d0a8f6ca7825f945e469feda4c2c"
+  ],
+  "instructions/project/CHANGELOG.md": [
+    "54b228c09362073d7a5418f3fa61ededca32474af571bc1e199ac24ce4007d62",
+    "9099ce19375424fb14b53bd53e15bc9eefa7be18983cc04ffb0888ba6fd244db"
+  ],
+  "instructions/project/CONVERSATION.md": [
+    "2436df79242341bc3846ab571756a6db3c662ba5adda1227464e938c4a1132b6",
+    "3df8340420c493874199d047cb9aa8f4d686943a1ce480d4c7072cf8571a2c94",
+    "a0a3e759672f989d343a463f26addee0bd6224347cb940efe9d5ec1e29341a20",
+    "d5e61df491911ffe6a2b610283f0ec73bd6cf479de9d235d204ab4ca22d57595"
+  ],
+  "instructions/project/PROJECT.md": [
+    "97c30d2449738f2240b7128f44cc52c93c2778e5f0887e53dab47ca9d865f49b",
+    "ec03bc12f0b9240c12157f5315160c27640874362a01afedf6f1d74e13fddaaf"
+  ],
+  "instructions/project/PROJECT_PROFILE.md": [
+    "c07cfa6c0b7279bb15498ffd5fd1e35e17e2e61273f44b29caf80783ba258931"
+  ]
+}

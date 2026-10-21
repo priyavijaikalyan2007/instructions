@@ -16,3 +16,13 @@
   definition: "Validates Markdown scope, derives root guide links, and installs nested guides while preserving project-owned content."
   anchor_file: "scripts/configure_instructions.py"
   related: ["ProfileInterview"]
+
+- name: "ProjectInitialization"
+  definition: "Initializes copied repository identity and policies using known inherited hashes and preserved backups."
+  anchor_file: "scripts/project_initialization.py"
+  related: ["ProfileConfiguration", "LicenseSelection"]
+
+- name: "LicenseSelection"
+  definition: "Collects exact software and content license choices and installs verified bundled legal texts."
+  anchor_file: "scripts/license_selection.py"
+  related: ["ProjectInitialization"]
