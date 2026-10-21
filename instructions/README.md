@@ -117,6 +117,36 @@ These instructions are battle tested in my private side projects. I have found t
 Shared workflow belongs in instructions/REPO.md, storage in instructions/PERSISTENCE.md, and interaction behavior in instructions/UI_UX.md.
 
 
+## Recommended product source layout
+
+For new components, use src/<type>/<component-name>/ even when only one component exists.
+The [shared folder convention](REPO.md#folder-and-file-structure) defines root responsibilities, database ownership, tests, and build output.
+Each target guide provides its matching layout. Existing projects retain their configured paths.
+
+```text
+src/
+    service/<service-name>/
+        backend/
+        frontend/
+        static/
+        database/
+    website/<website-name>/
+    app/<app-name>/
+    sdk/<api-name>/
+    extension/<extension-name>/
+        google-workspace/
+        browser/
+    tool/<tool-name>/
+    library/<library-name>/
+test/                              Tests spanning components
+```
+
+Create only currently needed directories. Unselected profiles reserve future locations by convention.
+Database scripts normally belong to their owning service. Root test/ is singular, while component test folders follow their toolchain.
+The interview suggests named example paths when no concrete component path is configured.
+It preserves existing values and still requires explicit confirmation for absent planned paths.
+These defaults do not move existing source or create application directories.
+
 ## Scenario reading trees
 
 Use the common baseline with the tree for the work in scope.

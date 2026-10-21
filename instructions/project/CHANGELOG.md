@@ -99,3 +99,9 @@ Created: 2026
 - Fixed: Replace generic Workspace questions with host, model, runtime, account, and distribution choices.
 - Added: Build, asset, host-test, and release guidance for the selected Workspace model.
 - Fixed: Allow explicit planned source paths and recognize JavaScript/TypeScript language input.
+
+## 21 October 2026: recommended component layouts
+
+- Added: Named src/<type>/<component-name>/ defaults in each profile guide, with root test/ for cross-component tests.
+- Added: Service-owned database source, toolchain exceptions, static-source boundaries, and additive setup conventions.
+- Changed: New-profile interviews suggest conventional paths while preserving configured paths and planned-source confirmation.

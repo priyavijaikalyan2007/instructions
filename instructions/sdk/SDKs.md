@@ -14,7 +14,7 @@ Created: 2026
 ## Target scope
 
 SDK work, including multi-language clients generated from an OpenAPI endpoint. This index links existing API-contract and language material.
-Existing guidance is limited to those linked contracts and conventions.
+Use the source layout below with the linked API contracts and language conventions.
 
 ## Topic references
 
@@ -33,6 +33,31 @@ Existing guidance is limited to those linked contracts and conventions.
 | C# conventions | [CSHARP.md](../csharp/CSHARP.md) |
 | Go conventions | [GO.md](../go/GO.md) |
 | Python conventions | [PYTHON.md](../python/PYTHON.md) |
+
+## Recommended source layout
+
+Use `src/sdk/<api-name>/` for clients of one API contract, including clients introduced after the service ships.
+Apply the [shared folder convention](../REPO.md#folder-and-file-structure). Preserve established generator paths in existing repositories.
+
+```text
+src/sdk/<api-name>/
+    generator/             Pinned generator version, options, templates, and generation scripts
+    swift/                 Swift package and its component tests
+    typescript/            TypeScript package and its component tests
+    java/                  Java package and its component tests
+    csharp/                C# package and its component tests
+    go/                    Go module and its component tests
+    python/                Python package and its component tests
+```
+
+Create only selected language outputs. Preserve each package's required internal source, resource, and test layout.
+Keep handwritten code distinguishable from generated code within each package.
+Record whether generated files are tracked or recreated by the build. Never replace their generation inputs with manual output edits.
+Use one authoritative API specification, either source or verified service-generated output.
+Do not maintain a separate handwritten copy of that contract per SDK language.
+A release snapshot can be retained when its provenance and update process are explicit.
+Keep published integrator documentation under docs/ and tests spanning the service and SDKs under root test/.
+Each SDK can ship independently without moving its source directory.
 
 ## Generated native clients
 

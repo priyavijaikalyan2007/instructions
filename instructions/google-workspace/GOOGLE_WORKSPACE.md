@@ -48,6 +48,33 @@ Host-provided cards and controls do not require a browser component library or a
 Use HTML-service controls for supported custom editor UI. Preserve the host's sandbox and asynchronous callback model.
 See [Google dialogs and sidebars](https://developers.google.com/apps-script/guides/dialogs).
 
+## Recommended source layout
+
+Use `src/extension/<extension-name>/google-workspace/` for a new Workspace extension family.
+Apply the [shared folder convention](../REPO.md#folder-and-file-structure). Preserve existing configured source paths.
+
+```text
+src/extension/<extension-name>/google-workspace/
+    shared/                Pure processing code shared by this extension's host adapters
+    docs/                  Google Docs host source and manifest, when selected
+    gmail/                 Gmail host source and manifest, when selected
+    sheets/                Google Sheets host source and manifest, when selected
+    slides/                Google Slides host source and manifest, when selected
+    assets/                Authored runtime images and Marketplace listing material
+    test/                  Extension component tests, subject to the configured toolchain
+```
+
+Here docs/ names the Google Docs host. User documentation belongs in repository-root `docs/<extension-name>/.`
+Use per-host projects when the add-on model requires them. One multi-host Workspace deployment can instead share its configured manifest.
+Do not duplicate manifests solely to fill this example tree.
+Keep build inputs, clasp configuration, and generation scripts with their actual deployment project.
+Keep generated upload files in ignored output directories.
+If the extension owns an HTTP service, place that server implementation under `src/service/<service-name>/backend/.`
+The HTTP-backed extension's profile scope must cover both its extension configuration and its service source.
+Separate profile components can express different languages or ownership boundaries.
+Create host adapters only for selected current hosts. Keep future host directories absent until their work enters scope.
+Use `playbooks/<extension-name>/` for installation and publication procedures and root test/ for cross-component workflows.
+
 ## Runtime and structure
 
 Preserve the existing layout. Keep host adapters thin and separate text-processing logic from Google service calls.

@@ -730,3 +730,35 @@ Fixed the remaining conditional build advice and completed the full verification
 All 96 tests pass, including the complete copied-repository Docs setup.
 Profile, dry-run, Markdown link, preservation, syntax, and whitespace checks pass.
 The correction is committed locally. No push or merge was requested for this correction.
+
+## 21 October 2026: additive source and test directory conventions
+
+### Requests
+
+> Great. Now, let's work on "recommended" folder structures. In my existing repositories I made the mistake of not setting things up well. So I want to fix that going forward. First, instructions already live in instructions/, specs in specs/, bug reports in bugreports/, playbooks in playbooks/, user facing docuemntation in docs/ etc. However, I want to make sure source code is in src/<type>. Example, if a repo has a native SaaS, with a native client and a web frontend along with SDKs, then we would want something like src/service/, src/service/static/, src/service/backend/ and src/service/frontend/, website at src/website/, apps at src/app/ and so on. Even if those options are not selected, adhering to this structgure enables additive enhancement over time. Brainstorm this with me and propose a folder structure setup that makes sense.
+
+The proposed convention used src/<type>/<component-name>/, even for a single component.
+The proposal kept toolchain-specific project structures inside that named component and preserved established layouts.
+It separated static source from compiled output and kept optional components absent until needed.
+
+> Thats actually quite good. I would call the root tests/ folder test/ simlar to src/. I agree on database ; perhaps that should be in src/service/database or src/database/ ? I agree with the rest and then include that in the per "profile" documentation about how things are setup as instructions. That way, once setup, the agents know where to place things by default.
+
+### Outcome
+
+Adopted root test/ for new cross-component tests and src/<type>/<component-name>/ for new product components.
+The default database location is src/service/<service-name>/database/, beside backend/, frontend/, and static/.
+An independently managed database can use src/database/<database-name>/ with explicit ownership.
+ORM-required migration classes and snapshots remain in their backend project without duplicating the migration sequence.
+Native and tool persistence stays with the app or tool.
+
+REPO.md owns the common convention. Each target guide now documents its matching component layout.
+The profile and project-facts templates link or record the relevant locations and exceptions.
+The interview suggests named example paths only when no concrete source path is configured.
+Users can replace example names and still must approve planned paths explicitly.
+No application directories were created, and existing repository source paths were not moved.
+
+All 101 tests pass, including accepted defaults across SaaS, native clients, SDKs, websites, tools, and extensions.
+The source profile check and dry run pass. No new Markdown link defects were found.
+Five existing layout-example groups changed intentionally. Other example content remains preserved.
+Existing CP1252 frontend content remains byte-identical around the inserted layout section.
+Commit locally on docs/recommended-layouts. No push or merge was requested.

@@ -45,20 +45,38 @@ Source assets, compiled browser bundles, component-library output, static hostin
 
 For component libraries, use the declared package scripts.
 
+## Static source ownership
+
+Apply the [shared folder convention](../REPO.md#source-assets-and-generated-output).
+Use `src/service/<service-name>/static/` or `src/website/<website-name>/static/` for source copied without compilation.
+Keep assets imported by a frontend build with that frontend's source.
+Do not put generated JavaScript or CSS in editable static/ directories.
+A runtime's wwwroot/, public/, or equivalent directory can receive assembled output from the build.
+Record its input mapping and whether the directory contains authored source, generated output, or clearly separated portions.
+Preserve established mappings in existing projects.
+Source ownership does not select CDN delivery, container packaging, or an independent website.
+
 ## component-library layout
 
+For a new reusable library, use `src/library/<library-name>/.`
+The following paths are relative to that library's project root.
+
 ```text
-components/<name>/     Component TypeScript, styles, tests, and usage documentation
-scss/                  Theme variables, shared styles, and component imports
+components/<name>/     Component source, styles, and component-specific fixtures
+scss/                  Shared variables and stylesheet source
 assets/                Source icons, fonts, and other licensed assets
-demo/                  Discoverable component examples and integration scenarios
-docs/                  Consumer contracts, API references, and integration guides
-scripts/               Build, bundle, validation, and publication tools
-tests/                 Browser, distribution, and cross-component tests
-dist/                  Generated bundles, assets, demos, and documentation
+demo/                  Editable examples and integration scenarios
+test/                  Library component and distribution tests, subject to toolchain conventions
+scripts/               Library-specific build, bundle, and validation automation
 ```
 
-Keep source and generated documents distinguishable. Register new demos and guides in the library's discovery and publication pipeline.
+Keep package manifests and lockfiles with the library.
+Keep consumer documentation under root `docs/<library-name>/` and include required package documentation during the build.
+Use root test/ for workflows that span the library and consuming applications.
+Keep generated bundles, published demos, and generated API documentation in ignored output locations.
+Preserve tool-required source and tests/ directories. Do not rename them merely to match the repository-wide test/ spelling.
+Register new demos and guides in the library's discovery and publication pipeline.
+Create a reusable library only when its public contract and ownership justify one. Avoid a general miscellaneous shared/ directory.
 
 ## static build and hosting example
 

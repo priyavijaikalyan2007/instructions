@@ -40,6 +40,10 @@ For absent literal paths in a new component, add `- Source state: planned` expli
 Omitting Source state requires existing paths. Planned scope creates no source files.
 For Workspace components, see [the structured setup fields](REPO.md#product-specific-workspace-setup).
 Replace angle-bracket values. Use `none` when a field does not apply.
+For new components, use [the default source locations](REPO.md#named-component-convention).
+Example names are replaceable. Existing component paths remain authoritative.
+Include service-owned database paths and directly copied static source in the components that own them.
+Keep Source state: planned explicit for absent paths. Do not enable future components merely to reserve directories.
 
 ### backend
 

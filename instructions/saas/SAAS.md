@@ -60,29 +60,42 @@ The .NET layout and packaging examples apply only to that declared backend model
 
 ## combined layout
 
-This is a .NET/browser layout example. Use the configured component paths from instructions/project/PROJECT.md.
+For new SaaS components, use `src/service/<service-name>/` under the [shared folder convention](../REPO.md#folder-and-file-structure).
+Keep backend, browser frontend, copied static source, and service-owned database artifacts distinguishable.
+Preserve established paths in existing projects until a separate migration is approved.
 
 ```text
-api/                   .NET backend, domain services, HTTP boundaries, and persistence
-frontend/              Browser HTML, CSS, and source assets
-typescript/            TypeScript source compiled into the browser output
-unittests/             Backend unit tests
-integrationtests/      Real service and database integration tests
-playwrighttests/       Browser workflows and accessibility checks
-sql/migrations/        Ordered, executable database migrations
-specs/                 Product requirements, designs, and progress
-playbooks/             Operator and development procedures
-docs/                  User and integrator documentation
+src/service/<service-name>/
+    backend/               APIs, business logic, entities, ORM mappings, and backend projects
+    frontend/              Editable browser UI, imported assets, and frontend build configuration
+    static/                Authored files copied directly without compilation
+    database/              Service-owned database scripts, when applicable
+        migrations/        Ordered migrations for the configured workflow
+        schema/            Authoritative schema source, when the workflow uses it
+        seeds/             Nonprivate seed data, when needed
+src/app/<app-name>/         Optional native clients, with their own target projects
+src/sdk/<api-name>/         Generated client packages and generator configuration
+test/<service-name>/        Tests spanning backend, browser, SDKs, or native clients
 ```
+
+Create only the parts selected for current work. A backend-only service needs no browser or static source directory.
+Keep component-level tests with their backend, frontend, or native project. Root test/ contains cross-component workflows.
+Native clients and SDKs retain their locations even when they first appear after the web application ships.
+Keep user documentation in docs/, requirements in specs/, and operational procedures in playbooks/.
+
+Combined source ownership does not require combined deployment.
+The backend and frontend can initially ship together and later ship separately without moving their editable source.
+Keep deployment definitions in deploy/ and generated delivery output in ignored build/ or dist/ locations.
+See [database ownership](../REPO.md#service-database-ownership) for ORM-required exceptions.
 
 ## frontend source layout
 
-These paths belong to the enterprise browser example. Use the configured source/output mapping in other projects.
-
-- Use TypeScript files in the ./typescript/ folder instead of inline Javascript.
-  - App specific TypeScript can be kept as separate modules.
-- Use CSS files in the frontend/ folder instead of inline CSS.
-  - App specific CSS can be kept as separate files.
+For new services, keep TypeScript, HTML templates, styles, imported assets, and their build configuration under frontend/.
+Choose internal folders that match the configured framework. Keep source languages together with the feature they implement where appropriate.
+Use the sibling static/ for direct-copy source files. Keep compiled bundles in generated output.
+Record source and output mappings in project facts and build configuration.
+Existing enterprise-shell projects can retain their configured typescript/ and frontend/ paths.
+Those legacy paths do not set the default for a new project.
 
 ## cross-layer data mapping
 

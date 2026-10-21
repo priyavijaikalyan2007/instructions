@@ -28,6 +28,28 @@ Static websites without an application backend. Browser source and static delive
 | Static assets and hosting | [STATIC_ASSETS.md](../static-assets/STATIC_ASSETS.md) |
 | Existing documentation publication checks | [DOCUMENTATION.md](../DOCUMENTATION.md#verified-facts-and-published-contracts) |
 
+## Recommended source layout
+
+For a new website, use `src/website/<website-name>/`, including a website that accompanies a native app or SaaS.
+Apply the [shared folder convention](../REPO.md#folder-and-file-structure). Preserve existing configured source paths.
+
+```text
+src/website/<website-name>/
+    content/               Editable site content, when the site uses a content pipeline
+    frontend/              Templates, scripts, styles, and assets processed by the build
+    static/                Authored files copied directly without compilation
+    test/                  Website component tests, subject to the toolchain's required spelling
+    scripts/               Website-specific automation
+```
+
+Keep the site's manifests and framework configuration at its project root.
+Use the framework's internal source layout when it differs from this example. Record that mapping in project facts.
+Generate publishable output into ignored build or distribution directories.
+Keep canonical user-documentation source under root docs/ when the website publishes that documentation.
+Copy or transform that source during the website build instead of maintaining a second editable copy.
+Use `deploy/<website-name>/` for repository-wide hosting configuration.
+A support or documentation website remains distinct from the application's browser UI.
+
 ## website and browser guidance
 
 - A static website may use HTML and CSS with no backend or JavaScript.

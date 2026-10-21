@@ -124,6 +124,8 @@ The target selection above replaces a single repository-wide project label.
 Use the consuming repository's README, source, manifests, and build scripts to select its configured model.
 The selected target guide's stack and layout examples remain starting points for that model.
 They do not authorize moving files or changing architecture.
+For new components, follow [the named source convention](REPO.md#folder-and-file-structure) and the selected target guide.
+Configured existing paths remain authoritative. Root test/ contains cross-component tests. Component test layouts follow their toolchain.
 
 Prefer Allman braces throughout. Keep four-space indentation, no tabs, one type per file, and lines at most 120 characters.
 Follow the syntax limits documented in `instructions/CODING_STYLE.md` rather than emitting invalid code.

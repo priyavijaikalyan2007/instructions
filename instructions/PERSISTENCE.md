@@ -29,11 +29,32 @@ User-visible save and recovery behavior belongs to [UI_UX.md](UI_UX.md#save-and-
 
 | Changed behavior | Sections |
 | --- | --- |
+| Database source, migration ownership, and service boundaries | [Database source ownership](#database-source-ownership) |
 | Related writes, integrity, and persistence checks | [Related writes and transactions](#related-writes-and-transactions) |
 | PostgreSQL/EF Core manual SQL workflow | [Configured example](#postgresql-and-ef-core-manual-sql-example) |
 | Async side effects or precomputed data | [Transactional outbox](#transactional-outbox), [materialized projections](#materialized-projections) |
 | EF Core query translation or computed properties | [Query convention](#entity-framework-query-convention), [computed properties](#entity-framework-computed-properties) |
 | Context and connection ownership | [Operation lifetimes](#operation-and-connection-lifetimes) |
+
+## Database source ownership
+
+Apply the [shared database ownership convention](REPO.md#service-database-ownership) when a new service owns database scripts.
+Use `src/service/<service-name>/database/` rather than a repository-wide directory shared implicitly by unrelated services.
+Keep only the migration, schema, and seed inputs required by the configured workflow.
+Do not maintain an editable schema dump alongside migrations unless the build verifies their relationship.
+Keep backend entities, ORM mappings, and repositories under backend/.
+Tool-required migration classes and snapshots can remain in their backend project.
+Choose one authoritative migration sequence per schema and record its owner and execution command in project facts.
+
+Use `src/database/<database-name>/` only for a deliberately independent database component with an explicit migration owner.
+A shared database server does not require shared schema ownership or a shared source directory.
+Keep infrastructure definitions in deploy/ and operating procedures in playbooks/.
+Keep database files, credentials, backups, and production dumps outside tracked source.
+Native and tool storage remains with its app or tool. Do not introduce a service database layout for local persistence.
+
+When new database scripts enter scope, add their source path to the owning backend component's profile.
+If SQL files change, select SQL guidance alongside persistence guidance.
+Preserve an existing migration path until a separately approved migration updates scripts, deployment inputs, and tests.
 
 ## Related writes and transactions
 
@@ -59,7 +80,8 @@ Always prefer writing plain SQL scripts for database migrations instead of using
 - Works reliably regardless of ORM tool versions
 
 ### Migration Guidelines
-- Place SQL migration scripts in `/sql/migrations/` with naming format: `YYYYMMDD_description.sql`
+- For a new service, place SQL scripts in `src/service/<service-name>/database/migrations/`.
+- Preserve an existing configured migration path. Use naming format: `YYYYMMDD_description.sql`.
 - Use `CREATE TABLE IF NOT EXISTS` and `CREATE INDEX IF NOT EXISTS` for idempotency
 - Include proper foreign key constraints with `ON DELETE CASCADE` or `ON DELETE SET NULL` as appropriate
 - Add timestamps (`created_at`, `updated_at`) to all tables

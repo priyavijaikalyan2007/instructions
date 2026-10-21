@@ -68,20 +68,47 @@ Do not assume that a development entry point exercises the packaged production a
 - A general Java web application uses its declared web framework. Keycloak is an identity-service choice, not a universal Java backend.
 - Use TypeScript for non-trivial browser logic. Preserve the host's template, security-header, and asset-delivery contracts.
 
-## Java and identity layout
+## Service source layout
+
+Use `src/service/<service-name>/backend/` for a new backend, including an API-only microservice.
+Apply the [shared folder convention](../REPO.md#folder-and-file-structure) and preserve existing configured layouts.
+Keep backend project manifests, dependencies, component tests, and framework resources with the backend.
+Use sibling database/ for service-owned database scripts, not for entities or ORM mappings.
+Add that database path to the backend component's profile scope when those scripts enter the project.
+Do not create browser or database components merely because the source type is service.
 
 ```text
-src/providers/         Java host extensions, with their own Maven/Gradle source and test roots
-src/themes/            Host-rendered templates, styles, and browser assets
-src/main/java/         Application Java code when this is a standard Java backend
-src/main/resources/    Application configuration and packaged resources
-src/test/java/         Unit and integration tests under the configured runner
-sql/                   Application-owned database scripts, when applicable
-Dockerfile             Container build, when the deployment uses containers
-target/ or build/      Generated output, never the source to edit
+src/service/<service-name>/
+    backend/               One or more configured backend projects or packages
+    database/              Owned schema scripts and migrations, when applicable
+    frontend/              Browser source, only when selected
+    static/                Direct-copy static source, only when needed
+deploy/<service-name>/     Runtime, container, and infrastructure definitions
+test/<service-name>/       Tests spanning this backend and other components
 ```
 
-The identity extension roots and standard Java roots are alternatives, not duplicate homes for the same code.
+Keep domain models and processing code in their backend projects.
+Tool-required migrations and snapshots stay in that backend project. Keep one migration authority for each schema.
+Store operator procedures in playbooks/ and public API documentation in docs/.
+
+## Java and identity layout
+
+The following paths are relative to `src/service/<service-name>/backend/` for a new Java backend.
+
+```text
+pom.xml or build.gradle    Project manifest, with its configured wrapper and dependency policy
+src/main/java/            Application source
+src/main/resources/       Configuration and packaged resources
+src/test/java/            Component unit and integration tests
+target/ or build/          Ignored generated output
+```
+
+A host-extension project can instead use `providers/<provider-name>/` with its own standard Java project roots.
+Place source for host-packaged themes in a named location such as `backend/themes/<theme-name>/.`
+Keep identity-host themes distinct from an independently served browser frontend.
+The provider and application layouts are alternatives, not duplicate homes for the same implementation.
+Repository-wide deployment definitions belong in `deploy/<service-name>/.`
+Keep build inputs such as a backend-specific Dockerfile with the component when its build context requires that location.
 
 ## Backend library selection
 
