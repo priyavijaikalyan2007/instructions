@@ -19,6 +19,10 @@ Created: 2026
 | Purpose | $description |
 | Build and test commands | TODO: Record verified commands |
 | Architecture | TODO: Describe implemented components |
+| Source locations | Recorded in the component profile linked below |
+| Database migration ownership | TODO: Record the owning service, source paths, and migration command, or none |
+| Component and cross-component tests | TODO: Record actual test paths and commands |
+| Source and generated output mapping | TODO: Record build inputs, generated output paths, and artifact policy |
 | Deployment | TODO: Record actual environments and release process |
 
 Component selections are in [PROJECT_PROFILE.md](<$profile_link>).

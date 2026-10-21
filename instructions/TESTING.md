@@ -36,6 +36,19 @@ We follow a test-driven development model. While strict TDD is not always possib
 
 For exploratory work, spikes, or complex integrations where the interface is unclear, you may write implementation code first. However, you must write comprehensive tests before considering the work complete. Document why TDD was not followed in your commit message.
 
+## Test placement
+
+Apply the [shared folder convention](REPO.md#repository-roots).
+Use repository-root test/ for new workflows that span services, frontends, SDKs, native clients, extensions, or tools.
+Group those tests by component or workflow when needed. Keep their nonprivate fixtures beside them.
+Keep unit tests and component integration tests with their owning project.
+Retain language-required names such as Go *_test.go files, Rust tests/, Java src/test/java/, and Swift Tests/.
+A tool-required tests/ inside a component does not change the root test/ convention.
+Generic test paths in language examples are relative to their owning component unless explicitly identified as repository-root paths.
+Preserve existing root tests/ until an approved migration updates all commands and references.
+Store manual test procedures in playbooks/ and bug reproduction evidence in bugreports/.
+Keep product acceptance requirements in specs/ and user-facing instructions in docs/.
+
 ## Test Categories
 
 ### Unit Tests

@@ -26,6 +26,19 @@ Created: 2026
 | --- | --- | --- | --- |
 | `<component identifier>` | `<paths>` | `<configured versions>` | `<in-repository interfaces>` |
 
+## Configured path facts
+
+| Fact | Value |
+| --- | --- |
+| Service and database ownership | `<service names, database source paths, migration owner, or none>` |
+| Tool-required migration paths | `<backend project paths or none>` |
+| Component test locations | `<actual paths>` |
+| Cross-component test locations | `<root test/ paths or existing configured paths>` |
+| Editable static source | `<direct-copy source paths or none>` |
+| Frontend source and output mapping | `<configured input and generated output paths or none>` |
+| Generated artifact policy | `<ignored or tracked outputs and their generation commands>` |
+| Established layout exceptions | `<recorded paths and decision references or none>` |
+
 ## Build and environment facts
 
 | Component | Build command | Test command | Configuration |

@@ -39,6 +39,18 @@ Command-line tools and CLI plugins. Existing material covers the tool stack, mod
 
 ## tool layouts
 
+For a new tool or CLI plugin, use `src/tool/<tool-name>/`, even when the repository has one tool.
+Apply the [shared folder convention](../REPO.md#folder-and-file-structure). Preserve existing paths in established projects.
+The table below is relative to that tool's project root.
+Keep tool-specific manifests, lockfiles, tests, fixtures, and scripts with the tool.
+Root scripts/ orchestrates tools and other components. Root test/ contains workflows spanning components.
+
+For example, a Rust tool can use src/tool/importer/src/main.rs and src/tool/importer/tests/.
+A Go tool can use src/tool/importer/cmd/importer/main.go and src/tool/importer/internal/.
+Repeated src names reflect the repository convention and the language's package convention.
+Keep operator procedures in `playbooks/<tool-name>/` and user documentation in `docs/<tool-name>/.`
+Keep local persistence and file-format evolution with the tool rather than inventing a service database.
+
 | Purpose | Go | Rust | Python |
 | --- | --- | --- | --- |
 | Manifest | `go.mod`, `go.sum` | `Cargo.toml`, configured `Cargo.lock` policy | `pyproject.toml`, project lockfile |

@@ -52,3 +52,21 @@
     - scripts/configure_instructions.py
     - instructions/google-workspace/GOOGLE_WORKSPACE.md
     - instructions/REPO.md
+
+- id: ADR-004
+  title: Use named source components and explicit database ownership
+  date: 2026-10-21
+  status: Accepted
+  context: >-
+    The owner approved additive src/<type>/<component-name>/ conventions and requested singular root test/.
+    New components use stable named locations while existing layouts remain authoritative.
+    Service-owned database scripts belong beside the backend under that service. Tool-required migrations stay
+    with their backend project. Independently managed database components require explicit ownership.
+    The interview offers replaceable examples without moving source or creating application directories.
+  files:
+    - instructions/REPO.md
+    - instructions/PERSISTENCE.md
+    - instructions/TESTING.md
+    - instructions/PROJECT_PROFILE_TEMPLATE.md
+    - scripts/profile_interview.py
+    - instructions/maintenance/recommended-layouts-review.md

@@ -115,9 +115,102 @@ Use configured local credentials. Never copy example credentials into a deployed
 
 ## Folder and file structure
 
-Preserve the consuming repository's established layout. Use the selected target guide's examples when a new project needs a layout.
-Keep specifications in `specs/`, operator guides in `playbooks/`, and user/integrator documentation in `docs/` where those conventions apply.
-Keep one type per source file, including short structs. See `instructions/CODING_STYLE.md` for nested-type and extension exceptions.
+Use these defaults for new repositories and newly introduced components.
+Preserve configured layouts in existing components. Folder guidance alone does not authorize a migration.
+Record actual paths in the profile and project facts. Keep project-specific exceptions in the configured additional-instructions file.
+
+### Named component convention
+
+Place product source under `src/<type>/<component-name>/`, including a repository with only one component.
+Use stable, descriptive, lowercase names separated by hyphens.
+Use the same name when adding a component's tests, documentation, build output, and deployment configuration.
+Do not put a language name at the type level. Select the language within its component.
+Different component types can share a product name without sharing a build or deployment.
+
+| Component | Default source location | Target guide |
+| --- | --- | --- |
+| SaaS or backend service | `src/service/<service-name>/` | [SaaS](saas/SAAS.md#combined-layout), [backend](backend/BACKEND.md#service-source-layout) |
+| Native application family | `src/app/<app-name>/` | [Apps](apps/APPS.md#native-application-layout) |
+| Static website | `src/website/<website-name>/` | [Websites](website/WEBSITES.md#recommended-source-layout) |
+| Generated API clients | `src/sdk/<api-name>/` | [SDKs](sdk/SDKs.md#recommended-source-layout) |
+| CLI application or plugin | `src/tool/<tool-name>/` | [Tools](tools/TOOLS.md#tool-layouts) |
+| Workspace or browser extension | `src/extension/<extension-name>/<platform>/` | [Workspace](google-workspace/GOOGLE_WORKSPACE.md#recommended-source-layout), [browser](browser-extensions/BROWSER_EXTENSIONS.md#recommended-source-layout) |
+| Deliberately reusable library | `src/library/<library-name>/` | [Component libraries](static-assets/STATIC_ASSETS.md#component-library-layout) |
+
+Types describe component responsibility. They do not enable every language or instruction associated with that type.
+A microservice follows the service convention without a frontend or static directory.
+A native app follows the app convention whether it stands alone or consumes this repository's SaaS API.
+Keep browser frontend and static source beneath their owning service or website.
+
+### Repository roots
+
+```text
+instructions/                  Shared instructions and project-owned instruction configuration
+agentknowledge/                Code navigation, decisions, and task history
+specs/                         Product and repository requirements and designs
+bugreports/                    Reproductions and issue evidence
+playbooks/                     Development, operations, deployment, and recovery procedures
+docs/                          User, administrator, and integrator documentation
+src/                           Product source, resources, manifests, and component build inputs
+test/                          Automated tests spanning components and their nonprivate fixtures
+scripts/                       Repository-wide automation
+deploy/                        Deployment and infrastructure definitions
+build/                         Ignored intermediate output, grouped by component
+dist/                          Ignored distributable artifacts, grouped by component
+```
+
+Keep the four agent entry files at the root. Keep repository policies in their configured root or .github locations.
+Root workspace manifests, lockfiles, configuration files, and entry scripts can remain where their tools require them.
+A root script orchestrates components. Keep component-specific scripts with their component.
+Use `test/` for new repository-wide tests. Tool-required `tests/`, `Tests/`, and `src/test/` remain valid inside components.
+Preserve existing root `tests/` until a separate migration is approved.
+Use component names beneath docs/, specs/, bugreports/, playbooks/, test/, and deploy/ when several components need separate records.
+Keep user documentation in docs/. Copy it into generated packages or published websites when needed.
+Machine-readable API contracts are source or verified generated output. Product specifications remain in specs/.
+
+### Additive setup
+
+Create only selected components and the directories that their current work needs.
+An unused conventional location is reserved by the rule. It does not require an empty directory or placeholder source file.
+When adding a component, use its named location and update the profile before dependent work.
+When creating a new folder within a component, follow its owning target and language guides.
+Keep package manifests, component tests, resources, and build configuration with that component.
+
+Language-layout examples are relative to the owning project or package unless they explicitly name the repository root.
+A Rust tool can therefore use `src/tool/importer/src/main.rs`.
+A Swift package can use `src/library/document-core/Sources/<Target>/` and `Tests/<Target>Tests/`.
+Keep Java source and tests under its project-relative src/main/java/ and src/test/java/ conventions.
+Do not rename tool-required folders to enforce a different spelling.
+Keep one type per source file, including short structs. See [CODING_STYLE.md](CODING_STYLE.md) for exceptions.
+
+### Service database ownership
+
+Keep a service's editable database scripts under `src/service/<service-name>/database/`.
+Use migrations/, schema/, and seeds/ only when the configured migration workflow needs them.
+Keep entities, ORM mappings, repositories, and business logic under backend/.
+If an ORM requires migration classes or snapshots inside its backend project, retain that tool-required location.
+Do not maintain duplicate migrations in backend/ and database/ for the same schema change.
+Record migration ownership, paths, commands, and ordering in project facts.
+
+Reserve `src/database/<database-name>/` for a database component with an independent build or migration lifecycle and an explicit owner.
+Do not introduce it merely because several services use one database server.
+Keep database infrastructure configuration in deploy/. Keep database files, backups, credentials, and production dumps outside tracked source.
+Native app and tool persistence remains with its owning app or tool.
+See [PERSISTENCE.md](PERSISTENCE.md#database-source-ownership) for migration and storage details.
+
+### Source assets and generated output
+
+Keep frontend code and imported UI assets under the owning frontend/ directory.
+Use its sibling static/ only for authored files copied directly without compilation.
+A file imported and processed by the frontend build belongs with that frontend's source assets.
+Compiled JavaScript, compiled CSS, and assembled public files belong in ignored build output, not editable static/ source.
+The build may copy that output into a framework-required directory such as wwwroot/.
+Directory location does not determine serving. Package assets locally or deliver them through a CDN according to the deployment model.
+
+Keep generated SDK code distinguishable from generator settings and handwritten adapters.
+Record whether generated SDK source is tracked. Recreate ignored generated source through the documented generation command.
+Use build/ and dist/ for repository-wide outputs. Allow ignored component-local target/, bin/, obj/, .build/, or equivalent tool output.
+Preserve existing configured mappings. Do not mix generated output with authored source or commit it without an explicit artifact policy.
 
 ## Context efficiency
 
@@ -200,6 +293,10 @@ The interview explains each selected part before asking for its source paths, ac
 Paths are relative to the selected repository. Supply files, folders, or matching patterns, separated by commas.
 For absent literal paths, the interview offers planned scope before continuing.
 Each prompt explains its meaning and gives examples. Press Enter to retain a displayed current value.
+For a new component without a concrete source path, Enter accepts the suggested named location.
+Example names such as core, companion, and writing-assistant are replaceable before accepting the path.
+The defaults follow [the named component convention](#named-component-convention).
+A missing suggested path still requires explicit planned-source confirmation.
 Accepting unchanged defaults preserves existing Markdown formatting, including quoted path values.
 Use manual profile edits or JSON answers for separate custom components and specialized SDK relationships.
 The SaaS-with-native-clients choice links clients to a single selected generated SDK component when that link is unambiguous.
@@ -236,7 +333,7 @@ Use these field names and types:
     "components": {
         "native-client": {
             "enabled": true,
-            "source_paths": ["src/MyApp"],
+            "source_paths": ["src/app/companion"],
             "targets": ["apps"],
             "languages": ["Swift"],
             "platforms": ["iOS", "iPadOS", "macOS"],
@@ -458,13 +555,13 @@ After a missing path, the interview offers explicit planned scope and shows that
 It creates no source directories or application files.
 The optional Source state field accepts existing or planned. JSON input uses source_state.
 When the field is absent, validation requires existing paths, as before.
-Unmatched patterns remain errors. Use literal paths such as src/docs for planned work.
+Unmatched patterns remain errors. Use literal paths such as src/extension/writing-assistant/google-workspace for planned work.
 Unsafe paths, symlinks, and paths beneath regular files remain errors in either mode.
 
 For example, a new Docs component can contain:
 
 ```text
-- Source paths: src/docs, assets/workspace
+- Source paths: src/extension/writing-assistant/google-workspace
 - Source state: planned
 - Targets: google-workspace
 - Languages: TypeScript, HTML, SCSS

@@ -49,11 +49,23 @@ PARTS = {
     "static-assets": ("Static assets", "Shared bundles, styles, fonts, icons, and other browser assets.",
                       "assets", ["static-assets"]),
 }
+SOURCE_PATH_DEFAULTS = {
+    "backend": "src/service/core/backend",
+    "frontend": "src/service/core/frontend, src/service/core/static",
+    "sdks": "src/sdk/core-api",
+    "apps": "src/app/companion",
+    "websites": "src/website/public",
+    "tools": "src/tool/administration",
+    "google-workspace": "src/extension/writing-assistant/google-workspace",
+    "browser-extensions": "src/extension/writing-assistant/browser",
+    "documentation": "docs",
+    "static-assets": "src/library/ui-components",
+}
 FIELD_HELP = {
     "source_paths": (
         "Which existing or planned files or folders belong to this part?",
         "Paths are relative to the selected repository.",
-        "Examples: src/server, apps/apple, web, scripts. A pattern such as *.md matches root Markdown files.",
+        "Examples: src/service/core/backend, src/app/companion, docs. Patterns can match existing files.",
         "Use commas for several paths. These paths limit where the selected guidance applies.",
     ),
     "languages": (
@@ -261,13 +273,28 @@ def configure_extension_clients(components: dict, is_saas: bool) -> set[str]:
     return newly_connected
 
 
+def source_path_default(values: dict, role: str) -> str:
+    """Suggest a named component path only when no concrete project-owned path is configured."""
+    current = values.get("source_paths", "")
+    if current.strip() and "<" not in current:
+        return current
+    proposed = SOURCE_PATH_DEFAULTS.get(role, "")
+    if proposed:
+        print("\nSuggested source scope for a new component: " + proposed)
+        print("Replace example component names if needed. Existing layouts can keep their configured paths.")
+    if role == "backend":
+        print("If this service owns database scripts, also include src/service/core/database in its source scope.")
+    return proposed
+
+
 def ask_source_paths(root: Path, values: dict, role: str) -> dict:
     """Validate paths during the interview and allow explicit planned scope without directory creation."""
+    current = source_path_default(values, role)
     if role == "google-workspace":
         print("\nInclude add-on source, manifest, build configuration, and release-asset paths in this scope.")
-        print("Examples: src/docs, src/shared, assets/workspace. Add future host paths only when they enter scope.")
+        print("Keep them inside the named extension. Add future host paths only when they enter scope.")
     while True:
-        paths = values_list(ask_field("source_paths", values.get("source_paths", ""), role))
+        paths = values_list(ask_field("source_paths", current, role))
         try:
             missing = missing_source_paths(root, paths)
         except ValueError as error:

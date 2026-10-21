@@ -55,25 +55,34 @@ A layout-only task selects native and UI guidance without unrelated backend impl
 
 ## native application layout
 
-For a repository with several native applications, use `src/<app-name>/` when a new layout is needed.
-Give each application its own build, tests, and documentation.
+Use `src/app/<app-name>/` for a new native application family, even when it has one platform.
+Apply the [shared folder convention](../REPO.md#folder-and-file-structure) and preserve established project layouts.
+A standalone app and a SaaS client use the same source convention. Their profile selects the actual integration behavior.
 
 ```text
-src/<app-name>/
-    Shared/            Swift logic and resources shared between platform targets
-    <AppName>/         macOS application entry point, views, and platform adapters
-    <AppName>Mobile/   iOS/iPadOS entry point, views, and platform adapters
-    <AppName>Tests/    Unit and integration tests
-    <AppName>.xcodeproj/  Targets, schemes, build settings, and project membership
-    Testing/           Manual regression plans and nonprivate sample data
-    AppStore/          Product metadata, review notes, and media plans
-    scripts/           App-specific build, archive, signing, and upload procedures
-    build/             Generated artifacts, excluded from source control
-src/web/               Public website, when this repository also owns one
+src/app/<app-name>/
+    apple/
+        Shared/                  Logic and resources shared by the Apple targets
+        <AppName>/               macOS entry point, views, and adapters
+        <AppName>Mobile/         iOS/iPadOS entry point, views, and adapters
+        <AppName>Tests/          Native component tests
+        <AppName>.xcodeproj/     Target settings, schemes, and project membership
+        AppStore/                Listing metadata and source media for the Apple app
+        scripts/                 App-specific build, archive, and upload automation
+    android/                     Android project, only when selected
+src/website/<website-name>/       Optional website, configured as its own component
+src/sdk/<api-name>/swift/          Generated SaaS client package, when selected
+test/<app-name>/                  Workflows spanning the app and other components
 ```
 
-For a Swift package, use `Sources/<Target>/` and `Tests/<Target>Tests/` with `Package.swift` instead of inventing an Xcode layout.
-Adding a source file also requires checking target membership and resource packaging.
+Add other platform projects only when selected. Do not duplicate an Android implementation solely to create a ChromeOS folder.
+Keep native persistence adapters and local schema evolution with the app.
+A Swift package uses `Sources/<Target>/`, `Tests/<Target>Tests/`, and Package.swift within its owning component.
+Keep Xcode-required file names and target organization. Verify target membership and resource packaging after adding files.
+Keep nonprivate test fixtures with their test target. Store manual test procedures under `playbooks/<app-name>/.`
+Use `docs/<app-name>/` for user and integrator guides and specs/<app-name>/ for product designs.
+Keep generated archives and distribution packages in ignored output locations.
+Read the selected platform guide before creating or changing a platform project.
 
 ## Local development
 

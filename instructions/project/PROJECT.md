@@ -55,3 +55,7 @@ Source baseline check: python3 scripts/update_template_baseline.py.
 
 Workspace setup collects structured hosts, model, runtime, account, and distribution choices.
 Planned literal source paths are supported through an explicit source_state field.
+
+New-component layout defaults are documented in REPO.md and each selected target guide.
+The interview offers named source-path examples only when a concrete component path is absent.
+This instruction repository retains its established scripts/ and scripts/tests/ paths.

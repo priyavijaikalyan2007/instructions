@@ -40,6 +40,20 @@ Read their sections only when that component uses the named stack or the corresp
 | Static assets, bundling, and published output | [STATIC_ASSETS.md](../static-assets/STATIC_ASSETS.md) |
 | Web application composition | [SAAS.md](../saas/SAAS.md) |
 
+## Recommended source layout
+
+For a new service UI, use `src/service/<service-name>/frontend/.`
+For a reusable component library, use `src/library/<library-name>/` and its declared package layout.
+Apply the [shared folder convention](../REPO.md#folder-and-file-structure). Preserve existing configured source paths.
+
+Keep the frontend manifest, editable TypeScript, templates, styles, imported assets, and component tests in that frontend project.
+Use the service's sibling static/ only for authored files copied directly without compilation.
+Keep compiled bundles and assembled public files in ignored build output.
+A framework-required public/ or wwwroot/ directory must have a documented source/output mapping.
+Keep one editable source for each asset. Do not edit a copied or compiled version instead.
+Use root `test/<service-name>/` for workflows spanning browser, backend, or native clients.
+Separate deployment later through build and deployment configuration, without moving frontend source.
+
 # 1. General Principles
 
 ## 1.1. Standards Compliance

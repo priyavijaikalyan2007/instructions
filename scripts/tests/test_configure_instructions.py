@@ -318,6 +318,55 @@ class ConfigureInstructionsTests(unittest.TestCase):
         result = self.run_cli(None, input_text="\n".join(answers) + "\n")
         self.assertTrue(result.returncode == 0 and "- Targets: apps" in (self.root / PROFILE).read_text())
 
+    def test_new_saas_accepts_additive_component_paths_without_creating_source(self):
+        answers = ["2", "", "yes", "C#", "container", "", "yes", "TypeScript, HTML, SCSS", "same container",
+                   "", "yes", "Swift, TypeScript", "iOS, browser", "generated library",
+                   "", "yes", "Swift", "iOS, macOS", "native application", "yes"]
+        result = self.run_cli(None, input_text="\n".join(answers) + "\n")
+        self.assertEqual(result.returncode, 0, result.stderr)
+        profile = (self.root / PROFILE).read_text()
+        for path in ["src/service/core/backend", "src/service/core/frontend, src/service/core/static",
+                     "src/sdk/core-api", "src/app/companion"]:
+            self.assertIn("- Source paths: " + path, profile)
+        self.assertEqual(list((self.root / "src").iterdir()), [])
+        self.assertIn("src/service/core/database", result.stdout)
+        self.assertEqual(self.run_cli(None, "--check").returncode, 0)
+
+    def test_new_independent_products_offer_named_component_defaults(self):
+        cases = [("4", ["Swift", "macOS", "native application"], "src/app/companion"),
+                 ("5", ["HTML, CSS", "static hosting"], "src/website/public"),
+                 ("6", ["Go", "macOS", "CLI binary"], "src/tool/administration")]
+        for category, details, expected in cases:
+            with self.subTest(category=category):
+                answers = [category, "", "yes", *details, "no"]
+                before = self.snapshot()
+                result = self.run_cli(None, input_text="\n".join(answers) + "\n")
+                self.assertEqual(result.returncode, 0, result.stderr)
+                self.assertIn("- Source paths: " + expected, result.stdout)
+                self.assertEqual(self.snapshot(), before)
+
+    def test_workspace_default_stays_inside_named_extension(self):
+        answers = ["7", "1", "1", "1", "1", "TypeScript, HTML, SCSS", "", "yes", "yes"]
+        result = self.run_cli(None, input_text="\n".join(answers) + "\n")
+        self.assertEqual(result.returncode, 0, result.stderr)
+        profile = (self.root / PROFILE).read_text()
+        self.assertIn("Source paths: src/extension/writing-assistant/google-workspace", profile)
+        self.assertNotIn("Gmail", profile)
+        self.assertFalse((self.root / "src/extension").exists())
+
+    def test_browser_default_stays_inside_named_extension(self):
+        answers = ["8", "", "yes", "TypeScript", "Chrome", "browser package", "yes"]
+        result = self.run_cli(None, input_text="\n".join(answers) + "\n")
+        self.assertEqual(result.returncode, 0, result.stderr)
+        self.assertIn("Source paths: src/extension/writing-assistant/browser", (self.root / PROFILE).read_text())
+
+    def test_layout_suggestion_does_not_replace_explicit_path(self):
+        answers = ["4", "src", "Swift", "macOS", "native application", "yes"]
+        result = self.run_cli(None, input_text="\n".join(answers) + "\n")
+        self.assertEqual(result.returncode, 0, result.stderr)
+        self.assertIn("- Source paths: src\n", (self.root / PROFILE).read_text())
+        self.assertFalse((self.root / "src/app").exists())
+
     def test_product_menu_preserves_original_six_categories(self):
         answers = ["4", "src", "Swift", "macOS", "native application", "no"]
         result = self.run_cli(None, input_text="\n".join(answers) + "\n")

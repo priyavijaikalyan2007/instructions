@@ -56,6 +56,31 @@ Keep signing, notarization, store submission, and release distinct from local ex
 See [Safari web extensions](https://developer.apple.com/documentation/safariservices/safari-web-extensions)
 and [Safari distribution](https://developer.apple.com/documentation/safariservices/distributing-your-safari-web-extension).
 
+## Recommended source layout
+
+Use `src/extension/<extension-name>/browser/` for a new browser extension family.
+Apply the [shared folder convention](../REPO.md#folder-and-file-structure). Preserve existing configured layouts.
+
+```text
+src/extension/<extension-name>/browser/
+    background/            Background handlers and worker source
+    content/               Page content scripts and injected styles
+    ui/                    Popup, options, and side-panel source
+    shared/                Logic shared within this extension
+    manifests/             Source manifests or browser-specific manifest inputs
+    assets/                Authored icons and store-listing material
+    test/                  Browser extension component tests, subject to toolchain conventions
+    safari/                Apple wrapper project, only when Safari packaging requires one
+```
+
+Keep package manifests, locks, and build scripts with the extension project.
+Keep generated browser archives and assembled manifests in ignored build or distribution output.
+A source manifest can retain a tool-required filename or location within this component.
+Place a separate native companion application under `src/app/<app-name>/` when the product has one.
+Do not duplicate a Safari extension wrapper as a companion app merely to populate both directories.
+Use root test/ for workflows spanning the extension, SaaS, SDKs, or native companion.
+Keep user guides under `docs/<extension-name>/` and publication procedures under `playbooks/<extension-name>/.`
+
 ## Structure and boundaries
 
 Preserve the repository's layout. Keep popup or side-panel UI, content scripts, background handlers, and shared logic distinguishable.
