@@ -14,7 +14,8 @@
 from copy import deepcopy
 from pathlib import Path
 
-from project_initialization import is_source_repository
+from project_initialization import is_source_repository, safe_path
+from workspace_profile import interview_workspace, language_values
 
 
 PRODUCTS = {
@@ -50,7 +51,8 @@ PARTS = {
 }
 FIELD_HELP = {
     "source_paths": (
-        "Which existing files or folders belong to this part? Paths are relative to the selected repository.",
+        "Which existing or planned files or folders belong to this part?",
+        "Paths are relative to the selected repository.",
         "Examples: src/server, apps/apple, web, scripts. A pattern such as *.md matches root Markdown files.",
         "Use commas for several paths. These paths limit where the selected guidance applies.",
     ),
@@ -81,6 +83,8 @@ def values_list(value: str) -> list[str]:
 def part_role(values: dict) -> str:
     """Use the existing component's scope rather than assuming its local identifier is a standard name."""
     targets = values_list(values.get("targets", ""))
+    if "google-workspace" in targets:
+        return "google-workspace"
     return next((role for role in PARTS if role in targets), "custom")
 
 
@@ -203,10 +207,13 @@ def show_component(identifier: str, values: dict) -> str:
     return role
 
 
-def ask_field(key: str, current: str) -> str:
+def ask_field(key: str, current: str, role: str = "") -> str:
     """Explain each requested fact and distinguish a required answer from an existing default."""
     print()
-    for line in FIELD_HELP[key]:
+    help_lines = FIELD_HELP[key]
+    if key == "source_paths" and role == "google-workspace":
+        help_lines = ("Enter repository-relative paths separated by commas. Missing literal paths can be planned.",)
+    for line in help_lines:
         print(line)
     default = ", ".join(values_list(current)) if key != "deployment" else current.strip("`")
     if "<" in default:
@@ -221,8 +228,8 @@ def ask_field(key: str, current: str) -> str:
 def show_extension_help(role: str) -> None:
     """Describe host and runtime facts without imposing a single extension architecture."""
     if role == "google-workspace":
-        print("Name the host and add-on type, such as Google Docs (Editor add-on) or Gmail (Workspace add-on).")
-        print("For packaging, record Apps Script or HTTP runtime and test, private, or Marketplace distribution.")
+        print("Choose current Google hosts, add-on UI, runtime, and audience in the following steps.")
+        print("The choices include build, asset, host-testing, and release guidance.")
     else:
         print("Name supported browsers and operating systems, such as Chrome, Firefox, or Safari on macOS and iOS.")
         print("For packaging, record unpacked tests, browser store packages, or Safari app distribution.")
@@ -254,13 +261,64 @@ def configure_extension_clients(components: dict, is_saas: bool) -> set[str]:
     return newly_connected
 
 
-def configure_component(identifier: str, values: dict) -> dict:
+def ask_source_paths(root: Path, values: dict, role: str) -> dict:
+    """Validate paths during the interview and allow explicit planned scope without directory creation."""
+    if role == "google-workspace":
+        print("\nInclude add-on source, manifest, build configuration, and release-asset paths in this scope.")
+        print("Examples: src/docs, src/shared, assets/workspace. Add future host paths only when they enter scope.")
+    while True:
+        paths = values_list(ask_field("source_paths", values.get("source_paths", ""), role))
+        try:
+            missing = missing_source_paths(root, paths)
+        except ValueError as error:
+            print(str(error))
+            continue
+        result = {"source_paths": paths}
+        if missing:
+            print("These source paths do not exist yet: " + ", ".join(missing))
+            print("Planned scope selects instructions for future code. It does not create source folders or files.")
+            default = "yes" if values.get("source_state", "").strip("`") == "planned" else "no"
+            answer = input(f"Record these as planned paths? [{default}]: ").strip().lower() or default
+            if answer not in {"yes", "y"}:
+                print("Re-enter existing paths or choose planned paths explicitly.")
+                continue
+            result["source_state"] = "planned"
+        elif values.get("source_state"):
+            result["source_state"] = "existing"
+        return result
+
+
+def missing_source_paths(root: Path, paths: list[str]) -> list[str]:
+    """Reject unsafe paths and unmatched patterns before asking whether missing literal paths are planned."""
+    missing = []
+    for value in paths:
+        path = safe_path(root, value)
+        if any(parent.exists() and not parent.is_dir() for parent in path.parents):
+            raise ValueError("A source path parent is a file. Enter a path beneath a directory.")
+        matches = list(root.glob(value))
+        if value == "none" or (not matches and any(char in value for char in "*?[]")):
+            raise ValueError("Enter a literal planned path or a pattern that matches existing source files.")
+        for match in matches:
+            safe_path(root, str(match.relative_to(root)))
+        if not matches:
+            missing.append(value)
+    if not paths:
+        raise ValueError("Enter at least one source path.")
+    return missing
+
+
+def configure_component(identifier: str, values: dict, root: Path) -> dict:
     """Ask only for facts relevant to the selected part. Target codes remain an implementation detail."""
     role = show_component(identifier, values)
     changes = {"enabled": True, "targets": values_list(values["targets"])}
-    changes["source_paths"] = values_list(ask_field("source_paths", values.get("source_paths", "")))
+    if role == "google-workspace":
+        changes.update(interview_workspace(values))
+        changes.update(ask_source_paths(root, values, role))
+        changes.update(saas_client=values["saas_client"].lower() == "yes", sdk_component=values["sdk_component"])
+        return changes
+    changes.update(ask_source_paths(root, values, role))
     if role != "documentation":
-        changes["languages"] = values_list(ask_field("languages", values.get("languages", "")))
+        changes["languages"] = language_values(ask_field("languages", values.get("languages", "")))
     else:
         changes["languages"] = values_list(values.get("languages", "none")) or ["none"]
     if role in {"apps", "sdks", "tools", "custom", "static-assets", "google-workspace", "browser-extensions"}:
@@ -290,7 +348,7 @@ def run_interview(root: Path, library_root: Path, components: dict, is_saas: boo
     answers = {"saas_product": is_saas, "components": {}}
     for identifier, values in working.items():
         if values["enabled"]:
-            answers["components"][identifier] = configure_component(identifier, values)
+            answers["components"][identifier] = configure_component(identifier, values, root)
         else:
             answers["components"][identifier] = {"enabled": False}
     return answers

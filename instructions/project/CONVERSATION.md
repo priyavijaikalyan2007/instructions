@@ -607,3 +607,126 @@ Source policy files and LICENSE remain byte-identical. Commit the verified imple
 
 The owner authorized pushing feat/project-initialization and opening a pull request for review.
 The implementation passed 77 tests. Publish the verified branch and leave the pull request unmerged for new-repository testing.
+
+## 21 October 2026: Workspace-specific interview and planned source scope
+
+### Request
+
+> ok. Here is what happened when I ran this script on a new repository where I was going to build Google Docs extensions (and perhaps in the future Gmail, Sheets & Slides too). While the first choice makes sense, subsequent choices don't make sense for this particular option. Like, how would I distribute Google Docs Extensions? What assets etc. are required? How they are packaged, built and distributed. When I pick an option, everything ofr that option shoudl be covered right?
+
+The user supplied this terminal transcript:
+
+```text
+vijaikalyan@vijakalyan-mbppro:~/Work/pvk2007/extensions$ ./scripts/configure-instructions.sh
+This repository contains the instruction library's original project profile.
+1. Initialize a new project: replace known inherited identity and policy files after preview.
+2. Edit only instruction selections: preserve all repository documents.
+Setup mode [2]: 1
+
+Initialize documents for a new repository copied from the instruction template.
+Known inherited originals will be backed up. Customized files will be preserved and reported.
+Contribution rules, private contacts, and response targets remain TODOs for the project owner.
+Repository name [extensions]:
+Copyright owner [required]: Priya & Vijai Kalyan
+Copyright year [2026]: 2026
+HTTPS repository URL [required]: https://github.com/priyavijaikalyan2007/extensions
+Project purpose [TODO: Describe this project and its users.]: Useful Google Workspace, Office and Browser extensions. ^[[D^[[D^[[D^[[D^[[D^[[D^[[
+
+Choose the license for new project software. Read the bundled terms before publishing.
+  1. MIT: Permissive terms with attribution and warranty disclaimer.
+  2. Apache-2.0: Permissive terms with an express patent grant and notice requirements.
+  3. LGPL-2.1: Lesser GPL version 2.1, commonly used for libraries.
+  4. LGPL-3.0: Lesser GPL version 3.0, with GPLv3 companion terms.
+  5. GPL-2.0: GPL version 2.0 copyleft terms.
+  6. GPL-3.0: GPL version 3.0 copyleft terms.
+  7. AGPL-3.0: Affero GPL version 3.0, including network-use source obligations.
+  8. Elastic-2.0: Source-available terms with managed-service and other restrictions.
+  9. SSPL-1.0: Source-available terms with service-source obligations.
+  0. Undecided or custom/commercial terms: create a TODO, not a fabricated license.
+For dual or multiple licensing, enter distinct numbers separated by commas.
+Recipients may choose any listed license (OR). This does not combine their obligations (AND).
+Elastic and SSPL are source-available choices, not OSI-approved open-source licenses.
+Software license numbers [0]: 1
+
+Content licensing applies to named documentation, artwork, or data paths.
+Creative Commons recommends software-specific licenses for code. These choices apply only to content.
+  0. No separate content license. Keep the project terms or pending decision.
+  1. CC-BY-4.0
+  2. CC-BY-SA-4.0
+  3. CC-BY-ND-4.0
+  4. CC-BY-NC-4.0
+  5. CC-BY-NC-SA-4.0
+  6. CC-BY-NC-ND-4.0
+  7. CC0-1.0
+BY: attribution. SA: share alike. NC: noncommercial. ND: no derivatives. CC0: public-domain dedication.
+Content license [0]: 0
+Configuring repository: /Users/vijaikalyan/Work/pvk2007/extensions
+Profile: instructions/project/PROJECT_PROFILE.md
+Creating a new profile.
+Component identifiers are local names in this profile, not product types.
+Guidance is selected automatically from your product choices and actual source languages.
+Press Enter to keep a displayed current value. No files change until you approve the final preview.
+
+Choose the product types that this repository contains:
+  1. SaaS: Webapp with backend, browser frontend, and static assets.
+  2. SaaS with Native Clients: The webapp plus native apps and generated SDKs.
+  3. Microservice: Backend only: APIs, data access, and an OpenAPI/Swagger endpoint.
+  4. Native App: Standalone application for selected operating systems.
+  5. Static Website: Website and static assets without an application backend.
+  6. CLI tools: Command-line tools or plugins for selected operating systems.
+  7. Google Workspace Extensions: Workspace or Editor add-ons, such as a Google Docs writing assistant.
+  8. Browser Extensions: Extensions for Chrome, Safari, Firefox, or selected compatible browsers.
+SaaS describes the product. Backend means server-side work. Frontend means the browser UI.
+The microservice choice includes no browser frontend or static assets.
+Extensions can stand alone or combine with SaaS. Microsoft Office extensions are not included yet.
+Combine compatible categories, such as 1, 5, 6 for a SaaS, public website, and CLI tools.
+Product numbers, separated by commas: 7
+
+Included parts: Google Workspace extension (workspace-extension)
+Product selection changes instruction scope, not application source, folder structure, or deployments.
+
+Component: workspace-extension (Google Workspace extension)
+Host-integrated Workspace or Editor add-on behavior.
+Covers: not configured yet
+Name the host and add-on type, such as Google Docs (Editor add-on) or Gmail (Workspace add-on).
+For packaging, record Apps Script or HTTP runtime and test, private, or Marketplace distribution.
+
+Which existing files or folders belong to this part? Paths are relative to the selected repository.
+Examples: src/server, apps/apple, web, scripts. A pattern such as *.md matches root Markdown files.
+Use commas for several paths. These paths limit where the selected guidance applies.
+Files or folders [required]: src/docs/, src/mail/
+
+Enter the actual source languages used in this part, separated by commas.
+Examples: Java, C#, Swift, Go, Rust, or Python. Browser code may use TypeScript, HTML, and SCSS.
+Source languages [required]: Javascript/Typescript, HTML, SCSS
+
+Enter the operating systems or consumer platforms, separated by commas.
+Examples: iOS, iPadOS, macOS, Android, ChromeOS, Linux, or Windows. Use browser for a generated browser SDK.
+Operating systems or platforms [required]: browser
+
+Describe how this part is packaged or delivered. This records a fact and does not deploy anything.
+Examples: container, served by the backend, CDN, native application, CLI binary, generated library, or none.
+Packaging or delivery [required]: none
+Configuration error: workspace-extension: source path does not exist: src/docs/
+```
+
+### Outcome
+
+Added a dedicated Workspace interview for current hosts, model, runtime, account context, and distribution.
+The interview explains compatible build output, runtime assets, host testing, OAuth, and Marketplace preparation.
+Expanded the Workspace guide with linked build, packaging, test, and release checklists based on Google documentation.
+Added explicit planned literal source paths without creating application directories or weakening existing-path checks.
+Normalized JavaScript/TypeScript input and retained legacy profile compatibility with a setup note.
+PR #6 was already merged. This correction uses fix/workspace-profile-interview from the updated origin/main.
+The user's extensions repository was not accessed or modified. No Google build, installation, or publication was performed.
+
+### Continuation
+
+> try again
+
+Continued the correction from its existing branch and test failures.
+Fixed the remaining conditional build advice and completed the full verification before committing locally.
+
+All 96 tests pass, including the complete copied-repository Docs setup.
+Profile, dry-run, Markdown link, preservation, syntax, and whitespace checks pass.
+The correction is committed locally. No push or merge was requested for this correction.

@@ -25,6 +25,7 @@ import tempfile
 import uuid
 
 from profile_interview import run_interview
+from workspace_profile import WORKSPACE_FIELDS, language_values, validate_workspace
 from project_initialization import initialization_changes, is_inherited, prepare_initialization, safe_path
 
 
@@ -42,6 +43,8 @@ FIELDS = {
     "source_paths": "Source paths", "targets": "Targets", "languages": "Languages", "platforms": "Platforms",
     "saas_client": "SaaS client", "sdk_component": "SDK component", "deployment": "Deployment",
 }
+REQUIRED_FIELDS = tuple(FIELDS)
+FIELDS.update({"source_state": "Source state", **WORKSPACE_FIELDS})
 LIST_FIELDS = {"source_paths", "targets", "languages", "platforms"}
 TARGET_GUIDES = {
     "backend": "backend/BACKEND.md", "frontend": "frontend/FRONTEND.md", "saas": "saas/SAAS.md",
@@ -74,7 +77,7 @@ def fresh_template(name: str) -> str:
     text = (LIBRARY_ROOT / "instructions" / name).read_text()
     text = re.sub(r"File GUID: [\w-]+", f"File GUID: {uuid.uuid4()}", text, count=1)
     if name == "PROJECT_PROFILE_TEMPLATE.md":
-        text = text.replace('](REPO.md#project-configuration)', '](../REPO.md#project-configuration)')
+        text = text.replace('](REPO.md#', '](../REPO.md#')
     if name == "PROJECT_TEMPLATE.md":
         text = re.sub(r"`<[^>]+>`", "`unspecified`", text)
     return text
@@ -267,23 +270,32 @@ def validate_project_paths(root: Path, text: str) -> None:
         seen.add(normalized)
 
 
-def validate_source_paths(root: Path, identifier: str, paths: str) -> None:
+def validate_source_paths(root: Path, identifier: str, paths: str, state: str = "existing") -> list[str]:
     """Check literal or glob source paths against the target repository."""
+    if state not in {"existing", "planned"}:
+        raise ValueError(f"{identifier}: Source state must be existing or planned.")
+    warnings = []
     values = split_values(paths)
     if not values:
         raise ValueError(f"{identifier}: at least one source path is required.")
     for value in values:
-        safe_path(root, value)
+        path = safe_path(root, value)
+        if any(parent.exists() and not parent.is_dir() for parent in path.parents):
+            raise ValueError(f"{identifier}: source path parent is not a directory: {value}")
         matches = list(root.glob(value))
-        if value == "none" or not matches:
-            raise ValueError(f"{identifier}: source path does not exist: {value}")
+        if value == "none" or (not matches and (state != "planned" or any(c in value for c in "*?[]"))):
+            raise ValueError(f"{identifier}: source path does not exist: {value}. "
+                             "Correct it or explicitly mark a literal new path as planned.")
+        if not matches:
+            warnings.append(f"{identifier}: planned source path is not created yet: {value}")
         for match in matches:
             safe_path(root, str(match.relative_to(root)))
+    return warnings
 
 
 def validate_component(root: Path, identifier: str, values: dict) -> tuple[set, list, list]:
     """Validate enabled metadata and report guide gaps without inventing coverage."""
-    for key in FIELDS:
+    for key in REQUIRED_FIELDS:
         value = values[key]
         if not value or "<" in value or ">" in value:
             raise ValueError(f"{identifier}: resolve {FIELDS[key]} before enabling this component.")
@@ -292,10 +304,14 @@ def validate_component(root: Path, identifier: str, values: dict) -> tuple[set, 
         raise ValueError(f"{identifier}: unknown target in {values['targets']}")
     if values["saas_client"].lower() not in {"yes", "no"}:
         raise ValueError(f"{identifier}: SaaS client must be yes or no.")
-    validate_source_paths(root, identifier, values["source_paths"])
+    warnings = validate_source_paths(root, identifier, values["source_paths"],
+                                     values.get("source_state", "").strip("`") or "existing")
     guides = {TARGET_GUIDES[target] for target in targets}
-    warnings = []
-    for language in split_values(values["languages"]):
+    if "google-workspace" in targets:
+        warnings.extend(validate_workspace(values))
+        if values.get("workspace_runtime", "").strip("`") == "http":
+            guides.add("backend/BACKEND.md")
+    for language in language_values(values["languages"]):
         if language.lower() == "none":
             continue
         known = LANGUAGE_GUIDES.get(language.lower())

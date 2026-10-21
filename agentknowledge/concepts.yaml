@@ -26,3 +26,8 @@
   definition: "Collects exact software and content license choices and installs verified bundled legal texts."
   anchor_file: "scripts/license_selection.py"
   related: ["ProjectInitialization"]
+
+- name: "WorkspaceProfile"
+  definition: "Explains and validates Workspace hosts, add-on models, runtimes, and distribution choices."
+  anchor_file: "scripts/workspace_profile.py"
+  related: ["ProfileInterview", "ProfileConfiguration"]

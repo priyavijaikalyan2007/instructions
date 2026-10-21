@@ -159,6 +159,20 @@ class ProjectInitializationTests(unittest.TestCase):
         self.assertNotIn("This is the instruction library's own repository", result.stdout)
         self.assertIn('utilextensions', (self.root / '.github/README.md').read_text())
 
+    def test_copied_script_initializes_docs_with_absent_source_paths(self):
+        self.inherit()
+        command = ['bash', str(self.root / 'scripts/configure-instructions.sh'), '--root', str(self.root)]
+        answers = ['1', '', 'Example Owner', '2026', 'https://github.com/example/utilextensions',
+                   'Writing tools', '1', '0', '7', '1', '1', '1', '1',
+                   'Javascript/Typescript, HTML, SCSS', 'src/docs', 'yes', 'yes']
+        result = subprocess.run(command, input='\n'.join(answers) + '\n', text=True,
+                                capture_output=True, timeout=20)
+        self.assertEqual(result.returncode, 0, result.stderr)
+        self.assertIn('Workspace model: editor', (self.root / PROFILE).read_text())
+        self.assertIn('Source state: planned', (self.root / PROFILE).read_text())
+        self.assertFalse((self.root / 'src/docs').exists())
+        self.assertTrue((self.root / 'instructions/project/INITIALIZATION.json').exists())
+
     def test_source_repository_initialization_is_rejected(self):
         self.root = LIBRARY
         result = self.run_cli('--apply')

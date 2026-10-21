@@ -43,7 +43,7 @@ Preserve instructions/project/ when distributing or updating the generic guides.
 2. Copy instructions/PROJECT_TEMPLATE.md to the configured project-facts path when that file is absent.
 3. Copy instructions/ADDITIONAL_TEMPLATE.md to the configured additional-instructions path when that file is absent.
 4. Replace placeholder values for enabled components and project files with verified facts.
-5. Check Enabled for each component that exists in the repository.
+5. Check Enabled for each current component. Mark absent literal source paths as planned when necessary.
 6. Record the component's source paths, targets, languages, platforms, SDK relationship, and deployment mode.
 7. Check only the project choices that match the actual architecture.
 8. Verify project-file paths and enabled component paths against the consuming repository.
@@ -162,7 +162,8 @@ You must always commit all changes to `git` with a concise description of change
 ## Profile selector
 
 Run the selector from this instruction-library checkout. Use Python 3.10 or later and Bash.
-The target repository must exist. Its application source directories must already exist before their components are enabled.
+The target repository must exist. Source paths normally must exist.
+For new work, explicitly select [planned source scope](#planned-source-scope) for absent literal paths.
 The selector uses the same Markdown profile as manual setup. It does not create a second configuration system.
 
 ### Interview and modify
@@ -196,7 +197,8 @@ Choosing new categories can disable previously selected parts in the profile. Th
 Existing documentation and unrecognized custom scopes remain preserved.
 
 The interview explains each selected part before asking for its source paths, actual languages, relevant operating systems, and packaging facts.
-Paths are relative to the selected repository. Supply existing files, folders, or patterns, separated by commas.
+Paths are relative to the selected repository. Supply files, folders, or matching patterns, separated by commas.
+For absent literal paths, the interview offers planned scope before continuing.
 Each prompt explains its meaning and gives examples. Press Enter to retain a displayed current value.
 Accepting unchanged defaults preserves existing Markdown formatting, including quoted path values.
 Use manual profile edits or JSON answers for separate custom components and specialized SDK relationships.
@@ -334,7 +336,7 @@ The source repository's own README, contribution policy, conduct policy, securit
 The interview collects repository identity, copyright ownership, software licensing, optional content licensing, and component choices.
 Unknown contribution rules, reporting contacts, support targets, and commands remain visible TODOs.
 The existing product interview still selects targets and languages.
-Source paths for enabled components must exist before the configuration can pass validation.
+Existing source paths must exist. Explicitly planned literal paths may be absent and produce a configuration note.
 Initialization does not create application source directories or invent build commands.
 
 ### Generated project documents
@@ -416,3 +418,63 @@ The completion record is written last.
 Repeat initialization preserves project documents and rejects changed identity or license answers.
 Review later identity or licensing changes separately. Ordinary profile edits never replace project documents.
 Shared instruction updates remain a separate reviewed operation. Initialization preserves installed shared guides.
+
+
+## Product-specific Workspace setup
+
+The Google Workspace interview asks for current hosts, add-on model, runtime, account context, and distribution.
+It replaces generic operating-system and packaging questions for that component.
+Editor add-ons use Apps Script. Workspace add-ons can use Apps Script or an HTTP service.
+Private Marketplace distribution requires an eligible Workspace organization account.
+Personal testing and public Marketplace distribution remain separate choices.
+
+The interview explains build output, UI assets, OAuth, host testing, and release preparation for the selected model.
+Read the linked [Workspace lifecycle guidance](google-workspace/GOOGLE_WORKSPACE.md#build-and-package) when implementing that component.
+Host cards do not automatically select a browser frontend. An HTTP runtime selects backend guidance for its service.
+TypeScript selects JavaScript guidance too. JavaScript/TypeScript input selects both language guides.
+Keep future host integrations out of the active selection until their work starts.
+
+The profile records these optional fields for Workspace components:
+
+| JSON key | Markdown label | Values |
+| --- | --- | --- |
+| workspace_model | Workspace model | editor, workspace |
+| workspace_runtime | Workspace runtime | apps-script, http |
+| workspace_account | Workspace account | personal, organization |
+| workspace_distribution | Workspace distribution | test, private, public |
+
+Use all four fields together. Platforms names the selected Google hosts.
+Languages records editable source languages. Deployment summarizes the intended runtime and distribution.
+Unknown remote IDs, build commands, and release contacts belong in project facts until confirmed.
+Legacy profiles without these fields remain readable and report the missing structured choices.
+Rerun the interview to configure those choices. Existing component notes remain intact.
+When components need different models or release scopes, use separate component sections through Markdown or JSON configuration.
+The interactive product choice creates one Workspace component initially and edits all enabled Workspace components on later runs.
+
+## Planned source scope
+
+A new repository can select instructions before its application source exists.
+After a missing path, the interview offers explicit planned scope and shows that choice in the preview.
+It creates no source directories or application files.
+The optional Source state field accepts existing or planned. JSON input uses source_state.
+When the field is absent, validation requires existing paths, as before.
+Unmatched patterns remain errors. Use literal paths such as src/docs for planned work.
+Unsafe paths, symlinks, and paths beneath regular files remain errors in either mode.
+
+For example, a new Docs component can contain:
+
+```text
+- Source paths: src/docs, assets/workspace
+- Source state: planned
+- Targets: google-workspace
+- Languages: TypeScript, HTML, SCSS
+- Platforms: Google Docs
+- Workspace model: editor
+- Workspace runtime: apps-script
+- Workspace account: personal
+- Workspace distribution: test
+```
+
+Retain the component's Enabled, SaaS client, SDK component, and Deployment fields when using this excerpt.
+A successful profile check validates configuration. It does not prove that planned source or a deployable add-on exists.
+When the source paths exist, change Source state to existing or accept the interview's detected state.

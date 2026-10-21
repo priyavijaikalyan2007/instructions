@@ -35,7 +35,10 @@ Read [REPO.md](REPO.md#project-configuration) for the selection rules and setup 
 ## Components
 
 Each component needs a unique identifier. Duplicate a component section when platforms or languages need separate scopes.
-Check Enabled only for components present in this repository.
+Check Enabled for current work in this repository. Keep possible future products disabled.
+For absent literal paths in a new component, add `- Source state: planned` explicitly.
+Omitting Source state requires existing paths. Planned scope creates no source files.
+For Workspace components, see [the structured setup fields](REPO.md#product-specific-workspace-setup).
 Replace angle-bracket values. Use `none` when a field does not apply.
 
 ### backend

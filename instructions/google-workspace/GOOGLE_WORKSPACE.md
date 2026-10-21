@@ -132,3 +132,120 @@ Verify project IDs, deployment IDs, versions, and the intended audience before c
 Personal testing, domain-private distribution, and public Marketplace release require different preparation.
 Use the current publication requirements for the chosen scope and distribution mode.
 A repository push does not authorize an add-on upload, installation, or public release.
+
+## Build and package
+
+Start with the profile's current hosts, model, runtime, account context, and distribution choice.
+Read this section for every Workspace implementation. Select only the applicable runtime and UI steps.
+Record project IDs, commands, artifact paths, and release owners in the configured project-facts file.
+Keep future Gmail, Sheets, or Slides support outside active scope until the owner selects that work.
+
+For a Docs tool with a custom HTML sidebar, consider an Editor add-on.
+For Gmail or shared card interfaces, consider a Workspace add-on.
+Verify the required document operations before selecting the model.
+Each Editor add-on extends one editor. Several Editor add-ons can share a Marketplace listing.
+Keep their manifests, project IDs, build outputs, tests, and release versions distinguishable within this repository.
+Share pure processing code where useful. Do not assume that one host adapter works in another host.
+See [Google's integration comparison](https://developers.google.com/workspace/extend).
+
+### Apps Script artifacts
+
+1. Keep appsscript.json, source, dependency locks, and build configuration under version control.
+2. Pin the build tools and clasp version.
+3. Compile TypeScript and bundle supported dependencies into Apps Script-compatible JavaScript when those sources are used.
+4. Preserve callable function names referenced by manifests, menus, triggers, and UI callbacks.
+5. Copy the manifest and prepared code into a dedicated upload directory.
+6. Configure clasp's root directory and ignore rules to include only the intended upload artifacts.
+7. Inspect that directory before upload.
+
+Exclude tests, development dependencies, private fixtures, credentials, and unrelated repository files from uploaded artifacts.
+Do not assume clasp performs the repository's TypeScript or SCSS build.
+Keep credentials outside tracked clasp configuration. Review the destination script ID before each upload.
+Document local build, validation, upload, version creation, and deployment as separate repository commands.
+See [clasp development](https://developers.google.com/apps-script/guides/clasp).
+
+### Editor UI assets
+
+Keep editable HTML, client scripts, and styles separate from generated output.
+Compile client TypeScript for the HTML-service browser context, separately from server-side Apps Script code.
+When SCSS is selected, compile it to CSS.
+Package local client scripts and CSS in HTML-service files using script and style elements.
+Keep included fragments separate when that improves maintenance. Verify their generated names and references.
+Use asynchronous google.script.run calls for server operations and show pending, success, and failure states.
+Test the HTML sandbox and any external HTTPS assets in the actual host.
+See [HTML-service packaging](https://developers.google.com/apps-script/guides/html/best-practices).
+
+A card-only Workspace add-on uses host-rendered widgets.
+Do not add an HTML sidebar or a SCSS bundle merely because the host runs in a browser.
+Host icons and card images can still require accessible HTTPS URLs.
+Keep those runtime assets separate from Marketplace listing artwork.
+See [Workspace manifests](https://developers.google.com/workspace/add-ons/concepts/manifests).
+
+### HTTP artifacts
+
+Build the configured service language into its declared server or container artifact.
+Define the add-on manifest and HTTPS callback endpoints through the Workspace deployment configuration.
+Keep an editable copy of that configuration in the repository.
+Verify incoming Google identity tokens and return the required card response JSON.
+Test timeout, retry, authorization, and response-schema failures through the actual host integration.
+Record endpoint ownership and deployment identifiers in project facts.
+Use [backend guidance](../backend/BACKEND.md) for this service.
+Do not require a separate SaaS product, database, or web frontend unless the application needs one.
+See [HTTP runtime setup](https://developers.google.com/workspace/add-ons/guides/alternate-runtimes).
+
+## Distribution and release assets
+
+Read this section for the selected audience, including projects that currently use test installation.
+The interview records release intent. It does not grant permission to create remote resources or publish.
+
+| Choice | Required preparation |
+| --- | --- |
+| Test installation | Use the model-specific developer test flow and permitted test accounts. A Marketplace listing is not required. |
+| Private Marketplace | Use an eligible Workspace organization account. Confirm domain audience, administrator restrictions, and installation policy. |
+| Public Marketplace | Prepare the listing, complete Marketplace review, and complete applicable OAuth verification before external distribution. |
+
+Private distribution is an organization boundary, not a list of personal Gmail accounts.
+Review audience before saving Marketplace visibility. Google currently prevents changing that choice afterward.
+Use a standard Google Cloud project for Apps Script publication and configure the Marketplace SDK and OAuth consent.
+Align declared scopes across code, manifest, consent configuration, and listing configuration.
+For an Editor release, record the published script version. For a Workspace release, record the appropriate deployment ID.
+See [publication preparation](https://developers.google.com/workspace/add-ons/how-tos/publish-add-on-overview).
+
+### Marketplace material
+
+Prepare the following material for private or public listings:
+
+- Product name, descriptions, category, supported hosts, and accurate pricing information.
+- Application icons, a listing card banner, and screenshots of the actual host integration.
+- Support, privacy-policy, and terms-of-service pages at accessible URLs.
+- Setup and administrator instructions when installation needs additional configuration.
+- Test instructions and access details required by the current review process.
+
+Use synthetic content in screenshots. Keep editable artwork separate from exported listing images.
+Validate current image sizes, formats, branding rules, and required fields before submission.
+Do not embed changing pixel dimensions in build assumptions without checking Google's requirements.
+See [listing assets and support links](https://developers.google.com/workspace/marketplace/create-listing).
+
+Record the chosen location for listing source and exported assets in project facts.
+Include those paths in the extension component's source scope.
+A listing image does not require enabling a generic static website or browser frontend component.
+If this repository owns a separate support website, select that website as its own component.
+
+### Verification and release sequence
+
+1. Run local tests and inspect the built artifacts.
+2. Upload the prepared Apps Script artifacts or deploy the configured HTTP service to the intended test environment.
+3. Install the add-on through the selected model's test procedure.
+4. Verify consent, host UI, document operations, error recovery, and account restrictions using synthetic data.
+5. Verify runtime logos, image URLs, and external service boundaries.
+6. Prepare the intended release version or deployment reference.
+7. Review listing assets, policies, audience, and scopes.
+8. Complete required verification and publication review before the authorized release.
+9. Test installation and updates as a permitted user after publication.
+10. Record the released version and the procedure for returning to the previous working version.
+
+For Editor tests, select a test document, script version, and initial authorization state.
+Exercise installation and enablement states. Document test-deployment limits for triggers and stored properties.
+See [Editor testing](https://developers.google.com/workspace/add-ons/how-tos/testing-editor-addons)
+and [Workspace testing](https://developers.google.com/workspace/add-ons/how-tos/testing-workspace-addons).
+Keep build success, host-test success, OAuth verification, and Marketplace acceptance as separate recorded results.

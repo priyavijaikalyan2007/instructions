@@ -24,7 +24,9 @@ Use only enabled components that the task changes. Select their targets, actual 
 For a SaaS client integration, also read the SaaS composition and the configured SDK component's contract guidance.
 A shared API-contract change selects affected consumers. A local UI change does not select unrelated backend implementation.
 Unchecked components and examples do not enter scope merely because their files are present.
-Treat missing configured files, unresolved values in enabled components, or source/profile disagreements as configuration gaps. Resolve them before dependent work.
+Treat missing configured files, unresolved values, or source/profile disagreements as configuration gaps.
+Explicit Source state: planned permits absent literal source paths while defining instructions for new work.
+It does not mean that source exists or that a build passed. Resolve other gaps before dependent work.
 For an older repository without a profile, infer existing scope from its README, source, manifests, and scripts.
 Do not invent project facts or enable components from this instruction repository's examples.
 

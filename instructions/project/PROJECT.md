@@ -52,3 +52,6 @@ Microsoft Office extension profiles are deferred. No extension host application 
 Project initialization: --initialize-project with optional --project-answers JSON.
 License texts: pinned SPDX license-list-data v3.29.0, installed without runtime network access.
 Source baseline check: python3 scripts/update_template_baseline.py.
+
+Workspace setup collects structured hosts, model, runtime, account, and distribution choices.
+Planned literal source paths are supported through an explicit source_state field.

@@ -93,3 +93,9 @@ Created: 2026
 - Changed: Profile selection now generates current scope links and installs nested shared guides without deleting inactive files.
 - Added: Language, tenant, clipboard, temporary-storage, memory, swap, and dump security guidance with primary-source references.
 - Fixed: AI security examples now use explicit trust boundaries, strict output validation, and scoped data policies.
+
+## 21 October 2026: Workspace setup correction
+
+- Fixed: Replace generic Workspace questions with host, model, runtime, account, and distribution choices.
+- Added: Build, asset, host-test, and release guidance for the selected Workspace model.
+- Fixed: Allow explicit planned source paths and recognize JavaScript/TypeScript language input.

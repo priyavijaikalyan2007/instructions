@@ -37,3 +37,18 @@
     - scripts/license_selection.py
     - scripts/update_template_baseline.py
     - instructions/templates/repository/TEMPLATES.md
+
+- id: ADR-003
+  title: Record explicit Workspace choices and planned source scope
+  date: 2026-10-21
+  status: Accepted
+  context: >-
+    New repositories need instructions before source directories exist. Planned literal paths remain explicit
+    and preserve strict existing-path checks. Workspace setup uses model-specific choices rather than free-text
+    platform and delivery guesses. Legacy profiles remain readable and report missing structured choices.
+  files:
+    - scripts/workspace_profile.py
+    - scripts/profile_interview.py
+    - scripts/configure_instructions.py
+    - instructions/google-workspace/GOOGLE_WORKSPACE.md
+    - instructions/REPO.md

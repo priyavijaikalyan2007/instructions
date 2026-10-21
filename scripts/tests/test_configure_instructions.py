@@ -349,7 +349,8 @@ class ConfigureInstructionsTests(unittest.TestCase):
         ]
         for number, languages, platforms, delivery, target, guide in cases:
             with self.subTest(number=number):
-                answers = [number, "src", languages, platforms, delivery, "yes"]
+                answers = (["7", "1", "1", "1", "1", languages, "src", "yes"] if number == "7"
+                           else [number, "src", languages, platforms, delivery, "yes"])
                 result = self.run_cli(None, input_text="\n".join(answers) + "\n")
                 self.assertEqual(result.returncode, 0, result.stderr)
                 profile = (self.root / PROFILE).read_text()
@@ -359,7 +360,7 @@ class ConfigureInstructionsTests(unittest.TestCase):
                 self.assertEqual(self.run_cli(None, "--check").returncode, 0)
 
     def test_extension_interview_explains_hosts_and_defers_office(self):
-        answers = ["7, 8", "src", "JavaScript", "Google Docs", "Apps Script test deployment",
+        answers = ["7, 8", "1", "1", "1", "1", "JavaScript", "src",
                    "src", "TypeScript", "Chrome, Firefox", "unpacked test extension", "no"]
         result = self.run_cli(None, input_text="\n".join(answers) + "\n")
         self.assertEqual(result.returncode, 0, result.stderr)
