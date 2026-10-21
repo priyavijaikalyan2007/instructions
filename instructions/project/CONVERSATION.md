@@ -762,3 +762,10 @@ The source profile check and dry run pass. No new Markdown link defects were fou
 Five existing layout-example groups changed intentionally. Other example content remains preserved.
 Existing CP1252 frontend content remains byte-identical around the inserted layout section.
 Commit locally on docs/recommended-layouts. No push or merge was requested.
+
+### Publication request
+
+> push and raise the PR please.
+
+The owner authorized pushing docs/recommended-layouts and opening a pull request against main.
+The verified implementation passed 101 tests. Leave the pull request unmerged for review.
