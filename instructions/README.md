@@ -52,6 +52,8 @@ Use the [profile template](PROJECT_PROFILE_TEMPLATE.md), [facts template](PROJEC
 Follow [manual setup](REPO.md#manual-setup) or use the [profile selector](REPO.md#profile-selector) to initialize or modify selections.
 Run `./scripts/configure-instructions.sh --root /path/to/project` from this checkout for the interview.
 Use `--check` for read-only validation and `--answers <json-file> --dry-run` to preview repeatable selections.
+If you created a repository with GitHub's template feature, use [project initialization](REPO.md#initialize-a-repository-created-from-this-template).
+Initialization replaces known inherited project documents and asks for license choices. It preserves customized files and backs up inherited originals.
 This repository's active profile describes the instruction library itself. Application examples do not enable application components here.
 Generic instruction updates preserve project-owned profiles, facts, and refinements.
 

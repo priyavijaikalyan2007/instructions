@@ -25,6 +25,7 @@ import tempfile
 import uuid
 
 from profile_interview import run_interview
+from project_initialization import initialization_changes, is_inherited, prepare_initialization, safe_path
 
 
 LIBRARY_ROOT = Path(__file__).resolve().parents[1]
@@ -62,19 +63,6 @@ LANGUAGE_GUIDES = {
 IDENTIFIER = re.compile(r"[a-z][a-z0-9-]*\Z")
 
 
-def safe_path(root: Path, value: str) -> Path:
-    """Resolve a repository-relative path without traversing symlinks or parent paths."""
-    path = Path(value)
-    if not value or path.is_absolute() or ".." in path.parts or ".git" in path.parts:
-        raise ValueError(f"Unsafe repository path: {value!r}")
-    current = root
-    for part in path.parts:
-        current = current / part
-        if current.is_symlink():
-            raise ValueError(f"Symlink paths are not supported: {value}")
-    return current
-
-
 def read_optional(root: Path, relative: str) -> str | None:
     """Read UTF-8 project configuration, preserving its newline bytes."""
     path = safe_path(root, relative)
@@ -85,6 +73,8 @@ def fresh_template(name: str) -> str:
     """Copy a template with a new file identity and neutral, explicit unknown facts."""
     text = (LIBRARY_ROOT / "instructions" / name).read_text()
     text = re.sub(r"File GUID: [\w-]+", f"File GUID: {uuid.uuid4()}", text, count=1)
+    if name == "PROJECT_PROFILE_TEMPLATE.md":
+        text = text.replace('](REPO.md#project-configuration)', '](../REPO.md#project-configuration)')
     if name == "PROJECT_TEMPLATE.md":
         text = re.sub(r"`<[^>]+>`", "`unspecified`", text)
     return text
@@ -418,12 +408,14 @@ def plan_changes(root: Path, profile: str, check: bool, guides: set[str]) -> dic
             if not safe_path(root, name).exists() or safe_path(root, name).read_bytes() != data}
 
 
-def preview(root: Path, changes: dict[str, bytes]) -> None:
+def preview(root: Path, changes: dict[str, bytes | None]) -> None:
     """Show configuration diffs and list missing guides without dumping every shared document."""
     for name, data in sorted(changes.items()):
         path = safe_path(root, name)
-        print(f"{'Update' if path.exists() else 'Create'} {name}")
-        if name in {PROFILE_PATH, "AGENTS.md"}:
+        action = 'Remove inherited' if data is None else ('Update' if path.exists() else 'Create')
+        print(f"{action} {name}")
+        review_files = {PROFILE_PATH, "AGENTS.md", "LICENSE", "THIRD_PARTY_NOTICES.md"}
+        if data is not None and (name in review_files or name.startswith('.github/')):
             before = path.read_text().splitlines(True) if path.exists() else []
             after = data.decode("utf-8").splitlines(True)
             print("".join(difflib.unified_diff(before, after, fromfile=name, tofile=name)), end="")
@@ -431,7 +423,7 @@ def preview(root: Path, changes: dict[str, bytes]) -> None:
         print("No changes.")
 
 
-def write_changes(root: Path, changes: dict[str, bytes]) -> None:
+def write_changes(root: Path, changes: dict[str, bytes | None]) -> None:
     """Preflight every destination, then replace each file atomically within its parent directory."""
     for name in changes:
         path = safe_path(root, name)
@@ -442,8 +434,14 @@ def write_changes(root: Path, changes: dict[str, bytes]) -> None:
                 raise ValueError(f"Destination parent is not a directory: {parent}")
             if parent == root:
                 break
-    for name, data in changes.items():
+    ordered = sorted(changes, key=lambda name: (not name.startswith('instructions/project/template-backup/'),
+                                                name == 'instructions/project/INITIALIZATION.json', name))
+    for name in ordered:
+        data = changes[name]
         path = safe_path(root, name)
+        if data is None:
+            path.unlink()
+            continue
         path.parent.mkdir(parents=True, exist_ok=True)
         descriptor, temporary = tempfile.mkstemp(prefix=".instructions-", dir=path.parent)
         try:
@@ -461,24 +459,36 @@ def arguments() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="Interview, preview, check, or edit a Markdown instruction profile.")
     parser.add_argument("--root", type=Path, default=Path.cwd(), help="existing target repository (default: cwd)")
     parser.add_argument("--answers", type=Path, help="JSON selections merged into the existing Markdown profile")
+    parser.add_argument("--initialize-project", action="store_true",
+                        help="initialize project documents from templates, preserving customized files")
+    parser.add_argument("--project-answers", type=Path,
+                        help="JSON project identity and license choices for --initialize-project")
     mode = parser.add_mutually_exclusive_group()
     mode.add_argument("--dry-run", action="store_true", help="preview only; never write")
     mode.add_argument("--apply", action="store_true", help="apply validated changes without a confirmation prompt")
     mode.add_argument("--check", action="store_true", help="validate the installed profile and selected guides")
     args = parser.parse_args()
+    if args.project_answers and not args.initialize_project:
+        parser.error("--project-answers requires --initialize-project")
+    if args.initialize_project and args.check:
+        parser.error("--initialize-project cannot be combined with --check")
     if args.check and args.answers:
         parser.error("--check reads the installed profile; do not combine it with --answers")
     return args
 
 
-def load_profile(root: Path, args: argparse.Namespace) -> str:
+def load_profile(root: Path, args: argparse.Namespace, identity: dict | None = None) -> str:
     """Read or initialize the profile, then collect only the requested input mode."""
     profile = read_optional(root, PROFILE_PATH)
+    if identity is not None and is_inherited(root, PROFILE_PATH):
+        profile = None
     is_new = profile is None
     if profile is None:
         if args.check:
             raise ValueError(f"Missing profile: {PROFILE_PATH}")
         profile = fresh_template("PROJECT_PROFILE_TEMPLATE.md")
+        if identity is not None:
+            profile = profile.replace('Repository: instructions', 'Repository: ' + identity['name'])
     if args.answers:
         answers = json.loads(args.answers.read_text())
         profile = apply_answers(profile, answers)
@@ -497,15 +507,22 @@ def check_root_routing(root: Path, guides: set[str]) -> None:
         raise ValueError("AGENTS.md needs the current managed routing block. Run the configurator to preview repair.")
 
 
+def validated_root(path: Path) -> Path:
+    """Require a real existing target directory before any profile or project operation."""
+    if path.is_symlink() or not path.is_dir():
+        raise ValueError("--root must name an existing directory without a final symlink.")
+    return path.resolve()
+
+
 def main() -> int:
     """Orchestrate input, validation, preview, and optional application."""
     args = arguments()
-    if args.root.is_symlink() or not args.root.is_dir():
-        raise ValueError("--root must name an existing directory without a final symlink.")
-    root = args.root.resolve()
-    profile = load_profile(root, args)
+    root = validated_root(args.root)
+    identity = prepare_initialization(root, args)
+    profile = load_profile(root, args, identity)
     guides, warnings = validate_profile(root, profile)
     changes = plan_changes(root, profile, args.check, guides)
+    changes.update(initialization_changes(root, identity, project_paths(profile)))
     for guide in sorted(guides | COMMON_GUIDES | {"AIML_SECURITY.md", "SECRET_HANDLING.md"}):
         relative = "instructions/" + guide
         if relative not in changes and not safe_path(root, relative).is_file():
