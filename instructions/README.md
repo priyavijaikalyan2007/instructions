@@ -119,7 +119,7 @@ Shared workflow belongs in instructions/REPO.md, storage in instructions/PERSIST
 
 ## Recommended product source layout
 
-For new components, use src/<type>/<component-name>/ even when only one component exists.
+For new components, use `src/<type>/<component-name>/` even when only one component exists.
 The [shared folder convention](REPO.md#folder-and-file-structure) defines root responsibilities, database ownership, tests, and build output.
 Each target guide provides its matching layout. Existing projects retain their configured paths.
 
