@@ -164,6 +164,11 @@ def license_files(value: dict, owner: str, year: str) -> dict[str, bytes]:
         identifiers.add(choice['content'])
     if any(identifier.startswith('LGPL-3.0') for identifier in identifiers):
         identifiers.add('GPL-3.0-only')
+    if len(identifiers) == 1 and len(choice['software']) == 1:
+        identifier = choice['software'][0]
+        notice = license_notice(choice, owner, year).replace(
+            f'Full terms: LICENSES/{identifier}.txt', 'Full license terms follow below.')
+        return {'LICENSE': notice.encode() + b'\n' + term_bytes(identifier, owner, year)}
     result = {f'LICENSES/{identifier}.txt': term_bytes(identifier, owner, year)
               for identifier in sorted(identifiers)}
     result['LICENSE'] = license_notice(choice, owner, year).encode()

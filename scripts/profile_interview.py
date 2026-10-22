@@ -105,7 +105,7 @@ def part_role(values: dict) -> str:
 def show_intro(root: Path, library_root: Path, is_new: bool) -> None:
     """Identify the repository being edited before presenting any project choices."""
     print(f"Configuring repository: {root}")
-    print("Profile: instructions/project/PROJECT_PROFILE.md")
+    print("Profile: PROJECT_PROFILE.md")
     print("Creating a new profile." if is_new else "Editing an existing profile.")
     print("Component identifiers are local names in this profile, not product types.")
     print("Guidance is selected automatically from your product choices and actual source languages.")

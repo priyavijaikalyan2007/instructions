@@ -14,7 +14,7 @@ Created: 2026
 This document lists the approved and recommended libraries for the frontend of our Enterprise SaaS applications, adhering to the "Pure TypeScript + Bootstrap 5" stack guidelines.
 
 This is the vanilla TypeScript/Bootstrap selection profile.
-Apply its framework-specific constraints and recommendations only when instructions/project/PROJECT.md declares that frontend stack.
+Apply its framework-specific constraints and recommendations only when PROJECT.md declares that frontend stack.
 Other frontends use their configured framework and the shared dependency-selection principles.
 
 **Core Stack:** Pure TypeScript, HTMX, HTML5, CSS3, Bootstrap 5+.

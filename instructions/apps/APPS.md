@@ -32,11 +32,11 @@ The existing platform instructions below cover Apple applications.
 
 ## Native SaaS clients
 
-A native app may be standalone or a SaaS client. Read that choice from its enabled component in instructions/project/PROJECT_PROFILE.md.
+A native app may be standalone or a SaaS client. Read that choice from its enabled component in PROJECT_PROFILE.md.
 For a SaaS integration change, read instructions/saas/SAAS.md and the configured SDK component's contract guidance in instructions/sdk/SDKs.md.
 Use the generated SDK from the API specification as the normal service boundary.
 Do not add another handwritten client layer merely because a native client exists.
-Keep generator settings and output paths in project configuration or instructions/project/PROJECT.md.
+Keep generator settings and output paths in project configuration or PROJECT.md.
 
 Use native controls and secure token storage. Follow the configured identity flow for sign-in, renewal, and sign-out.
 Reflect server-enforced permissions in the interface without treating client controls as authorization enforcement.

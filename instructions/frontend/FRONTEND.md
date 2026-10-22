@@ -16,7 +16,7 @@ Created: 2026
 Browser pages, dynamic UI, login flows, and reusable browser components.
 API, authentication, synchronization, and permission sections apply to browser work that uses those features.
 SaaS composition and asset compilation/delivery examples are linked separately.
-Use the frontend framework and design system recorded in instructions/project/PROJECT.md.
+Use the frontend framework and design system recorded in PROJECT.md.
 Bootstrap, HTMX, the enterprise shell, and the supplied theme catalog are scoped implementation profiles, not consequences of having a browser frontend.
 Read their sections only when that component uses the named stack or the corresponding project choice is checked.
 
@@ -831,7 +831,7 @@ if (!window.api || !window.api.isAuthenticated()) { ... }
 
 ## component-reuse workflow
 
-Use the component catalog recorded in instructions/project/PROJECT.md before implementing a replacement.
+Use the component catalog recorded in PROJECT.md before implementing a replacement.
 The URL workflow below applies only when the supplied theme catalog is selected for the component.
 
 - Before building new browser UI components, always consult the file
@@ -1063,7 +1063,7 @@ Accessibility is not just for disabled users; it improves the experience for eve
 
 ## Browser theme and component reuse
 
-The named catalog and theme resource below apply when instructions/project/PROJECT.md selects that catalog.
+The named catalog and theme resource below apply when PROJECT.md selects that catalog.
 Other frontends reuse their own declared components and appearance tokens.
 
 ### 1.1. Standardized Component Library

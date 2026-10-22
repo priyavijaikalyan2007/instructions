@@ -16,7 +16,20 @@ Start with [AGENTS.md](../AGENTS.md). The other root agent entries are CLAUDE.md
 The [scenario reading trees](../instructions/README.md#scenario-reading-trees) show the relevant files for native apps, SaaS clients, web SaaS, websites, and CLI tools.
 [Project configuration](../instructions/REPO.md#project-configuration) selects the guides needed for each task.
 The [profile selector](../instructions/REPO.md#profile-selector) initializes or modifies the same Markdown selections through an interview or JSON input.
-Project-owned files live under instructions/project/. Instruction maintenance records live under instructions/maintenance/.
+Project-owned files, including PROJECT_PROFILE.md, PROJECT.md, and ADDITIONAL.md, live at the root.
+Setup state and backups live under .instructions/. Instruction maintenance records live under instructions/maintenance/.
 The specs/ directory is reserved for actual product and repository specifications.
 
 Repository policies remain available through [contributing](CONTRIBUTING.md), [code of conduct](CODE_OF_CONDUCT.md), and [security](SECURITY.md).
+
+To test the interview locally without creating a GitHub repository:
+
+```bash
+./scripts/configure-instructions.sh --target-folder /tmp/instructions-trial --dry-run
+```
+
+Remove --dry-run to create the reviewed setup after confirmation.
+The ncurses interview records business facts, component choices, and multiple roles per coding tool.
+It supports editable fields, keyboard selection, scrolling help, and a review before approval.
+Use --ui plain for the line-oriented interface. Automation and redirected input keep plain output.
+[Project scaffolding](../instructions/PROJECT_SCAFFOLDING.md) explains generated script placeholders and the completion checklist.

@@ -11,6 +11,19 @@ Created: 2026
 
 # Changelog
 
+## 22 October 2026: project bootstrap and curses interview
+
+- Moved project profiles, facts, refinements, conversation, and changelog files to the repository root.
+- Added safe legacy migration, active reference repair, conflict checks, and preserved private file permissions.
+- Added local --target-folder setup, read-only trials, and self-contained setup tools.
+- Added multiple roles per tool and neutral agent entry points with preserved custom files.
+- Captured optional business facts and corrected invalid answers in place.
+- Generated profile-specific operation placeholders and a file-specific SETUP.md checklist.
+- Standardized new backend environment names as test, dev, and prod.
+- Kept single-license terms in root LICENSE and retained separate texts only when needed.
+- Added ncurses forms, editable fields, selection menus, scrolling help, preview, cancellation, and plain mode.
+- Verified 173 tests plus real-terminal and complete local bootstrap trials.
+
 ## 22 October 2026: extension interviews and folder bootstrap
 
 - Replaced generic browser prompts with browser/OS, installation-channel, source, build, and release choices.

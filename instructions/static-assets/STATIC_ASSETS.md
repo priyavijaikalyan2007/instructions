@@ -80,7 +80,7 @@ Create a reusable library only when its public contract and ownership justify on
 
 ## static build and hosting example
 
-This example applies only when the Theme component-library example is checked in instructions/project/PROJECT_PROFILE.md.
+This example applies only when the Theme component-library example is checked in PROJECT_PROFILE.md.
 It does not select Cloudflare hosting or a library build for a Java SaaS container.
 The selected library example uses this stack:
 
@@ -102,7 +102,7 @@ The selected library example uses this stack:
 
 ## theme resources
 
-These URLs belong to the selected theme-library example. Other components use the catalog recorded in instructions/project/PROJECT.md.
+These URLs belong to the selected theme-library example. Other components use the catalog recorded in PROJECT.md.
 
 - CSS Theme: https://theme.priyavijai-kalyan2007.workers.dev/css/custom.css
 - Bootstrap JS: theme.priyavijai-kalyan2007.workers.dev/js/bootstrap.bundle.min.js

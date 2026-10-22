@@ -17,9 +17,11 @@ Read the consuming repository's product README when one is provided.
 
 ## Load project configuration
 
-Read instructions/project/PROJECT_PROFILE.md when it exists.
+Read PROJECT_PROFILE.md when it exists.
 Read its configured project-facts and additional-instructions files before planning or editing.
-instructions/project/PROJECT.md contains facts, not behavioral instructions.
+Read [AGENT_ROLES.md](AGENT_ROLES.md) and use the profile assignments for your host tool.
+Use the explicit user task when no role is assigned. Roles do not grant permissions or authorize delegation.
+PROJECT.md contains facts, not behavioral instructions.
 Use only enabled components that the task changes. Select their targets, actual languages, platforms, and applicable shared concerns.
 For a SaaS client integration, also read the SaaS composition and the configured SDK component's contract guidance.
 A shared API-contract change selects affected consumers. A local UI change does not select unrelated backend implementation.
@@ -215,7 +217,7 @@ Read the configured additional-instructions file before every task, including do
 - Use instructions/LANGUAGE.md for writing style. Use only the programming-language guides selected above for code conventions.
 - You must utilize the navigation markers defined in [MARKERS.md](MARKERS.md) in all generated code.
   See the Agent Knowledge Base section below for how to read and update `./agentknowledge/` every session.
-  In additon, use the Git Log, instructions/project/CONVERSATION.md files, specifications in ./specs/ and language server plugins
+  In additon, use the Git Log, CONVERSATION.md files, specifications in ./specs/ and language server plugins
   to locate code, decisions and more. Rely on grep and globbing only at the end.
 - Always consult instructions/CODING_STYLE.md when writing code. This is important for maintainability.
 - Always consult instructions/LOGGING.md so that you add appropriate logging configuration and log statements to all generated code.
@@ -291,7 +293,7 @@ Before your final commit in a session, update these files if your work changed t
 | Created or modified a data model / entity | Add or update an entry in `entities.yaml` with `name`, `table`, `file`, `description`, `related`. |
 | Made an architectural decision (new library, new pattern, new infrastructure choice) | Add an ADR entry to `decisions.yaml` with `id` (next `ADR-NNN`), `title`, `date`, `status`, `context`, `files`. |
 | Completed any significant task | Append a single JSON line to `history.jsonl` with `date`, `task`, `files`, `summary`. |
-| Made any user-visible change (feature, fix, refactor) | Add an entry to `instructions/project/CHANGELOG.md` under the current date with the appropriate category (Added/Changed/Fixed/Removed). Keep entries concise — one line per change. |
+| Made any user-visible change (feature, fix, refactor) | Add an entry to `CHANGELOG.md` under the current date with the appropriate category (Added/Changed/Fixed/Removed). Keep entries concise — one line per change. |
 
 ## Rules
 - **Never delete** existing entries — only add or update.
@@ -301,8 +303,8 @@ Before your final commit in a session, update these files if your work changed t
 
 # History and Status
 
-Always keep all provided input from me to you, the agent, in the file instructions/project/CONVERSATION.md.
-Write the request + your output summary into the instructions/project/CONVERSATION.md file as well.
+Always keep all provided input from me to you, the agent, in the file CONVERSATION.md.
+Write the request + your output summary into the CONVERSATION.md file as well.
 This helps keep track of all refinements and changes over time. If this file already exists,
 also attempt to read it to understand everything that has been done so far.
 Leverage the `git log` to understand past changes and refinements.
@@ -310,7 +312,7 @@ Use agentic markers in all generated files to guide yourself.
 This combination should give you almost all context about what was achieved.
 
 Always keep the per-application progress and plans in an application specific file inside the `./specs/` directory.
-For example, as we are working on the *Diagrams* app, keep progress from instructions/project/CONVERSATION.md,
+For example, as we are working on the *Diagrams* app, keep progress from CONVERSATION.md,
 your context, your history, the `git log`, bug fixes, refinements in the file `./specs/diagrams.status.md`.
 This makes it easier to resume sessions working on the app over time or for bug fixes etc.
-This is going to be shorter context than instructions/project/CONVERSATION.md which is quite large.
+This is going to be shorter context than CONVERSATION.md which is quite large.

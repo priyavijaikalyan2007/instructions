@@ -25,15 +25,20 @@ import tempfile
 import uuid
 
 from profile_interview import run_interview
+from agent_roles import (agent_entry_changes, apply_agent_roles, interview_agent_roles, profile_agent_roles)
+from project_layout import (LEGACY_PATHS, PROFILE_PATH, STATE_PATH, canonical_profile, existing_project_path,
+                            layout_changes, read_project_bytes)
+from project_scaffolding import print_readiness, scaffolding_changes
 from browser_profile import BROWSER_FIELDS, validate_browser
 from source_folders import plan_source_folders, source_scope_warnings
-from terminal_ui import input, print, set_color_mode
+from terminal_ui import input, print, set_color_mode, interactive_requested, run_interview_ui
+from interview_cancelled import InterviewCancelled
 from workspace_profile import WORKSPACE_FIELDS, language_values, validate_workspace
-from project_initialization import initialization_changes, is_inherited, prepare_initialization, safe_path
+from project_initialization import (initialization_changes, is_inherited, is_source_repository,
+                                    prepare_initialization, safe_path)
 
 
 LIBRARY_ROOT = Path(__file__).resolve().parents[1]
-PROFILE_PATH = "instructions/project/PROJECT_PROFILE.md"
 START = "<!-- instructions:managed:start -->"
 END = "<!-- instructions:managed:end -->"
 COMMON_GUIDES = {
@@ -73,8 +78,8 @@ IDENTIFIER = re.compile(r"[a-z][a-z0-9-]*\Z")
 
 def read_optional(root: Path, relative: str) -> str | None:
     """Read UTF-8 project configuration, preserving its newline bytes."""
-    path = safe_path(root, relative)
-    return path.read_bytes().decode("utf-8") if path.exists() else None
+    data = read_project_bytes(root, relative)
+    return data.decode("utf-8") if data is not None else None
 
 
 def fresh_template(name: str) -> str:
@@ -82,7 +87,7 @@ def fresh_template(name: str) -> str:
     text = (LIBRARY_ROOT / "instructions" / name).read_text()
     text = re.sub(r"File GUID: [\w-]+", f"File GUID: {uuid.uuid4()}", text, count=1)
     if name == "PROJECT_PROFILE_TEMPLATE.md":
-        text = text.replace('](REPO.md#', '](../REPO.md#')
+        text = text.replace('](REPO.md', '](instructions/REPO.md')
     if name == "PROJECT_TEMPLATE.md":
         text = re.sub(r"`<[^>]+>`", "`unspecified`", text)
     return text
@@ -207,13 +212,15 @@ def update_component(block: str, changes: dict) -> str:
 
 def apply_answers(text: str, answers: dict) -> str:
     """Merge an explicit answer document into the existing Markdown profile."""
-    if not isinstance(answers, dict) or set(answers) - {"saas_product", "components"}:
-        raise ValueError("Unknown answer fields. Use saas_product and components only.")
+    if not isinstance(answers, dict) or set(answers) - {"saas_product", "components", "agent_roles"}:
+        raise ValueError("Unknown answer fields. Use saas_product, components, and agent_roles only.")
     if "saas_product" in answers:
         value = answers["saas_product"]
         formatted_value("enabled", value)
         checked_saas(text)
         text = re.sub(r"(?m)^- \[[ xX]\] SaaS product", f"- [{'x' if value else ' '}] SaaS product", text)
+    if "agent_roles" in answers:
+        text = apply_agent_roles(text, answers["agent_roles"])
     updates = answers.get("components", {})
     if not isinstance(updates, dict):
         raise ValueError("components must be an object keyed by component identifier.")
@@ -261,7 +268,7 @@ def project_paths(text: str) -> dict[str, str]:
 
 def validate_project_paths(root: Path, text: str) -> None:
     """Keep project context separate from shared guides, scripts, and agent entry points."""
-    reserved = {PROFILE_PATH, "AGENTS.md", "CLAUDE.md", "CODEX.md", "GEMINI.md"}
+    reserved = {PROFILE_PATH, "AGENTS.md", "CLAUDE.md", "CODEX.md", "GEMINI.md", "SETUP.md"}
     reserved.update(str(path.relative_to(LIBRARY_ROOT))
                     for path in (LIBRARY_ROOT / "instructions").rglob("*")
                     if path.is_file() and path.relative_to(LIBRARY_ROOT / "instructions").parts[0]
@@ -375,6 +382,7 @@ def validate_profile(root: Path, text: str) -> tuple[set, list]:
                 raise ValueError(f"{identifier}: SDK component {sdk!r} must name an enabled sdks component.")
         elif client:
             warnings.append(f"{identifier}: SaaS client has no SDK component; verify the explicit integration choice.")
+    profile_agent_roles(text)
     validate_project_paths(root, text)
     return guides, warnings
 
@@ -383,8 +391,9 @@ def routing_block(guides: set[str]) -> str:
     """Derive scope links from the profile while keeping common and conditional obligations explicit."""
     lines = [START,
              "Read [the shared workflow](instructions/WORKFLOW.md) before planning or editing.",
-             "Read `instructions/project/PROJECT_PROFILE.md` and its configured facts and additional instructions.",
+             "Read `PROJECT_PROFILE.md` and its configured facts and additional instructions.",
              "The profile is authoritative. Regenerate this block after changing its selections.",
+             "Use its tool-role assignments with [shared role definitions](instructions/AGENT_ROLES.md).",
              "",
              "Common requirements apply in every profile. Read the relevant task sections:", ""]
     lines.extend(f"- [{name}](instructions/{name})" for name in sorted(COMMON_GUIDES - {"WORKFLOW.md"}))
@@ -414,6 +423,17 @@ def missing_shared_guides(root: Path) -> dict[str, bytes]:
     return changes
 
 
+def missing_setup_tools(root: Path) -> dict[str, bytes]:
+    """Make a local target self-contained without replacing its existing scripts."""
+    names = ['configure-instructions.sh', 'configure_instructions.py', 'project_initialization.py',
+             'project_layout.py', 'agent_roles.py', 'license_selection.py', 'profile_interview.py',
+             'browser_profile.py', 'workspace_profile.py', 'source_folders.py', 'terminal_ui.py',
+             'project_context.py', 'project_scaffolding.py', 'interview_widgets.py',
+             'curses_interview.py', 'interview_cancelled.py']
+    return {'scripts/' + name: (LIBRARY_ROOT / 'scripts' / name).read_bytes() for name in names
+            if not safe_path(root, 'scripts/' + name).exists()}
+
+
 def managed_agents(existing: str, guides: set[str]) -> str:
     """Replace only our complete managed block or append it to handwritten root instructions."""
     managed = routing_block(guides)
@@ -439,14 +459,13 @@ def plan_changes(root: Path, profile: str, check: bool, guides: set[str]) -> dic
     for relative, template in project_paths(profile).items():
         if relative in changes or relative in {PROFILE_PATH, "AGENTS.md", "CLAUDE.md", "CODEX.md", "GEMINI.md"}:
             raise ValueError(f"Project file conflicts with an instruction file: {relative}")
-        if not safe_path(root, relative).exists():
+        if read_project_bytes(root, relative) is None:
             changes[relative] = fresh_template(template).encode("utf-8")
     agents = read_optional(root, "AGENTS.md")
     agents = (LIBRARY_ROOT / "AGENTS.md").read_text() if agents is None else agents
+    agents = canonical_profile(agents)
     changes["AGENTS.md"] = managed_agents(agents, guides).encode("utf-8")
-    for name in ["CLAUDE.md", "CODEX.md", "GEMINI.md"]:
-        if not safe_path(root, name).exists():
-            changes[name] = (LIBRARY_ROOT / name).read_bytes()
+    changes.update(agent_entry_changes(root, profile, LIBRARY_ROOT))
     return {name: data for name, data in changes.items()
             if not safe_path(root, name).exists() or safe_path(root, name).read_bytes() != data}
 
@@ -459,7 +478,8 @@ def preview(root: Path, changes: dict[str, bytes | None], folders: list[str]) ->
         path = safe_path(root, name)
         action = 'Remove inherited' if data is None else ('Update' if path.exists() else 'Create')
         print(f"{action} {name}")
-        review_files = {PROFILE_PATH, "AGENTS.md", "LICENSE", "THIRD_PARTY_NOTICES.md"}
+        review_files = {PROFILE_PATH, "AGENTS.md", "PROJECT.md", "ADDITIONAL.md", "SETUP.md",
+                        "LICENSE", "THIRD_PARTY_NOTICES.md"}
         if data is not None and (name in review_files or name.startswith('.github/')):
             before = path.read_text().splitlines(True) if path.exists() else []
             after = data.decode("utf-8").splitlines(True)
@@ -481,40 +501,53 @@ def preflight_file_changes(root: Path, changes: dict[str, bytes | None]) -> None
                 break
 
 
+def atomic_write(path: Path, data: bytes, mode: int) -> None:
+    """Replace one file within its parent directory while preserving its selected permissions."""
+    path.parent.mkdir(parents=True, exist_ok=True)
+    descriptor, temporary = tempfile.mkstemp(prefix=".instructions-", dir=path.parent)
+    try:
+        with os.fdopen(descriptor, "wb") as stream:
+            stream.write(data)
+        os.chmod(temporary, mode)
+        os.replace(temporary, path)
+    finally:
+        if os.path.exists(temporary):
+            os.unlink(temporary)
+
+
 def write_changes(root: Path, changes: dict[str, bytes | None], folders: list[str]) -> None:
-    """Preflight every destination, then replace each file atomically within its parent directory."""
+    """Preflight the complete plan and retain legacy state until its canonical replacement is written."""
     preflight_file_changes(root, changes)
     for folder in folders:
         safe_path(root, folder).mkdir(parents=True, exist_ok=True)
-    ordered = sorted(changes, key=lambda name: (not name.startswith('instructions/project/template-backup/'),
-                                                name == 'instructions/project/INITIALIZATION.json', name))
+    ordered = sorted(changes, key=lambda name: (not name.startswith('.instructions/template-backup/'),
+                                                name == LEGACY_PATHS[STATE_PATH], name == STATE_PATH,
+                                                changes[name] is None, name))
     for name in ordered:
-        data = changes[name]
-        path = safe_path(root, name)
+        path, data = safe_path(root, name), changes[name]
         if data is None:
-            path.unlink()
+            path.unlink(missing_ok=True)
             continue
-        path.parent.mkdir(parents=True, exist_ok=True)
-        descriptor, temporary = tempfile.mkstemp(prefix=".instructions-", dir=path.parent)
-        try:
-            with os.fdopen(descriptor, "wb") as stream:
-                stream.write(data)
-            os.chmod(temporary, path.stat().st_mode & 0o777 if path.exists() else 0o644)
-            os.replace(temporary, path)
-        finally:
-            if os.path.exists(temporary):
-                os.unlink(temporary)
+        previous = existing_project_path(root, name)
+        default_mode = 0o755 if name.endswith('.sh') else 0o644
+        mode = previous.stat().st_mode & 0o777 if previous.exists() else default_mode
+        atomic_write(path, data, mode)
 
 
 def arguments() -> argparse.Namespace:
     """Define the public CLI without network access or automatic Git operations."""
     parser = argparse.ArgumentParser(description="Interview, preview, check, or edit a Markdown instruction profile.")
-    parser.add_argument("--root", type=Path, default=Path.cwd(), help="existing target repository (default: cwd)")
+    target = parser.add_mutually_exclusive_group()
+    target.add_argument("--root", type=Path, help="existing target repository (default: cwd)")
+    target.add_argument("--target-folder", type=Path, help="initialize or edit a local folder without Git or GitHub")
+    parser.add_argument("--configure-agents", action="store_true", help="interview tool-role assignments")
     parser.add_argument("--answers", type=Path, help="JSON selections merged into the existing Markdown profile")
     parser.add_argument("--initialize-project", action="store_true",
                         help="initialize project documents from templates, preserving customized files")
     parser.add_argument("--project-answers", type=Path,
                         help="JSON project identity and license choices for --initialize-project")
+    parser.add_argument("--ui", choices=["auto", "curses", "plain"], default="auto",
+                        help="ncurses forms on interactive terminals, or plain stream output")
     parser.add_argument("--color", choices=["auto", "always", "never"], default="auto",
                         help="terminal styling (auto respects redirected output, NO_COLOR, and TERM=dumb)")
     mode = parser.add_mutually_exclusive_group()
@@ -522,18 +555,33 @@ def arguments() -> argparse.Namespace:
     mode.add_argument("--apply", action="store_true", help="apply validated changes without a confirmation prompt")
     mode.add_argument("--check", action="store_true", help="validate the installed profile and selected guides")
     args = parser.parse_args()
-    if args.project_answers and not args.initialize_project:
+    if args.target_folder and args.project_answers:
+        args.initialize_project = True
+    if args.project_answers and not (args.initialize_project or args.target_folder):
         parser.error("--project-answers requires --initialize-project")
     if args.initialize_project and args.check:
         parser.error("--initialize-project cannot be combined with --check")
-    if args.check and args.answers:
+    if args.check and (args.answers or args.configure_agents):
         parser.error("--check reads the installed profile; do not combine it with --answers")
     return args
+
+
+def interview_profile(root: Path, profile: str, is_new: bool, configure_agents: bool) -> str:
+    """Collect project choices and optional roles through the existing answer contract."""
+    assignments = interview_agent_roles(profile_agent_roles(profile)) if is_new or configure_agents else None
+    components = {key: component_values(profile[start:end])
+                  for key, (start, end) in component_blocks(profile).items()}
+    answers = run_interview(root, LIBRARY_ROOT, components, checked_saas(profile), is_new)
+    if assignments is not None:
+        answers['agent_roles'] = assignments
+    return apply_answers(profile, answers)
 
 
 def load_profile(root: Path, args: argparse.Namespace, identity: dict | None = None) -> str:
     """Read or initialize the profile, then collect only the requested input mode."""
     profile = read_optional(root, PROFILE_PATH)
+    if profile is not None:
+        profile = canonical_profile(profile)
     if identity is not None and is_inherited(root, PROFILE_PATH):
         profile = None
     is_new = profile is None
@@ -546,11 +594,12 @@ def load_profile(root: Path, args: argparse.Namespace, identity: dict | None = N
     if args.answers:
         answers = json.loads(args.answers.read_text())
         profile = apply_answers(profile, answers)
-    elif not args.check and not args.dry_run:
-        components = {key: component_values(profile[start:end])
-                      for key, (start, end) in component_blocks(profile).items()}
-        answers = run_interview(root, LIBRARY_ROOT, components, checked_saas(profile), is_new)
-        profile = apply_answers(profile, answers)
+    elif args.configure_agents and not is_new:
+        return apply_agent_roles(profile, interview_agent_roles(profile_agent_roles(profile)))
+    elif not args.check and (not args.dry_run or args.target_folder):
+        profile = interview_profile(root, profile, is_new, args.configure_agents)
+    if args.configure_agents and args.answers:
+        profile = apply_agent_roles(profile, interview_agent_roles(profile_agent_roles(profile)))
     return profile
 
 
@@ -561,10 +610,11 @@ def check_root_routing(root: Path, guides: set[str]) -> None:
         raise ValueError("AGENTS.md needs the current managed routing block. Run the configurator to preview repair.")
 
 
-def validated_root(path: Path) -> Path:
-    """Require a real existing target directory before any profile or project operation."""
-    if path.is_symlink() or not path.is_dir():
-        raise ValueError("--root must name an existing directory without a final symlink.")
+def validated_root(path: Path, allow_missing: bool = False) -> Path:
+    """Resolve an existing directory or an explicitly allowed missing local target without creating it."""
+    if path.is_symlink() or (path.exists() and not path.is_dir()) or (not allow_missing and not path.is_dir()):
+        raise ValueError("Target must be a directory without a final symlink. "
+                         "Only --target-folder permits missing paths.")
     return path.resolve()
 
 
@@ -575,40 +625,80 @@ def report_selection(guides: set[str], warnings: list[str]) -> None:
     print("Selected target/language guides (narrow further by the task): " + ", ".join(sorted(guides)))
 
 
-def main() -> int:
-    """Orchestrate input, validation, preview, and optional application."""
-    args = arguments()
-    set_color_mode(args.color)
-    root = validated_root(args.root)
-    identity = prepare_initialization(root, args)
-    profile = load_profile(root, args, identity)
-    guides, warnings = validate_profile(root, profile)
-    changes = plan_changes(root, profile, args.check, guides)
-    changes.update(initialization_changes(root, identity, project_paths(profile)))
-    components = [component_values(profile[start:end]) for start, end in component_blocks(profile).values()]
-    folders = plan_source_folders(root, components, changes, args.check)
-    for guide in sorted(guides | COMMON_GUIDES | {"AIML_SECURITY.md", "SECRET_HANDLING.md"}):
+def validate_selected_guides(root: Path, guides: set[str], changes: dict) -> None:
+    """Require selected files either on disk or in the validated installation plan."""
+    for guide in sorted(guides | COMMON_GUIDES | {"AIML_SECURITY.md", "SECRET_HANDLING.md", "AGENT_ROLES.md"}):
         relative = "instructions/" + guide
         if relative not in changes and not safe_path(root, relative).is_file():
             raise ValueError(f"Missing selected guide: {relative}")
+
+
+def project_setup_changes(root: Path, args, profile: str, identity: dict | None) -> tuple[dict, bool]:
+    """Keep project-owned scaffolding separate from generic profile selection and checking."""
+    changes = missing_setup_tools(root) if args.target_folder and not args.check else {}
+    changes.update(initialization_changes(root, identity, project_paths(profile)))
+    scaffold = bool(identity is not None or args.target_folder or existing_project_path(root, STATE_PATH).exists())
+    if scaffold and not args.check:
+        changes.update(scaffolding_changes(root, profile, project_paths(profile)))
+    return changes, scaffold
+
+
+def apply_preview(root: Path, args, changes: dict, folders: list[str]) -> None:
+    """Apply only after the full preview, or leave all files unchanged on dry run and cancellation."""
+    if args.dry_run or not (changes or folders):
+        return
+    if args.apply or ask_boolean("Apply these changes?", False):
+        write_changes(root, changes, folders)
+        print(f"Applied {len(changes)} file changes and created {len(folders)} source folders.")
+    else:
+        print("Cancelled. No files changed.")
+
+
+def configure_project(args) -> int:
+    """Orchestrate input, validation, preview, and optional application."""
+    root = validated_root(args.target_folder or args.root or Path.cwd(), bool(args.target_folder))
+    if args.target_folder and is_source_repository(root):
+        raise ValueError("Use a different target folder. This is the source instruction repository.")
+    if args.target_folder and not args.check and read_optional(root, PROFILE_PATH) is None:
+        args.initialize_project = True
+    changes = layout_changes(root, args.check)
+    identity = prepare_initialization(root, args)
+    profile = load_profile(root, args, identity)
+    guides, warnings = validate_profile(root, profile)
+    changes.update(plan_changes(root, profile, args.check, guides))
+    project_changes, scaffold = project_setup_changes(root, args, profile, identity)
+    changes.update(project_changes)
+    components = [component_values(profile[start:end]) for start, end in component_blocks(profile).values()]
+    folders = plan_source_folders(root, components, changes, args.check)
+    validate_selected_guides(root, guides, changes)
     report_selection(guides, warnings + source_scope_warnings(components))
     if args.check:
         check_root_routing(root, guides)
         print("Profile check passed.")
         return 0
     preview(root, changes, folders)
-    if not args.dry_run and (changes or folders):
-        if args.apply or ask_boolean("Apply these changes?", False):
-            write_changes(root, changes, folders)
-            print(f"Applied {len(changes)} file changes and created {len(folders)} source folders.")
-        else:
-            print("Cancelled. No files changed.")
+    if scaffold:
+        print_readiness(profile, project_paths(profile))
+    apply_preview(root, args, changes, folders)
     return 0
+
+
+def main() -> int:
+    """Select presentation separately from the project configuration workflow."""
+    args = arguments()
+    set_color_mode(args.color)
+    return run_interview_ui(lambda: configure_project(args), args.ui, interactive_requested(args))
 
 
 if __name__ == "__main__":
     try:
         sys.exit(main())
+    except InterviewCancelled:
+        print("Cancelled. No files changed.")
+        sys.exit(0)
+    except KeyboardInterrupt:
+        print("Interrupted. Review any reported changes before retrying.", file=sys.stderr)
+        sys.exit(130)
     except (ValueError, OSError, EOFError) as error:
         print(f"Configuration error: {error}", file=sys.stderr)
         sys.exit(2)

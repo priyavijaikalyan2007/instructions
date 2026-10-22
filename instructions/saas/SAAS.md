@@ -15,7 +15,7 @@ Created: 2026
 
 A SaaS is a product composed of the enabled services and user interfaces in one monolithic repository.
 It may include a backend, browser frontend, database, static assets, docs, website, generated SDKs, and native clients.
-Native clients are optional. Their platforms and SaaS-client relationship come from instructions/project/PROJECT_PROFILE.md.
+Native clients are optional. Their platforms and SaaS-client relationship come from PROJECT_PROFILE.md.
 Read only the components changed by the task. Presence in the repository does not require reading every component's implementation.
 
 ## Surface selection
@@ -30,7 +30,7 @@ Read only the components changed by the task. Presence in the repository does no
 | Separate static website | [WEBSITES.md](../website/WEBSITES.md) and affected asset/language guidance |
 
 Use generated SDKs from the API specification as the normal native service boundary.
-Keep generator configuration, output paths, server framework, and packaging facts in instructions/project/PROJECT.md.
+Keep generator configuration, output paths, server framework, and packaging facts in PROJECT.md.
 Native application behavior still includes appropriate session handling, secure credential storage, and usable failure feedback.
 Offline editing, background synchronization, tenants, and workspaces apply only when configured product capabilities need them.
 A container can package the server and browser frontend. Native clients have separate application build and release artifacts.
@@ -106,7 +106,7 @@ Those legacy paths do not set the default for a new project.
 
 ## super-app shell
 
-Apply this section only when the Enterprise browser shell example is selected in instructions/project/PROJECT_PROFILE.md.
+Apply this section only when the Enterprise browser shell example is selected in PROJECT_PROFILE.md.
 
 - Implement a super-app model.
 - In the super-app model, there is a **platform menu-bar** at the top for the user, application dropdown,

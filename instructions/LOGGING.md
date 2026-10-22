@@ -224,7 +224,7 @@ Wrap all highly detailed log levels such as DEBUG/TRACE with an if check to make
 
 ### 2.2 Environment Separation
 
-This deployment example applies to server components. Use the actual environment names from instructions/project/PROJECT.md.
+This deployment example applies to server components. Use the actual environment names from PROJECT.md.
 Local native apps do not need staging or production service configurations merely to emit logs.
 
 * Maintain **separate explicit configurations** for:

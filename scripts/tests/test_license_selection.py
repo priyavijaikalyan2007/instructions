@@ -37,7 +37,8 @@ class LicenseSelectionTests(unittest.TestCase):
                            'LGPL-2.1-only', 'LGPL-2.1-or-later', 'LGPL-3.0-only', 'LGPL-3.0-or-later']:
             result = licenses.license_files({'software': [identifier]}, 'Example Owner', '2026')
             self.assertIn(identifier, result['LICENSE'].decode())
-            self.assertTrue(result[f'LICENSES/{identifier}.txt'])
+            terms = result.get(f'LICENSES/{identifier}.txt', result['LICENSE'])
+            self.assertTrue(terms.endswith(licenses.term_bytes(identifier, 'Example Owner', '2026')))
             if identifier.startswith('LGPL-3.0'):
                 self.assertIn('LICENSES/GPL-3.0-only.txt', result)
 
@@ -45,7 +46,23 @@ class LicenseSelectionTests(unittest.TestCase):
         result = licenses.license_files({'software': ['MIT']}, 'Example Owner', '2026')
         expected = (licenses.LICENSE_ROOT / 'MIT.txt').read_text()
         expected = expected.replace('<year>', '2026').replace('<copyright holders>', 'Example Owner')
-        self.assertEqual(result['LICENSES/MIT.txt'].decode(), expected)
+        self.assertTrue(result['LICENSE'].decode().endswith(expected))
+
+    def test_single_license_keeps_full_terms_in_root_without_duplicate_folder(self):
+        for identifier in ['MIT', 'Apache-2.0', 'GPL-3.0-or-later']:
+            with self.subTest(identifier=identifier):
+                result = licenses.license_files({'software': [identifier]}, 'Owner', '2026')
+                self.assertEqual(set(result), {'LICENSE'})
+                self.assertTrue(result['LICENSE'].endswith(licenses.term_bytes(identifier, 'Owner', '2026')))
+                self.assertIn(identifier, result['LICENSE'].decode())
+
+    def test_multiple_terms_retain_scoped_root_notice_and_license_directory(self):
+        for choice in [{'software': ['MIT', 'Apache-2.0']},
+                       {'software': ['MIT'], 'content': 'CC-BY-4.0', 'content_paths': ['docs']},
+                       {'software': ['LGPL-3.0-only']}]:
+            result = licenses.license_files(choice, 'Owner', '2026')
+            self.assertTrue(any(path.startswith('LICENSES/') for path in result))
+            self.assertIn('LICENSES/', result['LICENSE'].decode())
 
     def test_dual_interview_asks_exact_gnu_version_policy(self):
         with redirect_stdout(io.StringIO()), patch('builtins.input',

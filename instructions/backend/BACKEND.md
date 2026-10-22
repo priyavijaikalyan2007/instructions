@@ -11,6 +11,14 @@ Created: 2026
 
 # Backend services
 
+## Environment convention
+
+For new backend components, use test for the local machine, dev for staging, and prod for production.
+Keep actual destinations, database ownership, and configuration paths in project facts.
+Setup defines names and script placeholders. It does not provision those environments.
+Preserve established environment mappings unless the task explicitly migrates them.
+Read [project scaffolding](../PROJECT_SCAFFOLDING.md) before implementing generated operation scripts.
+
 ## Target scope
 
 Server, container, and Kubernetes-hosted service work: APIs, databases, entities, data models, and service operations.
@@ -43,7 +51,7 @@ Read shared service boundaries, resource limits, and API behavior for every back
 Use [Java](../java/JAVA.md#performance) for Java runtime, testing, logging, profiling, and packaged execution.
 The ASP.NET Core section and .NET implementation notes apply only to a configured .NET component.
 A container does not select .NET, Keycloak, Cloud Run, or Kubernetes by itself.
-Use the component's actual framework, toolchain, and launch configuration from instructions/project/PROJECT.md and its manifests.
+Use the component's actual framework, toolchain, and launch configuration from PROJECT.md and its manifests.
 
 ## Runtime and resource boundaries
 

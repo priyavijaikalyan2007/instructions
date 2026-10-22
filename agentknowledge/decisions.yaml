@@ -107,3 +107,42 @@
     - scripts/configure_instructions.py
     - instructions/REPO.md
     - instructions/maintenance/extension-bootstrap-review.md
+
+- id: ADR-007
+  title: Keep project ownership at the root and initialize local targets without Git
+  date: 2026-10-22
+  status: Accepted
+  context: >-
+    The owner requested root project profiles and facts, selectable multiple roles per host tool,
+    and complete local setup without repeated GitHub template creation.
+    Shared rules stay under instructions/. Legacy moves preserve history, custom paths, permissions, and backups.
+    Project initialization captures business facts, creates missing operation placeholders, and reports completion tasks.
+    New backends use test locally, dev for staging, and prod for production. Unimplemented operations fail explicitly.
+    Single-license output keeps full terms in root LICENSE unless additional texts are required.
+  files:
+    - scripts/project_layout.py
+    - scripts/agent_roles.py
+    - scripts/project_context.py
+    - scripts/project_scaffolding.py
+    - instructions/AGENT_ROLES.md
+    - instructions/PROJECT_SCAFFOLDING.md
+    - PROJECT_PROFILE.md
+    - PROJECT.md
+
+- id: ADR-008
+  title: Use optional ncurses forms for interactive setup and retain plain automation
+  date: 2026-10-22
+  status: Accepted
+  context: >-
+    The owner found line-oriented terminal editing unreliable for a long interview and requested ncurses.
+    Python curses provides forms, choice lists, scrolling help, full review, and explicit cancellation.
+    TextBuffer stores printable Unicode and editing operations rather than escape sequences.
+    curses.wrapper restores terminal state. Redirected and JSON workflows remain plain.
+    --ui auto selects the interface. --ui plain opts out and --ui curses requires terminal support.
+    The setup installs no terminal dependencies or global agent configuration.
+  files:
+    - scripts/curses_interview.py
+    - scripts/interview_widgets.py
+    - scripts/terminal_ui.py
+    - scripts/interview_cancelled.py
+    - scripts/tests/test_curses_interview.py

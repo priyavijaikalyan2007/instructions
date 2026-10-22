@@ -17,7 +17,7 @@ Created: 2026
 | --- | --- |
 | Repository | instructions |
 | Product | Generic coding-agent instructions and repository analysis tools |
-| Source | instructions/, the four root agent entries, scripts/, .github/, and agentknowledge/ |
+| Source | instructions/, root agent entries and project files, scripts/, .github/, and agentknowledge/ |
 | Review history | Git history and merged pull requests in priyavijaikalyan2007/instructions |
 | Application runtime | none |
 | Generic build.sh or test.sh | absent |
@@ -29,8 +29,8 @@ Created: 2026
 | Generic entry point | AGENTS.md |
 | Shared agent workflow | instructions/WORKFLOW.md |
 | Agent entry files | CODEX.md, CLAUDE.md, GEMINI.md |
-| Project selections | instructions/project/PROJECT_PROFILE.md |
-| Local refinements | instructions/project/ADDITIONAL.md |
+| Project selections | PROJECT_PROFILE.md |
+| Local refinements | ADDITIONAL.md |
 | Plan and status | instructions/maintenance/instructions-plan.md, instructions/maintenance/instructions.status.md |
 | Profile selector | scripts/configure-instructions.sh, Python 3.10+, Bash, Python standard library |
 | Selector test command | python3 -m unittest discover -s scripts/tests -v |
@@ -68,3 +68,14 @@ First-time interactive setup records approved folder creation in optional source
 Extension defaults use src/extensions/googleworkspace/markdown and src/extensions/browser/markdown.
 Those example names are replaceable. Existing configured paths retain their values.
 Terminal output supports --color auto, always, and never without external dependencies.
+
+Project-owned context files now reside at the repository root. Initialization metadata uses .instructions/.
+The selector supports --target-folder for local tests without a Git repository or existing directory.
+Tools can have multiple roles recorded in PROJECT_PROFILE.md. Shared definitions live in instructions/AGENT_ROLES.md.
+Project initialization captures optional business facts and creates missing profile-specific operation placeholders and SETUP.md.
+For new backend components, the environment model uses test locally, dev for staging, and prod for production.
+Single-license output keeps full terms in root LICENSE when no companion or separate content terms are required.
+
+Interactive terminal interviews use Python curses forms. Plain and forced-curses modes are explicit --ui choices.
+PTY checks cover cursor editing, forward Delete, Backspace, choice selection, terminal resize, review, apply, and cancellation.
+Curses remains optional. JSON and redirected invocations retain plain output.

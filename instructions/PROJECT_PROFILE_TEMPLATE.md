@@ -11,17 +11,17 @@ Created: 2026
 
 # Project profile template
 
-Active configuration filename: instructions/project/PROJECT_PROFILE.md. Template source: instructions/PROJECT_PROFILE_TEMPLATE.md.
-Copy it to instructions/project/PROJECT_PROFILE.md, complete the values, and check each enabled component.
-Keep project facts in instructions/project/PROJECT.md and local instructions in instructions/project/ADDITIONAL.md.
+Active configuration filename: PROJECT_PROFILE.md. Template source: instructions/PROJECT_PROFILE_TEMPLATE.md.
+Copy it to PROJECT_PROFILE.md, complete the values, and check each enabled component.
+Keep project facts in PROJECT.md and local instructions in ADDITIONAL.md.
 Read [REPO.md](REPO.md#project-configuration) for the selection rules and setup procedure.
 
 ## Project files
 
 | Purpose | Path |
 | --- | --- |
-| Project facts | `instructions/project/PROJECT.md` |
-| Additional instructions | `instructions/project/ADDITIONAL.md` |
+| Project facts | `PROJECT.md` |
+| Additional instructions | `ADDITIONAL.md` |
 
 ## Project choices
 
@@ -147,3 +147,7 @@ Keep Source state: planned explicit for absent paths. Do not enable future compo
 - SaaS client: no
 - SDK component: none
 - Deployment: `<unpacked test extension, browser store packages, or Safari app distribution>`
+
+## Agent roles
+
+No tool-specific roles are assigned. Setup can record multiple roles per tool here.

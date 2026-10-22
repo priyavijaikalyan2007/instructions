@@ -12,7 +12,7 @@ Created: 2026
 # Agent Knowledge Base Architecture
 
 To optimize agent performance, we utilize a **Structured Local Knowledge Base** rooted in the repository. 
-This supplements `instructions/project/CONVERSATION.md` or `./specs/*.md` files which are the human readable versions with a
+This supplements `CONVERSATION.md` or `./specs/*.md` files which are the human readable versions with a
 machine-readable, queryable structure that agents can ingest quickly at the start of each session.
 
 ---

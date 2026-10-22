@@ -69,7 +69,7 @@ Use the documented generation command rather than editing generated output as a 
 Select the languages of affected outputs and consumers. A Swift SDK change selects instructions/swift/SWIFT.md, not every SDK language.
 Check request/response names, types, errors, and authentication integration against the actual generated contract.
 A changed API contract selects affected browser and native consumers in the same repository.
-Project-specific generator settings and output paths belong in instructions/project/PROJECT.md or referenced configuration files.
+Project-specific generator settings and output paths belong in PROJECT.md or referenced configuration files.
 App-side sessions, credential storage, lifecycle, and error presentation remain in instructions/apps/APPS.md and the shared UI/error guides.
 
 
