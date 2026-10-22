@@ -856,3 +856,13 @@ Local Markdown links and anchors pass. Four extension path examples changed inte
 Other existing code blocks and both CP1252 documents remain preserved.
 The active source profile check and dry run pass without changing AGENTS.md.
 Commit locally on fix/extension-bootstrap-interview. No downstream repository or browser installation was changed.
+
+
+### Publication and merge request
+
+> right, raise the PR and then merge. I will create another repo and test the template.
+
+The owner authorized pushing fix/extension-bootstrap-interview, creating a pull request, and merging it into main.
+The branch includes the preceding Apps Script guide and the verified extension interview and bootstrap fixes.
+All 127 tests passed. Source checks, template baseline, links, and terminal smoke tests also passed.
+Use a normal pull-request merge after remote checks, then synchronize local main for the owner's next template test.
