@@ -31,3 +31,18 @@
   definition: "Explains and validates Workspace hosts, add-on models, runtimes, and distribution choices."
   anchor_file: "scripts/workspace_profile.py"
   related: ["ProfileInterview", "ProfileConfiguration"]
+
+- name: "BrowserProfile"
+  definition: "Collects supported browser/OS pairs, extension delivery, language presets, and build/release guidance."
+  anchor_file: "scripts/browser_profile.py"
+  related: ["ProfileInterview", "ProfileConfiguration"]
+
+- name: "SourceFolders"
+  definition: "Preflights explicit enabled source-directory creation and warns about overlapping extension scope."
+  anchor_file: "scripts/source_folders.py"
+  related: ["ProfileConfiguration", "ProjectInitialization"]
+
+- name: "TerminalPresentation"
+  definition: "Styles line-oriented interview roles while retaining plain-text and unattended operation."
+  anchor_file: "scripts/terminal_ui.py"
+  related: ["ProfileInterview", "ProjectInitialization", "LicenseSelection"]

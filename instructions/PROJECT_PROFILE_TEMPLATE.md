@@ -37,8 +37,12 @@ Read [REPO.md](REPO.md#project-configuration) for the selection rules and setup 
 Each component needs a unique identifier. Duplicate a component section when platforms or languages need separate scopes.
 Check Enabled for current work in this repository. Keep possible future products disabled.
 For absent literal paths in a new component, add `- Source state: planned` explicitly.
-Omitting Source state requires existing paths. Planned scope creates no source files.
+Omitting Source state requires existing paths. Planned scope alone creates no source files or folders.
+Optional Source folders lists literal source paths to create as directories after preview and apply approval.
+JSON uses source_folders. Keep planned files outside that list and use an empty list to clear it.
+First-time interactive setup collects folder creation explicitly. Existing-profile edits preserve their configured paths.
 For Workspace components, see [the structured setup fields](REPO.md#product-specific-workspace-setup).
+For browser components, see [browser setup](REPO.md#product-specific-browser-setup).
 Replace angle-bracket values. Use `none` when a field does not apply.
 For new components, use [the default source locations](REPO.md#named-component-convention).
 Example names are replaceable. Existing component paths remain authoritative.
@@ -138,7 +142,7 @@ Keep Source state: planned explicit for absent paths. Do not enable future compo
 - [ ] Enabled
 - Source paths: `<extension source, manifest, and build configuration paths>`
 - Targets: browser-extensions
-- Languages: `<actual languages, such as JavaScript, TypeScript, HTML, CSS, or Apps Script>`
+- Languages: `<actual languages, such as JavaScript, TypeScript, HTML, CSS, or SCSS>`
 - Platforms: `<Chrome, Firefox, Safari with operating systems, or actual browsers>`
 - SaaS client: no
 - SDK component: none

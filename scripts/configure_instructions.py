@@ -25,6 +25,9 @@ import tempfile
 import uuid
 
 from profile_interview import run_interview
+from browser_profile import BROWSER_FIELDS, validate_browser
+from source_folders import plan_source_folders, source_scope_warnings
+from terminal_ui import input, print, set_color_mode
 from workspace_profile import WORKSPACE_FIELDS, language_values, validate_workspace
 from project_initialization import initialization_changes, is_inherited, prepare_initialization, safe_path
 
@@ -44,8 +47,9 @@ FIELDS = {
     "saas_client": "SaaS client", "sdk_component": "SDK component", "deployment": "Deployment",
 }
 REQUIRED_FIELDS = tuple(FIELDS)
-FIELDS.update({"source_state": "Source state", **WORKSPACE_FIELDS})
-LIST_FIELDS = {"source_paths", "targets", "languages", "platforms"}
+FIELDS.update({"source_state": "Source state", "source_folders": "Source folders",
+               **WORKSPACE_FIELDS, **BROWSER_FIELDS})
+LIST_FIELDS = {"source_paths", "source_folders", "targets", "languages", "platforms", "browser_targets"}
 TARGET_GUIDES = {
     "backend": "backend/BACKEND.md", "frontend": "frontend/FRONTEND.md", "saas": "saas/SAAS.md",
     "tools": "tools/TOOLS.md",
@@ -61,7 +65,8 @@ LANGUAGE_GUIDES = {
     "css": ["css/CSS.md"],
     "scss": ["scss/SCSS.md", "css/CSS.md"], "sql": ["sql/SQL.md"], "shell": ["shell/SHELL.md"],
     "bash": ["shell/SHELL.md"],
-    "apps script": ["javascript/JAVASCRIPT.md"], "google apps script": ["javascript/JAVASCRIPT.md"],
+    "apps script": ["javascript/JAVASCRIPT.md", "apps-script/APPS_SCRIPT.md"],
+    "google apps script": ["javascript/JAVASCRIPT.md", "apps-script/APPS_SCRIPT.md"],
 }
 IDENTIFIER = re.compile(r"[a-z][a-z0-9-]*\Z")
 
@@ -148,6 +153,8 @@ def formatted_value(key: str, value) -> str:
         if not isinstance(value, bool):
             raise ValueError(f"{key} must be a boolean.")
         return "yes" if value else "no"
+    if key == "source_folders" and value == []:
+        return ""
     if key in LIST_FIELDS:
         if not isinstance(value, list) or not value or any(not isinstance(item, str) for item in value):
             raise ValueError(f"{key} must be a nonempty list of strings.")
@@ -293,6 +300,30 @@ def validate_source_paths(root: Path, identifier: str, paths: str, state: str = 
     return warnings
 
 
+def workspace_runtime_guides(values: dict) -> set[str]:
+    """Select runtime guidance from validated Workspace metadata, not language guesses."""
+    runtime = values.get("workspace_runtime", "").strip("`")
+    if runtime == "apps-script":
+        return {"apps-script/APPS_SCRIPT.md", "javascript/JAVASCRIPT.md"}
+    if runtime == "http":
+        return {"backend/BACKEND.md"}
+    return set()
+
+
+def language_scope(identifier: str, languages: str) -> tuple[set[str], list[str]]:
+    """Resolve only declared languages and report coverage gaps without substituting another language."""
+    guides, warnings = set(), []
+    for language in language_values(languages):
+        if language.lower() == "none":
+            continue
+        known = LANGUAGE_GUIDES.get(language.lower())
+        if known:
+            guides.update(known)
+        else:
+            warnings.append(f"{identifier}: language coverage gap for {language}; retain the actual language.")
+    return guides, warnings
+
+
 def validate_component(root: Path, identifier: str, values: dict) -> tuple[set, list, list]:
     """Validate enabled metadata and report guide gaps without inventing coverage."""
     for key in REQUIRED_FIELDS:
@@ -309,16 +340,12 @@ def validate_component(root: Path, identifier: str, values: dict) -> tuple[set, 
     guides = {TARGET_GUIDES[target] for target in targets}
     if "google-workspace" in targets:
         warnings.extend(validate_workspace(values))
-        if values.get("workspace_runtime", "").strip("`") == "http":
-            guides.add("backend/BACKEND.md")
-    for language in language_values(values["languages"]):
-        if language.lower() == "none":
-            continue
-        known = LANGUAGE_GUIDES.get(language.lower())
-        if known:
-            guides.update(known)
-        else:
-            warnings.append(f"{identifier}: language coverage gap for {language}; retain the actual language.")
+        guides.update(workspace_runtime_guides(values))
+    if "browser-extensions" in targets:
+        warnings.extend(validate_browser(values))
+    language_guides, language_warnings = language_scope(identifier, values["languages"])
+    guides.update(language_guides)
+    warnings.extend(language_warnings)
     platforms = {value.lower() for value in split_values(values["platforms"])}
     if "apps" in targets and platforms - {"ios", "ipados", "macos"}:
         warnings.append(f"{identifier}: native platform coverage gap. Detailed app guidance covers Apple platforms.")
@@ -424,8 +451,10 @@ def plan_changes(root: Path, profile: str, check: bool, guides: set[str]) -> dic
             if not safe_path(root, name).exists() or safe_path(root, name).read_bytes() != data}
 
 
-def preview(root: Path, changes: dict[str, bytes | None]) -> None:
+def preview(root: Path, changes: dict[str, bytes | None], folders: list[str]) -> None:
     """Show configuration diffs and list missing guides without dumping every shared document."""
+    for folder in folders:
+        print(f"Create source folder {folder}")
     for name, data in sorted(changes.items()):
         path = safe_path(root, name)
         action = 'Remove inherited' if data is None else ('Update' if path.exists() else 'Create')
@@ -435,12 +464,12 @@ def preview(root: Path, changes: dict[str, bytes | None]) -> None:
             before = path.read_text().splitlines(True) if path.exists() else []
             after = data.decode("utf-8").splitlines(True)
             print("".join(difflib.unified_diff(before, after, fromfile=name, tofile=name)), end="")
-    if not changes:
+    if not changes and not folders:
         print("No changes.")
 
 
-def write_changes(root: Path, changes: dict[str, bytes | None]) -> None:
-    """Preflight every destination, then replace each file atomically within its parent directory."""
+def preflight_file_changes(root: Path, changes: dict[str, bytes | None]) -> None:
+    """Validate every file destination before source folders or instruction files are written."""
     for name in changes:
         path = safe_path(root, name)
         if path.exists() and not path.is_file():
@@ -450,6 +479,13 @@ def write_changes(root: Path, changes: dict[str, bytes | None]) -> None:
                 raise ValueError(f"Destination parent is not a directory: {parent}")
             if parent == root:
                 break
+
+
+def write_changes(root: Path, changes: dict[str, bytes | None], folders: list[str]) -> None:
+    """Preflight every destination, then replace each file atomically within its parent directory."""
+    preflight_file_changes(root, changes)
+    for folder in folders:
+        safe_path(root, folder).mkdir(parents=True, exist_ok=True)
     ordered = sorted(changes, key=lambda name: (not name.startswith('instructions/project/template-backup/'),
                                                 name == 'instructions/project/INITIALIZATION.json', name))
     for name in ordered:
@@ -479,6 +515,8 @@ def arguments() -> argparse.Namespace:
                         help="initialize project documents from templates, preserving customized files")
     parser.add_argument("--project-answers", type=Path,
                         help="JSON project identity and license choices for --initialize-project")
+    parser.add_argument("--color", choices=["auto", "always", "never"], default="auto",
+                        help="terminal styling (auto respects redirected output, NO_COLOR, and TERM=dumb)")
     mode = parser.add_mutually_exclusive_group()
     mode.add_argument("--dry-run", action="store_true", help="preview only; never write")
     mode.add_argument("--apply", action="store_true", help="apply validated changes without a confirmation prompt")
@@ -530,31 +568,39 @@ def validated_root(path: Path) -> Path:
     return path.resolve()
 
 
+def report_selection(guides: set[str], warnings: list[str]) -> None:
+    """Keep coverage warnings and selected guidance visible before the write preview."""
+    for warning in warnings:
+        print(f"Note: {warning}", file=sys.stderr)
+    print("Selected target/language guides (narrow further by the task): " + ", ".join(sorted(guides)))
+
+
 def main() -> int:
     """Orchestrate input, validation, preview, and optional application."""
     args = arguments()
+    set_color_mode(args.color)
     root = validated_root(args.root)
     identity = prepare_initialization(root, args)
     profile = load_profile(root, args, identity)
     guides, warnings = validate_profile(root, profile)
     changes = plan_changes(root, profile, args.check, guides)
     changes.update(initialization_changes(root, identity, project_paths(profile)))
+    components = [component_values(profile[start:end]) for start, end in component_blocks(profile).values()]
+    folders = plan_source_folders(root, components, changes, args.check)
     for guide in sorted(guides | COMMON_GUIDES | {"AIML_SECURITY.md", "SECRET_HANDLING.md"}):
         relative = "instructions/" + guide
         if relative not in changes and not safe_path(root, relative).is_file():
             raise ValueError(f"Missing selected guide: {relative}")
-    for warning in warnings:
-        print(f"Note: {warning}", file=sys.stderr)
-    print("Selected target/language guides (narrow further by the task): " + ", ".join(sorted(guides)))
+    report_selection(guides, warnings + source_scope_warnings(components))
     if args.check:
         check_root_routing(root, guides)
         print("Profile check passed.")
         return 0
-    preview(root, changes)
-    if not args.dry_run and changes:
+    preview(root, changes, folders)
+    if not args.dry_run and (changes or folders):
         if args.apply or ask_boolean("Apply these changes?", False):
-            write_changes(root, changes)
-            print(f"Applied {len(changes)} file changes.")
+            write_changes(root, changes, folders)
+            print(f"Applied {len(changes)} file changes and created {len(folders)} source folders.")
         else:
             print("Cancelled. No files changed.")
     return 0

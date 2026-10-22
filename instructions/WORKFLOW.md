@@ -26,6 +26,8 @@ A shared API-contract change selects affected consumers. A local UI change does 
 Unchecked components and examples do not enter scope merely because their files are present.
 Treat missing configured files, unresolved values, or source/profile disagreements as configuration gaps.
 Explicit Source state: planned permits absent literal source paths while defining instructions for new work.
+Optional Source folders metadata selects directory creation after preview and apply approval.
+An empty bootstrapped folder still represents planned work, not implemented source.
 It does not mean that source exists or that a build passed. Resolve other gaps before dependent work.
 For an older repository without a profile, infer existing scope from its README, source, manifests, and scripts.
 Do not invent project facts or enable components from this instruction repository's examples.
@@ -93,7 +95,8 @@ Code examples in this instruction repository do not select a language for the co
 | Rust source and Cargo configuration | [RUST.md](rust/RUST.md) |
 | Java source and JVM build configuration | [JAVA.md](java/JAVA.md) |
 | Python source and package configuration | [PYTHON.md](python/PYTHON.md) |
-| JavaScript or Apps Script source and runtime configuration | [JAVASCRIPT.md](javascript/JAVASCRIPT.md) |
+| JavaScript source and runtime configuration | [JAVASCRIPT.md](javascript/JAVASCRIPT.md) |
+| Server-side Apps Script, including compiled TypeScript output | [APPS_SCRIPT.md](apps-script/APPS_SCRIPT.md), plus shared JavaScript and actual source-language rules |
 | TypeScript source, declarations, and compiler configuration | [TYPESCRIPT.md](typescript/TYPESCRIPT.md) and its shared [JavaScript rules](javascript/JAVASCRIPT.md) |
 | HTML markup and markup in templates or views | [HTML.md](html/HTML.md) |
 | CSS stylesheets | [CSS.md](css/CSS.md) |

@@ -11,6 +11,24 @@ Created: 2026
 
 # Changelog
 
+## 22 October 2026: extension interviews and folder bootstrap
+
+- Replaced generic browser prompts with browser/OS, installation-channel, source, build, and release choices.
+- Added explained JavaScript/TypeScript presets with CSS defaults and optional SCSS for browser and Apps Script UI.
+- Changed extension defaults to src/extensions/<ecosystem>/<extension-name>/ and retained existing configured paths.
+- Created approved source folders during first-time interactive setup after preview and final approval.
+- Added optional source_folders metadata for explicit JSON/manual selection and safe directory restoration.
+- Added terminal colors with automatic plain-text fallback and --color controls across the interview.
+- Updated current Safari testing and packaging options from official Apple guidance.
+- Added 21 regression tests. All 127 tests pass.
+
+## 21 October 2026: Apps Script runtime guidance
+
+- Added Apps Script runtime rules and examples layered on shared JavaScript conventions.
+- Selected the runtime guide automatically for Apps Script Workspace runtimes and explicit Apps Script language labels.
+- Kept HTTP add-ons on their actual backend language guidance and preserved unselected installed guides.
+- Added five routing regression tests. All 106 selector tests pass.
+
 ## 21 October 2026: new-project initialization
 
 - Added explained project initialization with policy templates, identity fields, and explicit license choices.

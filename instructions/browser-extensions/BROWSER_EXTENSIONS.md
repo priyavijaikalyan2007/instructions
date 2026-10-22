@@ -58,11 +58,11 @@ and [Safari distribution](https://developer.apple.com/documentation/safariservic
 
 ## Recommended source layout
 
-Use `src/extension/<extension-name>/browser/` for a new browser extension family.
+Use `src/extensions/browser/<extension-name>/` for a new browser extension family.
 Apply the [shared folder convention](../REPO.md#folder-and-file-structure). Preserve existing configured layouts.
 
 ```text
-src/extension/<extension-name>/browser/
+src/extensions/browser/<extension-name>/
     background/            Background handlers and worker source
     content/               Page content scripts and injected styles
     ui/                    Popup, options, and side-panel source
@@ -167,3 +167,46 @@ Keep unpacked installation, signed packaging, store submission, publication, and
 Check current Chrome Web Store, Mozilla Add-ons, and Apple policies before distribution.
 Keep version changes, privacy disclosures, permission changes, and release notes consistent with the actual package.
 Use the configured signing and upload process. A repository merge does not authorize an extension-store release.
+
+## Build, assets, and distribution
+
+Use the [browser interview](../REPO.md#product-specific-browser-setup) to select browser/OS pairs and an installation channel.
+Keep runtime delivery separate from API hosting. Serving pages or APIs from a backend does not install an extension.
+Keep component scope under src/extensions/browser/<extension-name>/ unless existing project paths differ.
+
+Compile TypeScript and SCSS only when they are editable source languages.
+Include generated JavaScript and CSS, required HTML, icons, locale files, and referenced resources in the prepared package.
+Keep executable extension code local to the package. Review the final manifest and permission set for each browser.
+Store generated archives in ignored output. Keep authored manifests, build configuration, and release artwork in source control.
+
+| Selected destination | Local verification | Distribution artifact and work |
+| --- | --- | --- |
+| Chrome desktop | Load a trusted unpacked build and test actual extension contexts | ZIP for Chrome Web Store, plus listing and privacy information |
+| Edge desktop | Load the unpacked build in Edge and verify its supported APIs | ZIP for Microsoft Edge Add-ons through Partner Center |
+| Firefox desktop or Android | Use the matching browser, web-ext, and real device tests where applicable | Mozilla-signed XPI through Add-ons or self-distribution |
+| Safari on Apple platforms | Use the supported temporary-folder or app-based test flow for the selected target | Apple app packaging, signing, and the selected Apple distribution process |
+
+Chrome's ordinary public distribution uses the Chrome Web Store.
+Chrome self-hosting has platform and enterprise-policy restrictions. Do not offer a backend download as universal installation.
+See [Chrome distribution](https://developer.chrome.com/docs/extensions/how-to/distribute).
+Edge has its own submission and listing process. See [Edge publication](https://learn.microsoft.com/en-us/microsoft-edge/extensions/publish/publish-extension).
+
+Firefox release distribution requires Mozilla signing, including self-distributed extensions.
+Keep self-distribution installation and update instructions separate from a public Add-ons listing.
+See [Mozilla signing and distribution](https://extensionworkshop.com/documentation/publish/signing-and-distribution-overview/).
+Verify Android APIs and behavior separately from desktop Firefox.
+See [Firefox Android development](https://extensionworkshop.com/documentation/develop/developing-extensions-for-firefox-for-android/).
+
+Current Safari supports temporary extension-folder tests on macOS without creating an app project.
+Verify that the minimum supported Safari version provides that test flow.
+For app packaging, use Xcode or the Safari Web Extension Packager in App Store Connect.
+The web packager can prepare builds for TestFlight and App Store submission without local Xcode.
+Keep native-language scope conditional on actual wrapper-source changes.
+See [Safari extension options](https://developer.apple.com/documentation/safariservices/safari-web-extensions)
+and [App Store Connect packaging](https://developer.apple.com/documentation/safariservices/packaging-and-distributing-safari-web-extensions-with-app-store-connect).
+
+For store releases, prepare actual screenshots, required icons, descriptions, support information, and privacy-policy URLs.
+Check current store artwork specifications rather than copying fixed dimensions between stores.
+Declare permissions and data handling accurately. Supply review access or instructions when authentication is required.
+Keep developer registration, signing, upload, review, publication, and rollout separate from local compilation.
+Use playbooks/<extension-name>/ for the project's exact commands, account facts, and release procedures.

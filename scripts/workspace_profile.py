@@ -13,6 +13,8 @@
 
 import re
 
+from terminal_ui import input, print
+
 
 WORKSPACE_FIELDS = {
     'workspace_model': 'Workspace model', 'workspace_runtime': 'Workspace runtime',
@@ -111,24 +113,44 @@ def choose_distribution(account: str, current: str) -> str:
         print('For a personal account, choose test installation or public Marketplace distribution.')
 
 
+def ask_script_languages(current: str, label: str, html_ui: bool) -> list[str]:
+    """Explain source and compilation choices without presenting unrelated backend languages."""
+    presets = ['JavaScript, HTML, CSS', 'TypeScript, HTML, CSS', 'TypeScript, HTML, SCSS',
+               'JavaScript', 'TypeScript'] if html_ui else ['JavaScript', 'TypeScript']
+    print('\n' + label + ' source choices:')
+    print('JavaScript: runs in the extension or Apps Script runtime without a TypeScript compilation step.')
+    print('TypeScript: compiles to JavaScript. Its type checks run during the build.')
+    if html_ui:
+        print('HTML defines custom UI. CSS supplies styles. SCSS is optional and compiles to CSS.')
+        print('Choose script-only source when no custom HTML UI is used. Add markup or styles only when used.')
+    for number, preset in enumerate(presets, 1):
+        print(f'  {number}. {preset}')
+    default = current.strip('`') if current and '<' not in current else '1'
+    print('Choose a preset number or enter actual languages separated by commas. Existing custom lists remain valid.')
+    while True:
+        answer = input(f'{label} source languages [{default}]: ').strip() or default
+        if answer.isdigit() and 1 <= int(answer) <= len(presets):
+            answer = presets[int(answer) - 1]
+        languages = language_values(answer)
+        supported = (has_script_language(languages) if label != 'Browser' else
+                     bool({'javascript', 'typescript'} & {name.lower() for name in languages}))
+        if supported:
+            return languages
+        print('Include JavaScript or TypeScript for browser code. Apps Script labels apply only to Apps Script.')
+
+
 def ask_languages(values: dict) -> list[str]:
-    """Explain source languages through the selected runtime and UI model."""
-    runtime, model = values['workspace_runtime'], values['workspace_model']
-    if runtime == 'apps-script':
+    """Offer explained script presets or the actual HTTP service language."""
+    if values['workspace_runtime'] == 'apps-script':
         print('\nApps Script runs JavaScript. TypeScript is compiled before upload.')
-        print('For Editor HTML-service UI, include HTML and CSS or SCSS if used.')
-        default = 'TypeScript, HTML, SCSS' if model == 'editor' else 'TypeScript'
-    else:
-        print('\nEnter the HTTPS service source languages, such as Python, Java, C#, Go, or TypeScript.')
-        default = ''
+        return ask_script_languages(values.get('languages', ''), 'Workspace', values['workspace_model'] == 'editor')
+    print('\nEnter the HTTPS service source languages, such as Python, Java, C#, Go, or TypeScript.')
     current = values.get('languages', '').strip('`')
-    default = current if current and '<' not in current else default
+    default = current if current and '<' not in current else ''
     while True:
         answer = input(f'Workspace source languages [{default or "required"}]: ').strip() or default
-        languages = language_values(answer)
-        if languages and (runtime == 'http' or has_script_language(languages)):
+        if languages := language_values(answer):
             return languages
-        print('Enter actual source languages. Apps Script needs JavaScript, TypeScript, or Apps Script.')
 
 
 def has_script_language(languages: list[str]) -> bool:

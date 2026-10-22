@@ -98,6 +98,7 @@ Read applicable topic sections together with the selected language guide. Follow
 | Java | [JAVA.md](java/JAVA.md) |
 | Python | [PYTHON.md](python/PYTHON.md) |
 | JavaScript | [JAVASCRIPT.md](javascript/JAVASCRIPT.md) |
+| Apps Script runtime | [APPS_SCRIPT.md](apps-script/APPS_SCRIPT.md), plus shared JavaScript rules |
 | TypeScript | [TYPESCRIPT.md](typescript/TYPESCRIPT.md), plus shared JavaScript rules |
 | HTML | [HTML.md](html/HTML.md) |
 | CSS | [CSS.md](css/CSS.md) |
@@ -133,9 +134,9 @@ src/
     website/<website-name>/
     app/<app-name>/
     sdk/<api-name>/
-    extension/<extension-name>/
-        google-workspace/
-        browser/
+    extensions/
+        googleworkspace/<extension-name>/
+        browser/<extension-name>/
     tool/<tool-name>/
     library/<library-name>/
 test/                              Tests spanning components
@@ -145,7 +146,8 @@ Create only currently needed directories. Unselected profiles reserve future loc
 Database scripts normally belong to their owning service. Root test/ is singular, while component test folders follow their toolchain.
 The interview suggests named example paths when no concrete component path is configured.
 It preserves existing values and still requires explicit confirmation for absent planned paths.
-These defaults do not move existing source or create application directories.
+First-time interactive setup previews and creates approved source folders after final approval.
+Existing paths remain unchanged. Planned files require separate handling, as described in [REPO.md](REPO.md#planned-source-scope).
 
 ## Scenario reading trees
 
@@ -359,6 +361,8 @@ Use TOOLS.md for stdout, stderr, exit status, cancellation, and local data prote
 instructions/
 ├── google-workspace/
 │   └── GOOGLE_WORKSPACE.md
+├── apps-script/
+│   └── APPS_SCRIPT.md  [Apps Script runtime, including compiled TypeScript]
 ├── javascript/
 │   └── JAVASCRIPT.md  [Apps Script or JavaScript source]
 ├── typescript/
@@ -375,6 +379,8 @@ instructions/
 ```
 
 Use the common baseline too. Select the host's add-on model and the actual runtime language.
+Apps Script runtime selection loads both Apps Script and JavaScript guidance. TypeScript source adds its own guide.
+HTTP-based add-ons select backend and actual language guidance without automatically loading Apps Script.
 Card-based UI does not require HTML or a browser component library.
 A writing assistant does not require a backend or AI merely because it edits documents.
 

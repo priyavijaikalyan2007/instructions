@@ -16,6 +16,8 @@ from pathlib import Path
 
 from project_initialization import is_source_repository, safe_path
 from workspace_profile import interview_workspace, language_values
+from browser_profile import interview_browser
+from terminal_ui import input, print
 
 
 PRODUCTS = {
@@ -56,8 +58,8 @@ SOURCE_PATH_DEFAULTS = {
     "apps": "src/app/companion",
     "websites": "src/website/public",
     "tools": "src/tool/administration",
-    "google-workspace": "src/extension/writing-assistant/google-workspace",
-    "browser-extensions": "src/extension/writing-assistant/browser",
+    "google-workspace": "src/extensions/googleworkspace/markdown",
+    "browser-extensions": "src/extensions/browser/markdown",
     "documentation": "docs",
     "static-assets": "src/library/ui-components",
 }
@@ -243,8 +245,8 @@ def show_extension_help(role: str) -> None:
         print("Choose current Google hosts, add-on UI, runtime, and audience in the following steps.")
         print("The choices include build, asset, host-testing, and release guidance.")
     else:
-        print("Name supported browsers and operating systems, such as Chrome, Firefox, or Safari on macOS and iOS.")
-        print("For packaging, record unpacked tests, browser store packages, or Safari app distribution.")
+        print("Choose browsers, their operating systems, source languages, and installation channels.")
+        print("Build output, packaged assets, local tests, and store requirements follow those choices.")
 
 
 def configure_extension_clients(components: dict, is_saas: bool) -> set[str]:
@@ -287,8 +289,25 @@ def source_path_default(values: dict, role: str) -> str:
     return proposed
 
 
-def ask_source_paths(root: Path, values: dict, role: str) -> dict:
-    """Validate paths during the interview and allow explicit planned scope without directory creation."""
+def approve_missing_paths(missing: list[str], values: dict, bootstrap: bool) -> bool:
+    """Explain the planned-path and first-setup directory semantics before collecting consent."""
+    print("These source paths do not exist yet: " + ", ".join(missing))
+    if bootstrap:
+        print("First setup will create these paths as source folders after final approval.")
+        print("For a future file, select its parent folder instead. No application files will be generated.")
+    else:
+        print("Planned scope selects future work. Existing profiles do not create new folders automatically.")
+    default = "yes" if bootstrap or values.get("source_state", "").strip("`") == "planned" else "no"
+    question = "Create these source folders after final approval?" if bootstrap else "Record these as planned paths?"
+    answer = input(f"{question} [{default}]: ").strip().lower() or default
+    if answer in {"yes", "y"}:
+        return True
+    print("Re-enter existing paths or choose planned paths explicitly.")
+    return False
+
+
+def ask_source_paths(root: Path, values: dict, role: str, bootstrap: bool = False) -> dict:
+    """Collect safe source scope and explicit first-setup folder creation before the final preview."""
     current = source_path_default(values, role)
     if role == "google-workspace":
         print("\nInclude add-on source, manifest, build configuration, and release-asset paths in this scope.")
@@ -302,16 +321,15 @@ def ask_source_paths(root: Path, values: dict, role: str) -> dict:
             continue
         result = {"source_paths": paths}
         if missing:
-            print("These source paths do not exist yet: " + ", ".join(missing))
-            print("Planned scope selects instructions for future code. It does not create source folders or files.")
-            default = "yes" if values.get("source_state", "").strip("`") == "planned" else "no"
-            answer = input(f"Record these as planned paths? [{default}]: ").strip().lower() or default
-            if answer not in {"yes", "y"}:
-                print("Re-enter existing paths or choose planned paths explicitly.")
+            if not approve_missing_paths(missing, values, bootstrap):
                 continue
             result["source_state"] = "planned"
-        elif values.get("source_state"):
+            if bootstrap:
+                result["source_folders"] = missing
+        elif values.get("source_state") and not values.get("source_folders"):
             result["source_state"] = "existing"
+        if values.get("source_folders") and "source_folders" not in result:
+            result["source_folders"] = [path for path in values_list(values["source_folders"]) if path in paths]
         return result
 
 
@@ -334,16 +352,17 @@ def missing_source_paths(root: Path, paths: list[str]) -> list[str]:
     return missing
 
 
-def configure_component(identifier: str, values: dict, root: Path) -> dict:
+def configure_component(identifier: str, values: dict, root: Path, bootstrap: bool = False) -> dict:
     """Ask only for facts relevant to the selected part. Target codes remain an implementation detail."""
     role = show_component(identifier, values)
     changes = {"enabled": True, "targets": values_list(values["targets"])}
-    if role == "google-workspace":
-        changes.update(interview_workspace(values))
-        changes.update(ask_source_paths(root, values, role))
+    if role in {"google-workspace", "browser-extensions"}:
+        interview = interview_workspace if role == "google-workspace" else interview_browser
+        changes.update(interview(values))
+        changes.update(ask_source_paths(root, values, role, bootstrap))
         changes.update(saas_client=values["saas_client"].lower() == "yes", sdk_component=values["sdk_component"])
         return changes
-    changes.update(ask_source_paths(root, values, role))
+    changes.update(ask_source_paths(root, values, role, bootstrap))
     if role != "documentation":
         changes["languages"] = language_values(ask_field("languages", values.get("languages", "")))
     else:
@@ -371,11 +390,11 @@ def run_interview(root: Path, library_root: Path, components: dict, is_saas: boo
     labels = [f"{PARTS.get(part_role(value), ('Project-specific part',))[0]} ({identifier})"
               for identifier, value in working.items() if value["enabled"]]
     print("\nIncluded parts: " + ", ".join(labels))
-    print("Product selection changes instruction scope, not application source, folder structure, or deployments.")
+    print("Product choices select instructions. First setup can also create approved source folders after the preview.")
     answers = {"saas_product": is_saas, "components": {}}
     for identifier, values in working.items():
         if values["enabled"]:
-            answers["components"][identifier] = configure_component(identifier, values, root)
+            answers["components"][identifier] = configure_component(identifier, values, root, is_new)
         else:
             answers["components"][identifier] = {"enabled": False}
     return answers

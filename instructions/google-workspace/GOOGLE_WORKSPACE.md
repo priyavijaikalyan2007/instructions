@@ -37,6 +37,7 @@ See [Google add-on types](https://developers.google.com/workspace/add-ons/concep
 Common workflow, writing style, testing, logging, and security requirements remain applicable.
 
 - Read [JavaScript](../javascript/JAVASCRIPT.md) for Apps Script or JavaScript source.
+- Read [Apps Script](../apps-script/APPS_SCRIPT.md) for the Apps Script runtime, including compiled TypeScript output.
 - Read [TypeScript](../typescript/TYPESCRIPT.md) when the repository compiles TypeScript.
 - Read [HTML](../html/HTML.md) and [CSS](../css/CSS.md) for HTML-service sidebars or dialogs.
 - Read [UI_UX.md](../UI_UX.md) and matching [component profiles](../UI_UX_COMPONENTS.md) for interaction behavior.
@@ -50,11 +51,11 @@ See [Google dialogs and sidebars](https://developers.google.com/apps-script/guid
 
 ## Recommended source layout
 
-Use `src/extension/<extension-name>/google-workspace/` for a new Workspace extension family.
+Use `src/extensions/googleworkspace/<extension-name>/` for a new Workspace extension family.
 Apply the [shared folder convention](../REPO.md#folder-and-file-structure). Preserve existing configured source paths.
 
 ```text
-src/extension/<extension-name>/google-workspace/
+src/extensions/googleworkspace/<extension-name>/
     shared/                Pure processing code shared by this extension's host adapters
     docs/                  Google Docs host source and manifest, when selected
     gmail/                 Gmail host source and manifest, when selected
