@@ -17,6 +17,12 @@ Created: 2026
 | Owner | $owner |
 | Repository | $repository_url |
 | Purpose | $description |
+| Intended users | $users |
+| User problem | $problem |
+| Expected value | $value |
+| Initial scope | $scope |
+| Success criteria | $success_criteria |
+| Constraints and exclusions | $constraints |
 | Build and test commands | TODO: Record verified commands |
 | Architecture | TODO: Describe implemented components |
 | Source locations | Recorded in the component profile linked below |
@@ -28,3 +34,5 @@ Created: 2026
 Component selections are in [PROJECT_PROFILE.md](<$profile_link>).
 Local refinements are in [ADDITIONAL.md](<$additional_link>).
 Licensing choices and attribution scope are recorded in the root LICENSE and THIRD_PARTY_NOTICES.md.
+
+Setup completion record: SETUP.md. Application operations are not yet verified.

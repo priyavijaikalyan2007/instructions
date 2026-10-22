@@ -46,3 +46,28 @@
   definition: "Styles line-oriented interview roles while retaining plain-text and unattended operation."
   anchor_file: "scripts/terminal_ui.py"
   related: ["ProfileInterview", "ProjectInitialization", "LicenseSelection"]
+
+- name: "ProjectLayout"
+  definition: "Migrates default project-owned files to the root while preserving history, permissions, and custom paths."
+  anchor_file: "scripts/project_layout.py"
+  related: ["ProfileConfiguration", "ProjectInitialization"]
+
+- name: "AgentRoles"
+  definition: "Records multiple project roles per host tool and installs neutral, documented entry pointers."
+  anchor_file: "scripts/agent_roles.py"
+  related: ["ProfileConfiguration", "ProfileInterview"]
+
+- name: "ProjectScaffolding"
+  definition: "Creates missing operation placeholders and project completion steps without claiming application readiness."
+  anchor_file: "scripts/project_scaffolding.py"
+  related: ["ProjectInitialization", "ProjectContext"]
+
+- name: "ProjectContext"
+  definition: "Captures optional business facts and corrects invalid input without discarding accepted answers."
+  anchor_file: "scripts/project_context.py"
+  related: ["ProjectInitialization"]
+
+- name: "CursesInterview"
+  definition: "Presents forms, choice lists, scrollable help, review, and cancellation with a plain automation fallback."
+  anchor_file: "scripts/curses_interview.py"
+  related: ["TerminalPresentation", "ProfileInterview"]

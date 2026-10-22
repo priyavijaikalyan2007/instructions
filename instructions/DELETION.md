@@ -11,7 +11,7 @@ Created: 2026
 # Deletion Patterns and Guidelines
 
 This document describes the selected Knobby deletion example.
-Apply its database columns, service interfaces, trash UI, and browser storage only when that project choice is checked in instructions/project/PROJECT_PROFILE.md.
+Apply its database columns, service interfaces, trash UI, and browser storage only when that project choice is checked in PROJECT_PROFILE.md.
 Other components follow their declared deletion and retention requirements, persistence integrity, and shared UI recovery rules.
 A native document operation does not require SQL columns or browser storage solely because deletion is involved.
 Within the selected example, future features that support deletion must follow the patterns below.
@@ -380,7 +380,7 @@ When adding deletion support to a new resource:
 - [ ] Add restore and permanent delete buttons
 - [ ] Add warning dialogs for permanent actions
 - [ ] Test: delete, view in trash, restore, permanent delete, empty trash
-- [ ] Update instructions/project/CONVERSATION.md with changes
+- [ ] Update CONVERSATION.md with changes
 
 ## Example: Diagrams App
 

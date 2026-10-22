@@ -58,7 +58,8 @@ Other legal texts, including their explanatory examples and original copyright n
 License texts keep their own copying permissions and are not relabeled with this repository's source-code headers.
 
 The generated root LICENSE records project scope and the selected identifiers.
-Full terms reside in LICENSES/<identifier>.txt. THIRD_PARTY_NOTICES.md explains the copied library's separate attribution.
+A single software license keeps its full terms in root LICENSE.
+Multiple alternatives, separate content terms, and required companions use LICENSES/<identifier>.txt. THIRD_PARTY_NOTICES.md explains the copied library's separate attribution.
 INSTRUCTION_LIBRARY_LICENSE.txt preserves the source library's MIT text for installation as instructions/LICENSE.
 
 ## Recognizing inherited files
@@ -66,7 +67,7 @@ INSTRUCTION_LIBRARY_LICENSE.txt preserves the source library's MIT text for inst
 inherited-files.json records known complete-file hashes for source-specific documents and records.
 The initializer replaces or removes a file only when its entire content matches a registered version.
 Customized files remain untouched. Conflicting license files stop initialization before writes.
-Originals are backed up under instructions/project/template-backup/ before replacements and removals.
+Originals are backed up under .instructions/template-backup/ before replacements and removals.
 The backup is historical material. It does not supply active project facts or agent instructions.
 
 When source-specific documents or records change:
@@ -79,3 +80,7 @@ When source-specific documents or records change:
 
 The maintenance command preserves older registered hashes and rejects downstream repositories.
 Never register a consuming project's edited content as an inherited source version.
+
+Project facts and refinements default to root PROJECT.md and ADDITIONAL.md.
+Optional business_context answers populate project facts and the generated README.
+Missing operation placeholders and SETUP.md are project-owned. See instructions/PROJECT_SCAFFOLDING.md.

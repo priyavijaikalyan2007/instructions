@@ -19,7 +19,7 @@ import unittest
 
 
 SCRIPT = Path(__file__).resolve().parents[1] / "configure-instructions.sh"
-PROFILE = "instructions/project/PROJECT_PROFILE.md"
+PROFILE = "PROJECT_PROFILE.md"
 
 
 class ConfigureInstructionsTests(unittest.TestCase):
@@ -39,6 +39,8 @@ class ConfigureInstructionsTests(unittest.TestCase):
         if answers is not None:
             self.answers.write_text(json.dumps(answers))
             command.extend(["--answers", str(self.answers)])
+        if answers is None and input_text is not None and not (self.root / PROFILE).exists():
+            input_text = "none\n" + input_text
         return subprocess.run(command, input=input_text, text=True, capture_output=True, timeout=20)
 
     def native_answers(self):
@@ -67,7 +69,7 @@ class ConfigureInstructionsTests(unittest.TestCase):
         self.initialize()
         self.assertTrue(all((self.root / p).is_file() for p in [
             PROFILE, "AGENTS.md", "instructions/WORKFLOW.md", "instructions/swift/SWIFT.md",
-            "instructions/project/PROJECT.md", "instructions/project/ADDITIONAL.md",
+            "PROJECT.md", "ADDITIONAL.md",
             "CLAUDE.md", "CODEX.md", "GEMINI.md",
         ]))
 
@@ -75,7 +77,7 @@ class ConfigureInstructionsTests(unittest.TestCase):
         self.initialize()
         self.assertTrue((self.root / "instructions/java/JAVA.md").is_file())
         self.assertFalse((self.root / "instructions/maintenance").exists())
-        self.assertFalse((self.root / "instructions/project/CONVERSATION.md").exists())
+        self.assertFalse((self.root / "CONVERSATION.md").exists())
 
     def test_root_routing_includes_selected_guides_and_common_obligations(self):
         self.initialize()
@@ -113,9 +115,9 @@ class ConfigureInstructionsTests(unittest.TestCase):
         self.assertEqual(list(outside.iterdir()), [])
 
     def test_java_saas_native_fixture_resolves_without_dotnet_scope(self):
-        fixture = SCRIPT.parents[1] / "instructions/maintenance/examples/java-saas/instructions/project"
+        fixture = SCRIPT.parents[1] / "instructions/maintenance/examples/java-saas"
         profile = self.root / PROFILE
-        profile.parent.mkdir(parents=True)
+        profile.parent.mkdir(parents=True, exist_ok=True)
         profile.write_bytes((fixture / "PROJECT_PROFILE.md").read_bytes())
         for name in ["server", "web", "api/generator-config", "sdks/swift", "sdks/typescript", "apps/apple"]:
             (self.root / name).mkdir(parents=True)
@@ -158,7 +160,7 @@ class ConfigureInstructionsTests(unittest.TestCase):
 
     def test_preserves_project_facts_refinements_and_existing_guides(self):
         self.initialize()
-        paths = ["instructions/project/PROJECT.md", "instructions/project/ADDITIONAL.md",
+        paths = ["PROJECT.md", "ADDITIONAL.md",
                  "instructions/swift/SWIFT.md"]
         for path in paths:
             with (self.root / path).open("a") as stream:
@@ -245,8 +247,9 @@ class ConfigureInstructionsTests(unittest.TestCase):
 
     def test_duplicate_component_is_rejected(self):
         self.initialize()
-        with (self.root / PROFILE).open("a") as stream:
-            stream.write("\n### native-client\n\n- [ ] Enabled\n")
+        path = self.root / PROFILE
+        path.write_text(path.read_text().replace("## Agent roles",
+                        "### native-client\n\n- [ ] Enabled\n\n## Agent roles"))
         result = self.run_cli(None, "--check")
         self.assertTrue(result.returncode == 2 and "Duplicate" in result.stderr)
 
@@ -274,8 +277,8 @@ class ConfigureInstructionsTests(unittest.TestCase):
     def test_custom_project_paths_are_preserved(self):
         self.initialize()
         profile_path = self.root / PROFILE
-        text = profile_path.read_text().replace("instructions/project/PROJECT.md", "local/facts.md")
-        text = text.replace("instructions/project/ADDITIONAL.md", "local/refinements.md")
+        text = profile_path.read_text().replace("PROJECT.md", "local/facts.md")
+        text = text.replace("ADDITIONAL.md", "local/refinements.md")
         profile_path.write_text(text)
         result = self.run_cli({}, "--apply")
         self.assertTrue(result.returncode == 0 and (self.root / "local/facts.md").is_file()
@@ -285,7 +288,7 @@ class ConfigureInstructionsTests(unittest.TestCase):
         self.initialize()
         profile_path = self.root / PROFILE
         profile_path.write_text(profile_path.read_text().replace(
-            "instructions/project/PROJECT.md", "instructions/swift/SWIFT.md"))
+            "PROJECT.md", "instructions/swift/SWIFT.md"))
         result = self.run_cli(None, "--check")
         self.assertEqual(result.returncode, 2)
 
@@ -296,7 +299,7 @@ class ConfigureInstructionsTests(unittest.TestCase):
 
     def test_interview_explains_repository_specific_component_names(self):
         profile = self.root / PROFILE
-        profile.parent.mkdir(parents=True)
+        profile.parent.mkdir(parents=True, exist_ok=True)
         source = SCRIPT.parents[1] / PROFILE
         text = source.read_text().replace('`*.md`, `instructions/`, `.github/`, `agentknowledge/`', '`src`')
         text = text.replace('`scripts/`', '`src`')
@@ -517,7 +520,7 @@ class ConfigureInstructionsTests(unittest.TestCase):
     def test_unsafe_project_path_rejected_without_writes(self):
         self.initialize()
         path = self.root / PROFILE
-        path.write_text(path.read_text().replace("instructions/project/PROJECT.md", "../outside.md"))
+        path.write_text(path.read_text().replace("PROJECT.md", "../outside.md"))
         before = self.snapshot()
         result = self.run_cli({}, "--apply")
         self.assertTrue(result.returncode == 2 and self.snapshot() == before)
@@ -546,7 +549,7 @@ class ConfigureInstructionsTests(unittest.TestCase):
 
     def test_existing_project_file_encoding_is_preserved(self):
         self.initialize()
-        facts = self.root / "instructions/project/PROJECT.md"
+        facts = self.root / "PROJECT.md"
         facts.write_bytes(b"Project facts with legacy encoding: \x96 retain these bytes.\n")
         before = facts.read_bytes()
         result = self.run_cli({}, "--apply")
@@ -557,8 +560,8 @@ class ConfigureInstructionsTests(unittest.TestCase):
         path = self.root / PROFILE
         original = path.read_text()
         variants = [
-            original.replace("instructions/project/ADDITIONAL.md", "instructions/project/./PROJECT.md"),
-            original.replace("instructions/project/PROJECT.md", "src/context.md"),
+            original.replace("ADDITIONAL.md", "./PROJECT.md"),
+            original.replace("PROJECT.md", "src/context.md"),
         ]
         (self.root / "src/context.md").mkdir()
         for text in variants:

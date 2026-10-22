@@ -13,8 +13,9 @@ Created: 2026
 
 <!-- instructions:managed:start -->
 Read [the shared workflow](instructions/WORKFLOW.md) before planning or editing.
-Read `instructions/project/PROJECT_PROFILE.md` and its configured facts and additional instructions.
+Read `PROJECT_PROFILE.md` and its configured facts and additional instructions.
 The profile is authoritative. Regenerate this block after changing its selections.
+Use its tool-role assignments with [shared role definitions](instructions/AGENT_ROLES.md).
 
 Common requirements apply in every profile. Read the relevant task sections:
 

@@ -15,8 +15,8 @@ Created: 2026
 
 | Purpose | Path |
 | --- | --- |
-| Project facts | `instructions/project/PROJECT.md` |
-| Additional instructions | `instructions/project/ADDITIONAL.md` |
+| Project facts | `PROJECT.md` |
+| Additional instructions | `ADDITIONAL.md` |
 
 ## Project choices
 
@@ -50,3 +50,7 @@ Created: 2026
 - SaaS client: no
 - SDK component: none
 - Deployment: local tooling
+
+## Agent roles
+
+No tool-specific roles are assigned. Follow the user task and shared workflow.

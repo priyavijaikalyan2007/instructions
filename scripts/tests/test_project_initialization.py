@@ -20,7 +20,7 @@ import unittest
 
 LIBRARY = Path(__file__).resolve().parents[2]
 SCRIPT = LIBRARY / 'scripts/configure-instructions.sh'
-PROFILE = 'instructions/project/PROJECT_PROFILE.md'
+PROFILE = 'PROJECT_PROFILE.md'
 
 
 class ProjectInitializationTests(unittest.TestCase):
@@ -56,7 +56,8 @@ class ProjectInitializationTests(unittest.TestCase):
         """Reproduce GitHub template copying without its Git metadata."""
         for folder in ['instructions', '.github', 'agentknowledge', 'scripts']:
             shutil.copytree(LIBRARY / folder, self.root / folder, ignore=shutil.ignore_patterns('__pycache__'))
-        for name in ['LICENSE', 'AGENTS.md', 'CLAUDE.md', 'CODEX.md', 'GEMINI.md']:
+        for name in ['LICENSE', 'AGENTS.md', 'CLAUDE.md', 'CODEX.md', 'GEMINI.md',
+                     'PROJECT_PROFILE.md', 'PROJECT.md', 'ADDITIONAL.md', 'CONVERSATION.md', 'CHANGELOG.md']:
             shutil.copy2(LIBRARY / name, self.root / name)
 
     def snapshot(self):
@@ -72,10 +73,10 @@ class ProjectInitializationTests(unittest.TestCase):
         self.assertNotIn('Enterprise Bootstrap', (self.root / '.github/CONTRIBUTING.md').read_text())
         self.assertNotIn('48-72', (self.root / '.github/SECURITY.md').read_text())
         self.assertNotIn('instruction-library', (self.root / PROFILE).read_text())
-        self.assertNotIn('refactor/scoped-guides', (self.root / 'instructions/project/PROJECT.md').read_text())
-        self.assertEqual((self.root / 'instructions/project/template-backup/.github/README.md').read_bytes(), original)
+        self.assertNotIn('refactor/scoped-guides', (self.root / 'PROJECT.md').read_text())
+        self.assertEqual((self.root / '.instructions/template-backup/.github/README.md').read_bytes(), original)
         self.assertFalse((self.root / 'agentknowledge/history.jsonl').exists())
-        self.assertFalse((self.root / 'instructions/project/CONVERSATION.md').exists())
+        self.assertFalse((self.root / 'CONVERSATION.md').exists())
         self.assertEqual((self.root / 'instructions/LICENSE').read_bytes(), (LIBRARY / 'LICENSE').read_bytes())
 
     def test_dry_run_and_cancel_write_nothing(self):
@@ -117,6 +118,7 @@ class ProjectInitializationTests(unittest.TestCase):
         self.assertEqual(self.snapshot(), before)
 
     def test_symlink_destination_fails_before_any_write(self):
+        self.identity['license'] = {'software': ['MIT', 'Apache-2.0']}
         outside = Path(self.directory.name) / 'outside'
         outside.mkdir()
         (self.root / 'LICENSES').symlink_to(outside, target_is_directory=True)
@@ -152,8 +154,8 @@ class ProjectInitializationTests(unittest.TestCase):
         script = self.root / 'scripts/configure-instructions.sh'
         command = ['bash', str(script), '--root', str(self.root)]
         answers = '\n'.join(['1', '', 'Example Owner', '2026',
-                             'https://github.com/example/utilextensions', 'Writing tools',
-                             '1', '0', '8', '1', '2', '1', '2', 'src', 'yes'])
+                             'https://github.com/example/utilextensions', 'Writing tools', *[''] * 6,
+                             '1', '0', 'none', '8', '1', '2', '1', '2', 'src', 'yes'])
         result = subprocess.run(command, input=answers, text=True, capture_output=True, timeout=20)
         self.assertEqual(result.returncode, 0, result.stderr)
         self.assertNotIn("This is the instruction library's own repository", result.stdout)
@@ -163,7 +165,7 @@ class ProjectInitializationTests(unittest.TestCase):
         self.inherit()
         command = ['bash', str(self.root / 'scripts/configure-instructions.sh'), '--root', str(self.root)]
         answers = ['1', '', 'Example Owner', '2026', 'https://github.com/example/utilextensions',
-                   'Writing tools', '1', '0', '7', '1', '1', '1', '1',
+                   'Writing tools', *[''] * 6, '1', '0', 'none', '7', '1', '1', '1', '1',
                    'Javascript/Typescript, HTML, SCSS', 'src/docs', 'yes', 'yes']
         result = subprocess.run(command, input='\n'.join(answers) + '\n', text=True,
                                 capture_output=True, timeout=20)
@@ -171,7 +173,29 @@ class ProjectInitializationTests(unittest.TestCase):
         self.assertIn('Workspace model: editor', (self.root / PROFILE).read_text())
         self.assertIn('Source state: planned', (self.root / PROFILE).read_text())
         self.assertTrue((self.root / 'src/docs').is_dir())
-        self.assertTrue((self.root / 'instructions/project/INITIALIZATION.json').exists())
+        self.assertTrue((self.root / '.instructions/INITIALIZATION.json').exists())
+
+    def test_source_detection_does_not_require_installed_git(self):
+        import sys
+        from unittest.mock import patch
+        sys.path.insert(0, str(SCRIPT.parent))
+        from project_initialization import is_source_repository
+        (self.root / '.git').mkdir()
+        with patch('project_initialization.subprocess.run', side_effect=FileNotFoundError):
+            self.assertFalse(is_source_repository(self.root))
+
+    def test_source_detection_does_not_treat_a_nested_target_as_the_library(self):
+        import sys
+        from unittest.mock import patch
+        sys.path.insert(0, str(SCRIPT.parent))
+        from project_initialization import is_source_repository
+        (self.root / '.git').mkdir()
+        child = self.root / 'local-trial'
+        child.mkdir()
+        reply = subprocess.CompletedProcess([], 0, stdout='git@github.com:priyavijaikalyan2007/instructions.git\n')
+        with patch('project_initialization.subprocess.run', return_value=reply):
+            self.assertTrue(is_source_repository(self.root))
+            self.assertFalse(is_source_repository(child))
 
     def test_source_repository_initialization_is_rejected(self):
         self.root = LIBRARY
@@ -206,7 +230,7 @@ class ProjectInitializationTests(unittest.TestCase):
 
     def test_backup_conflict_aborts_without_writes(self):
         self.inherit()
-        backup = self.root / 'instructions/project/template-backup/.github/README.md'
+        backup = self.root / '.instructions/template-backup/.github/README.md'
         backup.parent.mkdir(parents=True)
         backup.write_text('Unrelated earlier backup')
         before = self.snapshot()
@@ -224,8 +248,8 @@ class ProjectInitializationTests(unittest.TestCase):
     def test_custom_project_file_locations_are_respected(self):
         self.inherit()
         profile = self.root / PROFILE
-        profile.write_text(profile.read_text().replace('instructions/project/PROJECT.md', 'docs/PROJECT.md')
-                           .replace('instructions/project/ADDITIONAL.md', 'docs/LOCAL.md'))
+        profile.write_text(profile.read_text().replace('PROJECT.md', 'docs/PROJECT.md')
+                           .replace('ADDITIONAL.md', 'docs/LOCAL.md'))
         (self.root / 'docs').mkdir()
         facts = self.root / 'docs/PROJECT.md'
         facts.write_text('Actual project facts\n')
@@ -241,7 +265,7 @@ class ProjectInitializationTests(unittest.TestCase):
         result = self.run_cli('--apply')
         self.assertEqual(result.returncode, 0, result.stderr)
         documents = list((self.root / '.github').glob('*.md'))
-        documents.extend((self.root / 'instructions/project').glob('*.md'))
+        documents.extend(self.root.glob('*.md'))
         for path in documents:
             for target in re.findall(r'\]\(<?([^\s)>]+)>?\)', path.read_text()):
                 if target.startswith(('https:', 'http:', '#')):

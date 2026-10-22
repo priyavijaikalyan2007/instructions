@@ -14,7 +14,7 @@ Created: 2026
 This document outlines the mandatory criteria and preferred categories for selecting third-party libraries for the frontend of our Enterprise SaaS applications.
 
 This is the vanilla TypeScript/Bootstrap selection profile.
-Apply its framework-specific constraints and recommendations only when instructions/project/PROJECT.md declares that frontend stack.
+Apply its framework-specific constraints and recommendations only when PROJECT.md declares that frontend stack.
 Other frontends use their configured framework and the shared dependency-selection principles.
 
 **Core Stack:** Pure TypeScript, HTMX, HTML5, CSS3, and Bootstrap 5+.

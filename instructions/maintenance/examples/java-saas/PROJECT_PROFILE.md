@@ -18,8 +18,8 @@ Paths below are relative to an imagined consuming repository. No application art
 
 | Purpose | Path |
 | --- | --- |
-| Project facts | `instructions/project/PROJECT.md` |
-| Additional instructions | `instructions/project/ADDITIONAL.md` |
+| Project facts | `PROJECT.md` |
+| Additional instructions | `ADDITIONAL.md` |
 
 ## Project choices
 

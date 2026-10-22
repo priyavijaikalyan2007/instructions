@@ -23,7 +23,7 @@ The interview script remains deferred. No script is required for manual selectio
 
 The [profile template](../PROJECT_PROFILE_TEMPLATE.md), [facts template](../PROJECT_TEMPLATE.md), and [refinement template](../ADDITIONAL_TEMPLATE.md) support consuming repositories.
 This instruction repository has its own active documentation/tooling profile. Application examples do not enable application work here.
-The [Java SaaS fixture](examples/java-saas/instructions/project/PROJECT_PROFILE.md) supplies the fictional consuming-project profile for the reading tests.
+The [Java SaaS fixture](examples/java-saas/PROJECT_PROFILE.md) supplies the fictional consuming-project profile for the reading tests.
 Its paths represent one monolithic repository. It contains no buildable application artifacts.
 
 ## Fresh-context reading tests
@@ -74,3 +74,8 @@ The interview script is a future step, not an implemented feature.
 Android and ChromeOS selection still requires actual platform guidance from the consuming project where coverage is absent here.
 The older TDD-exception and production-fix permission-policy conflicts remain outside this routing correction.
 This documentation change does not claim application builds, runtime tests, container execution, or App Store validation.
+
+## 22 October 2026: project-file locations
+
+The Java fixture now keeps its project files at the fixture root, matching current setup output.
+Its scenario and prior validation findings remain unchanged.

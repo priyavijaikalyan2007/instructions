@@ -17,7 +17,7 @@ import tempfile
 import unittest
 
 SCRIPT = Path(__file__).resolve().parents[1] / 'configure-instructions.sh'
-PROFILE = 'instructions/project/PROJECT_PROFILE.md'
+PROFILE = 'PROJECT_PROFILE.md'
 
 
 class BrowserProfileTests(unittest.TestCase):
@@ -35,6 +35,8 @@ class BrowserProfileTests(unittest.TestCase):
             path = Path(self.directory.name) / 'answers.json'
             path.write_text(json.dumps(answers))
             command.extend(['--answers', str(path)])
+        if lines is not None and not (self.root / PROFILE).exists():
+            lines = ['none', *lines]
         return subprocess.run(command, input=None if lines is None else '\n'.join(lines) + '\n',
                               text=True, capture_output=True, timeout=20)
 

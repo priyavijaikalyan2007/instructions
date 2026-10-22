@@ -866,3 +866,70 @@ The owner authorized pushing fix/extension-bootstrap-interview, creating a pull 
 The branch includes the preceding Apps Script guide and the verified extension interview and bootstrap fixes.
 All 127 tests passed. Source checks, template baseline, links, and terminal smoke tests also passed.
 Use a normal pull-request merge after remote checks, then synchronize local main for the owner's next template test.
+
+
+## 22 October 2026: root project context and local setup interview
+
+### Requests
+
+> Ok. I feel there are a number of problems with the placement of files and the content of files as well. 1) I think PROJECT_PROFILE.md and PROJECT.md both should be at the root of the repo. Interview script should move it there and update any references. That is, things that are project specific should be at the root and things that are generic/common should be in instructions/. Perhaps most of instructions/project/ should be that? 2) I think we should think about asking the user what "role" Claude, Codex, Gemini play. Perhaps the user uses something like PI or Roo or Cline which has different instructions. This will help tailor (if needed) different coding agents for differnt roles. For example, in some cases, I use Claude for writing code but in others Codex; I use Antigravity for other things. Each one plays a different role based on the repository. 3) I am tired of trying to create a repo and using the template repo to create it; can you make sure that the interview script has a "target folder" mode in which it can do the same setup but it can be a local temp directory that I can delete and retry? Helps me test locally instead.
+
+The owner selected multiple roles per tool in the profile.
+
+> Another bug: why is there a separate LICSENSES folder when there is already a LICENSE file at root?
+
+> Some more fixes: 1) I think you should scaffold placeholder scripts. See ~/Work/knobby/apps and ~/Work/knobby/idp/ and ~/Work/pvk2007/rapid/ for the type of scripts that are easy adn common to setup and how they work. They don't have to "do" anything; just be generated and placed in there with examples on how to fail, how to log etc. For example, smoke.sh if needed, deploy.sh if needed, monitor.sh, logs.sh, build.sh, test.sh, clean.sh, migrate.sh, runsql.sh and so on. For anything with a backend, we can use a 3-environment model (test, dev and prod) where test is local machine, dev is staging deployment and prod is production. 2) You should print a list of files and instructions for what needs to be modified to actually make the setup ready adn relevant for that repo. 3) It might be good to interview the user about business context etc and include them directly in the gneerated PROJECT.md etc. WDYT?
+
+> After thinking about this, I really think you should proper ncurses for the interview script; at this point its long, complex and has a lot of user input which deserves a proper interface. When I hit delete or something else in the terminal, it results in control characters. ncurses might take care of that with textboxes and such?
+
+> great. commit, push, raise the PR and merge. I will test locally.
+
+### Changes
+
+Moved the five default project Markdown files to the root. Shared guides and templates remain under instructions/.
+Legacy migration repairs active links and guide references while retaining historical record bytes and private file permissions.
+Conflicting root and legacy files stop setup before writes. Custom context locations remain authoritative unless they collide with reserved files.
+Initialization state and original-file backups use .instructions/.
+The fictional Java routing example now models project files at its fixture root.
+
+Added multiple project roles per coding tool and shared role definitions.
+The tool entry files now point to AGENTS.md and the profile without fixed vendor roles.
+Known inherited entries receive backups before replacement. Custom entries remain unchanged.
+Roo receives its documented workspace pointer when selected. Other supported tools use their shared/native entry mechanism.
+Role choices do not grant tool permissions or authorize delegation.
+
+Added --target-folder for local setup without GitHub, Git, or a pre-existing target directory.
+Interactive and JSON dry runs remain read-only. Approved setup installs its own setup tools for later edits.
+The interview captures optional business facts and leaves unknown facts as TODOs.
+Invalid identity and business facts can be corrected without repeating accepted answers.
+
+Generated missing profile-specific operation placeholders and SETUP.md completion tasks.
+Placeholders show logging, argument checks, and failure handling. They return 2 until implemented.
+Backend scripts use test for local work, dev for staging, and prod for production.
+Actual environments, commands, credentials, and application implementation remain project work.
+A single software license keeps its full terms in root LICENSE. Multiple or companion texts retain LICENSES/.
+Existing initialized legal files remain preserved.
+
+Interactive terminals now use ncurses forms with text editing, selectable menus, scrolling help, and explicit cancellation.
+The full preview precedes final approval. Plain mode remains available for automation or unsupported terminals.
+The screen handles forward Delete, Backspace, cursor movement, Unicode, and resizing.
+Curses restores terminal input modes when the interface closes or raises an exception.
+
+### Publication
+
+The owner explicitly authorized committing, pushing, opening a pull request, and merging it into main.
+Publish the verified feature branch through the normal pull-request workflow, then synchronize local main.
+No downstream application repository was modified. Private source identifiers and deployment commands were not copied into generic templates.
+
+
+### Verification
+
+The 127-test baseline passed before implementation. The expanded suite passes all 173 tests.
+Real ncurses PTY checks verify forward Delete, Backspace, cursor edits, checkbox selection, resize, review, apply, and cancellation.
+Normal input modes and erase bindings return after the interface closes.
+macOS can retain its PENDIN bookkeeping flag after returning to canonical input. Functional terminal modes remain restored.
+A complete Docs/browser setup passes through dry run, apply, copied-tool validation, and unchanged repeat configuration without Git.
+Single-license output contains full root terms. Conditional operation scripts fail with TODO status until implemented.
+Markdown links, active profile validation, read-only preview, inherited baselines, and source formatting checks pass.
+Existing examples remain intact except the intentionally updated common reading tree.
+The two CP1252 guides changed only default project-path tokens. Prior conversation bytes remain intact before this appended record.

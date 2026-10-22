@@ -6,17 +6,59 @@
     "17d38676bea611910457cd589f8bedb4b59d239b3adebb679c113709959e9020"
   ],
   ".github/README.md": [
-    "92c462f386b26088ae26733991c079e5962b6e50125970421dd04619bc8acda9"
+    "0f1e377c22beb2db6a6efdb3ea3a94e90ec51c1de7859cec63fc0ff781b08dc8",
+    "92c462f386b26088ae26733991c079e5962b6e50125970421dd04619bc8acda9",
+    "c076fe1f9347d189320ceb4b799e8e73392a2afe527ef9fcca8319b8a908104a"
   ],
   ".github/SECURITY.md": [
     "093366e8c71f268d8b91ed7c0d8288a1beb4cc57a97b0f8b986830d8c6363b92"
   ],
+  "ADDITIONAL.md": [
+    "62fd02680b920e0fbc80a34f090f992047d3d0a8f6ca7825f945e469feda4c2c"
+  ],
+  "AGENTS.md": [
+    "4a06f20fa4642b0a6e4b956062c08631e4021868e4c733cb1689b33062a9b9ad",
+    "ec1b0dea95c942343750b1d6cf9279c16ae6655003773cdf4c500305a1e77c8b",
+    "fd8015aa17e405a6f48a06b5bba41a153e14f16c48afc5b7f0ed86b6be522c2a"
+  ],
+  "CHANGELOG.md": [
+    "2c63e50b00f95a613da1a45282d3e35446dee1386aa18874fe5153a5457065e2",
+    "40dc42b0e38debf10a5acbcb11b8792ea8dd4db19204a60f397c51ef880afaa5",
+    "c0436e91accb543fbfadc25defa267cbcd5b91fcc7dc9f090106d79c5998bdb3"
+  ],
+  "CLAUDE.md": [
+    "9867919f6070b352a691d22e195483d9edaff186edb40d452a06481375bd0961",
+    "dee3175554ac326ff92a89ed862133695d8956d4a0926ebbc25964df5f247c37"
+  ],
+  "CODEX.md": [
+    "2d39880b883b4e90cc2dd5a823161cd441fe98a8025afcc25f06ddcc21cdb716",
+    "eec39e4ae2ff6b312acdbe30674cfe8e23b7fc7a9d97703bcd1c49138e3a1e82"
+  ],
+  "CONVERSATION.md": [
+    "89f2b9eaa8c79c72d74f6f6b51cda98ca5ebf97a4539ce9f0f6c2ab7b05e5055",
+    "901ab13bca6f2ed5f2c76211792cba26fec0c875286851ae77c183db4211a762",
+    "c6d2779e200cd20c11f935d6eb2a75935e3dcd3ef85e25b2e750c7bc16581877"
+  ],
+  "GEMINI.md": [
+    "13aa9e4feddfa81ad2a9c639c72d6b690828b40207d765784050e524baf06394",
+    "8bf6fe052a5f993dc513793a4e45bec9163452583962be4460f5dce4098a134e"
+  ],
   "LICENSE": [
     "12df52735802c33e97b57f9c59e976a700f79bf854bde40136a2c17511e61601"
+  ],
+  "PROJECT.md": [
+    "17d4470ce96fdee2a3b186cdaf54378fe2584a97b251199d9f4d2b6827a7453a",
+    "4a0564e1fd1416f531a4cb87e1f652fe865c1abf7ed0966478baa03130f900ef",
+    "f86d043c610c9ad7ca726ab8637d1b3ec15fae3292d9e91fe24539f9b997f830"
+  ],
+  "PROJECT_PROFILE.md": [
+    "0dc91f253b17c02b58d6ca3c73774be98dd8cd7f126211d07bebdfe7d4befcef",
+    "3da22345925946a6a8eb335b5c1159dc88fff7952d2e2c3676b594595a4cc1db"
   ],
   "agentknowledge/concepts.yaml": [
     "0890f7435e208a49a76e5ccd2814a3a8c7529edced1b036d96eff97349c24ff9",
     "1ba634f1f289cea51e28c11979c3e37dde64356bf58ca770d65d9a0a1864ff13",
+    "5fc635b9785f98f56d03351a6dbbdf463047c28fe0b6749a97dfcdbf2a26e9e5",
     "710313639b2f2b787503eff3dc6b2f51c0e723011ce72e37cb506d11de504542",
     "874e665fd3b91e786fa2c2aecadc8a1f46ef03c766367135fe4ef0f8fe500024"
   ],
@@ -26,10 +68,12 @@
     "1e7372fbe9e6b7fcd65d1ab29871b2843e67a8fc35bca518ce773e84ab2795ea",
     "2ec62f074ea851ed88530bdee03e7ba771f7dfc5f473350fc3add1591ca0fbd9",
     "79019653d0658d32a057030f361519e0b967fe4fd5e2f6d6e5e1dddd9f30fe3f",
-    "a31080bee93c4d032c80fc7a44543555e192c6e469e52461fb4a3dbfdbbe6ded"
+    "a31080bee93c4d032c80fc7a44543555e192c6e469e52461fb4a3dbfdbbe6ded",
+    "bcedd74114696464dd11a512a8baf1529dfed7295dc03fd653af483c88eebf32"
   ],
   "agentknowledge/history.jsonl": [
     "084ca7c0ad008c9c84a13d7d7d3e302ed555424a2c5824ff0d79cfc59ffc5dd6",
+    "4eab9b7213bb84de9ea08f860732e2292d95da5da51fd8d82ef520cd8358e86c",
     "6adef2033808063179767461548587ee81e752e2d81eec758cd6bbe936951827",
     "7657d71496ad84c4753722d30cd24cb4c60294dab5c7ef3e6e4943c5264a9b1c",
     "a15fb7ae74067d29ba5fec92779c4da7c0e255ccf8430f294aca8ffb7e680c66",
@@ -44,6 +88,15 @@
   ],
   "instructions/maintenance/apps-script-guidance-review.md": [
     "668f0b8c13cfb7b6839d758255466ff8d6f56e23f4ddf1af0293c649d9ccaf6f"
+  ],
+  "instructions/maintenance/examples/java-saas/ADDITIONAL.md": [
+    "5924b3e04f50040805ffd7bb55dab863e35a30a9b0b4f222096a14b5bb5d92e9"
+  ],
+  "instructions/maintenance/examples/java-saas/PROJECT.md": [
+    "ac3d5b0aa9274c86f972e8fc712d31c48dab54dd9c3b8b6f27e8e4412c8bf9c9"
+  ],
+  "instructions/maintenance/examples/java-saas/PROJECT_PROFILE.md": [
+    "ca7b90c9d2c9db6898cf2d29b9b5b7d8b39eb8277d76fff0faf6f4a87508cc0c"
   ],
   "instructions/maintenance/examples/java-saas/instructions/project/ADDITIONAL.md": [
     "5924b3e04f50040805ffd7bb55dab863e35a30a9b0b4f222096a14b5bb5d92e9"
@@ -87,7 +140,15 @@
     "ac78384fe1f3490c6c8d87535f9e1a3aa123dd2a9b88dc9c635422785abd92f4"
   ],
   "instructions/maintenance/project-profile-validation.md": [
-    "66db1ccc228f131ef11100331cad3c57b46399448ccb5dda1c6c268842edef66"
+    "66db1ccc228f131ef11100331cad3c57b46399448ccb5dda1c6c268842edef66",
+    "9eaa2e368f3204cd061036d7a9c8009cb0614605bb30cc65171807b3aee42da8"
+  ],
+  "instructions/maintenance/project-root-local-setup-review.md": [
+    "042bc90e9c8700ebd42eae935f278f70273bbe33a42f5ab6673544b85ac7b9fd",
+    "6481764a102697171aea64d85d564d428e9cdddbb768d3699534501474f509da",
+    "693a27841eeea0a91eaa37d2ab6dbb3af577e7a08a0357281fc971de2aca1dd9",
+    "824a9c182e8ff0cb98f07ea69b0215420676ac1b77cb925ca9e7ef5194cc677b",
+    "fee5d320a3312ed7fa9b1001c7039ff5e28ce4712f80ddbd203e4f1f046693cf"
   ],
   "instructions/maintenance/recommended-layouts-review.md": [
     "5ef2c56647f9b740e67667b9663822557fff434bf394404019ce77719b19c97b"

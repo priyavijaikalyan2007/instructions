@@ -11,9 +11,9 @@ Created: 2026
 
 # Additional instruction template
 
-This file becomes the consuming project's local refinement file when copied to instructions/project/ADDITIONAL.md.
+This file becomes the consuming project's local refinement file when copied to ADDITIONAL.md.
 The project profile identifies its path. AGENTS.md requires reading that configured file.
-Project facts belong in instructions/project/PROJECT.md. Reusable engineering rules belong in their generic subject guides.
+Project facts belong in PROJECT.md. Reusable engineering rules belong in their generic subject guides.
 
 ## Project-specific instructions
 

@@ -76,7 +76,7 @@ Verify the published output and its links, not only the source file's existence.
 ### 4. Release Notes & Updates
 **Audience:** All users and stakeholders.
 **Focus:** What changed, why it matters, and how to upgrade.
-**Location:** `/docs/external/updates/` (derived from `instructions/project/CHANGELOG.md`)
+**Location:** `/docs/external/updates/` (derived from `CHANGELOG.md`)
 
 *   **Structure:**
     *   **New Features:** Description of new capabilities.
@@ -164,4 +164,4 @@ Documentation is part of the "Definition of Done". A change is not complete unti
 1. The relevant documentation files are updated.
 2. `instructions/frontend/COMPONENTS.md` is updated if a component was added or changed.
 3. `demo/index.html` includes the new or changed component.
-4. `instructions/project/CONVERSATION.md` records the change.
+4. `CONVERSATION.md` records the change.

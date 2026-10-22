@@ -17,7 +17,7 @@ import tempfile
 import unittest
 
 SCRIPT = Path(__file__).resolve().parents[1] / 'configure-instructions.sh'
-PROFILE = 'instructions/project/PROJECT_PROFILE.md'
+PROFILE = 'PROJECT_PROFILE.md'
 
 
 class SourceFolderTests(unittest.TestCase):

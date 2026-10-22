@@ -28,7 +28,7 @@ class TerminalUiTests(unittest.TestCase):
             environment.pop('NO_COLOR', None)
             environment.update(env or {})
             result = subprocess.run(['bash', str(SCRIPT), '--root', directory, *flags],
-                                    input='4\nsrc/app/example\nyes\nSwift\nmacOS\nnative application\nno\n',
+                                    input='none\n4\nsrc/app/example\nyes\nSwift\nmacOS\nnative application\nno\n',
                                     text=True, capture_output=True, env=environment, timeout=20)
             self.assertEqual(list(Path(directory).iterdir()), [])
             return result

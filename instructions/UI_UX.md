@@ -797,7 +797,7 @@ It should not merely expose the domain's storage format.
 ## Design prerequisites
 
 Always consider the user experience before finalizing UI or workflow changes.
-- Read the configured instructions/project/ADDITIONAL.md refinements. Follow any project-owned experience references explicitly listed there.
+- Read the configured ADDITIONAL.md refinements. Follow any project-owned experience references explicitly listed there.
 - If the intended user flow is unclear, **pause and ask for clarification**.
 
 ## UI engineering acceptance checklist

@@ -17,13 +17,13 @@ Backend containers, native signing, and static bundle delivery remain in their t
 
 ## Project configuration
 
-The manual profile is instructions/project/PROJECT_PROFILE.md. AGENTS.md reads it before target and language selection.
+The manual profile is PROJECT_PROFILE.md. AGENTS.md reads it before target and language selection.
 Its Project files table declares the project-facts file and the local additional-instructions file.
 Resolve configured paths from the consuming repository root.
-Those default to instructions/project/PROJECT.md and instructions/project/ADDITIONAL.md. Both declared files must exist before dependent work.
+Those default to PROJECT.md and ADDITIONAL.md. Both declared files must exist before dependent work.
 
-instructions/project/PROJECT.md contains project-specific facts: purpose, structure, configured commands, versions, and environment names.
-instructions/project/ADDITIONAL.md contains local instructions, explicit exceptions, and emerging lessons.
+PROJECT.md contains project-specific facts: purpose, structure, configured commands, versions, and environment names.
+ADDITIONAL.md contains local instructions, explicit exceptions, and emerging lessons.
 Keep generic rules in their subject guides. Preserve all three project-owned files when updating generic instructions.
 An instruction that is reusable across projects can be proposed for its generic guide, then shortened locally after adoption.
 
@@ -32,14 +32,17 @@ An instruction that is reusable across projects can be proposed for its generic 
 Keep common guides and templates under instructions/.
 Keep target and language guides under their named folders, retaining descriptive filenames.
 Keep AGENTS.md, CLAUDE.md, GEMINI.md, and CODEX.md as the root instruction entry files.
-Store project-owned facts, profiles, refinements, and conversation records under instructions/project/ by default.
+Store PROJECT_PROFILE.md, PROJECT.md, ADDITIONAL.md, CONVERSATION.md, and CHANGELOG.md at the repository root.
+Store setup state and inherited backups under .instructions/.
+Keep SETUP.md and root operation scripts project-owned.
 Store instruction-library plans, audits, and examples under instructions/maintenance/.
 Reserve specs/ for the consuming repository's actual product and repository specifications.
-Preserve instructions/project/ when distributing or updating the generic guides.
+Preserve root project files and .instructions/ when distributing or updating generic guides.
+Use the configured context paths when an established project uses custom locations.
 
 ### Manual setup
 
-1. Copy instructions/PROJECT_PROFILE_TEMPLATE.md to instructions/project/PROJECT_PROFILE.md when no profile exists.
+1. Copy instructions/PROJECT_PROFILE_TEMPLATE.md to PROJECT_PROFILE.md when no profile exists.
 2. Copy instructions/PROJECT_TEMPLATE.md to the configured project-facts path when that file is absent.
 3. Copy instructions/ADDITIONAL_TEMPLATE.md to the configured additional-instructions path when that file is absent.
 4. Replace placeholder values for enabled components and project files with verified facts.
@@ -47,7 +50,8 @@ Preserve instructions/project/ when distributing or updating the generic guides.
 6. Record the component's source paths, targets, languages, platforms, SDK relationship, and deployment mode.
 7. Check only the project choices that match the actual architecture.
 8. Verify project-file paths and enabled component paths against the consuming repository.
-9. Assign each copied file a new GUID according to instructions/COPYRIGHT_HEADER.md.
+9. Adjust copied profile links to resolve from the repository root.
+10. Assign each copied file a new GUID according to instructions/COPYRIGHT_HEADER.md.
 
 Unchecked example components may retain template placeholders. They do not select guides or require source paths.
 For an existing setup, edit its profile and local files in place. Preserve handwritten content and local refinements.
@@ -247,7 +251,7 @@ When the product already provides user-configurable settings (e.g., AI provider/
 
 ## Conversation records
 
-You must always update `instructions/project/CONVERSATION.md` with a brief description of changes made after each set of changes. This file serves as organizational and agentic memory tracking the evolution of the product. Do not skip this step.
+You must always update `CONVERSATION.md` with a brief description of changes made after each set of changes. This file serves as organizational and agentic memory tracking the evolution of the product. Do not skip this step.
 
 ## Commit records
 
@@ -322,6 +326,66 @@ The check validates installed configuration, configured project files, enabled s
 A check reports missing files instead of installing them.
 Neither command writes files. A successful check does not validate application builds or every transitive instruction link.
 
+### Local target folders
+
+Use --target-folder to create a test setup without GitHub or a Git repository:
+
+```bash
+./scripts/configure-instructions.sh --target-folder /tmp/instructions-trial --dry-run
+./scripts/configure-instructions.sh --target-folder /tmp/instructions-trial
+```
+
+The first command interviews and previews without creating the target or its missing parents.
+The second command repeats the interview and creates the reviewed setup after confirmation.
+Use a new folder for another clean trial. Existing project files and custom scripts are preserved.
+Enter none for an unavailable repository URL. Setup does not run git init, create remotes, or contact services.
+The target receives shared guides, neutral agent entries, project documents, and a copy of the setup tools.
+You can then run its own scripts/configure-instructions.sh. Its --check validates configuration, not application readiness.
+Use --project-answers identity.json and --answers selections.json for repeatable noninteractive trials.
+With --dry-run, those files preview the exact inputs. Replace --dry-run with --apply to apply them.
+
+### Tool roles
+
+First-time interviews offer Claude Code, Codex, Gemini CLI, Antigravity, Pi, Roo Code, Cline, and a custom tool identifier.
+Select several roles per tool. Role definitions stay in [AGENT_ROLES.md](AGENT_ROLES.md).
+Assignments and project-specific notes stay in root PROJECT_PROFILE.md.
+A host tool determines the assignment. The selected model provider does not determine it.
+Role assignments do not grant permissions or authorize delegation.
+
+Edit only those assignments with this command:
+
+```bash
+./scripts/configure-instructions.sh --root /path/to/project --configure-agents
+```
+
+Existing component selections stay unchanged. Ordinary product interviews preserve existing role assignments.
+JSON accepts the optional agent_roles object:
+
+```json
+{
+    "agent_roles": {
+        "claude": ["implementation", "testing"],
+        "codex": {"roles": ["planning", "review"], "notes": "Review API boundaries."},
+        "roo": ["review"]
+    }
+}
+```
+
+Omit agent_roles to preserve its table. Use an empty object to clear tool-specific assignments.
+Setup creates a Roo workspace pointer only when needed. Custom tools require their documented instruction mechanism.
+Setup preserves custom entry files. It does not install tools or modify global tool settings.
+
+### Root project migration
+
+Earlier installations stored project files under instructions/project/.
+The updated selector previews moving the five default project Markdown files to the root.
+It also moves initialization state and backups to .instructions/.
+Custom context paths remain authoritative. Conflicting root and legacy files stop setup before writes.
+Active document links and default project references are repaired. Historical conversation and changelog bytes remain intact.
+Existing active generic guides receive only default project-path substitutions during this migration.
+Dry runs and cancellation preserve all files. --check reports a required migration without applying it.
+Generic policy upgrades remain a separate reviewed operation.
+
 ### Repeatable selections
 
 Save explicit selections in a JSON answer file when an interview is unsuitable.
@@ -367,19 +431,22 @@ Use the [README trees](README.md#scenario-reading-trees) to inspect common and c
 
 ### Preservation and write boundaries
 
-Initialization copies missing shared files from instructions/ and missing root agent entries.
+Initialization copies missing shared files from instructions/ and missing neutral root agent entries.
 It excludes the source repository's project/ and maintenance/ directories.
 Missing project-owned files use fresh template GUIDs. Unknown project facts remain explicitly unspecified.
 The selector preserves installed shared guides, custom component notes, project facts, and local refinements.
-The selector updates only the selected Markdown field lines and the marked root AGENTS block.
+The selector edits selected Markdown fields, optional role assignments, and the marked root AGENTS block.
+Recognized inherited agent entries receive neutral pointers after an exact backup. Custom entries remain unchanged.
 Existing text outside that block remains unchanged. Malformed blocks require manual repair before configuration.
 Manual profiles remain editable without the script.
 
 Configured project-file paths resolve from the target repository root. Custom safe paths remain unchanged.
-Project facts and refinements need separate Markdown files and cannot replace shared guides or root entries.
+Project facts and refinements need separate Markdown files. They cannot replace shared guides, root entries, or SETUP.md.
 Paths cannot escape the repository, enter .git, or traverse symlinks.
 Repeated identical selections produce no changes after initialization.
-Application code, source directories, deployments, credentials, Git state, and existing generic guides remain unchanged.
+Application code, deployments, credentials, and Git state remain unchanged.
+Approved source folders and missing project script placeholders can be created during project initialization.
+Existing generic guides remain installed. Legacy root-layout migration repairs only default project-path references.
 Each file replacement is atomic. A filesystem failure can interrupt a multi-file apply, so inspect the reported error and retry.
 Generic guide upgrades remain a separate reviewed operation.
 
@@ -426,12 +493,14 @@ You can also request initialization explicitly:
 ```
 
 Run the updated script from this library or from a new clone that includes it.
-Initialization requires Python 3.10+, Bash, and Git.
+Initialization requires Python 3.10+ and Bash. Git is optional for local-folder setup.
 For an older clone, use this library's current script with --root pointing to that clone.
 The initializer refuses to initialize the source instructions repository itself.
 The source repository's own README, contribution policy, conduct policy, security policy, and LICENSE remain unchanged.
 
-The interview collects repository identity, copyright ownership, software licensing, optional content licensing, and component choices.
+The interview collects repository identity, copyright ownership, licenses, business context, tool roles, and component choices.
+Business questions cover users, their problem, expected value, scope, success criteria, and constraints.
+Unanswered questions remain TODOs in project-owned files. JSON accepts these facts through optional business_context.
 Unknown contribution rules, reporting contacts, support targets, and commands remain visible TODOs.
 The existing product interview still selects targets and languages.
 Existing source paths must exist. Explicitly planned literal paths may be absent and produce a configuration note.
@@ -442,12 +511,16 @@ It does not generate application files or invent build commands. JSON callers se
 
 - .github/README.md, which GitHub uses as the repository landing page.
 - .github/CONTRIBUTING.md, .github/CODE_OF_CONDUCT.md, and .github/SECURITY.md.
-- LICENSE, plus full selected terms under LICENSES/.
+- LICENSE containing the full terms when one software license needs no additional texts.
+- LICENSES/ for multiple alternatives, separate content licenses, or required companion terms.
 - THIRD_PARTY_NOTICES.md and instructions/LICENSE for copied instruction-library attribution.
-- The configured project-facts and additional-instructions files, normally under instructions/project/.
-- instructions/project/INITIALIZATION.json, which records completed initialization and licensing choices.
+- Root PROJECT_PROFILE.md and configured project facts and refinements, normally PROJECT.md and ADDITIONAL.md.
+- SETUP.md, a project-owned completion checklist.
+- Missing root operation scripts selected by the profile.
+- .instructions/INITIALIZATION.json, which records completed initialization and licensing choices.
 
-The existing root agent files retain their roles. Their managed scope is regenerated from the selected profile.
+Tool roles come from PROJECT_PROFILE.md. Neutral entry files point to the same profile and shared role definitions.
+The managed AGENTS scope is regenerated from selected components. Custom entry files remain project-owned.
 Custom context paths remain authoritative. Generated links follow those paths.
 Generated policy scaffolding retains its file-specific template attribution.
 New application material uses the selected project terms, subject to existing third-party notices.
@@ -460,6 +533,9 @@ Select several software licenses to offer alternatives joined by OR.
 A product name such as Elasticsearch does not identify one universal license arrangement.
 Select the exact alternatives that the project owner intends to offer.
 
+A single software license keeps its complete legal text in root LICENSE, below the scope notice.
+Multiple terms use a root scope notice and LICENSES/ for the separate texts.
+LGPL 3.0 retains its GPL 3.0 companion text. Existing initialized license files are preserved.
 Creative Commons offers a separate content choice, including the six 4.0 variants and CC0 1.0.
 Record the paths covered by that content choice. Existing third-party and explicit file notices still take precedence.
 Undecided or custom commercial terms remain pending until the owner supplies the actual terms.
@@ -496,14 +572,17 @@ Omit content and content_paths when no separate content license applies.
 ```
 
 The dry run lists every planned creation, replacement, backup, and removal. It shows policy, license, profile, and root-routing diffs.
-A dry run never writes files or starts an interview. Initialization dry runs require --project-answers.
+A dry run never writes files. With --root, it reads current selections without an interview.
+Explicit --configure-agents starts a role interview.
+With --target-folder, a dry run can interview a new project without creating the folder.
+Noninteractive initialization dry runs require --project-answers and --answers.
 Replace --dry-run with --apply to apply the reviewed inputs without an interactive confirmation.
 Without either option, the script requests confirmation after the preview. Cancellation writes nothing.
 
 ### Preservation and inherited history
 
 Initialization recognizes inherited files by registered whole-file hashes, including supported earlier template versions.
-It backs up exact inherited originals under instructions/project/template-backup/ before replacing or removing them.
+It backs up exact inherited originals under .instructions/template-backup/ before replacing or removing them.
 It resets an unchanged inherited profile and generates new project facts and local-instruction placeholders.
 It removes unchanged source-library conversation, changelog, maintenance, and knowledge records from their active locations.
 Customized records and documents remain untouched and are reported for manual review.
@@ -624,11 +703,67 @@ Shared source remains allowed when that overlap is intentional.
 
 ## Terminal presentation
 
-The interview uses distinct colors for headings, choices, current defaults, warnings, results, and preview diffs.
-Meaning remains in the text, so color is never required to understand a choice.
-The shared presentation includes project identity and license questions.
+Interactive terminals use ncurses forms through Python's optional curses module.
+This covers project facts, licenses, tool roles, product choices, and final approval.
+Text boxes support cursor movement, Delete, Backspace, Home, End, Ctrl+A, Ctrl+E, Ctrl+U, and Ctrl+W.
+Long answers scroll within the text box. Terminal key sequences do not become project facts.
+Correct invalid identity and business facts in the current field. Accepted answers remain available.
 
-Use --color auto for terminal detection. This is the default.
-Automatic mode disables color for redirected output, NO_COLOR, and TERM=dumb.
-Use --color never for plain output or --color always to force ANSI colors.
-The interview stays line-oriented and supports ordinary keyboard input without a full-screen terminal interface.
+Use Up and Down to move through choices. Use Space to select checkboxes and Enter to continue.
+For numeric menus, you can also edit the selected values directly in the text box.
+Use PgUp and PgDn to scroll field guidance. Use F2 to review all interview messages.
+The full change review appears before the final approval question. Approval defaults to no.
+Esc opens a cancellation choice before apply. A result view remains available after completion.
+Terminal resize preserves the current answer. Small windows request at least 60 columns and 18 rows.
+Curses restores terminal modes after normal completion, explicit cancellation, and exceptions.
+
+Use these presentation modes:
+
+| Option | Behavior |
+| --- | --- |
+| --ui auto | Use curses for an interactive terminal. Use plain output for automation and unsupported terminals. |
+| --ui curses | Require curses for an interview. Report unavailable terminal support before setup writes. |
+| --ui plain | Use the line-oriented interview explicitly. |
+
+Python curses support is optional. Setup does not install terminal packages.
+On supported macOS and Unix Python builds, it provides the ncurses interface without a separate UI dependency.
+See [Python's curses documentation](https://docs.python.org/3/library/curses.html) for platform availability.
+Plain mode remains available when curses is missing, TERM=dumb, or input or output is redirected.
+JSON apply and check commands remain suitable for scripts.
+
+Use --color auto for terminal detection, --color never for monochrome, or --color always to force supported colors.
+Automatic color selection honors NO_COLOR and redirected output.
+Monochrome curses still uses terminal screen-control codes. Redirected auto mode emits plain stream output.
+Labels and selection markers retain meaning without color.
+
+## Project scaffold and readiness
+
+Initialization creates missing profile-specific operation scripts and root SETUP.md.
+Read [PROJECT_SCAFFOLDING.md](PROJECT_SCAFFOLDING.md) for the script selection and implementation contract.
+Scripts provide usage, logging, argument checks, and failure examples. Their project operations remain TODOs.
+Existing script implementations remain unchanged. Selecting another target adds its missing entry scripts.
+
+For backend work, use test for the local machine, dev for staging, and prod for production.
+These are environment names, not provisioned resources. Record actual destinations and secret references in project facts.
+Keep credentials out of source, script arguments, and logs.
+The preview prints file-specific completion steps. SETUP.md records the same tasks for later review.
+A successful selector check does not mean that placeholder scripts build, test, deploy, or validate the application.
+
+### Business-context answers
+
+Add an optional business_context member to the project identity JSON. These values are facts rather than instruction selections:
+
+```json
+{
+    "users": "Technical writers",
+    "problem": "Repeated manual document cleanup",
+    "value": "Less editing time",
+    "scope": "Google Docs and browser extensions",
+    "success_criteria": "Fewer manual formatting steps",
+    "constraints": "No service backend in the initial release"
+}
+```
+
+This example is the member value, not a complete project-answers file.
+The required identity and license fields still apply. Complete unknown facts in PROJECT.md after setup.
+The recorded initialization identity is preserved on repeats. Later changes to project facts remain project-owned edits.

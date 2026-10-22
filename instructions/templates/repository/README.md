@@ -15,12 +15,20 @@ $description
 
 ## Project overview
 
-[TODO: Describe the intended users, their problem, and the product's scope.]
+Intended users: $users
+
+Problem: $problem
+
+Initial scope: $scope
+
+Expected value: $value
 
 ## Getting started
 
 [TODO: List verified prerequisites, installation steps, and the first useful action.]
 [TODO: Add tested build, run, and test commands. Do not copy commands from another project.]
+
+Complete the root SETUP.md checklist. Generated operation scripts remain placeholders until implemented.
 
 ## Development
 

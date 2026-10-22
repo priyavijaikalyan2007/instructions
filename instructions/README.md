@@ -10,13 +10,14 @@ Created: 2026
 <!-- AGENT: Readme file describing this repository. -->
 
 This is the shared instruction library overview. The four root agent entry files route to guides under instructions/.
-Project configuration and local refinements live under instructions/project/ and remain project-owned during generic instruction updates.
+Project configuration and local refinements live at the repository root and remain project-owned during generic updates.
+Setup state and backups live under .instructions/.
 Instruction-maintenance plans, audits, and examples live under instructions/maintenance/.
 The consuming repository's specs/ directory is reserved for its actual product and repository specifications.
 
-This repository contains instructions for coding agents, primarily Claude and Gemini. Each agent is asked to perform a different role.
-
-The CLAUDE.md and GEMINI.md file reference AGENTS.md and then specify the role that the agent should play. AGENTS.md sets the main the context and the agent specific instructions set the roles.
+This repository contains shared instructions for coding tools and optional project-specific role assignments.
+Root PROJECT_PROFILE.md selects components, languages, and multiple roles per tool.
+The neutral tool entry files reference AGENTS.md. Shared role definitions remain in instructions/AGENT_ROLES.md.
 
 Instead of using a monolithic, single instruction file, the AGENTS.md file references multiple individual files for specific instructions. It also tells the agent how to clean, build, test and run the code.
 
@@ -44,16 +45,22 @@ For an existing flat installation, review the relocation map before retiring old
 
 ## Project configuration
 
-[WORKFLOW.md](WORKFLOW.md#load-project-configuration) reads the active instructions/project/PROJECT_PROFILE.md before selecting guides.
+[WORKFLOW.md](WORKFLOW.md#load-project-configuration) reads the active PROJECT_PROFILE.md before selecting guides.
 The profile identifies project facts and local refinements, then selects enabled components and their source languages.
-instructions/project/PROJECT.md contains facts only. instructions/project/ADDITIONAL.md contains project-specific instructions and emerging lessons.
+PROJECT.md contains facts only. ADDITIONAL.md contains project-specific instructions and emerging lessons.
 
 Use the [profile template](PROJECT_PROFILE_TEMPLATE.md), [facts template](PROJECT_TEMPLATE.md), and [refinement template](ADDITIONAL_TEMPLATE.md).
 Follow [manual setup](REPO.md#manual-setup) or use the [profile selector](REPO.md#profile-selector) to initialize or modify selections.
 Run `./scripts/configure-instructions.sh --root /path/to/project` from this checkout for the interview.
+Interactive terminals use ncurses forms with editable fields, selection lists, scrolling help, and a final review.
+Use `--ui plain` for the line-oriented interface or `--ui curses` to require curses support.
 Use `--check` for read-only validation and `--answers <json-file> --dry-run` to preview repeatable selections.
 If you created a repository with GitHub's template feature, use [project initialization](REPO.md#initialize-a-repository-created-from-this-template).
-Initialization replaces known inherited project documents and asks for license choices. It preserves customized files and backs up inherited originals.
+Initialization replaces known inherited project documents and asks for licenses, business facts, and tool roles. It preserves customized files and backs up inherited originals.
+Use `--target-folder /tmp/instructions-trial --dry-run` for a local interview without creating a repository or folder.
+Remove `--dry-run` to repeat setup with a final preview and confirmation.
+New projects receive missing operation placeholders and a SETUP.md checklist. Existing scripts are preserved.
+Read [project scaffolding](PROJECT_SCAFFOLDING.md) before implementing those operations.
 This repository's active profile describes the instruction library itself. Application examples do not enable application components here.
 Generic instruction updates preserve project-owned profiles, facts, and refinements.
 
@@ -155,20 +162,26 @@ Use the common baseline with the tree for the work in scope.
 Paths are relative to the consuming repository root. Bracketed conditions select a file only when that condition applies.
 These trees show reading scope, not a required application directory layout.
 Read relevant sections and examples, rather than every section in each linked guide.
-An agent starts with its own entry file and AGENTS.md. It does not need every agent-specific entry file.
+An agent starts with its documented entry mechanism and AGENTS.md.
+CODEX.md is a compatibility pointer. Codex normally loads AGENTS.md directly.
+The profile identifies roles by host tool rather than model provider.
 
 ### Common baseline
 
 ```text
 .
 ├── AGENTS.md
-├── CLAUDE.md / CODEX.md / GEMINI.md       [the active agent's entry]
+├── CLAUDE.md / GEMINI.md / CODEX.md       [tool entry or compatibility pointer]
+├── PROJECT_PROFILE.md                   Components, languages, and tool roles
+├── PROJECT.md                           Project and business facts
+├── ADDITIONAL.md                        Local instructions and emerging lessons
+├── CONVERSATION.md                      Prior context and session records, when present
+├── CHANGELOG.md                         Project changes, when present
+├── SETUP.md                             Project initialization checklist, when generated
+├── .instructions/                       Initialization state and historical backups, when generated
 └── instructions/
-    ├── project/
-    │   ├── PROJECT_PROFILE.md            Enabled components and source paths
-    │   ├── PROJECT.md                    Project facts
-    │   ├── ADDITIONAL.md                 Local instructions and emerging lessons
-    │   └── CONVERSATION.md               Prior context and session records
+    ├── AGENT_ROLES.md                    Shared role definitions and tool entry guidance
+    ├── PROJECT_SCAFFOLDING.md            [project setup or operation-script work]
     ├── WORKFLOW.md                       Shared workflow and guide selection
     ├── REPO.md                           Setup, commands, and scope selection
     ├── LANGUAGE.md
@@ -414,7 +427,7 @@ Microsoft Office extension guidance is deferred.
 Check the active profile choices before tracing a tree.
 For each changed behavior, follow the applicable leaves and their linked sections.
 Check that conditional examples match the project's actual language, platform, and configured architecture.
-Record project-local lessons in instructions/project/ADDITIONAL.md and propose reusable refinements for the owning shared guide.
+Record project-local lessons in ADDITIONAL.md and propose reusable refinements for the owning shared guide.
 
 ## Agent Knowledge Base
 
