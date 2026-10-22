@@ -138,3 +138,23 @@ Results show apply status and completion steps. Plain mode retains diffs.
 
 Validation: 176 tests pass. A real ncurses trial verified two tool role screens, F3 inspection,
 return to summary, explicit approval, readable results, cursor editing, resize, and terminal restoration.
+
+
+## 22 October 2026: public documents at the root
+
+Plan: Move README.md, CONTRIBUTING.md, CODE_OF_CONDUCT.md, and SECURITY.md from .github/ to the root.
+Update project_initialization.py, project_layout.py, project_scaffolding.py, configure_instructions.py,
+update_template_baseline.py, their tests, active repository guides, document templates, and session records.
+Keep workflow and issue configuration under .github/. Preserve existing policy text except local links.
+Reuse layout_changes(root, check) and extend rebase_links(text, source_root) for known public-document moves.
+Retain dry-run, cancellation, conflict, symlink, permission, and inherited-backup protections.
+No pattern required. Existing functions cover this change. CLI orchestration remains separate from file planning.
+Explain README as the public introduction, PROJECT as detailed facts, and PROJECT_PROFILE as scope configuration.
+Verify fresh setup, copied templates, initialized legacy migration, links, preservation, and the full test suite.
+
+Validation: All 183 tests pass. Active root and guide Markdown file links resolve.
+Policy text remains unchanged except the moved contribution policy license link.
+Fresh local setup and copied-template initialization produce root public documents.
+Initialized legacy setups repair checklist and source-scope references without losing owner edits.
+Dry runs, cancellation, conflicts, symlinks, inherited backups, and private file permissions are covered.
+Source profile checks, read-only preview, and formatting checks pass.

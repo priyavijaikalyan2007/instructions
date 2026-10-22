@@ -946,3 +946,17 @@ Response: Added root configure.sh, installed it in local targets, and updated cu
 User: Ran the script. 1) Question 16 is unexplained nad has just "Available agent roles:" - what is it supposed to do? 2) Why is teh ifnal review or the "Setup result" page showing me diff style output? Is that useful for an end user or should it be formatter better for readability?
 
 Response: Repeat the purpose and controls for every tool role question. Show readable setup summaries and completion steps in forms. Keep exact file changes available through F3 and preserve plain-mode diff output.
+
+
+## 22 October 2026: root public documents
+
+User: Great. That seems good. One final question: why do the files that are supposed to be in the repository root such as Create .github/CODE_OF_CONDUCT.md
+  Create .github/CONTRIBUTING.md
+  Create .github/README.md
+  Create .github/SECURITY.md stored in a separate .github folder? The .github folder is supposed to be for Github specific stuff like Actions and such right? Placing them at the root immediately makes the landing page of any github repo created from these instructions usable on day 1. Plus, what is the different between what README.md would say and what PROJECT_PROFILE.md or PROJECT.md would say?
+
+Response: GitHub supports the previous location, but root documents match the project convention. README introduces the product and first use. PROJECT holds detailed facts. PROJECT_PROFILE selects instruction scope and tool roles.
+
+User: agree. please fix.
+
+Response: Moved the source public documents to the root and updated initialization, completion links, and shared guidance. Existing setups preview safe moves and preserve customized text and permissions. Conflicts stop setup before writes. GitHub configuration remains in .github/.

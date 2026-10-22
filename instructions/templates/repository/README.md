@@ -17,11 +17,9 @@ $description
 
 Intended users: $users
 
-Problem: $problem
-
-Initial scope: $scope
-
 Expected value: $value
+
+Read [project facts](<$project_link>) for the user problem, scope, constraints, and success criteria.
 
 ## Getting started
 

@@ -55,10 +55,11 @@ class ProjectInitializationTests(unittest.TestCase):
     def inherit(self):
         """Reproduce GitHub template copying without its Git metadata."""
         for folder in ['instructions', '.github', 'agentknowledge', 'scripts']:
-            shutil.copytree(LIBRARY / folder, self.root / folder, ignore=shutil.ignore_patterns('__pycache__'))
+            if (LIBRARY / folder).exists():
+                shutil.copytree(LIBRARY / folder, self.root / folder, ignore=shutil.ignore_patterns('__pycache__'))
         for name in ['LICENSE', 'AGENTS.md', 'CLAUDE.md', 'CODEX.md', 'GEMINI.md',
                      'PROJECT_PROFILE.md', 'PROJECT.md', 'ADDITIONAL.md', 'CONVERSATION.md', 'CHANGELOG.md',
-                     'configure.sh']:
+                     'configure.sh', 'README.md', 'CONTRIBUTING.md', 'CODE_OF_CONDUCT.md', 'SECURITY.md']:
             shutil.copy2(LIBRARY / name, self.root / name)
 
     def snapshot(self):
@@ -67,15 +68,15 @@ class ProjectInitializationTests(unittest.TestCase):
 
     def test_initialize_copy_replaces_policies_and_resets_library_profile(self):
         self.inherit()
-        original = (self.root / '.github/README.md').read_bytes()
+        original = (self.root / 'README.md').read_bytes()
         result = self.run_cli('--apply')
         self.assertEqual(result.returncode, 0, result.stderr)
-        self.assertIn('utilextensions', (self.root / '.github/README.md').read_text())
-        self.assertNotIn('Enterprise Bootstrap', (self.root / '.github/CONTRIBUTING.md').read_text())
-        self.assertNotIn('48-72', (self.root / '.github/SECURITY.md').read_text())
+        self.assertIn('utilextensions', (self.root / 'README.md').read_text())
+        self.assertNotIn('Enterprise Bootstrap', (self.root / 'CONTRIBUTING.md').read_text())
+        self.assertNotIn('48-72', (self.root / 'SECURITY.md').read_text())
         self.assertNotIn('instruction-library', (self.root / PROFILE).read_text())
         self.assertNotIn('refactor/scoped-guides', (self.root / 'PROJECT.md').read_text())
-        self.assertEqual((self.root / '.instructions/template-backup/.github/README.md').read_bytes(), original)
+        self.assertEqual((self.root / '.instructions/template-backup/README.md').read_bytes(), original)
         self.assertFalse((self.root / 'agentknowledge/history.jsonl').exists())
         self.assertFalse((self.root / 'CONVERSATION.md').exists())
         self.assertEqual((self.root / 'instructions/LICENSE').read_bytes(), (LIBRARY / 'LICENSE').read_bytes())
@@ -88,15 +89,31 @@ class ProjectInitializationTests(unittest.TestCase):
             self.assertEqual(result.returncode, 0, result.stderr)
             self.assertEqual(self.snapshot(), before)
 
+    def test_legacy_inherited_public_documents_are_replaced_at_root_with_backups(self):
+        self.inherit()
+        github = self.root / '.github'
+        github.mkdir(exist_ok=True)
+        names = ['README.md', 'CONTRIBUTING.md', 'CODE_OF_CONDUCT.md', 'SECURITY.md']
+        originals = {name: (self.root / name).read_bytes() for name in names}
+        for name in names:
+            (self.root / name).rename(github / name)
+        result = self.run_cli('--apply')
+        self.assertEqual(result.returncode, 0, result.stderr)
+        for name in names:
+            self.assertTrue((self.root / name).is_file())
+            self.assertFalse((github / name).exists())
+            self.assertEqual((self.root / '.instructions/template-backup' / name).read_bytes(), originals[name])
+        self.assertIn('utilextensions', (self.root / 'README.md').read_text())
+
     def test_repeat_preserves_edits_and_custom_files(self):
         self.inherit()
-        custom = self.root / '.github/CONTRIBUTING.md'
+        custom = self.root / 'CONTRIBUTING.md'
         custom.write_text('Our contribution process\n')
         result = self.run_cli('--apply')
         self.assertEqual(result.returncode, 0, result.stderr)
         self.assertEqual(custom.read_text(), 'Our contribution process\n')
         self.assertIn('Preserve customized', result.stdout)
-        readme = self.root / '.github/README.md'
+        readme = self.root / 'README.md'
         readme.write_text('Project overview edited by owner\n')
         before = self.snapshot()
         self.assertEqual(self.run_cli('--apply').returncode, 0)
@@ -160,7 +177,7 @@ class ProjectInitializationTests(unittest.TestCase):
         result = subprocess.run(command, input=answers, text=True, capture_output=True, timeout=20)
         self.assertEqual(result.returncode, 0, result.stderr)
         self.assertNotIn("This is the instruction library's own repository", result.stdout)
-        self.assertIn('utilextensions', (self.root / '.github/README.md').read_text())
+        self.assertIn('utilextensions', (self.root / 'README.md').read_text())
 
     def test_copied_script_initializes_docs_with_absent_source_paths(self):
         self.inherit()
@@ -231,7 +248,7 @@ class ProjectInitializationTests(unittest.TestCase):
 
     def test_backup_conflict_aborts_without_writes(self):
         self.inherit()
-        backup = self.root / '.instructions/template-backup/.github/README.md'
+        backup = self.root / '.instructions/template-backup/README.md'
         backup.parent.mkdir(parents=True)
         backup.write_text('Unrelated earlier backup')
         before = self.snapshot()
@@ -257,7 +274,7 @@ class ProjectInitializationTests(unittest.TestCase):
         (self.root / 'docs/LOCAL.md').write_text('Actual local instructions\n')
         result = self.run_cli('--apply')
         self.assertEqual(result.returncode, 0, result.stderr)
-        self.assertIn('docs/PROJECT.md', (self.root / '.github/README.md').read_text())
+        self.assertIn('docs/PROJECT.md', (self.root / 'README.md').read_text())
         self.assertEqual(facts.read_text(), 'Actual project facts\n')
 
     def test_generated_documents_link_to_existing_files(self):

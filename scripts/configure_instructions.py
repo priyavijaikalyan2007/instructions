@@ -27,7 +27,7 @@ import uuid
 from profile_interview import run_interview
 from agent_roles import (agent_entry_changes, apply_agent_roles, interview_agent_roles, profile_agent_roles)
 from project_layout import (LEGACY_PATHS, PROFILE_PATH, STATE_PATH, canonical_profile, existing_project_path,
-                            layout_changes, read_project_bytes)
+                            layout_changes, read_project_bytes, PUBLIC_DOCUMENTS)
 from project_scaffolding import print_readiness, scaffolding_changes
 from browser_profile import BROWSER_FIELDS, validate_browser
 from source_folders import plan_source_folders, source_scope_warnings
@@ -270,7 +270,7 @@ def project_paths(text: str) -> dict[str, str]:
 
 def validate_project_paths(root: Path, text: str) -> None:
     """Keep project context separate from shared guides, scripts, and agent entry points."""
-    reserved = {PROFILE_PATH, "AGENTS.md", "CLAUDE.md", "CODEX.md", "GEMINI.md", "SETUP.md"}
+    reserved = {PROFILE_PATH, "AGENTS.md", "CLAUDE.md", "CODEX.md", "GEMINI.md", "SETUP.md", *PUBLIC_DOCUMENTS}
     reserved.update(str(path.relative_to(LIBRARY_ROOT))
                     for path in (LIBRARY_ROOT / "instructions").rglob("*")
                     if path.is_file() and path.relative_to(LIBRARY_ROOT / "instructions").parts[0]
@@ -299,6 +299,9 @@ def validate_source_paths(root: Path, identifier: str, paths: str, state: str = 
         if any(parent.exists() and not parent.is_dir() for parent in path.parents):
             raise ValueError(f"{identifier}: source path parent is not a directory: {value}")
         matches = list(root.glob(value))
+        if not matches and value in LEGACY_PATHS:
+            previous = existing_project_path(root, value)
+            matches = [previous] if previous.is_file() else []
         if value == "none" or (not matches and (state != "planned" or any(c in value for c in "*?[]"))):
             raise ValueError(f"{identifier}: source path does not exist: {value}. "
                              "Correct it or explicitly mark a literal new path as planned.")
@@ -484,7 +487,7 @@ def preview(root: Path, changes: dict[str, bytes | None], folders: list[str], pr
         action = 'Remove inherited' if data is None else ('Update' if path.exists() else 'Create')
         print(f"{action} {name}")
         review_files = {PROFILE_PATH, "AGENTS.md", "PROJECT.md", "ADDITIONAL.md", "SETUP.md",
-                        "LICENSE", "THIRD_PARTY_NOTICES.md"}
+                        "LICENSE", "THIRD_PARTY_NOTICES.md", *PUBLIC_DOCUMENTS}
         if data is not None and (name in review_files or name.startswith('.github/')):
             before = path.read_text().splitlines(True) if path.exists() else []
             after = data.decode("utf-8").splitlines(True)

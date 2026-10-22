@@ -15,6 +15,11 @@ These files generate project-owned documents during explicit project initializat
 They do not replace the instruction repository's own README, contribution policy, conduct policy, security policy, or LICENSE.
 The existing instructions/README_TEMPLATE.md remains the general outline for writing a project overview manually.
 The README template here adds concrete policy and configuration links for the initializer's output locations.
+The initializer places README.md, CONTRIBUTING.md, CODE_OF_CONDUCT.md, and SECURITY.md at the repository root.
+Reserve .github/ for GitHub configuration. Keep one repository landing README rather than a competing .github/README.md.
+README.md provides the public introduction and first-use instructions. PROJECT.md holds detailed project facts.
+PROJECT_PROFILE.md records instruction selections, component scope, platforms, delivery choices, and agent roles.
+Link to authoritative details instead of repeating them across these files.
 
 Templates use Python string.Template placeholders. Project values do not execute as code.
 Generated Markdown keeps template attribution and receives a new file GUID and repository identity.

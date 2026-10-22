@@ -23,8 +23,11 @@ Resolve configured paths from the consuming repository root.
 Those default to PROJECT.md and ADDITIONAL.md. Both declared files must exist before dependent work.
 
 PROJECT.md contains project-specific facts: purpose, structure, configured commands, versions, and environment names.
+README.md introduces the project to users and contributors, with installation, first-use, support, and documentation links.
+PROJECT_PROFILE.md records components, languages, paths, delivery choices, and agent roles to select applicable instructions.
+Keep detailed facts authoritative in PROJECT.md and link to them from README.md when needed.
 ADDITIONAL.md contains local instructions, explicit exceptions, and emerging lessons.
-Keep generic rules in their subject guides. Preserve all three project-owned files when updating generic instructions.
+Keep generic rules in their subject guides. Preserve project-owned files when updating generic instructions.
 An instruction that is reusable across projects can be proposed for its generic guide, then shortened locally after adoption.
 
 ### Instruction layout
@@ -33,6 +36,11 @@ Keep common guides and templates under instructions/.
 Keep target and language guides under their named folders, retaining descriptive filenames.
 Keep AGENTS.md, CLAUDE.md, GEMINI.md, and CODEX.md as the root instruction entry files.
 Store PROJECT_PROFILE.md, PROJECT.md, ADDITIONAL.md, CONVERSATION.md, and CHANGELOG.md at the repository root.
+Store README.md, CONTRIBUTING.md, CODE_OF_CONDUCT.md, and SECURITY.md at the root.
+Reserve .github/ for GitHub configuration, such as workflows and issue templates.
+Setup previews moves from the previous .github/ document locations and repairs relative Markdown links.
+Customized document content and permissions remain preserved. Conflicting root and previous files require resolution before setup proceeds.
+Dry runs, cancellation, and --check leave files unchanged. Workflows and other GitHub configuration stay in .github/.
 Store setup state and inherited backups under .instructions/.
 Keep SETUP.md and root operation scripts project-owned.
 Store instruction-library plans, audits, and examples under instructions/maintenance/.
@@ -164,7 +172,7 @@ build/                         Ignored intermediate output, grouped by component
 dist/                          Ignored distributable artifacts, grouped by component
 ```
 
-Keep the four agent entry files at the root. Keep repository policies in their configured root or .github locations.
+Keep the four agent entry files and repository-wide public documents at the root.
 Root workspace manifests, lockfiles, configuration files, and entry scripts can remain where their tools require them.
 A root script orchestrates components. Keep component-specific scripts with their component.
 Use `test/` for new repository-wide tests. Tool-required `tests/`, `Tests/`, and `src/test/` remain valid inside components.
@@ -513,8 +521,8 @@ It does not generate application files or invent build commands. JSON callers se
 
 ### Generated project documents
 
-- .github/README.md, which GitHub uses as the repository landing page.
-- .github/CONTRIBUTING.md, .github/CODE_OF_CONDUCT.md, and .github/SECURITY.md.
+- Root README.md, which introduces the project and provides its repository landing page.
+- Root CONTRIBUTING.md, CODE_OF_CONDUCT.md, and SECURITY.md.
 - LICENSE containing the full terms when one software license needs no additional texts.
 - LICENSES/ for multiple alternatives, separate content licenses, or required companion terms.
 - THIRD_PARTY_NOTICES.md and instructions/LICENSE for copied instruction-library attribution.

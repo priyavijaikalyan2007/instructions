@@ -48,6 +48,10 @@ For an existing flat installation, review the relocation map before retiring old
 [WORKFLOW.md](WORKFLOW.md#load-project-configuration) reads the active PROJECT_PROFILE.md before selecting guides.
 The profile identifies project facts and local refinements, then selects enabled components and their source languages.
 PROJECT.md contains facts only. ADDITIONAL.md contains project-specific instructions and emerging lessons.
+Root README.md introduces the product and explains first use. PROJECT.md holds its detailed project facts.
+PROJECT_PROFILE.md records component scope and instruction selections. Link to details rather than duplicate them.
+Root CONTRIBUTING.md, CODE_OF_CONDUCT.md, and SECURITY.md describe project policies.
+Reserve .github/ for GitHub configuration, such as workflows and issue templates.
 
 Use the [profile template](PROJECT_PROFILE_TEMPLATE.md), [facts template](PROJECT_TEMPLATE.md), and [refinement template](ADDITIONAL_TEMPLATE.md).
 Follow [manual setup](REPO.md#manual-setup) or use the [profile selector](REPO.md#profile-selector) to initialize or modify selections.

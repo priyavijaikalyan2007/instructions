@@ -11,6 +11,13 @@ Created: 2026
 
 # Changelog
 
+## 22 October 2026: root public documents
+
+- Moved README.md, CONTRIBUTING.md, CODE_OF_CONDUCT.md, and SECURITY.md to the root.
+- Changed initialization and completion checklists to use root public documents.
+- Added previewed legacy moves, relative-link repair, preserved permissions, and conflict checks.
+- Clarified public introductions, detailed project facts, and instruction-selection configuration.
+
 ## 22 October 2026: shorter setup command
 
 - Added root configure.sh for setup and profile edits, including local target installations.

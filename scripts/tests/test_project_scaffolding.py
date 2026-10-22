@@ -68,7 +68,7 @@ class ProjectScaffoldingTests(unittest.TestCase):
         project = (self.root / 'PROJECT.md').read_text()
         for value in self.identity['business_context'].values():
             self.assertIn(value, project)
-        self.assertIn('Technical writers', (self.root / '.github/README.md').read_text())
+        self.assertIn('Technical writers', (self.root / 'README.md').read_text())
         self.assertEqual((self.root / 'instructions/REPO.md').read_bytes(),
                          (SCRIPT.parents[1] / 'instructions/REPO.md').read_bytes())
 

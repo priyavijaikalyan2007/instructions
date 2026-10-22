@@ -38,7 +38,7 @@ This project follows the [Contributor Covenant Code of Conduct](CODE_OF_CONDUCT.
 
 ## License
 
-By participating in this project (filing issues, feature requests, or discussions), you agree that any contributions of ideas or suggestions may be used under the project's [MIT License](../LICENSE).
+By participating in this project (filing issues, feature requests, or discussions), you agree that any contributions of ideas or suggestions may be used under the project's [MIT License](LICENSE).
 
 ---
 

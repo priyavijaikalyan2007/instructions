@@ -146,3 +146,18 @@
     - scripts/terminal_ui.py
     - scripts/interview_cancelled.py
     - scripts/tests/test_curses_interview.py
+
+- id: ADR-009
+  title: Keep repository-wide public documents at the root
+  date: 2026-10-22
+  status: Accepted
+  context: >-
+    The owner requested visible root README, contribution, conduct, and security documents.
+    GitHub configuration remains under .github/. Setup previews known legacy moves, repairs Markdown links,
+    preserves customized content and permissions, and rejects conflicting destinations before writing.
+    README provides the public introduction. PROJECT holds detailed facts. PROJECT_PROFILE selects instructions.
+  files:
+    - scripts/project_layout.py
+    - scripts/project_initialization.py
+    - instructions/REPO.md
+    - README.md

@@ -32,7 +32,7 @@ Created: 2026
 ### instruction-library
 
 - [x] Enabled
-- Source paths: `*.md`, `instructions/`, `.github/`, `agentknowledge/`
+- Source paths: `*.md`, `instructions/`, `agentknowledge/`
 - Targets: documentation
 - Languages: none
 - Platforms: none
