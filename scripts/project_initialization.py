@@ -24,6 +24,8 @@ from string import Template
 import subprocess
 import uuid
 
+from terminal_ui import input, print
+
 from license_selection import interview_license, license_files, validate_license
 
 

@@ -134,9 +134,9 @@ src/
     website/<website-name>/
     app/<app-name>/
     sdk/<api-name>/
-    extension/<extension-name>/
-        google-workspace/
-        browser/
+    extensions/
+        googleworkspace/<extension-name>/
+        browser/<extension-name>/
     tool/<tool-name>/
     library/<library-name>/
 test/                              Tests spanning components
@@ -146,7 +146,8 @@ Create only currently needed directories. Unselected profiles reserve future loc
 Database scripts normally belong to their owning service. Root test/ is singular, while component test folders follow their toolchain.
 The interview suggests named example paths when no concrete component path is configured.
 It preserves existing values and still requires explicit confirmation for absent planned paths.
-These defaults do not move existing source or create application directories.
+First-time interactive setup previews and creates approved source folders after final approval.
+Existing paths remain unchanged. Planned files require separate handling, as described in [REPO.md](REPO.md#planned-source-scope).
 
 ## Scenario reading trees
 

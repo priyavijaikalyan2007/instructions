@@ -122,6 +122,7 @@ Record actual paths in the profile and project facts. Keep project-specific exce
 ### Named component convention
 
 Place product source under `src/<type>/<component-name>/`, including a repository with only one component.
+Extensions use `src/extensions/<ecosystem>/<extension-name>/`, with googleworkspace and browser as the current ecosystems.
 Use stable, descriptive, lowercase names separated by hyphens.
 Use the same name when adding a component's tests, documentation, build output, and deployment configuration.
 Do not put a language name at the type level. Select the language within its component.
@@ -134,7 +135,7 @@ Different component types can share a product name without sharing a build or de
 | Static website | `src/website/<website-name>/` | [Websites](website/WEBSITES.md#recommended-source-layout) |
 | Generated API clients | `src/sdk/<api-name>/` | [SDKs](sdk/SDKs.md#recommended-source-layout) |
 | CLI application or plugin | `src/tool/<tool-name>/` | [Tools](tools/TOOLS.md#tool-layouts) |
-| Workspace or browser extension | `src/extension/<extension-name>/<platform>/` | [Workspace](google-workspace/GOOGLE_WORKSPACE.md#recommended-source-layout), [browser](browser-extensions/BROWSER_EXTENSIONS.md#recommended-source-layout) |
+| Workspace or browser extension | `src/extensions/<ecosystem>/<extension-name>/` | [Workspace](google-workspace/GOOGLE_WORKSPACE.md#recommended-source-layout), [browser](browser-extensions/BROWSER_EXTENSIONS.md#recommended-source-layout) |
 | Deliberately reusable library | `src/library/<library-name>/` | [Component libraries](static-assets/STATIC_ASSETS.md#component-library-layout) |
 
 Types describe component responsibility. They do not enable every language or instruction associated with that type.
@@ -434,7 +435,8 @@ The interview collects repository identity, copyright ownership, software licens
 Unknown contribution rules, reporting contacts, support targets, and commands remain visible TODOs.
 The existing product interview still selects targets and languages.
 Existing source paths must exist. Explicitly planned literal paths may be absent and produce a configuration note.
-Initialization does not create application source directories or invent build commands.
+First-time interactive setup can create explicitly approved source folders after the final preview.
+It does not generate application files or invent build commands. JSON callers select folders through source_folders.
 
 ### Generated project documents
 
@@ -554,16 +556,26 @@ The interactive product choice creates one Workspace component initially and edi
 
 A new repository can select instructions before its application source exists.
 After a missing path, the interview offers explicit planned scope and shows that choice in the preview.
-It creates no source directories or application files.
+First-time interactive setup treats approved missing paths as folders and records optional Source folders metadata.
+Use a future file's parent folder as interactive scope. Existing files can remain individual source paths.
+Only approved source folders and their parents are created after final apply approval.
+Application files are not generated. Dry runs, checks, cancellation, and validation failures create no folders.
+Existing-profile edits retain planned paths without automatically requesting new directory creation.
+JSON and manual profiles can select folders explicitly through source_folders or Source folders.
+Each folder must match a literal source path in the same enabled component.
+An empty source_folders list clears that selection. Planned files need no Source folders entry.
+Folder creation rejects symlinks, paths outside the repository, and conflicts with existing or planned instruction files.
+Git does not track empty folders. Rerun the selector to restore configured empty folders after cloning.
 The optional Source state field accepts existing or planned. JSON input uses source_state.
 When the field is absent, validation requires existing paths, as before.
-Unmatched patterns remain errors. Use literal paths such as src/extension/writing-assistant/google-workspace for planned work.
+Unmatched patterns remain errors. Use literal paths such as src/extensions/googleworkspace/markdown for planned work.
 Unsafe paths, symlinks, and paths beneath regular files remain errors in either mode.
 
 For example, a new Docs component can contain:
 
 ```text
-- Source paths: src/extension/writing-assistant/google-workspace
+- Source paths: src/extensions/googleworkspace/markdown
+- Source folders: src/extensions/googleworkspace/markdown
 - Source state: planned
 - Targets: google-workspace
 - Languages: TypeScript, HTML, SCSS
@@ -576,4 +588,47 @@ For example, a new Docs component can contain:
 
 Retain the component's Enabled, SaaS client, SDK component, and Deployment fields when using this excerpt.
 A successful profile check validates configuration. It does not prove that planned source or a deployable add-on exists.
-When the source paths exist, change Source state to existing or accept the interview's detected state.
+An empty bootstrapped folder does not mean that application source exists or a build passed.
+Keep Source state: planned until implementation exists. Then update the state through the profile or JSON.
+Older planned profiles without Source folders can still accept the interview's detected existing-path state.
+
+## Product-specific browser setup
+
+The browser interview collects browsers, operating systems for each browser, distribution, and actual source languages.
+The current preset covers Chrome and Edge desktop, Firefox desktop and Android, and Safari on selected Apple platforms.
+Select current targets only. Other browsers and delivery models require separately verified project configuration.
+
+The language menu explains JavaScript execution and TypeScript compilation.
+UI presets offer HTML with CSS or SCSS. Script-only presets and custom language lists remain available.
+Apps Script is a separate Google runtime, not a browser extension source language.
+The Workspace interview uses the same explained presets for its Apps Script runtime.
+HTTP Workspace services retain their actual backend-language question.
+
+| Profile field | JSON field | Values |
+| --- | --- | --- |
+| Browser targets | browser_targets | Browser/OS pairs, such as chrome-macos, firefox-android, safari-ios |
+| Browser distribution | browser_distribution | test, store, self-hosted |
+
+Platforms summarizes the selected pairs. Deployment summarizes the selected installation channel.
+Self-hosted in this preset means Mozilla-signed Firefox XPI distribution, not a generic backend hosting mode.
+For different distribution modes, use separate component sections.
+Older free-text browser profiles remain readable and receive a warning to rerun the browser interview.
+
+Read [browser build and distribution guidance](browser-extensions/BROWSER_EXTENSIONS.md#build-assets-and-distribution).
+The interview explains manifests, compiled bundles, packaged assets, local tests, stores, signing, and listing requirements.
+An extension that calls an API still needs an installed extension package.
+Source defaults are src/extensions/browser/markdown and src/extensions/googleworkspace/markdown.
+Replace the example name. Keep each extension's profile scope narrow and independent.
+The selector warns when literal Workspace and browser scopes overlap, such as a browser scope of src/.
+Shared source remains allowed when that overlap is intentional.
+
+## Terminal presentation
+
+The interview uses distinct colors for headings, choices, current defaults, warnings, results, and preview diffs.
+Meaning remains in the text, so color is never required to understand a choice.
+The shared presentation includes project identity and license questions.
+
+Use --color auto for terminal detection. This is the default.
+Automatic mode disables color for redirected output, NO_COLOR, and TERM=dumb.
+Use --color never for plain output or --color always to force ANSI colors.
+The interview stays line-oriented and supports ordinary keyboard input without a full-screen terminal interface.

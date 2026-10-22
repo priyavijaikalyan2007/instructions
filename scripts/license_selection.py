@@ -18,6 +18,8 @@ import hashlib
 import json
 from pathlib import Path
 
+from terminal_ui import input, print
+
 
 LICENSE_ROOT = Path(__file__).resolve().parents[1] / 'instructions/templates/repository/licenses'
 SOFTWARE = {

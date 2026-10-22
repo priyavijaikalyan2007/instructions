@@ -51,11 +51,11 @@ See [Google dialogs and sidebars](https://developers.google.com/apps-script/guid
 
 ## Recommended source layout
 
-Use `src/extension/<extension-name>/google-workspace/` for a new Workspace extension family.
+Use `src/extensions/googleworkspace/<extension-name>/` for a new Workspace extension family.
 Apply the [shared folder convention](../REPO.md#folder-and-file-structure). Preserve existing configured source paths.
 
 ```text
-src/extension/<extension-name>/google-workspace/
+src/extensions/googleworkspace/<extension-name>/
     shared/                Pure processing code shared by this extension's host adapters
     docs/                  Google Docs host source and manifest, when selected
     gmail/                 Gmail host source and manifest, when selected

@@ -26,6 +26,8 @@ A shared API-contract change selects affected consumers. A local UI change does 
 Unchecked components and examples do not enter scope merely because their files are present.
 Treat missing configured files, unresolved values, or source/profile disagreements as configuration gaps.
 Explicit Source state: planned permits absent literal source paths while defining instructions for new work.
+Optional Source folders metadata selects directory creation after preview and apply approval.
+An empty bootstrapped folder still represents planned work, not implemented source.
 It does not mean that source exists or that a build passed. Resolve other gaps before dependent work.
 For an older repository without a profile, infer existing scope from its README, source, manifests, and scripts.
 Do not invent project facts or enable components from this instruction repository's examples.

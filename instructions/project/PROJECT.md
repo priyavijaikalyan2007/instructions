@@ -62,3 +62,9 @@ This instruction repository retains its established scripts/ and scripts/tests/ 
 
 Apps Script runtimes select a runtime-specific guide alongside shared JavaScript rules.
 TypeScript source additionally selects TypeScript guidance. HTTP runtimes do not imply Apps Script.
+
+Browser setup records supported browser/OS pairs and a typed distribution mode.
+First-time interactive setup records approved folder creation in optional source_folders metadata.
+Extension defaults use src/extensions/googleworkspace/markdown and src/extensions/browser/markdown.
+Those example names are replaceable. Existing configured paths retain their values.
+Terminal output supports --color auto, always, and never without external dependencies.

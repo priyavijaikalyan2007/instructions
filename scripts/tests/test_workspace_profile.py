@@ -68,7 +68,7 @@ class WorkspaceProfileTests(unittest.TestCase):
             self.assertIn(text, result.stdout)
         self.assertNotIn('Operating systems or platforms [', result.stdout)
         self.assertNotIn('Packaging or delivery [', result.stdout)
-        self.assertFalse((self.root / 'src').exists())
+        self.assertTrue((self.root / 'src/docs').is_dir())
         self.assertEqual(self.run_cli(flags=['--check']).returncode, 0)
 
     def test_generated_scope_includes_each_language_and_excludes_future_hosts(self):
@@ -185,7 +185,7 @@ class WorkspaceProfileTests(unittest.TestCase):
         self.assertEqual(self.run_cli(flags=['--check']).returncode, 0)
 
     def test_planned_scope_becomes_existing_when_sources_are_created(self):
-        self.assertEqual(self.run_cli(self.docs_input()).returncode, 0)
+        self.assertEqual(self.run_cli(answers=self.workspace_answers(), flags=['--apply']).returncode, 0)
         (self.root / 'src/docs').mkdir(parents=True)
         result = self.run_cli([''] * 7 + ['yes'])
         self.assertEqual(result.returncode, 0, result.stderr)

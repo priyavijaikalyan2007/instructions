@@ -153,7 +153,7 @@ class ProjectInitializationTests(unittest.TestCase):
         command = ['bash', str(script), '--root', str(self.root)]
         answers = '\n'.join(['1', '', 'Example Owner', '2026',
                              'https://github.com/example/utilextensions', 'Writing tools',
-                             '1', '0', '8', 'src', 'TypeScript', 'Chrome', 'browser package', 'yes', ''])
+                             '1', '0', '8', '1', '2', '1', '2', 'src', 'yes'])
         result = subprocess.run(command, input=answers, text=True, capture_output=True, timeout=20)
         self.assertEqual(result.returncode, 0, result.stderr)
         self.assertNotIn("This is the instruction library's own repository", result.stdout)
@@ -170,7 +170,7 @@ class ProjectInitializationTests(unittest.TestCase):
         self.assertEqual(result.returncode, 0, result.stderr)
         self.assertIn('Workspace model: editor', (self.root / PROFILE).read_text())
         self.assertIn('Source state: planned', (self.root / PROFILE).read_text())
-        self.assertFalse((self.root / 'src/docs').exists())
+        self.assertTrue((self.root / 'src/docs').is_dir())
         self.assertTrue((self.root / 'instructions/project/INITIALIZATION.json').exists())
 
     def test_source_repository_initialization_is_rejected(self):

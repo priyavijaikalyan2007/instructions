@@ -803,3 +803,56 @@ They do not verify live Google authorization, host behavior, deployment, or quot
 Local Markdown links and anchors pass. Existing code examples remain intact except the updated Workspace reading tree.
 The CP1252 guides remain byte-identical. Source profile check and dry run pass without changing the active selection.
 Commit locally on feat/apps-script-guidance. No push or publication was requested.
+
+
+## 22 October 2026: product-specific browser setup and folder bootstrap
+
+### Request
+
+The owner supplied a new-repository interview transcript selecting Google Workspace and browser extensions.
+Workspace prompts collected useful facts, but browser prompts requested generic languages, platforms, and delivery.
+The owner entered browser as the platform and served by the backend as delivery.
+The browser source scope of src/ also overlapped the Workspace source scope.
+The owner requested extension conventions matching src/extensions/googleworkspace/markdown and creation of captured folders in new repositories.
+
+> Also, it would be nice if the interview was properly formatted with well differentiated text (colors, etc.). You can also use ncurses if you prefer. The current one is very bland.
+
+### Outcome
+
+Added a dedicated browser interview with supported browser/OS pairs, distribution choices, and selected-browser build guidance.
+The current preset covers Chrome/Edge desktop, Firefox desktop/Android, and Safari macOS/iOS/iPadOS.
+It distinguishes developer tests, store distribution, and Firefox signed self-distribution.
+The interview explains manifests, bundles, referenced assets, permissions, signing, listings, and release stages.
+A backend API does not substitute for extension installation.
+Legacy free-text profiles remain readable with a warning to rerun the browser interview.
+The selector warns about overlapping literal Workspace and browser scope without forbidding intentional shared source.
+
+Browser and Apps Script prompts now offer explained JavaScript and TypeScript presets.
+UI presets default to JavaScript, HTML, and CSS. TypeScript, SCSS, script-only source, and custom lists remain selectable.
+HTTP Workspace services retain their actual backend-language question.
+Apps Script source labels remain specific to the Google runtime.
+
+New extension defaults use src/extensions/googleworkspace/<extension-name>/ and src/extensions/browser/<extension-name>/.
+The interview uses markdown as a replaceable example name and preserves concrete configured paths.
+First-time interactive setup records approved missing folders in optional Source folders metadata.
+Final apply creates only those folders and their parents. It generates no application files.
+JSON/manual callers can select source_folders explicitly. Planned files remain separate from folder-creation metadata.
+Existing-profile edits do not automatically add new folder-creation selections.
+Dry runs, checks, cancellation, and invalid plans do not create directories.
+Preflight rejects unsafe paths, symlinks, existing-file conflicts, and planned instruction-file conflicts.
+Git does not retain empty directories. The saved metadata supports restoring them through another selector run.
+
+Added semantic terminal colors for headings, options, defaults, warnings, results, and diffs.
+The line-oriented interview uses no extra dependency. Color remains optional through --color auto/always/never.
+Automatic mode honors NO_COLOR, TERM=dumb, and redirected output. Identity and license prompts share the same renderer.
+
+Official platform documentation supports the browser delivery guidance.
+Current Apple options include temporary macOS folder tests and App Store Connect packaging without local Xcode.
+Native wrapper languages remain conditional on actual native-source edits.
+
+All 127 tests pass, including 21 new tests for browser choices, combined setup, safe folder creation, and terminal presentation.
+Copied-template initialization and existing-profile preservation checks pass.
+Local Markdown links and anchors pass. Four extension path examples changed intentionally.
+Other existing code blocks and both CP1252 documents remain preserved.
+The active source profile check and dry run pass without changing AGENTS.md.
+Commit locally on fix/extension-bootstrap-interview. No downstream repository or browser installation was changed.

@@ -318,7 +318,7 @@ class ConfigureInstructionsTests(unittest.TestCase):
         result = self.run_cli(None, input_text="\n".join(answers) + "\n")
         self.assertTrue(result.returncode == 0 and "- Targets: apps" in (self.root / PROFILE).read_text())
 
-    def test_new_saas_accepts_additive_component_paths_without_creating_source(self):
+    def test_new_saas_creates_approved_additive_component_paths(self):
         answers = ["2", "", "yes", "C#", "container", "", "yes", "TypeScript, HTML, SCSS", "same container",
                    "", "yes", "Swift, TypeScript", "iOS, browser", "generated library",
                    "", "yes", "Swift", "iOS, macOS", "native application", "yes"]
@@ -328,7 +328,9 @@ class ConfigureInstructionsTests(unittest.TestCase):
         for path in ["src/service/core/backend", "src/service/core/frontend, src/service/core/static",
                      "src/sdk/core-api", "src/app/companion"]:
             self.assertIn("- Source paths: " + path, profile)
-        self.assertEqual(list((self.root / "src").iterdir()), [])
+        for path in ["src/service/core/backend", "src/service/core/frontend", "src/service/core/static",
+                     "src/sdk/core-api", "src/app/companion"]:
+            self.assertTrue((self.root / path).is_dir())
         self.assertIn("src/service/core/database", result.stdout)
         self.assertEqual(self.run_cli(None, "--check").returncode, 0)
 
@@ -350,15 +352,15 @@ class ConfigureInstructionsTests(unittest.TestCase):
         result = self.run_cli(None, input_text="\n".join(answers) + "\n")
         self.assertEqual(result.returncode, 0, result.stderr)
         profile = (self.root / PROFILE).read_text()
-        self.assertIn("Source paths: src/extension/writing-assistant/google-workspace", profile)
+        self.assertIn("Source paths: src/extensions/googleworkspace/markdown", profile)
         self.assertNotIn("Gmail", profile)
-        self.assertFalse((self.root / "src/extension").exists())
+        self.assertTrue((self.root / "src/extensions/googleworkspace/markdown").is_dir())
 
     def test_browser_default_stays_inside_named_extension(self):
-        answers = ["8", "", "yes", "TypeScript", "Chrome", "browser package", "yes"]
+        answers = ["8", "1", "2", "1", "TypeScript", "", "yes", "yes"]
         result = self.run_cli(None, input_text="\n".join(answers) + "\n")
         self.assertEqual(result.returncode, 0, result.stderr)
-        self.assertIn("Source paths: src/extension/writing-assistant/browser", (self.root / PROFILE).read_text())
+        self.assertIn("Source paths: src/extensions/browser/markdown", (self.root / PROFILE).read_text())
 
     def test_layout_suggestion_does_not_replace_explicit_path(self):
         answers = ["4", "src", "Swift", "macOS", "native application", "yes"]
@@ -399,7 +401,7 @@ class ConfigureInstructionsTests(unittest.TestCase):
         for number, languages, platforms, delivery, target, guide in cases:
             with self.subTest(number=number):
                 answers = (["7", "1", "1", "1", "1", languages, "src", "yes"] if number == "7"
-                           else [number, "src", languages, platforms, delivery, "yes"])
+                           else [number, "1,3,4", "2", "2", "1", "1", languages, "src", "yes"])
                 result = self.run_cli(None, input_text="\n".join(answers) + "\n")
                 self.assertEqual(result.returncode, 0, result.stderr)
                 profile = (self.root / PROFILE).read_text()
@@ -410,7 +412,7 @@ class ConfigureInstructionsTests(unittest.TestCase):
 
     def test_extension_interview_explains_hosts_and_defers_office(self):
         answers = ["7, 8", "1", "1", "1", "1", "JavaScript", "src",
-                   "src", "TypeScript", "Chrome, Firefox", "unpacked test extension", "no"]
+                   "1,3", "2", "2", "1", "TypeScript", "src", "no"]
         result = self.run_cli(None, input_text="\n".join(answers) + "\n")
         self.assertEqual(result.returncode, 0, result.stderr)
         for phrase in ["7. Google Workspace Extensions", "8. Browser Extensions", "Editor add-on",
@@ -419,14 +421,14 @@ class ConfigureInstructionsTests(unittest.TestCase):
         self.assertEqual(self.snapshot(), {})
 
     def test_extension_saas_relationship_is_explicit_and_can_be_removed(self):
-        answers = ["3, 8", "yes", "src", "Java", "container", "src", "TypeScript", "Chrome", "store", "yes"]
+        answers = ["3, 8", "yes", "src", "Java", "container", "1", "2", "2", "TypeScript", "src", "yes"]
         result = self.run_cli(None, input_text="\n".join(answers) + "\n")
         self.assertEqual(result.returncode, 0, result.stderr)
         profile = (self.root / PROFILE).read_text()
         extension = profile.split("### browser-extension", 1)[1]
         self.assertIn("- SaaS client: yes", extension)
         self.assertIn("instructions/saas/SAAS.md", (self.root / "AGENTS.md").read_text())
-        result = self.run_cli(None, input_text="8\n\n\n\n\nyes\n")
+        result = self.run_cli(None, input_text="8\n\n\n\n\n\nyes\n")
         self.assertEqual(result.returncode, 0, result.stderr)
         extension = (self.root / PROFILE).read_text().split("### browser-extension", 1)[1]
         self.assertIn("- SaaS client: no", extension)

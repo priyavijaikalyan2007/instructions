@@ -87,3 +87,23 @@
     - instructions/google-workspace/GOOGLE_WORKSPACE.md
     - scripts/configure_instructions.py
     - scripts/tests/test_workspace_profile.py
+
+- id: ADR-006
+  title: Collect extension delivery by product and create explicitly approved source folders
+  date: 2026-10-22
+  status: Accepted
+  context: >-
+    The owner found generic browser platform and delivery prompts unclear and requested paths matching
+    src/extensions/googleworkspace/markdown. Extensions now group by ecosystem before extension name.
+    Typed browser/OS pairs and distribution choices drive tailored guidance without inventing a backend.
+    Optional Source folders metadata distinguishes approved directory creation from planned file scope.
+    First-time interactive setup records it explicitly. Every creation is previewed and validated before apply.
+    Existing paths and legacy profiles remain preserved. Terminal colors are optional and require no dependency.
+  files:
+    - scripts/browser_profile.py
+    - scripts/source_folders.py
+    - scripts/terminal_ui.py
+    - scripts/profile_interview.py
+    - scripts/configure_instructions.py
+    - instructions/REPO.md
+    - instructions/maintenance/extension-bootstrap-review.md
