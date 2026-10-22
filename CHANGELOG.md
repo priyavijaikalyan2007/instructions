@@ -11,6 +11,13 @@ Created: 2026
 
 # Changelog
 
+## 22 October 2026: shorter setup command
+
+- Added root configure.sh for setup and profile edits, including local target installations.
+- Updated current commands and retained the previous launcher for compatibility.
+- Explained role selection for each coding tool and separated readable form summaries from optional F3 diffs.
+- Changed the result screen to show the apply status and project completion steps.
+
 ## 22 October 2026: project bootstrap and curses interview
 
 - Moved project profiles, facts, refinements, conversation, and changelog files to the repository root.

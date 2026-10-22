@@ -71,3 +71,8 @@
   definition: "Presents forms, choice lists, scrollable help, review, and cancellation with a plain automation fallback."
   anchor_file: "scripts/curses_interview.py"
   related: ["TerminalPresentation", "ProfileInterview"]
+
+- name: "SetupReview"
+  definition: "Summarizes selected scope and file changes while preserving optional exact diff inspection."
+  anchor_file: "scripts/setup_review.py"
+  related: ["CursesInterview", "ProfileConfiguration"]

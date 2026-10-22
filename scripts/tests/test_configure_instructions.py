@@ -302,7 +302,7 @@ class ConfigureInstructionsTests(unittest.TestCase):
         profile.parent.mkdir(parents=True, exist_ok=True)
         source = SCRIPT.parents[1] / PROFILE
         text = source.read_text().replace('`*.md`, `instructions/`, `.github/`, `agentknowledge/`', '`src`')
-        text = text.replace('`scripts/`', '`src`')
+        text = text.replace('`configure.sh`, `scripts/`', '`src`')
         profile.write_text(text)
         result = self.run_cli(None, input_text="\n" * 7 + "no\n")
         expected = [str(self.root), "existing profile", "local names", "instruction-library",

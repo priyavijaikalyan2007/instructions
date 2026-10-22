@@ -123,3 +123,7 @@ class AgentRolesTests(unittest.TestCase):
         self.assertIn('implementation, testing', profile)
         self.assertIn('planning, review', profile)
         self.assertNotIn('founder and dreamer', (self.root / 'CODEX.md').read_text())
+        self.assertIn('Choose the work Claude Code should normally handle', result.stdout)
+        self.assertIn('Choose the work Codex should normally handle', result.stdout)
+        self.assertIn('Space selects several roles', result.stdout)
+        self.assertIn('Optional project notes for Codex', result.stdout)

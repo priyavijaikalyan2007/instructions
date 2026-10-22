@@ -43,7 +43,7 @@ Created: 2026
 ### repository-tools
 
 - [x] Enabled
-- Source paths: `scripts/`
+- Source paths: `configure.sh`, `scripts/`
 - Targets: tools
 - Languages: Python, Shell
 - Platforms: configured development environments

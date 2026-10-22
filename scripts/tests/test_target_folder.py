@@ -16,7 +16,7 @@ import subprocess
 import tempfile
 import unittest
 
-SCRIPT = Path(__file__).resolve().parents[1] / 'configure-instructions.sh'
+SCRIPT = Path(__file__).resolve().parents[2] / 'configure.sh'
 
 
 class TargetFolderTests(unittest.TestCase):
@@ -48,7 +48,7 @@ class TargetFolderTests(unittest.TestCase):
         self.assertEqual(result.returncode, 0, result.stderr)
         for path in ['PROJECT_PROFILE.md', 'PROJECT.md', 'ADDITIONAL.md', 'AGENTS.md',
                      '.instructions/INITIALIZATION.json', '.github/README.md', 'LICENSE',
-                     'scripts/configure-instructions.sh', 'scripts/configure_instructions.py']:
+                     'configure.sh', 'scripts/configure-instructions.sh', 'scripts/configure_instructions.py']:
             self.assertTrue((self.root / path).is_file(), path)
         self.assertTrue((self.root / 'src/tool/example').is_dir())
         self.assertFalse((self.root / '.git').exists())
@@ -77,8 +77,10 @@ class TargetFolderTests(unittest.TestCase):
 
     def test_installed_script_can_edit_and_check_its_local_target(self):
         self.assertEqual(self.run_cli('--apply').returncode, 0)
-        script = self.root / 'scripts/configure-instructions.sh'
-        result = subprocess.run(['bash', str(script), '--root', str(self.root), '--check'],
+        renamed = self.root.with_name('project with spaces')
+        self.root.rename(renamed)
+        script = renamed / 'configure.sh'
+        result = subprocess.run([str(script), '--root', str(renamed), '--check'], cwd=self.directory.name,
                                 text=True, capture_output=True, timeout=20)
         self.assertEqual(result.returncode, 0, result.stderr)
 
@@ -97,7 +99,7 @@ class TargetFolderTests(unittest.TestCase):
         self.assertEqual((self.root / 'LICENSE').read_bytes(), before)
 
     def test_target_mode_rejects_the_source_library_before_any_write(self):
-        self.root = SCRIPT.parents[1]
+        self.root = SCRIPT.parent
         result = self.run_cli('--apply', json_answers=False, input_text='')
         self.assertEqual(result.returncode, 2)
         self.assertIn('source instruction repository', result.stderr)

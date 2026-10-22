@@ -32,9 +32,9 @@ Created: 2026
 | Project selections | PROJECT_PROFILE.md |
 | Local refinements | ADDITIONAL.md |
 | Plan and status | instructions/maintenance/instructions-plan.md, instructions/maintenance/instructions.status.md |
-| Profile selector | scripts/configure-instructions.sh, Python 3.10+, Bash, Python standard library |
+| Profile selector | configure.sh, Python 3.10+, Bash, Python standard library |
 | Selector test command | python3 -m unittest discover -s scripts/tests -v |
-| Selector read-only check | ./scripts/configure-instructions.sh --check |
+| Selector read-only check | ./configure.sh --check |
 | Repository-tool documentation | instructions/REPO_TOOLS_README.md |
 | Knowledge records | agentknowledge/history.jsonl and agentknowledge/lcv_constraints.yaml |
 | Source encoding | instructions/frontend/FRONTEND.md and instructions/DOCUMENTATION.md use CP1252. Most other guides use UTF-8. |

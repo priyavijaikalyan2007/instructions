@@ -87,6 +87,16 @@ def input(prompt: str = '') -> str:
     return builtins.input(styled(text, 'prompt'))
 
 
+def present_preview(summary: list[str], details: list[str]) -> bool:
+    """Use a readable primary review in forms while preserving plain CLI diffs."""
+    if ACTIVE_SCREEN is None:
+        return False
+    ACTIVE_SCREEN.pending = []
+    ACTIVE_SCREEN.details = details
+    ACTIVE_SCREEN.write('\n'.join(summary))
+    return True
+
+
 def interactive_requested(args) -> bool:
     """Use forms only when this invocation can ask a person for identity, selections, or approval."""
     if args.check:

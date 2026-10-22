@@ -28,6 +28,7 @@ class InterviewScreen:
         self.screen = screen
         self.lines, self.pending, self.previous_context, self.cached_menu = [], [], [], []
         self.step, self.scroll, self.menu_prompt = 0, 0, ''
+        self.details = []
         self.colors = colors and curses.has_colors()
         screen.keypad(True)
         if self.colors:
@@ -99,11 +100,13 @@ class InterviewScreen:
             offset = max(0, min(offset, max(0, len(wrapped) - height)))
             for index, line in enumerate(wrapped[offset:offset + height], 2):
                 self.put(index, 2, line, self.style(line))
-            self.put(rows - 2, 1, 'Up/Down or PgUp/PgDn scroll | Home/End | Enter returns | Esc returns')
+            self.put(rows - 2, 1, 'Up/Down or PgUp/PgDn scroll | F3 exact changes | Enter returns | Esc returns')
             self.screen.refresh()
             key = self.screen.get_wch()
             if key in {'\n', '\r', '\x1b', curses.KEY_ENTER}:
                 return
+            if key == curses.KEY_F3 and self.details and lines is not self.details:
+                self.review('Exact file changes | Enter returns to summary', self.details)
             offset = self.review_offset(key, offset, height, len(wrapped))
 
     def review_offset(self, key, offset: int, height: int, length: int) -> int:
@@ -237,6 +240,8 @@ class InterviewScreen:
             self.confirm_cancel()
         elif key == curses.KEY_F2:
             self.review('Interview review | Enter returns to the current answer', self.lines)
+        elif key == curses.KEY_F3 and self.details:
+            self.review('Exact file changes | Enter returns to the current answer', self.details)
         elif key in {curses.KEY_PPAGE, curses.KEY_NPAGE}:
             self.scroll += -5 if key == curses.KEY_PPAGE else 5
         elif options and key in {curses.KEY_UP, curses.KEY_DOWN}:

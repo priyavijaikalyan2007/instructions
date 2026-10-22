@@ -25,7 +25,7 @@ Repository policies remain available through [contributing](CONTRIBUTING.md), [c
 To test the interview locally without creating a GitHub repository:
 
 ```bash
-./scripts/configure-instructions.sh --target-folder /tmp/instructions-trial --dry-run
+./configure.sh --target-folder /tmp/instructions-trial --dry-run
 ```
 
 Remove --dry-run to create the reviewed setup after confirmation.

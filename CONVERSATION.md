@@ -933,3 +933,16 @@ Single-license output contains full root terms. Conditional operation scripts fa
 Markdown links, active profile validation, read-only preview, inherited baselines, and source formatting checks pass.
 Existing examples remain intact except the intentionally updated common reading tree.
 The two CP1252 guides changed only default project-path tokens. Prior conversation bytes remain intact before this appended record.
+
+
+## 22 October 2026: shorter setup entry point
+
+User: Also, I think the instruction configuration script should just be called configure.sh or init.sh; not "configure-instructions.sh" -- too long.
+
+User: Brevity is nice.
+
+Response: Added root configure.sh, installed it in local targets, and updated current documentation. Retained the old launcher for compatibility. Verified local setup, paths with spaces, and the regression suite.
+
+User: Ran the script. 1) Question 16 is unexplained nad has just "Available agent roles:" - what is it supposed to do? 2) Why is teh ifnal review or the "Setup result" page showing me diff style output? Is that useful for an end user or should it be formatter better for readability?
+
+Response: Repeat the purpose and controls for every tool role question. Show readable setup summaries and completion steps in forms. Keep exact file changes available through F3 and preserve plain-mode diff output.
