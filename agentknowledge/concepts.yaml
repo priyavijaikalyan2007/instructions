@@ -48,7 +48,7 @@
   related: ["ProfileInterview", "ProjectInitialization", "LicenseSelection"]
 
 - name: "ProjectLayout"
-  definition: "Migrates default project-owned files to the root while preserving history, permissions, and custom paths."
+  definition: "Migrates project context and public documents to the root while preserving history, permissions, and custom paths."
   anchor_file: "scripts/project_layout.py"
   related: ["ProfileConfiguration", "ProjectInitialization"]
 

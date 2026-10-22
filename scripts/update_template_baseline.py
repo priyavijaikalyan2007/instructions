@@ -30,7 +30,8 @@ def updated_manifest() -> dict:
     result = json.loads(MANIFEST.read_text())
     paths = [ROOT / name for name in ['LICENSE', 'AGENTS.md', 'CLAUDE.md', 'CODEX.md', 'GEMINI.md']]
     paths.extend(ROOT / name for name in ['PROJECT_PROFILE.md', 'PROJECT.md', 'ADDITIONAL.md',
-                                        'CONVERSATION.md', 'CHANGELOG.md'] if (ROOT / name).is_file())
+                                        'CONVERSATION.md', 'CHANGELOG.md', 'README.md', 'CONTRIBUTING.md',
+                                        'CODE_OF_CONDUCT.md', 'SECURITY.md'] if (ROOT / name).is_file())
     for folder in FOLDERS:
         paths.extend(path for path in (ROOT / folder).rglob('*') if path.is_file())
     for path in sorted(paths):

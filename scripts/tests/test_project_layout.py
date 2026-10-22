@@ -159,3 +159,75 @@ class ProjectLayoutTests(unittest.TestCase):
         self.assertEqual(original_backup.read_bytes(), b'Exact backup bytes.\n')
         self.assertFalse((folder / 'INITIALIZATION.json').exists())
         self.assertEqual((self.root / '.instructions/template-backup/original.md').stat().st_mode & 0o777, 0o600)
+
+    def seed_public_documents(self):
+        self.assertEqual(self.run_cli(self.answers, '--apply').returncode, 0)
+        github = self.root / '.github'
+        github.mkdir(exist_ok=True)
+        (github / 'README.md').write_text('Owner overview.\n[Policy](CONTRIBUTING.md)\n[Facts](../PROJECT.md)\n')
+        (github / 'CONTRIBUTING.md').write_text('Owner policy.\n[Guide](../instructions/REPO.md)\n')
+        (github / 'CODE_OF_CONDUCT.md').write_text('Owner conduct policy.\n')
+        (github / 'SECURITY.md').write_text('Private reporting instructions.\n')
+        (github / 'SECURITY.md').chmod(0o600)
+        (github / 'workflows').mkdir()
+        (github / 'workflows/build.yml').write_text('name: Keep this workflow\n')
+
+    def test_public_documents_move_with_custom_content_links_and_permissions(self):
+        self.seed_public_documents()
+        result = self.run_cli({}, '--apply')
+        self.assertEqual(result.returncode, 0, result.stderr)
+        for name in ['README.md', 'CONTRIBUTING.md', 'CODE_OF_CONDUCT.md', 'SECURITY.md']:
+            self.assertTrue((self.root / name).is_file())
+            self.assertFalse((self.root / '.github' / name).exists())
+        self.assertIn('[Policy](CONTRIBUTING.md)', (self.root / 'README.md').read_text())
+        self.assertIn('[Facts](PROJECT.md)', (self.root / 'README.md').read_text())
+        self.assertIn('[Guide](instructions/REPO.md)', (self.root / 'CONTRIBUTING.md').read_text())
+        self.assertEqual((self.root / 'SECURITY.md').stat().st_mode & 0o777, 0o600)
+        self.assertEqual((self.root / '.github/workflows/build.yml').read_text(), 'name: Keep this workflow\n')
+        before = self.snapshot()
+        self.assertEqual(self.run_cli({}, '--apply').returncode, 0)
+        self.assertEqual(self.snapshot(), before)
+
+    def test_public_document_preview_cancel_and_check_preserve_files(self):
+        self.seed_public_documents()
+        before = self.snapshot()
+        for flags, answer in [(('--dry-run',), None), ((), 'no\n')]:
+            result = self.run_cli({}, *flags, input_text=answer)
+            self.assertEqual(result.returncode, 0, result.stderr)
+            self.assertEqual(self.snapshot(), before)
+        self.assertEqual(self.run_cli(None, '--check').returncode, 2)
+        self.assertEqual(self.snapshot(), before)
+
+    def test_public_document_source_scope_follows_the_move(self):
+        self.seed_public_documents()
+        profile = self.root / 'PROJECT_PROFILE.md'
+        text = profile.read_text().replace('Source paths: src', 'Source paths: .github/README.md')
+        profile.write_text(text.replace('Targets: tools', 'Targets: documentation').replace('Languages: Go',
+                                                                                       'Languages: none'))
+        result = self.run_cli({}, '--apply')
+        self.assertEqual(result.returncode, 0, result.stderr)
+        self.assertIn('Source paths: README.md', profile.read_text())
+        self.assertEqual(self.run_cli(None, '--check').returncode, 0)
+
+    def test_public_document_conflict_and_symlink_abort_before_writes(self):
+        self.seed_public_documents()
+        destination = self.root / 'README.md'
+        destination.write_text('Different root overview.\n')
+        before = self.snapshot()
+        self.assertEqual(self.run_cli({}, '--apply').returncode, 2)
+        self.assertEqual(self.snapshot(), before)
+        destination.unlink()
+        destination.symlink_to(self.root / 'PROJECT.md')
+        before = self.snapshot()
+        self.assertEqual(self.run_cli({}, '--apply').returncode, 2)
+        self.assertEqual(self.snapshot(), before)
+
+    def test_public_documents_cannot_be_repurposed_as_project_context(self):
+        self.assertEqual(self.run_cli(self.answers, '--apply').returncode, 0)
+        profile = self.root / 'PROJECT_PROFILE.md'
+        profile.write_text(profile.read_text().replace('`PROJECT.md`', '`README.md`'))
+        (self.root / 'README.md').write_text('Public introduction.\n')
+        before = self.snapshot()
+        result = self.run_cli({}, '--apply')
+        self.assertEqual(result.returncode, 2)
+        self.assertEqual(self.snapshot(), before)

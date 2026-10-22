@@ -27,15 +27,13 @@ import uuid
 from terminal_ui import input, print
 from project_context import context_values, interview_context, validate_context
 
-from project_layout import (BACKUP_ROOT, PROFILE_PATH, STATE_PATH, LEGACY_PATHS, PROJECT_FILES,
+from project_layout import (BACKUP_ROOT, PROFILE_PATH, STATE_PATH, LEGACY_PATHS, PROJECT_FILES, PUBLIC_DOCUMENTS,
                             existing_project_path, read_project_bytes, safe_path)
 from license_selection import interview_license, license_files, validate_license
 
 
 TEMPLATE_ROOT = Path(__file__).resolve().parents[1] / 'instructions/templates/repository'
-DOCUMENTS = {'.github/README.md': 'README.md', '.github/CONTRIBUTING.md': 'CONTRIBUTING.md',
-             '.github/CODE_OF_CONDUCT.md': 'CODE_OF_CONDUCT.md', '.github/SECURITY.md': 'SECURITY.md',
-             'THIRD_PARTY_NOTICES.md': 'THIRD_PARTY_NOTICES.md'}
+DOCUMENTS = {name: name for name in (*PUBLIC_DOCUMENTS, 'THIRD_PARTY_NOTICES.md')}
 
 
 def inherited_files() -> dict:

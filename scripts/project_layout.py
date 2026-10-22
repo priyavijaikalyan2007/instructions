@@ -18,12 +18,14 @@ import re
 
 
 PROJECT_FILES = ('PROJECT_PROFILE.md', 'PROJECT.md', 'ADDITIONAL.md', 'CONVERSATION.md', 'CHANGELOG.md')
+PUBLIC_DOCUMENTS = ('README.md', 'CONTRIBUTING.md', 'CODE_OF_CONDUCT.md', 'SECURITY.md')
 PROFILE_PATH = 'PROJECT_PROFILE.md'
 STATE_PATH = '.instructions/INITIALIZATION.json'
 BACKUP_ROOT = '.instructions/template-backup/'
 LEGACY_ROOT = 'instructions/project/'
 LEGACY_PATHS = {name: LEGACY_ROOT + name for name in PROJECT_FILES}
 LEGACY_PATHS[STATE_PATH] = LEGACY_ROOT + 'INITIALIZATION.json'
+LEGACY_PATHS.update({name: '.github/' + name for name in PUBLIC_DOCUMENTS})
 
 
 def safe_path(root: Path, value: str) -> Path:
@@ -52,33 +54,35 @@ def existing_project_path(root: Path, relative: str) -> Path:
 
 def canonical_profile(text: str) -> str:
     """Replace default project references without altering custom context locations."""
-    for name in PROJECT_FILES:
-        text = text.replace(LEGACY_ROOT + name, name)
+    for name, legacy in LEGACY_PATHS.items():
+        text = text.replace(legacy, name)
     return text
 
 
-def rebase_target(target: str) -> str:
+def rebase_target(target: str, source_root: str = LEGACY_ROOT) -> str:
     """Move a local link target while retaining URI schemes, anchors, and angle-delimited paths."""
     angled = target.startswith('<') and target.endswith('>')
     value = target[1:-1] if angled else target
     if value.startswith(('#', '/')) or re.match(r'^[a-zA-Z][a-zA-Z0-9+.-]*:', value):
         return target
     path, separator, anchor = value.partition('#')
-    path = canonical_profile(posixpath.normpath(posixpath.join(LEGACY_ROOT, path)))
+    path = canonical_profile(posixpath.normpath(posixpath.join(source_root, path)))
     result = path + (separator + anchor if separator else '')
     return '<' + result + '>' if angled else result
 
 
-def rebase_links(text: str) -> str:
+def rebase_links(text: str, source_root: str = LEGACY_ROOT) -> str:
     """Keep inline and reference links valid when an active document moves to the root."""
     def replace(match):
-        return match.group(1) + rebase_target(match.group(2))
+        return match.group(1) + rebase_target(match.group(2), source_root)
     text = re.sub(r'(\]\()(<[^>\n]+>|[^\s)]+)', replace, text)
     return re.sub(r'(^ {0,3}\[[^\]\n]+\]:[ \t]*)(<[^>\n]+>|[^\s]+)', replace, text, flags=re.M)
 
 
 def migrated_bytes(relative: str, data: bytes) -> bytes:
     """Repair active documents while preserving the exact bytes of historical records and setup state."""
+    if relative in PUBLIC_DOCUMENTS:
+        return canonical_profile(rebase_links(data.decode('utf-8'), '.github/')).encode('utf-8')
     if relative not in {'PROJECT_PROFILE.md', 'PROJECT.md', 'ADDITIONAL.md'}:
         return data
     return canonical_profile(rebase_links(data.decode('utf-8'))).encode('utf-8')
@@ -108,15 +112,17 @@ def migration_pairs(root: Path) -> dict[str, str]:
 def active_reference_changes(root: Path) -> dict[str, bytes]:
     """Repair only default path tokens in active guides, preserving encodings and custom rules."""
     changes = {}
-    for path in safe_path(root, 'instructions').rglob('*.md'):
+    paths = list(safe_path(root, 'instructions').rglob('*.md'))
+    paths.extend(path for path in root.glob('*.md') if path.name not in {'CONVERSATION.md', 'CHANGELOG.md'})
+    for path in paths:
         relative = path.relative_to(root).as_posix()
         if any(part in {'project', 'maintenance', 'templates'} for part in path.relative_to(root).parts):
             continue
         safe_path(root, relative)
         original = path.read_bytes()
         data = original
-        for name in PROJECT_FILES:
-            data = data.replace((LEGACY_ROOT + name).encode(), name.encode())
+        for name, legacy in LEGACY_PATHS.items():
+            data = data.replace(legacy.encode(), name.encode())
         if data != original:
             changes[relative] = data
     return changes
@@ -136,7 +142,7 @@ def layout_changes(root: Path, check: bool = False) -> dict[str, bytes | None]:
         changes[destination] = data
         changes[source] = None
     if changes:
-        changes.update(active_reference_changes(root))
+        changes.update({name: data for name, data in active_reference_changes(root).items() if name not in changes})
     if check and changes:
         raise ValueError('Project files need root-layout migration. Run setup to preview the moves.')
     return changes

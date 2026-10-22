@@ -17,7 +17,7 @@ Created: 2026
 | --- | --- |
 | Repository | instructions |
 | Product | Generic coding-agent instructions and repository analysis tools |
-| Source | instructions/, root agent entries and project files, scripts/, .github/, and agentknowledge/ |
+| Source | instructions/, root agent entries and project files, scripts/, and agentknowledge/ |
 | Review history | Git history and merged pull requests in priyavijaikalyan2007/instructions |
 | Application runtime | none |
 | Generic build.sh or test.sh | absent |

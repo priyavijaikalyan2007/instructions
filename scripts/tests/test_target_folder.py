@@ -47,12 +47,15 @@ class TargetFolderTests(unittest.TestCase):
         result = self.run_cli('--apply')
         self.assertEqual(result.returncode, 0, result.stderr)
         for path in ['PROJECT_PROFILE.md', 'PROJECT.md', 'ADDITIONAL.md', 'AGENTS.md',
-                     '.instructions/INITIALIZATION.json', '.github/README.md', 'LICENSE',
+                     '.instructions/INITIALIZATION.json', 'README.md', 'LICENSE',
                      'configure.sh', 'scripts/configure-instructions.sh', 'scripts/configure_instructions.py']:
             self.assertTrue((self.root / path).is_file(), path)
         self.assertTrue((self.root / 'src/tool/example').is_dir())
         self.assertFalse((self.root / '.git').exists())
-        self.assertIn('Local template trial', (self.root / '.github/README.md').read_text())
+        self.assertIn('Local template trial', (self.root / 'README.md').read_text())
+        for name in ['README.md', 'CONTRIBUTING.md', 'CODE_OF_CONDUCT.md', 'SECURITY.md']:
+            self.assertTrue((self.root / name).is_file())
+            self.assertFalse((self.root / '.github' / name).exists())
 
     def test_dry_run_and_cancel_leave_missing_target_and_parent_absent(self):
         for flags, answer in [(('--dry-run',), None), ((), 'no\n')]:
@@ -90,6 +93,33 @@ class TargetFolderTests(unittest.TestCase):
         result = self.run_cli('--apply')
         self.assertEqual(result.returncode, 0, result.stderr)
         self.assertEqual((self.root / 'PROJECT.md').read_text(), 'Owner facts.\n')
+
+    def test_initialized_target_migrates_public_documents_and_completion_links(self):
+        self.assertEqual(self.run_cli('--apply').returncode, 0)
+        names = ['README.md', 'CONTRIBUTING.md', 'CODE_OF_CONDUCT.md', 'SECURITY.md']
+        github = self.root / '.github'
+        github.mkdir(exist_ok=True)
+        readme = self.root / 'README.md'
+        readme.write_text('Owner introduction.\n[Facts](../PROJECT.md)\n[Policy](CONTRIBUTING.md)\n')
+        for name in names:
+            (self.root / name).rename(github / name)
+        setup = self.root / 'SETUP.md'
+        text = setup.read_text()
+        for name in names:
+            text = text.replace('`' + name + '`', '`.github/' + name + '`')
+        setup.write_text(text)
+        before = {str(p.relative_to(self.root)): p.read_bytes() for p in self.root.rglob('*') if p.is_file()}
+        self.assertEqual(self.run_cli('--dry-run').returncode, 0)
+        self.assertEqual(before, {str(p.relative_to(self.root)): p.read_bytes()
+                                  for p in self.root.rglob('*') if p.is_file()})
+        result = self.run_cli('--apply')
+        self.assertEqual(result.returncode, 0, result.stderr)
+        self.assertIn('Owner introduction.', readme.read_text())
+        self.assertIn('[Facts](PROJECT.md)', readme.read_text())
+        for name in names:
+            self.assertTrue((self.root / name).is_file())
+            self.assertFalse((github / name).exists())
+            self.assertNotIn('.github/' + name, setup.read_text())
 
     def test_changed_license_is_rejected_in_repeat_target_mode(self):
         self.assertEqual(self.run_cli('--apply').returncode, 0)
