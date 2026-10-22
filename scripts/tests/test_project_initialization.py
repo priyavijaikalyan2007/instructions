@@ -57,7 +57,8 @@ class ProjectInitializationTests(unittest.TestCase):
         for folder in ['instructions', '.github', 'agentknowledge', 'scripts']:
             shutil.copytree(LIBRARY / folder, self.root / folder, ignore=shutil.ignore_patterns('__pycache__'))
         for name in ['LICENSE', 'AGENTS.md', 'CLAUDE.md', 'CODEX.md', 'GEMINI.md',
-                     'PROJECT_PROFILE.md', 'PROJECT.md', 'ADDITIONAL.md', 'CONVERSATION.md', 'CHANGELOG.md']:
+                     'PROJECT_PROFILE.md', 'PROJECT.md', 'ADDITIONAL.md', 'CONVERSATION.md', 'CHANGELOG.md',
+                     'configure.sh']:
             shutil.copy2(LIBRARY / name, self.root / name)
 
     def snapshot(self):

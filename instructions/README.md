@@ -51,7 +51,7 @@ PROJECT.md contains facts only. ADDITIONAL.md contains project-specific instruct
 
 Use the [profile template](PROJECT_PROFILE_TEMPLATE.md), [facts template](PROJECT_TEMPLATE.md), and [refinement template](ADDITIONAL_TEMPLATE.md).
 Follow [manual setup](REPO.md#manual-setup) or use the [profile selector](REPO.md#profile-selector) to initialize or modify selections.
-Run `./scripts/configure-instructions.sh --root /path/to/project` from this checkout for the interview.
+Run `./configure.sh --root /path/to/project` from this checkout for the interview.
 Interactive terminals use ncurses forms with editable fields, selection lists, scrolling help, and a final review.
 Use `--ui plain` for the line-oriented interface or `--ui curses` to require curses support.
 Use `--check` for read-only validation and `--answers <json-file> --dry-run` to preview repeatable selections.

@@ -32,6 +32,8 @@ from project_scaffolding import print_readiness, scaffolding_changes
 from browser_profile import BROWSER_FIELDS, validate_browser
 from source_folders import plan_source_folders, source_scope_warnings
 from terminal_ui import input, print, set_color_mode, interactive_requested, run_interview_ui
+from terminal_ui import present_preview
+from setup_review import summary_lines, detail_lines
 from interview_cancelled import InterviewCancelled
 from workspace_profile import WORKSPACE_FIELDS, language_values, validate_workspace
 from project_initialization import (initialization_changes, is_inherited, is_source_repository,
@@ -429,9 +431,10 @@ def missing_setup_tools(root: Path) -> dict[str, bytes]:
              'project_layout.py', 'agent_roles.py', 'license_selection.py', 'profile_interview.py',
              'browser_profile.py', 'workspace_profile.py', 'source_folders.py', 'terminal_ui.py',
              'project_context.py', 'project_scaffolding.py', 'interview_widgets.py',
-             'curses_interview.py', 'interview_cancelled.py']
-    return {'scripts/' + name: (LIBRARY_ROOT / 'scripts' / name).read_bytes() for name in names
-            if not safe_path(root, 'scripts/' + name).exists()}
+             'curses_interview.py', 'interview_cancelled.py', 'setup_review.py']
+    paths = ['configure.sh', *['scripts/' + name for name in names]]
+    return {path: (LIBRARY_ROOT / path).read_bytes() for path in paths
+            if not safe_path(root, path).exists()}
 
 
 def managed_agents(existing: str, guides: set[str]) -> str:
@@ -470,8 +473,10 @@ def plan_changes(root: Path, profile: str, check: bool, guides: set[str]) -> dic
             if not safe_path(root, name).exists() or safe_path(root, name).read_bytes() != data}
 
 
-def preview(root: Path, changes: dict[str, bytes | None], folders: list[str]) -> None:
+def preview(root: Path, changes: dict[str, bytes | None], folders: list[str], profile: str = '') -> None:
     """Show configuration diffs and list missing guides without dumping every shared document."""
+    if present_preview(summary_lines(root, changes, folders, profile), detail_lines(root, changes)):
+        return
     for folder in folders:
         print(f"Create source folder {folder}")
     for name, data in sorted(changes.items()):
@@ -676,10 +681,10 @@ def configure_project(args) -> int:
         check_root_routing(root, guides)
         print("Profile check passed.")
         return 0
-    preview(root, changes, folders)
+    preview(root, changes, folders, profile)
+    apply_preview(root, args, changes, folders)
     if scaffold:
         print_readiness(profile, project_paths(profile))
-    apply_preview(root, args, changes, folders)
     return 0
 
 

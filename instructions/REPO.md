@@ -267,7 +267,7 @@ The selector uses the same Markdown profile as manual setup. It does not create 
 ### Interview and modify
 
 ```bash
-./scripts/configure-instructions.sh --root /path/to/project
+./configure.sh --root /path/to/project
 ```
 
 The interview starts with these product categories:
@@ -313,12 +313,15 @@ In this instruction repository, instruction-library means documentation and inst
 To configure an application, point --root at that application repository rather than this instruction-library checkout.
 
 The selector previews profile and root AGENTS changes, lists additions, and asks before applying them.
+The forms review summarizes selected components, tool roles, project files, shared guides, and source folders.
+Press F3 to inspect the complete file list and exact text changes. The result screen shows status and next steps.
+Plain mode retains diff output for terminal inspection and automation.
 Answer no to cancel without writes.
 To inspect the installed selections without an interview, use these commands:
 
 ```bash
-./scripts/configure-instructions.sh --root /path/to/project --dry-run
-./scripts/configure-instructions.sh --root /path/to/project --check
+./configure.sh --root /path/to/project --dry-run
+./configure.sh --root /path/to/project --check
 ```
 
 The dry run previews missing files and leaves existing selections unchanged.
@@ -331,8 +334,8 @@ Neither command writes files. A successful check does not validate application b
 Use --target-folder to create a test setup without GitHub or a Git repository:
 
 ```bash
-./scripts/configure-instructions.sh --target-folder /tmp/instructions-trial --dry-run
-./scripts/configure-instructions.sh --target-folder /tmp/instructions-trial
+./configure.sh --target-folder /tmp/instructions-trial --dry-run
+./configure.sh --target-folder /tmp/instructions-trial
 ```
 
 The first command interviews and previews without creating the target or its missing parents.
@@ -340,7 +343,8 @@ The second command repeats the interview and creates the reviewed setup after co
 Use a new folder for another clean trial. Existing project files and custom scripts are preserved.
 Enter none for an unavailable repository URL. Setup does not run git init, create remotes, or contact services.
 The target receives shared guides, neutral agent entries, project documents, and a copy of the setup tools.
-You can then run its own scripts/configure-instructions.sh. Its --check validates configuration, not application readiness.
+You can then run its own `./configure.sh`. Its --check validates configuration, not application readiness.
+The previous `scripts/configure-instructions.sh` entry remains available for existing commands.
 Use --project-answers identity.json and --answers selections.json for repeatable noninteractive trials.
 With --dry-run, those files preview the exact inputs. Replace --dry-run with --apply to apply them.
 
@@ -355,7 +359,7 @@ Role assignments do not grant permissions or authorize delegation.
 Edit only those assignments with this command:
 
 ```bash
-./scripts/configure-instructions.sh --root /path/to/project --configure-agents
+./configure.sh --root /path/to/project --configure-agents
 ```
 
 Existing component selections stay unchanged. Ordinary product interviews preserve existing role assignments.
@@ -414,8 +418,8 @@ Replace the example path with an existing source path.
 To preview and then apply the same answers, use these commands:
 
 ```bash
-./scripts/configure-instructions.sh --root /path/to/project --answers /path/to/answers.json --dry-run
-./scripts/configure-instructions.sh --root /path/to/project --answers /path/to/answers.json --apply
+./configure.sh --root /path/to/project --answers /path/to/answers.json --dry-run
+./configure.sh --root /path/to/project --answers /path/to/answers.json --apply
 ```
 
 Omitted components and fields retain their existing values. Unknown JSON fields are errors.
@@ -489,7 +493,7 @@ The profile selector offers initialization when it recognizes an inherited instr
 You can also request initialization explicitly:
 
 ```bash
-./scripts/configure-instructions.sh --initialize-project --root /path/to/new-repository
+./configure.sh --initialize-project --root /path/to/new-repository
 ```
 
 Run the updated script from this library or from a new clone that includes it.
@@ -567,7 +571,7 @@ Use an empty software list for an undecided license. An optional custom_terms st
 Omit content and content_paths when no separate content license applies.
 
 ```bash
-./scripts/configure-instructions.sh --root /path/to/new-repository \
+./configure.sh --root /path/to/new-repository \
     --initialize-project --project-answers project.json --answers profile.json --dry-run
 ```
 

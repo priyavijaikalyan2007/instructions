@@ -127,3 +127,14 @@ Existing code examples remain unchanged except the updated root reading tree.
 The CP1252 guides retain their encoding and differ only in default project-path tokens.
 Historical record bytes precede the appended current outcome without rewriting past findings.
 The owner authorized a commit, push, pull request, and merge. No remote permissions or tool credentials are changed.
+
+
+## 22 October 2026: launcher and review refinement
+
+Use root configure.sh for initialization and profile edits. Retain the previous launcher for compatibility.
+Local setup installs both entries. Role questions repeat the purpose and controls for each selected tool.
+Forms show a grouped change summary. F3 exposes complete file details and exact text changes.
+Results show apply status and completion steps. Plain mode retains diffs.
+
+Validation: 176 tests pass. A real ncurses trial verified two tool role screens, F3 inspection,
+return to summary, explicit approval, readable results, cursor editing, resize, and terminal restoration.
