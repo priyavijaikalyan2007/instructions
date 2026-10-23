@@ -11,6 +11,13 @@ Created: 2026
 
 # Changelog
 
+## 23 October 2026: UI interview navigation
+
+- Added F5 Back and F6 Next for UI questions, including the pre-apply review.
+- Preserved session drafts and rebuilt conditional questions after earlier edits.
+- Required later answers and final approval to be confirmed again after relevant changes.
+- Locked navigation before filesystem writes and retained sequential plain and JSON operation.
+
 ## 22 October 2026: root public documents
 
 - Moved README.md, CONTRIBUTING.md, CODE_OF_CONDUCT.md, and SECURITY.md to the root.

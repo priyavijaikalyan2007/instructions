@@ -32,7 +32,7 @@ from project_scaffolding import print_readiness, scaffolding_changes
 from browser_profile import BROWSER_FIELDS, validate_browser
 from source_folders import plan_source_folders, source_scope_warnings
 from terminal_ui import input, print, set_color_mode, interactive_requested, run_interview_ui
-from terminal_ui import present_preview
+from terminal_ui import present_preview, lock_navigation
 from setup_review import summary_lines, detail_lines
 from interview_cancelled import InterviewCancelled
 from workspace_profile import WORKSPACE_FIELDS, language_values, validate_workspace
@@ -434,7 +434,8 @@ def missing_setup_tools(root: Path) -> dict[str, bytes]:
              'project_layout.py', 'agent_roles.py', 'license_selection.py', 'profile_interview.py',
              'browser_profile.py', 'workspace_profile.py', 'source_folders.py', 'terminal_ui.py',
              'project_context.py', 'project_scaffolding.py', 'interview_widgets.py',
-             'curses_interview.py', 'interview_cancelled.py', 'setup_review.py']
+             'curses_interview.py', 'interview_cancelled.py', 'setup_review.py', 'interview_history.py',
+             'interview_question.py', 'interview_revisit.py']
     paths = ['configure.sh', *['scripts/' + name for name in names]]
     return {path: (LIBRARY_ROOT / path).read_bytes() for path in paths
             if not safe_path(root, path).exists()}
@@ -656,6 +657,7 @@ def apply_preview(root: Path, args, changes: dict, folders: list[str]) -> None:
     if args.dry_run or not (changes or folders):
         return
     if args.apply or ask_boolean("Apply these changes?", False):
+        lock_navigation()
         write_changes(root, changes, folders)
         print(f"Applied {len(changes)} file changes and created {len(folders)} source folders.")
     else:
@@ -695,7 +697,8 @@ def main() -> int:
     """Select presentation separately from the project configuration workflow."""
     args = arguments()
     set_color_mode(args.color)
-    return run_interview_ui(lambda: configure_project(args), args.ui, interactive_requested(args))
+    return run_interview_ui(lambda: configure_project(argparse.Namespace(**vars(args))),
+                            args.ui, interactive_requested(args))
 
 
 if __name__ == "__main__":

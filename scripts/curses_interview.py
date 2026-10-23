@@ -17,6 +17,9 @@ import re
 import textwrap
 
 from interview_cancelled import InterviewCancelled
+from interview_history import InterviewHistory
+from interview_question import InterviewQuestion
+from interview_revisit import InterviewRevisit
 from interview_widgets import TextBuffer, menu_options, prompt_default
 
 
@@ -29,6 +32,9 @@ class InterviewScreen:
         self.lines, self.pending, self.previous_context, self.cached_menu = [], [], [], []
         self.step, self.scroll, self.menu_prompt = 0, 0, ''
         self.details = []
+        self.history = InterviewHistory()
+        self.navigation_locked, self.reviewing_result = False, False
+        self.current_index, self.current_field, self.scope = -1, None, ''
         self.colors = colors and curses.has_colors()
         screen.keypad(True)
         if self.colors:
@@ -38,11 +44,45 @@ class InterviewScreen:
                 curses.init_pair(number, color, -1)
         curses.set_escdelay(100)
 
+    def run(self, callback):
+        """Rebuild a read-only interview only after an explicit navigation request."""
+        while True:
+            self.reset_view()
+            try:
+                result = callback()
+                self.finish()
+                return result
+            except InterviewRevisit as request:
+                if self.navigation_locked:
+                    raise RuntimeError('Cannot revisit questions after setup starts writing files.') from request
+                self.history.rewind(request.index)
+
+    def reset_view(self) -> None:
+        """Rebuild explanations and menus while retaining the session's answer history."""
+        self.lines, self.pending, self.previous_context, self.cached_menu = [], [], [], []
+        self.details, self.scope, self.menu_prompt = [], '', ''
+        self.step, self.scroll, self.current_index = 0, 0, -1
+        self.current_field, self.reviewing_result = None, False
+
+    def navigate_back(self) -> None:
+        """Save a draft and revisit the previous question while all changes remain unwritten."""
+        if self.navigation_locked or self.current_index < 0:
+            return
+        destination = self.current_index if self.reviewing_result else self.current_index - 1
+        if destination < 0:
+            return
+        if self.current_field is not None:
+            self.history.save_draft(self.current_index, self.current_field.value)
+        raise InterviewRevisit(destination)
+
     def write(self, text: str) -> None:
         """Buffer output rather than mixing ordinary print calls with the active curses screen."""
         lines = re.sub(r'\x1b\[[0-9;]*m', '', text).splitlines()
         self.lines.extend(lines)
         self.pending.extend(lines)
+        for line in lines:
+            if line.startswith('Component:'):
+                self.scope = line
 
     def put(self, row: int, column: int, text: str, style: int = 0) -> None:
         """Clip to the current screen and tolerate a resize between measuring and drawing."""
@@ -100,13 +140,16 @@ class InterviewScreen:
             offset = max(0, min(offset, max(0, len(wrapped) - height)))
             for index, line in enumerate(wrapped[offset:offset + height], 2):
                 self.put(index, 2, line, self.style(line))
-            self.put(rows - 2, 1, 'Up/Down or PgUp/PgDn scroll | F3 exact changes | Enter returns | Esc returns')
+            controls = 'PgUp/PgDn scroll | F3 changes | Enter/F6 return'
+            self.put(rows - 2, 1, controls + (' | F5 Back' if not self.navigation_locked else ''))
             self.screen.refresh()
             key = self.screen.get_wch()
-            if key in {'\n', '\r', '\x1b', curses.KEY_ENTER}:
+            if key in {'\n', '\r', '\x1b', curses.KEY_ENTER, curses.KEY_F6}:
                 return
             if key == curses.KEY_F3 and self.details and lines is not self.details:
                 self.review('Exact file changes | Enter returns to summary', self.details)
+            if key == curses.KEY_F5:
+                self.navigate_back()
             offset = self.review_offset(key, offset, height, len(wrapped))
 
     def review_offset(self, key, offset: int, height: int, length: int) -> int:
@@ -163,8 +206,8 @@ class InterviewScreen:
         for index, line in enumerate(content[self.scroll:self.scroll + height], start):
             self.put(index, 2, line, self.style(line))
         self.draw_options(options, field, selected, start + height + 1, rows - 7)
-        self.put(rows - 3, 1, 'Enter next | Up/Down choices | Space select | Left/Right edit | Ctrl+U clear')
-        self.put(rows - 2, 1, 'PgUp/PgDn help | F2 full review | Home/End edit | Esc cancel')
+        self.put(rows - 3, 1, 'F5 Back | F6/Enter Next | Space select | Esc cancel')
+        self.put(rows - 2, 1, 'Arrows edit/choose | PgUp/PgDn help | F2 review | F3 diff')
         self.draw_field(field, rows)
         self.screen.refresh()
 
@@ -214,23 +257,37 @@ class InterviewScreen:
             field.edit(key)
 
     def ask(self, prompt: str) -> str:
-        """Present one editable question and return only its literal answer to existing validation."""
-        self.step, self.scroll = self.step + 1, 0
+        """Reuse matching earlier answers only until the requested question becomes editable."""
         context, options = self.form_context(prompt)
-        field = TextBuffer(prompt_default(prompt))
+        snapshot = InterviewQuestion(prompt, tuple(context), tuple(options), self.scope)
+        index, question, replay = self.history.visit(snapshot)
+        self.step, self.scroll, self.current_index = index + 1, 0, index
+        if replay and not prompt.startswith('Apply these changes?'):
+            self.lines.append(prompt + question.answer)
+            return question.answer
+        value = question.draft if question.draft is not None else prompt_default(prompt)
+        field = TextBuffer(value)
+        self.current_field = field
+        if prompt.startswith('Apply these changes?'):
+            field = self.current_field = TextBuffer(prompt_default(prompt))
+            self.review('Review planned changes | Enter continues to approval', context)
+        answer = self.edit_question(prompt, context, options, field)
+        self.history.accept(index, answer)
+        self.lines.append(prompt + answer)
+        return answer
+
+    def edit_question(self, prompt: str, context: list[str], options: list, field: TextBuffer) -> str:
+        """Validate through the existing caller after Next, or preserve edits when Back is selected."""
         selected = next((index for index, (value, _) in enumerate(options) if value == field.value), 0)
         multiple = bool(re.search(r'\bnumbers\b', prompt, re.I))
-        if prompt.startswith('Apply these changes?'):
-            self.review('Review planned changes | Enter continues to approval', context)
         while True:
             if not self.dimensions_ready():
                 continue
+            self.current_field = field
             self.draw_form(prompt, context, options, field, selected)
             key = self.screen.get_wch()
-            if key in {'\n', '\r', curses.KEY_ENTER}:
-                answer = field.value or (options[selected][0] if options and not multiple else '')
-                self.lines.append(prompt + answer)
-                return answer
+            if key in {'\n', '\r', curses.KEY_ENTER, curses.KEY_F6}:
+                return field.value or (options[selected][0] if options and not multiple else '')
             selected, field = self.form_key(key, options, field, selected, multiple)
 
     def form_key(self, key, options: list, field: TextBuffer, selected: int,
@@ -238,6 +295,8 @@ class InterviewScreen:
         """Route choice navigation, help, and editing without executing or storing terminal control sequences."""
         if key == '\x1b':
             self.confirm_cancel()
+        elif key == curses.KEY_F5:
+            self.navigate_back()
         elif key == curses.KEY_F2:
             self.review('Interview review | Enter returns to the current answer', self.lines)
         elif key == curses.KEY_F3 and self.details:
@@ -256,6 +315,7 @@ class InterviewScreen:
 
     def finish(self) -> None:
         """Keep the result and completion instructions available until the user closes the interface."""
+        self.reviewing_result = True
         self.review('Setup result | Enter closes the interface', self.pending or self.lines)
 
     def summary(self) -> str:

@@ -97,6 +97,12 @@ def present_preview(summary: list[str], details: list[str]) -> bool:
     return True
 
 
+def lock_navigation() -> None:
+    """Prevent UI replay once an approved operation can create, replace, or remove files."""
+    if ACTIVE_SCREEN is not None:
+        ACTIVE_SCREEN.navigation_locked = True
+
+
 def interactive_requested(args) -> bool:
     """Use forms only when this invocation can ask a person for identity, selections, or approval."""
     if args.check:
@@ -147,9 +153,7 @@ def run_curses(callback, curses):
         session = InterviewScreen(screen, color_enabled(sys.stdout))
         ACTIVE_SCREEN = session
         try:
-            result = callback()
-            session.finish()
-            return result
+            return session.run(callback)
         finally:
             ACTIVE_SCREEN = None
 

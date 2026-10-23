@@ -306,6 +306,12 @@ The interview explains each selected part before asking for its source paths, ac
 Paths are relative to the selected repository. Supply files, folders, or matching patterns, separated by commas.
 For absent literal paths, the interview offers planned scope before continuing.
 Each prompt explains its meaning and gives examples. Press Enter to retain a displayed current value.
+In the UI, press F5 for Back and F6 or Enter for Next. Text cursor arrows retain their editing behavior.
+Back saves the current field as a session draft. Next submits the field through its normal validation.
+After an earlier answer changes, confirm later answers again. Matching questions retain drafts, and conditional questions are rebuilt.
+Press F5 from the final review to edit the last question. Review the rebuilt plan before approving it.
+Read-only result screens also allow Back. Navigation ends when approved setup starts writing files.
+Drafts exist only during the current UI session. Plain mode and JSON operation remain sequential.
 For a new component without a concrete source path, Enter accepts the suggested named location.
 Example names such as core, companion, and writing-assistant are replaceable before accepting the path.
 The defaults follow [the named component convention](#named-component-convention).

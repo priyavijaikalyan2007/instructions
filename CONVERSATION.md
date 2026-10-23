@@ -960,3 +960,10 @@ Response: GitHub supports the previous location, but root documents match the pr
 User: agree. please fix.
 
 Response: Moved the source public documents to the root and updated initialization, completion links, and shared guidance. Existing setups preview safe moves and preserve customized text and permissions. Conflicts stop setup before writes. GitHub configuration remains in .github/.
+
+
+## 23 October 2026: UI interview navigation
+
+User: Ah. Foudn another bug. Let's say I want to revisit a previous question or move back and froth between questions in the interview, I should be abel to do that. But only in the UI version.
+
+Response: Added UI-only F5 Back and F6 Next, with session drafts and existing field validation. Back from the pre-apply review revisits the last question. Earlier edits rebuild conditional questions and the final plan. Later matching answers require confirmation, and final approval is never replayed. Navigation locks before filesystem writes. Plain and JSON workflows remain sequential.

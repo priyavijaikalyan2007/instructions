@@ -161,3 +161,20 @@
     - scripts/project_initialization.py
     - instructions/REPO.md
     - README.md
+
+- id: ADR-010
+  title: Revisit UI questions through session history before the write boundary
+  date: 2026-10-23
+  status: Accepted
+  context: >-
+    The owner requested backward and forward navigation in the UI interview only.
+    Question snapshots retain drafts and accepted answers. Explicit Back rebuilds read-only processing
+    from fresh command arguments and matching prior answers, then reopens the chosen question.
+    Earlier edits require later confirmation and rebuild conditional choices and the final plan.
+    Final approval is never replayed. Navigation locks before writes. Plain and JSON operation remain sequential.
+  files:
+    - scripts/interview_history.py
+    - scripts/interview_question.py
+    - scripts/interview_revisit.py
+    - scripts/curses_interview.py
+    - scripts/terminal_ui.py
