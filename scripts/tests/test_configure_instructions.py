@@ -258,7 +258,7 @@ class ConfigureInstructionsTests(unittest.TestCase):
         self.assertTrue(result.returncode == 2 and self.snapshot() == {})
 
     def test_cancel_after_interview_writes_nothing(self):
-        result = self.run_cli(None, input_text="4\nsrc\nSwift\nmacOS\nnative application\nno\n")
+        result = self.run_cli(None, input_text="4\nsrc\n3\n1\nnative application\nno\n")
         self.assertTrue(result.returncode == 0 and "cancel" in result.stdout.lower()
                         and self.snapshot() == {})
 
@@ -293,7 +293,7 @@ class ConfigureInstructionsTests(unittest.TestCase):
         self.assertEqual(result.returncode, 2)
 
     def test_enabling_component_via_interview(self):
-        answers = ["4", "src", "Swift", "macOS", "native application", "yes"]
+        answers = ["4", "src", "3", "1", "native application", "yes"]
         result = self.run_cli(None, input_text="\n".join(answers) + "\n")
         self.assertTrue(result.returncode == 0 and "- Languages: Swift" in (self.root / PROFILE).read_text())
 
@@ -310,21 +310,21 @@ class ConfigureInstructionsTests(unittest.TestCase):
         self.assertTrue(result.returncode == 0 and all(value in result.stdout for value in expected))
 
     def test_interview_explains_every_enabled_component_field(self):
-        answers = ["4", "src", "Swift", "macOS", "native application", "no"]
+        answers = ["4", "src", "3", "1", "native application", "no"]
         result = self.run_cli(None, input_text="\n".join(answers) + "\n")
         expected = ["relative to the selected repository", "selected automatically", "actual source languages",
                     "operating systems", "standalone", "packaged or delivered", "Press Enter to keep"]
         self.assertTrue(result.returncode == 0 and all(value in result.stdout for value in expected))
 
     def test_interview_accepts_numbered_native_app_choice(self):
-        answers = ["4", "src", "Swift", "macOS", "native application", "yes"]
+        answers = ["4", "src", "3", "1", "native application", "yes"]
         result = self.run_cli(None, input_text="\n".join(answers) + "\n")
         self.assertTrue(result.returncode == 0 and "- Targets: apps" in (self.root / PROFILE).read_text())
 
     def test_new_saas_creates_approved_additive_component_paths(self):
-        answers = ["2", "", "yes", "C#", "container", "", "yes", "TypeScript, HTML, SCSS", "same container",
-                   "", "yes", "Swift, TypeScript", "iOS, browser", "generated library",
-                   "", "yes", "Swift", "iOS, macOS", "native application", "yes"]
+        answers = ["2", "", "yes", "1", "container", "", "yes", "2,3,5", "same container",
+                   "", "yes", "2,1", "1,3", "generated library",
+                   "", "yes", "1,3", "1", "native application", "yes"]
         result = self.run_cli(None, input_text="\n".join(answers) + "\n")
         self.assertEqual(result.returncode, 0, result.stderr)
         profile = (self.root / PROFILE).read_text()
@@ -338,9 +338,9 @@ class ConfigureInstructionsTests(unittest.TestCase):
         self.assertEqual(self.run_cli(None, "--check").returncode, 0)
 
     def test_new_independent_products_offer_named_component_defaults(self):
-        cases = [("4", ["Swift", "macOS", "native application"], "src/app/companion"),
-                 ("5", ["HTML, CSS", "static hosting"], "src/website/public"),
-                 ("6", ["Go", "macOS", "CLI binary"], "src/tool/administration")]
+        cases = [("4", ["3", "1", "native application"], "src/app/companion"),
+                 ("5", ["3,4", "static hosting"], "src/website/public"),
+                 ("6", ["1", "2", "CLI binary"], "src/tool/administration")]
         for category, details, expected in cases:
             with self.subTest(category=category):
                 answers = [category, "", "yes", *details, "no"]
@@ -351,7 +351,7 @@ class ConfigureInstructionsTests(unittest.TestCase):
                 self.assertEqual(self.snapshot(), before)
 
     def test_workspace_default_stays_inside_named_extension(self):
-        answers = ["7", "1", "1", "1", "1", "TypeScript, HTML, SCSS", "", "yes", "yes"]
+        answers = ["7", "1", "1", "1", "1", "2,3,5", "", "yes", "yes"]
         result = self.run_cli(None, input_text="\n".join(answers) + "\n")
         self.assertEqual(result.returncode, 0, result.stderr)
         profile = (self.root / PROFILE).read_text()
@@ -360,20 +360,20 @@ class ConfigureInstructionsTests(unittest.TestCase):
         self.assertTrue((self.root / "src/extensions/googleworkspace/markdown").is_dir())
 
     def test_browser_default_stays_inside_named_extension(self):
-        answers = ["8", "1", "2", "1", "TypeScript", "", "yes", "yes"]
+        answers = ["8", "1", "2", "1", "2", "", "yes", "yes"]
         result = self.run_cli(None, input_text="\n".join(answers) + "\n")
         self.assertEqual(result.returncode, 0, result.stderr)
         self.assertIn("Source paths: src/extensions/browser/markdown", (self.root / PROFILE).read_text())
 
     def test_layout_suggestion_does_not_replace_explicit_path(self):
-        answers = ["4", "src", "Swift", "macOS", "native application", "yes"]
+        answers = ["4", "src", "3", "1", "native application", "yes"]
         result = self.run_cli(None, input_text="\n".join(answers) + "\n")
         self.assertEqual(result.returncode, 0, result.stderr)
         self.assertIn("- Source paths: src\n", (self.root / PROFILE).read_text())
         self.assertFalse((self.root / "src/app").exists())
 
     def test_product_menu_preserves_original_six_categories(self):
-        answers = ["4", "src", "Swift", "macOS", "native application", "no"]
+        answers = ["4", "src", "3", "1", "native application", "no"]
         result = self.run_cli(None, input_text="\n".join(answers) + "\n")
         expected = ["1. SaaS", "2. SaaS with Native Clients", "3. Microservice", "4. Native App",
                     "5. Static Website", "6. CLI tools", "SaaS describes the product"]
@@ -396,9 +396,9 @@ class ConfigureInstructionsTests(unittest.TestCase):
 
     def test_extension_interviews_select_independent_targets(self):
         cases = [
-            ("7", "Apps Script", "Google Docs (Editor add-on)", "Apps Script test deployment",
+            ("7", "1", "Google Docs (Editor add-on)", "Apps Script test deployment",
              "google-workspace", "google-workspace/GOOGLE_WORKSPACE.md"),
-            ("8", "TypeScript, HTML, CSS", "Chrome, Safari, Firefox", "browser store packages",
+            ("8", "2,3,4", "Chrome, Safari, Firefox", "browser store packages",
              "browser-extensions", "browser-extensions/BROWSER_EXTENSIONS.md"),
         ]
         for number, languages, platforms, delivery, target, guide in cases:
@@ -414,8 +414,8 @@ class ConfigureInstructionsTests(unittest.TestCase):
                 self.assertEqual(self.run_cli(None, "--check").returncode, 0)
 
     def test_extension_interview_explains_hosts_and_defers_office(self):
-        answers = ["7, 8", "1", "1", "1", "1", "JavaScript", "src",
-                   "1,3", "2", "2", "1", "TypeScript", "src", "no"]
+        answers = ["7, 8", "1", "1", "1", "1", "1", "src",
+                   "1,3", "2", "2", "1", "2", "src", "no"]
         result = self.run_cli(None, input_text="\n".join(answers) + "\n")
         self.assertEqual(result.returncode, 0, result.stderr)
         for phrase in ["7. Google Workspace Extensions", "8. Browser Extensions", "Editor add-on",
@@ -424,7 +424,7 @@ class ConfigureInstructionsTests(unittest.TestCase):
         self.assertEqual(self.snapshot(), {})
 
     def test_extension_saas_relationship_is_explicit_and_can_be_removed(self):
-        answers = ["3, 8", "yes", "src", "Java", "container", "1", "2", "2", "TypeScript", "src", "yes"]
+        answers = ["3, 8", "yes", "src", "2", "container", "1", "2", "2", "2", "src", "yes"]
         result = self.run_cli(None, input_text="\n".join(answers) + "\n")
         self.assertEqual(result.returncode, 0, result.stderr)
         profile = (self.root / PROFILE).read_text()
@@ -460,16 +460,16 @@ class ConfigureInstructionsTests(unittest.TestCase):
 
     def test_product_categories_select_expected_parts_and_sdk_relationships(self):
         scenarios = [
-            ("1", ["src", "Java", "container", "src", "TypeScript, HTML, SCSS", "same container"],
+            ("1", ["src", "2", "container", "src", "2,3,5", "same container"],
              {"backend", "frontend"}),
-            ("2", ["src", "Java", "container", "src", "TypeScript, HTML", "same container",
-                   "src", "Swift, TypeScript", "iOS, browser", "generated library",
-                   "src", "Swift", "iOS, macOS", "native application"],
+            ("2", ["src", "2", "container", "src", "2,3", "same container",
+                   "src", "2,1", "1,3", "generated library",
+                   "src", "1,3", "1", "native application"],
              {"backend", "frontend", "sdk", "native-client"}),
-            ("3", ["src", "Java", "container"], {"backend"}),
-            ("4", ["src", "Swift", "macOS", "native application"], {"native-client"}),
-            ("5", ["src", "HTML, CSS", "static hosting"], {"website"}),
-            ("6", ["src", "Go", "macOS, Linux", "CLI binary"], {"tool"}),
+            ("3", ["src", "2", "container"], {"backend"}),
+            ("4", ["src", "3", "1", "native application"], {"native-client"}),
+            ("5", ["src", "3,4", "static hosting"], {"website"}),
+            ("6", ["src", "1,2", "2", "CLI binary"], {"tool"}),
         ]
         for category, values, expected in scenarios:
             with self.subTest(category=category):
@@ -482,8 +482,8 @@ class ConfigureInstructionsTests(unittest.TestCase):
                     self.assertIn("Uses generated SDK: sdk", result.stdout)
 
     def test_combines_saas_website_and_cli_without_extra_component_questions(self):
-        answers = ["1, 5, 6", "src", "Java", "container", "src", "TypeScript, HTML", "same container",
-                   "src", "HTML, CSS", "static hosting", "src", "Python", "macOS", "CLI package", "yes"]
+        answers = ["1, 5, 6", "src", "2", "container", "src", "2,3", "same container",
+                   "src", "3,4", "static hosting", "src", "1", "1", "CLI package", "yes"]
         result = self.run_cli(None, input_text="\n".join(answers) + "\n")
         self.assertTrue(result.returncode == 0 and "Enable " not in result.stdout
                         and "Source paths:" in (self.root / PROFILE).read_text())
@@ -504,7 +504,7 @@ class ConfigureInstructionsTests(unittest.TestCase):
         self.assertTrue("- SaaS client: no" in native and "- SDK component: none" in native)
 
     def test_overlapping_saas_choices_are_explained_before_reprompt(self):
-        answers = ["1, 2", "4", "src", "Swift", "macOS", "native application", "no"]
+        answers = ["1, 2", "4", "src", "3", "1", "native application", "no"]
         result = self.run_cli(None, input_text="\n".join(answers) + "\n")
         self.assertTrue(result.returncode == 0 and "categories overlap" in result.stdout
                         and self.snapshot() == {})

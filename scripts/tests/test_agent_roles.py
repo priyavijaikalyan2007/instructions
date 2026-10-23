@@ -116,7 +116,7 @@ class AgentRolesTests(unittest.TestCase):
         self.assertEqual((self.root / 'CODEX.md').read_bytes(), original)
 
     def test_new_interview_collects_multiple_roles_for_each_selected_tool(self):
-        lines = ['1,2', '2,6', '', '3,5', '', '6', 'src', 'Go', 'Linux', 'CLI binary', 'yes']
+        lines = ['1,2', '2,6', '', '3,5', '', '6', 'src', '2', '2', 'CLI binary', 'yes']
         result = self.run_cli(answers=False, input_text='\n'.join(lines) + '\n')
         self.assertEqual(result.returncode, 0, result.stderr)
         profile = (self.root / 'PROJECT_PROFILE.md').read_text()

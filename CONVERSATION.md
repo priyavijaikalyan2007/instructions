@@ -967,3 +967,10 @@ Response: Moved the source public documents to the root and updated initializati
 User: Ah. Foudn another bug. Let's say I want to revisit a previous question or move back and froth between questions in the interview, I should be abel to do that. But only in the UI version.
 
 Response: Added UI-only F5 Back and F6 Next, with session drafts and existing field validation. Back from the pre-apply review revisits the last question. Earlier edits rebuild conditional questions and the final plan. Later matching answers require confirmation, and final approval is never replayed. Navigation locks before filesystem writes. Plain and JSON workflows remain sequential.
+
+
+## 23 October 2026: contextual language and platform menus
+
+User: I found some more issues. In multiple places such as tagret language selection, target platform selection etc. you ask for a comman separated free form input. Since this repository only supports specific languages and target platforms, best to present selection relevant options instead. That means, for example, if the target platforms are iOS, iPadOS and macOS, the target languages may present Swift along with TypeScript, HTML, CSS & SCSS (since those are common for websites). If tools is picked, then expanding to present Python or Go is useful.
+
+Response: Replaced language and platform name entry with supported selection lists in UI and plain interviews. Native apps, CLI tools, and generated SDKs choose platforms before contextual source languages. Extensions choose individual script, markup, and stylesheet languages. Existing unlisted facts can be retained explicitly. Platform edits rebuild language checkboxes. Manual and JSON validation remains available, and local targets include the shared catalog. Regression tests and a real ncurses checkbox trial verify the changes.

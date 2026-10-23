@@ -35,7 +35,8 @@ from terminal_ui import input, print, set_color_mode, interactive_requested, run
 from terminal_ui import present_preview, lock_navigation
 from setup_review import summary_lines, detail_lines
 from interview_cancelled import InterviewCancelled
-from workspace_profile import WORKSPACE_FIELDS, language_values, validate_workspace
+from workspace_profile import WORKSPACE_FIELDS, validate_workspace
+from profile_choices import LANGUAGE_GUIDES, language_values
 from project_initialization import (initialization_changes, is_inherited, is_source_repository,
                                     prepare_initialization, safe_path)
 
@@ -64,16 +65,6 @@ TARGET_GUIDES = {
     "google-workspace": "google-workspace/GOOGLE_WORKSPACE.md",
     "browser-extensions": "browser-extensions/BROWSER_EXTENSIONS.md",
     "sdks": "sdk/SDKs.md", "documentation": "DOCUMENTATION.md",
-}
-LANGUAGE_GUIDES = {
-    "c#": ["csharp/CSHARP.md"], "swift": ["swift/SWIFT.md"], "go": ["go/GO.md"], "rust": ["rust/RUST.md"],
-    "java": ["java/JAVA.md"], "python": ["python/PYTHON.md"], "javascript": ["javascript/JAVASCRIPT.md"],
-    "typescript": ["typescript/TYPESCRIPT.md", "javascript/JAVASCRIPT.md"], "html": ["html/HTML.md"],
-    "css": ["css/CSS.md"],
-    "scss": ["scss/SCSS.md", "css/CSS.md"], "sql": ["sql/SQL.md"], "shell": ["shell/SHELL.md"],
-    "bash": ["shell/SHELL.md"],
-    "apps script": ["javascript/JAVASCRIPT.md", "apps-script/APPS_SCRIPT.md"],
-    "google apps script": ["javascript/JAVASCRIPT.md", "apps-script/APPS_SCRIPT.md"],
 }
 IDENTIFIER = re.compile(r"[a-z][a-z0-9-]*\Z")
 
@@ -435,7 +426,7 @@ def missing_setup_tools(root: Path) -> dict[str, bytes]:
              'browser_profile.py', 'workspace_profile.py', 'source_folders.py', 'terminal_ui.py',
              'project_context.py', 'project_scaffolding.py', 'interview_widgets.py',
              'curses_interview.py', 'interview_cancelled.py', 'setup_review.py', 'interview_history.py',
-             'interview_question.py', 'interview_revisit.py']
+             'interview_question.py', 'interview_revisit.py', 'profile_choices.py']
     paths = ['configure.sh', *['scripts/' + name for name in names]]
     return {path: (LIBRARY_ROOT / path).read_bytes() for path in paths
             if not safe_path(root, path).exists()}
