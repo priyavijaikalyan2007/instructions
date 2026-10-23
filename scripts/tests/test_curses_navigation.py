@@ -137,3 +137,18 @@ class CursesNavigationTests(unittest.TestCase):
                 patch.object(configurator, 'run_interview_ui', side_effect=rerun):
             self.assertEqual(configurator.main(), 0)
         self.assertEqual(observed, [False, False])
+
+    def test_platform_edit_rebuilds_language_checkboxes_before_accepting_answers(self):
+        from profile_choices import select_languages, select_platforms
+        keys = ['1', curses.KEY_F6, '1', curses.KEY_F6, curses.KEY_F5, curses.KEY_F5,
+                '\x15', '4', curses.KEY_F6, '1', curses.KEY_F6, curses.KEY_F6]
+        session = self.session(keys)
+        def interview():
+            platforms = select_platforms('apps', '')
+            languages = select_languages('apps', platforms, '')
+            terminal_ui.input('Delivery [native application]: ')
+            return platforms, languages
+        self.assertEqual(self.run_session(session, interview), (['Android'], ['Java']))
+        options = session.history.questions[1].options
+        self.assertIn(('1', 'Java'), options)
+        self.assertNotIn(('1', 'Swift'), options)

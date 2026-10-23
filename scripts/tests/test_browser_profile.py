@@ -50,7 +50,7 @@ class BrowserProfileTests(unittest.TestCase):
         return {'components': {'browser-extension': component}}
 
     def test_browser_interview_records_browsers_platforms_and_store_delivery(self):
-        result = self.run_cli(['8', '1,3', '2', '2', '2', '2', '', 'yes', 'yes'])
+        result = self.run_cli(['8', '1,3', '2', '2', '2', '2,3,4', '', 'yes', 'yes'])
         self.assertEqual(result.returncode, 0, result.stderr)
         profile = (self.root / PROFILE).read_text()
         for value in ['Browser targets: chrome-macos, firefox-macos', 'Browser distribution: store',
@@ -111,10 +111,10 @@ class BrowserProfileTests(unittest.TestCase):
         self.assertIn('Chrome Web Store', result.stdout)
         self.assertEqual(list(self.root.iterdir()), [])
 
-    def test_browser_language_prompt_retries_apps_script_source(self):
-        result = self.run_cli(['8', '1', '2', '1', 'Apps Script', 'JavaScript', '', 'yes', 'no'])
+    def test_browser_language_prompt_rejects_free_text_source(self):
+        result = self.run_cli(['8', '1', '2', '1', 'Apps Script', '1', '', 'yes', 'no'])
         self.assertEqual(result.returncode, 0, result.stderr)
-        self.assertIn('Include JavaScript or TypeScript', result.stdout)
+        self.assertIn('Choose the displayed numbers', result.stdout)
         self.assertEqual(list(self.root.iterdir()), [])
 
     def test_invalid_browser_json_fails_before_any_writes(self):

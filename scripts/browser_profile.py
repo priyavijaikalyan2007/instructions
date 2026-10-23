@@ -11,8 +11,9 @@
 # RELATES: profile_interview.py, configure_instructions.py, instructions/browser-extensions/BROWSER_EXTENSIONS.md
 # FLOW: Browsers -> operating systems for each browser -> distribution -> source -> required artifact guidance.
 
-from terminal_ui import input, print
-from workspace_profile import ask_script_languages, language_values
+from terminal_ui import print
+from workspace_profile import ask_script_languages
+from profile_choices import choose_many, language_values
 
 
 BROWSER_FIELDS = {'browser_targets': 'Browser targets', 'browser_distribution': 'Browser distribution'}
@@ -31,22 +32,6 @@ DISTRIBUTIONS = {
 }
 STORES = {'chrome': 'Chrome Web Store', 'edge': 'Microsoft Edge Add-ons',
           'firefox': 'Mozilla Add-ons', 'safari': 'Apple App Store'}
-
-
-def choose_many(label: str, options: list[str], defaults: list[str], multiple: bool = True) -> list[str]:
-    """Present actual supported values and require a valid numbered selection."""
-    print('\n' + label + ':')
-    for number, option in enumerate(options, 1):
-        print(f'  {number}. {option}')
-    default = ','.join(str(options.index(value) + 1) for value in defaults if value in options)
-    while True:
-        kind = 'numbers' if multiple else 'number'
-        answer = input(f'{label} {kind} [{default or "required"}]: ').strip() or default
-        numbers = [value.strip() for value in answer.split(',')]
-        valid = all(value.isdigit() and 1 <= int(value) <= len(options) for value in numbers)
-        if valid and (multiple or len(numbers) == 1):
-            return list(dict.fromkeys(options[int(value) - 1] for value in numbers))
-        print('Choose the displayed numbers. Select only targets that you will test now.')
 
 
 def choose_targets(values: dict) -> list[str]:

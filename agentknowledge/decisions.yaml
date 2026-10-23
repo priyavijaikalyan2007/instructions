@@ -178,3 +178,21 @@
     - scripts/interview_revisit.py
     - scripts/curses_interview.py
     - scripts/terminal_ui.py
+
+- id: ADR-011
+  title: Select supported platforms before contextual source languages
+  date: 2026-10-23
+  status: Accepted
+  context: >-
+    The owner requested relevant selection lists instead of arbitrary language and platform input.
+    Native apps, CLI tools, and generated SDKs collect platforms before their source languages.
+    Extension runtimes use individual language choices. Existing unlisted facts require explicit retention.
+    The shared catalog also owns guide mapping and is installed with local targets.
+    Manual and JSON configurations retain existing coverage validation. Platform edits rebuild UI choices.
+  files:
+    - scripts/profile_choices.py
+    - scripts/profile_interview.py
+    - scripts/workspace_profile.py
+    - scripts/browser_profile.py
+    - scripts/configure_instructions.py
+    - instructions/REPO.md

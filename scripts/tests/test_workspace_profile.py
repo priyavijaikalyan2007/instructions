@@ -44,7 +44,7 @@ class WorkspaceProfileTests(unittest.TestCase):
 
     def docs_input(self, approval='yes'):
         """Select Docs Editor, personal testing, and planned source paths."""
-        return ['7', '1', '1', '1', '1', 'Javascript/Typescript, HTML, SCSS',
+        return ['7', '1', '1', '1', '1', '1,2,3,5',
                 'src/docs/', 'yes', approval]
 
     def workspace_answers(self, **overrides):
@@ -84,7 +84,7 @@ class WorkspaceProfileTests(unittest.TestCase):
         self.assertNotIn('Gmail', (self.root / PROFILE).read_text())
 
     def test_gmail_workspace_http_records_backend_scope(self):
-        lines = ['7', '2', '2', '2', '2', '2', 'Python', 'src/mail', 'yes', 'yes']
+        lines = ['7', '2', '2', '2', '2', '2', '5', 'src/mail', 'yes', 'yes']
         result = self.run_cli(lines)
         self.assertEqual(result.returncode, 0, result.stderr)
         profile = (self.root / PROFILE).read_text()
@@ -96,7 +96,7 @@ class WorkspaceProfileTests(unittest.TestCase):
         self.assertNotIn('SCSS compilation', result.stdout)
 
     def test_invalid_editor_gmail_choice_is_explained_and_retried(self):
-        lines = ['7', '2', '1', '2', '1', '1', '3', 'TypeScript', 'src/mail', 'yes', 'no']
+        lines = ['7', '2', '1', '2', '1', '1', '3', '2', 'src/mail', 'yes', 'no']
         result = self.run_cli(lines)
         self.assertEqual(result.returncode, 0, result.stderr)
         self.assertIn('Editor add-ons support Docs, Sheets, Slides, and Forms', result.stdout)
@@ -194,7 +194,7 @@ class WorkspaceProfileTests(unittest.TestCase):
         self.assertIn('Source state: existing', (self.root / PROFILE).read_text())
 
     def test_javascript_cards_skip_typescript_and_stylesheet_build_steps(self):
-        lines = ['7', '2', '2', '1', '1', '1', 'JavaScript', 'src/mail', 'yes', 'no']
+        lines = ['7', '2', '2', '1', '1', '1', '1', 'src/mail', 'yes', 'no']
         result = self.run_cli(lines)
         self.assertEqual(result.returncode, 0, result.stderr)
         build = result.stdout.split('Build and packaging for these choices:', 1)[1]
@@ -203,7 +203,7 @@ class WorkspaceProfileTests(unittest.TestCase):
 
     def test_css_editor_does_not_require_scss_compilation(self):
         lines = self.docs_input('no')
-        lines[5] = 'JavaScript, HTML, CSS'
+        lines[5] = '1,3,4'
         result = self.run_cli(lines)
         self.assertEqual(result.returncode, 0, result.stderr)
         build = result.stdout.split('Build and packaging for these choices:', 1)[1]

@@ -57,6 +57,8 @@ Use the [profile template](PROJECT_PROFILE_TEMPLATE.md), [facts template](PROJEC
 Follow [manual setup](REPO.md#manual-setup) or use the [profile selector](REPO.md#profile-selector) to initialize or modify selections.
 Run `./configure.sh --root /path/to/project` from this checkout for the interview.
 Interactive terminals use ncurses forms with editable fields, selection lists, scrolling help, and a final review.
+Choose platforms before languages for native apps, CLI tools, and generated SDKs.
+Language lists show supported choices for the selected component and platforms.
 Use F5 Back and F6 Next to revisit UI questions. Edits rebuild dependent questions and require a fresh final review.
 Use `--ui plain` for the line-oriented interface or `--ui curses` to require curses support.
 Use `--check` for read-only validation and `--answers <json-file> --dry-run` to preview repeatable selections.

@@ -11,6 +11,14 @@ Created: 2026
 
 # Changelog
 
+## 23 October 2026: contextual platform and language selection
+
+- Replaced free-text language and platform prompts with relevant selection lists in UI and plain interviews.
+- Collected native app, CLI, and SDK platforms before presenting their supported source languages.
+- Replaced extension language presets and arbitrary input with individual language choices.
+- Preserved unlisted existing facts through an explicit Keep existing selection option.
+- Rebuilt language checkboxes after platform edits and installed the shared catalog in local targets.
+
 ## 23 October 2026: UI interview navigation
 
 - Added F5 Back and F6 Next for UI questions, including the pre-apply review.

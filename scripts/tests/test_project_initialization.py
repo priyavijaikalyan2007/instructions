@@ -184,7 +184,7 @@ class ProjectInitializationTests(unittest.TestCase):
         command = ['bash', str(self.root / 'scripts/configure-instructions.sh'), '--root', str(self.root)]
         answers = ['1', '', 'Example Owner', '2026', 'https://github.com/example/utilextensions',
                    'Writing tools', *[''] * 6, '1', '0', 'none', '7', '1', '1', '1', '1',
-                   'Javascript/Typescript, HTML, SCSS', 'src/docs', 'yes', 'yes']
+                   '1,2,3,5', 'src/docs', 'yes', 'yes']
         result = subprocess.run(command, input='\n'.join(answers) + '\n', text=True,
                                 capture_output=True, timeout=20)
         self.assertEqual(result.returncode, 0, result.stderr)

@@ -26,7 +26,7 @@ class CursesInterviewTests(unittest.TestCase):
     def test_explicit_plain_mode_retains_interview_and_cancellation(self):
         with tempfile.TemporaryDirectory() as directory:
             result = subprocess.run([str(SCRIPT), '--root', directory, '--ui', 'plain'],
-                                    input='none\n6\nsrc/tool/example\nyes\nGo\nLinux\nCLI binary\nno\n',
+                                    input='none\n6\nsrc/tool/example\nyes\n2\n2\nCLI binary\nno\n',
                                     text=True, capture_output=True, timeout=20)
             self.assertEqual(result.returncode, 0, result.stderr)
             self.assertIn('Cancelled', result.stdout)

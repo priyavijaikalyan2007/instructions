@@ -48,7 +48,8 @@ class TargetFolderTests(unittest.TestCase):
         self.assertEqual(result.returncode, 0, result.stderr)
         for path in ['PROJECT_PROFILE.md', 'PROJECT.md', 'ADDITIONAL.md', 'AGENTS.md',
                      '.instructions/INITIALIZATION.json', 'README.md', 'LICENSE',
-                     'configure.sh', 'scripts/configure-instructions.sh', 'scripts/configure_instructions.py']:
+                     'configure.sh', 'scripts/configure-instructions.sh', 'scripts/configure_instructions.py',
+                     'scripts/profile_choices.py']:
             self.assertTrue((self.root / path).is_file(), path)
         self.assertTrue((self.root / 'src/tool/example').is_dir())
         self.assertFalse((self.root / '.git').exists())
@@ -72,7 +73,7 @@ class TargetFolderTests(unittest.TestCase):
 
     def test_interactive_local_dry_run_works_without_repository_url(self):
         lines = ['', 'Example Owner', '2026', '', 'Local trial', *[''] * 6, '1', '0', 'none',
-                 '6', '', '', 'Go', 'Linux', 'CLI binary']
+                 '6', '', '', '2', '2', 'CLI binary']
         result = self.run_cli('--dry-run', input_text='\n'.join(lines) + '\n', json_answers=False)
         self.assertEqual(result.returncode, 0, result.stderr)
         self.assertIn('PROJECT_PROFILE.md', result.stdout)
@@ -137,7 +138,7 @@ class TargetFolderTests(unittest.TestCase):
     def test_interactive_fact_corrections_keep_accepted_answers(self):
         lines = ['', 'Example Owner', 'bad-year', '2026', 'bad-url', 'none', 'Local trial',
                  'bad|users', 'Writers', *[''] * 5, '1', '0', 'none',
-                 '6', '', '', 'Go', 'Linux', 'CLI binary']
+                 '6', '', '', '2', '2', 'CLI binary']
         result = self.run_cli('--dry-run', input_text='\n'.join(lines) + '\n', json_answers=False)
         self.assertEqual(result.returncode, 0, result.stderr)
         self.assertIn('Writers', result.stdout)

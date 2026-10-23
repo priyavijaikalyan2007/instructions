@@ -15,7 +15,8 @@ from copy import deepcopy
 from pathlib import Path
 
 from project_initialization import is_source_repository, safe_path
-from workspace_profile import interview_workspace, language_values
+from workspace_profile import interview_workspace
+from profile_choices import select_languages, select_platforms
 from browser_profile import interview_browser
 from terminal_ui import input, print
 
@@ -70,22 +71,13 @@ FIELD_HELP = {
         "Examples: src/service/core/backend, src/app/companion, docs. Patterns can match existing files.",
         "Use commas for several paths. These paths limit where the selected guidance applies.",
     ),
-    "languages": (
-        "Enter the actual source languages used in this part, separated by commas.",
-        "Examples: Java, C#, Swift, Go, Rust, or Python. Browser code may use TypeScript, HTML, and SCSS.",
-    ),
-    "platforms": (
-        "Enter the operating systems or consumer platforms, separated by commas.",
-        "Examples: iOS, iPadOS, macOS, Android, ChromeOS, Linux, or Windows. Use browser for a generated browser SDK.",
-    ),
     "deployment": (
         "Describe how this part is packaged or delivered. This records a fact and does not deploy anything.",
         "Examples: container, served by the backend, CDN, native application, CLI binary, generated library, or none.",
     ),
 }
 FIELD_LABELS = {
-    "source_paths": "Files or folders", "languages": "Source languages",
-    "platforms": "Operating systems or platforms", "deployment": "Packaging or delivery",
+    "source_paths": "Files or folders", "deployment": "Packaging or delivery",
 }
 
 
@@ -363,15 +355,11 @@ def configure_component(identifier: str, values: dict, root: Path, bootstrap: bo
         changes.update(saas_client=values["saas_client"].lower() == "yes", sdk_component=values["sdk_component"])
         return changes
     changes.update(ask_source_paths(root, values, role, bootstrap))
+    changes["platforms"] = select_platforms(role, values.get("platforms", ""))
     if role != "documentation":
-        changes["languages"] = language_values(ask_field("languages", values.get("languages", "")))
+        changes["languages"] = select_languages(role, changes["platforms"], values.get("languages", ""))
     else:
         changes["languages"] = values_list(values.get("languages", "none")) or ["none"]
-    if role in {"apps", "sdks", "tools", "custom", "static-assets", "google-workspace", "browser-extensions"}:
-        changes["platforms"] = values_list(ask_field("platforms", values.get("platforms", "")))
-    else:
-        changes["platforms"] = values_list(values["platforms"])
-        print("Platform retained: " + values["platforms"])
     changes["saas_client"] = values["saas_client"].lower() == "yes"
     changes["sdk_component"] = values["sdk_component"]
     changes["deployment"] = ask_field("deployment", values.get("deployment", ""))

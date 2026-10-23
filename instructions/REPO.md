@@ -302,10 +302,15 @@ For an existing profile, press Enter at the product question to retain enabled p
 Choosing new categories can disable previously selected parts in the profile. Their source files and recorded notes remain intact.
 Existing documentation and unrecognized custom scopes remain preserved.
 
-The interview explains each selected part before asking for its source paths, actual languages, relevant operating systems, and packaging facts.
+The interview explains each selected part before collecting its source paths, platforms, languages, and packaging facts.
 Paths are relative to the selected repository. Supply files, folders, or matching patterns, separated by commas.
 For absent literal paths, the interview offers planned scope before continuing.
 Each prompt explains its meaning and gives examples. Press Enter to retain a displayed current value.
+Language and platform fields use supported selection lists. In the UI, use arrows and Space to select choices.
+In plain mode, enter the displayed numbers. Select several numbers when the field permits multiple choices.
+Native apps, CLI tools, and SDKs collect platforms first. Their language lists reflect those platforms and component roles.
+Browser components retain their browser platform. Workspace and browser extensions retain their specific host and browser menus.
+Project paths and packaging descriptions remain editable facts.
 In the UI, press F5 for Back and F6 or Enter for Next. Text cursor arrows retain their editing behavior.
 Back saves the current field as a session draft. Next submits the field through its normal validation.
 After an earlier answer changes, confirm later answers again. Matching questions retain drafts, and conditional questions are rebuilt.
@@ -321,6 +326,34 @@ Use manual profile edits or JSON answers for separate custom components and spec
 The SaaS-with-native-clients choice links clients to a single selected generated SDK component when that link is unambiguous.
 For several SDK components, retain a valid configured link or set the relationship through manual or JSON configuration.
 The interview preserves the existing scoped-example checkboxes. Edit those manually when the actual project requires an example.
+
+### Language and platform choices
+
+Select only languages used within the component's source scope. Separate frontend and website components keep their own selections.
+TypeScript source selects shared JavaScript guidance automatically. SCSS source also selects CSS guidance.
+These references do not mean that compiled JavaScript or CSS must be selected as source languages.
+
+| Component | Language choices |
+| --- | --- |
+| Backend or Workspace HTTP service | C#, Java, Go, Rust, Python, JavaScript, TypeScript, SQL, Shell |
+| Browser frontend, website, or static assets | JavaScript, TypeScript, HTML, CSS, SCSS |
+| Native Apple app | Swift and the web languages used within that component |
+| Android or ChromeOS app | Java and the web languages used within that component |
+| CLI tools | Python, Go, Rust, C#, Java, JavaScript, TypeScript, Shell. Swift is also available for macOS or Linux. |
+| Generated SDKs | C#, Java, Go, Python, Rust, JavaScript, TypeScript. Swift is also available for Apple consumers. |
+| Apps Script custom HTML UI or browser extension | JavaScript, TypeScript, HTML, CSS, SCSS |
+| Apps Script host-rendered cards | JavaScript, TypeScript |
+
+Native app platforms include iOS, iPadOS, macOS, Android, and ChromeOS.
+Detailed native guidance covers Apple platforms. Android and ChromeOS selections retain the existing partial-coverage warning.
+CLI platforms include macOS, Linux, and Windows. SDK platforms describe the consumers, including browsers and servers.
+Language choices identify available instruction coverage. They do not verify framework compatibility or generator support.
+
+Existing values outside a menu receive a labeled Keep existing selection option.
+Select that option alone, or select replacement values. Setup does not silently remove project facts.
+Manual profiles and JSON answers retain their existing validation and coverage warnings.
+After a platform change, review the rebuilt language choices before final approval.
+The choice catalog and guide mapping live in scripts/profile_choices.py.
 
 Component identifiers are local profile names. They are not additional product categories.
 In this instruction repository, instruction-library means documentation and instruction files. repository-tools means the local CLI scripts.
@@ -696,10 +729,11 @@ The current preset covers Chrome and Edge desktop, Firefox desktop and Android, 
 Select current targets only. Other browsers and delivery models require separately verified project configuration.
 
 The language menu explains JavaScript execution and TypeScript compilation.
-UI presets offer HTML with CSS or SCSS. Script-only presets and custom language lists remain available.
+Select individual script, markup, and stylesheet languages from the checklist.
+Script-only selections are valid. Include JavaScript or TypeScript for executable source.
 Apps Script is a separate Google runtime, not a browser extension source language.
-The Workspace interview uses the same explained presets for its Apps Script runtime.
-HTTP Workspace services retain their actual backend-language question.
+The Workspace interview uses the same selections for its Apps Script runtime.
+HTTP Workspace services use the backend-language selection list.
 
 | Profile field | JSON field | Values |
 | --- | --- | --- |
