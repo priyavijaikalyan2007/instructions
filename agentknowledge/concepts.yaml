@@ -76,3 +76,8 @@
   definition: "Summarizes selected scope and file changes while preserving optional exact diff inspection."
   anchor_file: "scripts/setup_review.py"
   related: ["CursesInterview", "ProfileConfiguration"]
+
+- name: "InterviewHistory"
+  definition: "Preserves UI question snapshots and drafts while invalidating stale accepted answers after earlier edits."
+  anchor_file: "scripts/interview_history.py"
+  related: ["CursesInterview", "ProfileInterview"]

@@ -42,5 +42,6 @@ To test the interview locally without creating a GitHub repository:
 Remove --dry-run to create the reviewed setup after confirmation.
 The ncurses interview records business facts, component choices, and multiple roles per coding tool.
 It supports editable fields, keyboard selection, scrolling help, and a review before approval.
+Use F5 Back and F6 Next to revisit UI questions. Draft answers remain available during the session.
 Use --ui plain for the line-oriented interface. Automation and redirected input keep plain output.
 [Project scaffolding](instructions/PROJECT_SCAFFOLDING.md) explains generated script placeholders and the completion checklist.
